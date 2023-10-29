@@ -20,10 +20,12 @@ Ví dụ một chương trình Hello World. Điều cần lưu ý ở đây là 
 
 ```C
 #include <stdio.h>
+#include <stdlib.h>
 
 void unreachableFunction()
 {
     printf("Pwned!\n");
+    exit(0);
 }
 
 int main() {
