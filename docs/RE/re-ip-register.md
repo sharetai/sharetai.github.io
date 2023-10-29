@@ -18,7 +18,7 @@ Thanh ghi con trỏ lệnh được gọi là thanh ghi EIP đơn giản là tha
 
 Ví dụ một chương trình Hello World. Điều cần lưu ý ở đây là có một hàm tên là unreachableFunction mà hàm chính không bao giờ gọi. Nếu ta có thể kiểm soát thanh ghi EIP, ta có thể hack chương trình này để thực thi mã đó!
 
-```C++
+```C
 #include <stdio.h>
 
 void unreachableFunction()
