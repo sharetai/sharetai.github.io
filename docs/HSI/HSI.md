@@ -252,6 +252,7 @@ interface Ethernet0/1.11
  pppoe enable group NHATNGHE
 !
 interface Ethernet0/0
+ no shutdown
  ip address 210.245.0.1 255.255.255.0
 !
 ip local pool NN_DHCP 210.245.0.2 210.245.0.254
