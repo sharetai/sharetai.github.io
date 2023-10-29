@@ -18,7 +18,7 @@ Thanh ghi con trỏ lệnh được gọi là thanh ghi EIP đơn giản là tha
 
 Ví dụ một chương trình Hello World. Điều cần lưu ý ở đây là có một hàm tên là unreachableFunction mà hàm chính không bao giờ gọi. Nếu ta có thể kiểm soát thanh ghi EIP, ta có thể hack chương trình này để thực thi mã đó!
 
-```C
+```c
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -37,7 +37,7 @@ int main() {
 `gcc -m32 -ggdb -o eipExample eipExample.c` // Biên dịch chương trình <br>
 `./eipExample` // Chạy chương trình
 
-```bash
+```conf
 ┌──(root㉿kali)-[~/box]
 └─# gcc -m32 -ggdb -o eipExample eipExample.c
 
@@ -53,7 +53,7 @@ Hello World!
 `continue` // Chạy tiếp chương trình <br>
 `disassemble` // Tháo rời mã
 
-```bash
+```conf
 (gdb) set disassembly-flavor intel
 (gdb) break main
 Breakpoint 1 at 0x11e4: file eipExample.c, line 11.
@@ -100,7 +100,7 @@ Chạy lại chương trình và kiểm tra xem EIP đang trỏ đến đâu. <b
 `disassemble unreachableFunction` // Thao gỡ hàm unreachableFunction <br>
 `set $eip = 0x5655619d` // Đặt eip thành địa chỉ bắt đầu của hàm unreachableFunction
 
-```bash
+```conf
 (gdb) run
 Starting program: /root/box/eipExample
 [Thread debugging using libthread_db enabled]
