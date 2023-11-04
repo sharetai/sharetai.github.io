@@ -59,6 +59,15 @@ wget -P ~ https://git.io/.gdbinit
 pip install pygments
 ```
 
+__Use personal configuration files__
+
+~/.gdbinit.d/init
+```
+set disassembly-flavor intel
+dashboard registers -style column-major True
+dashboard assembly -style opcodes True
+```
+
 ## Pwndbg + Peda + GEF — All in One
 
 __Pwndbg__
