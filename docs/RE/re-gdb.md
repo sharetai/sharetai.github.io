@@ -52,6 +52,13 @@ Type "apropos word" to search for commands related to "word".
 (gdb)
 ```
 
+## Cài đặt GDB dashboard
+
+```
+wget -P ~ https://git.io/.gdbinit
+pip install pygments
+```
+
 ## Pwndbg + Peda + GEF — All in One
 
 __Pwndbg__
