@@ -11,8 +11,6 @@ parent: RE
 Kỹ thuật dịch ngược mã nguồn phần mềm
 {: .fs-6 .fw-300 }
 
-_Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfection.github.io/reversing/)_
-
 ---
 
 ## Table of contents
