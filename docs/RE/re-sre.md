@@ -11,6 +11,8 @@ parent: RE
 Kỹ thuật dịch ngược mã nguồn phần mềm
 {: .fs-6 .fw-300 }
 
+_Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfection.github.io/reversing/)_
+
 ---
 
 ## Table of contents
@@ -39,7 +41,7 @@ Kỹ thuật dịch ngược mã nguồn phần mềm
 - Những bước này thường được thực hiện tự động
 - Sau khi đi qua những bước này, một tệp thực thi được tạo ra
 
-*Phần cảnh báo: Đây là những lĩnh vực nghiên cứu vô cùng phức tạp, và chúng tôi chỉ đang đề cập đến một cái nhìn tổng quan rất cao.
+*Phần cảnh báo: Đây là những lĩnh vực nghiên cứu vô cùng phức tạp, và ta chỉ đang đề cập đến một cái nhìn tổng quan rất cao.
 
 ### Tiền xử lý mã nguồn, thực hiện:
 

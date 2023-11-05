@@ -11,6 +11,8 @@ parent: RE
 Thanh ghi con trỏ lệnh
 {: .fs-6 .fw-300 }
 
+_Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfection.github.io/reversing/)_
+
 ---
 
 

@@ -21,7 +21,7 @@ Sau lưu và Khôi phục
 
 ---
 
-Cấu hình xong thiết bị thì chúng ta nên backup để đề phòng khi sự cố xảy ra có thể restore thiết bị về trạng thái ban đầu trong thời gian nhanh nhất. Các thành phần trên thiết bị cisco cần backup:
+Cấu hình xong thiết bị thì ta nên backup để đề phòng khi sự cố xảy ra có thể restore thiết bị về trạng thái ban đầu trong thời gian nhanh nhất. Các thành phần trên thiết bị cisco cần backup:
 
 * File **startup-config** chứa thông tin cấu hình
 * Hệ điều hành **IOS**

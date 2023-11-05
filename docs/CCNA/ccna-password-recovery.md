@@ -51,7 +51,7 @@ Router#reload
 
 ## Thao tác trên Switch
 
-**Bước 1:** Tắt-bật switch, nhấn giữ phím **Mode** ở mặt trước cho đến khi đèn **SYST LED** trên switch chuyển từ màu vàng sang màu xanh lá cây. Khi chúng ta nhả phím **Mode** thì đèn **SYST LED** phải ở trạng thái xanh lá cây để vào chế độ **ROM MONITOR**
+**Bước 1:** Tắt-bật switch, nhấn giữ phím **Mode** ở mặt trước cho đến khi đèn **SYST LED** trên switch chuyển từ màu vàng sang màu xanh lá cây. Khi ta nhả phím **Mode** thì đèn **SYST LED** phải ở trạng thái xanh lá cây để vào chế độ **ROM MONITOR**
 
 **Bước 2:** Khi vào được chế độ **ROM MONITOR**, đổi tên file config.text để lần khởi động kế không load cấu hình cũ
 
