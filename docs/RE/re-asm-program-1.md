@@ -39,27 +39,31 @@ Chương trình đầu tiên sẽ trình bày cách di chuyển dữ liệu tứ
 
 __moving_immediate_data.asm__
 
-```nasm
- 1  ;moving_immediate_data: mov immediate data between registers & memory
- 2
- 3  section .data                        ;Data segment
- 4  section .bss                         ;Uninitialized data
- 5      buffer resb 1
- 6  section .text                        ;Code Segment
- 7      global _start
- 8
- 9  _start:                              ;User prompt
-10      nop                              ;used for debugging purposes
-11
-12  moving_immediate_data_to_register:
-13      mov eax, 100                     ;mov 100 into the EAX register
-14      mov byte[buffer], 0x50           ;mov 0x50 into buffer memory location
-15
-16  exit:
-17      mov eax, 1                       ;sys_exit system call
-18      mov ebx, 0                       ;exit code 0 successful execution
-19      int 80h                          ;call sys_exit
-```
+{% capture code %}
+{% highlight nasm linenos %}
+;moving_immediate_data: mov immediate data between registers & memory
+
+section .data                        ;Data segment
+section .bss                         ;Uninitialized data
+    buffer resb 1
+section .text                        ;Code Segment
+    global _start
+
+_start:                              ;User prompt
+    nop                              ;used for debugging purposes
+
+moving_immediate_data_to_register:
+    mov eax, 100                     ;mov 100 into the EAX register
+    mov byte[buffer], 0x50           ;mov 0x50 into buffer memory location
+
+exit:
+    mov eax, 1                       ;sys_exit system call
+    mov ebx, 0                       ;exit code 0 successful execution
+    int 80h                          ;call sys_exit
+{% endhighlight %}
+{% endcapture %}
+{% include fix_linenos.html code=code %}
+{% assign code = nil %}
 
 Biên dịch chương trình:
 

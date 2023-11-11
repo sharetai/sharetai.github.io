@@ -1,14 +1,14 @@
 ---
 layout: default
 title: ASM Program 3 [Moving Data Between Memory And Registers]
-nav_order: 7
+nav_order: 8
 parent: RE
 ---
 
 # ASM Program 3 [Moving Data Between Memory And Registers]
 {: .no_toc }
 
-ASM Chương trình 2 [Di chuyển dữ liệu giữa bộ nhớ và thanh ghi]
+ASM Chương trình 3 [Di chuyển dữ liệu giữa bộ nhớ và thanh ghi]
 {: .fs-6 .fw-300 }
 
 _Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfection.github.io/reversing/)_
@@ -25,30 +25,34 @@ _Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfec
 
 ## Programming
 
-Chương trình bên dưới thực hiện di sao chép dữ liệu từ thanh ghi ecx vào biến memory.
+Chương trình bên dưới thực hiện di sao chép dữ liệu từ biến memory vào thanh ghi ecx.
 
 __moving_data_between_memory_and_registers.asm__
 
-```nasm
- 1  ;moving_data_between_memory_and_registers: mov data between mem and regs
- 2
- 3  section .data
- 4      memory db 10
- 5
- 6  section .text                        ;Code Segment
- 7      global _start
- 8
- 9  _start:                              ;User prompt
-10      nop                              ;used for debugging purposes
-11
-12  mov_immediate_data_between_memory_and_registers:
-13      mov ecx, [memory]                ;mov memory value into ECX register
-14
-15  exit:
-16      mov eax, 1                       ;sys_exit system call
-17      mov ebx, 0                       ;exit code 0 successful execution
-18      int 80h                          ;call sys_exit
-```
+{% capture code %}
+{% highlight nasm linenos %}
+;moving_data_between_memory_and_registers: mov data between mem and regs
+
+section .data
+    memory db 10
+
+section .text                        ;Code Segment
+    global _start
+
+_start:                              ;User prompt
+    nop                              ;used for debugging purposes
+
+mov_immediate_data_between_memory_and_registers:
+    mov ecx, [memory]                ;mov constant value into ECX register
+
+exit:
+    mov eax, 1                       ;sys_exit system call
+    mov ebx, 0                       ;exit code 0 successful execution
+    int 80h                          ;call sys_exit
+{% endhighlight %}
+{% endcapture %}
+{% include fix_linenos.html code=code %}
+{% assign code = nil %}
 
 Biên dịch chương trình:
 

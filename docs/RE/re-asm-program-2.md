@@ -29,25 +29,29 @@ Chương trình bên dưới thực hiện di sao chép dữ liệu từ thanh g
 
 __moving_data_between_registers.asm__
 
-```nasm
- 1  ;moving_data_between_registers: mov data between registers
- 2
- 3  section .data                        ;Data segment
- 4  section .text                        ;Code Segment
- 5      global _start
- 6
- 7  _start:                              ;User prompt
- 8      nop                              ;used for debugging purposes
- 9      mov edx, 22
-10
-11  mov_data_between_registers:
-12      mov eax, edx                     ;mov the value in EDX into EAX
-13
-14  exit:
-15      mov eax, 1                       ;sys_exit system call
-16      mov ebx, 0                       ;exit code 0 successful execution
-17      int 80h                          ;call sys_exit
-```
+{% capture code %}
+{% highlight nasm linenos %}
+;moving_data_between_registers: mov data between registers
+
+section .data                        ;Data segment
+section .text                        ;Code Segment
+    global _start
+
+_start:                              ;User prompt
+    nop                              ;used for debugging purposes
+    mov edx, 22
+
+mov_data_between_registers:
+    mov eax, edx                     ;mov the value in EDX into EAX
+
+exit:
+    mov eax, 1                       ;sys_exit system call
+    mov ebx, 0                       ;exit code 0 successful execution
+    int 80h                          ;call sys_exit
+{% endhighlight %}
+{% endcapture %}
+{% include fix_linenos.html code=code %}
+{% assign code = nil %}
 
 Biên dịch chương trình:
 

@@ -5,8 +5,8 @@ $body-font-family: system-ui, -apple-system, blinkmacsystemfont, "Segoe UI",
   roboto, "Helvetica Neue", arial, sans-serif, "Segoe UI Emoji" !default;
 $mono-font-family: "SFMono-Regular", menlo, consolas, monospace !default;
 $root-font-size: 16px !default; // DEPRECATED: previously base font-size for rems
-$body-line-height: 1.4 !default;
-$content-line-height: 1.2 !default;
+$body-line-height: 1.4;
+$content-line-height: 1.6;
 $body-heading-line-height: 1.25 !default;
 
 // Font size
