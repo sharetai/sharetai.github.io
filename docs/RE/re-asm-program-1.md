@@ -70,7 +70,7 @@ ld -m elf_i386 -o moving_immediate_data moving_immediate_data.o
 
 ## Debugging
 
-__nop__ (no operation) dùng với mục đích đề debug breakpoint. Không quan trọng.
+__nop__ (no operation) dùng với mục đích để debug breakpoint. Không quan trọng.
 
 ```conf
 ┌──(root㉿kali)-[~/box]

@@ -58,7 +58,7 @@ ld -m elf_i386 -o moving_data_between_registers moving_data_between_registers.o
 
 ## Debugging
 
-__nop__ (no operation) dùng với mục đích đề debug breakpoint. Không quan trọng.
+__nop__ (no operation) dùng với mục đích để debug breakpoint. Không quan trọng.
 
 ```conf
 ┌──(root㉿kali)-[~/box]
