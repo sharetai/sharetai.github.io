@@ -25,7 +25,7 @@ _Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfec
 
 ## Programming
 
-Chương trình bên dưới thực hiện di sao chép dữ liệu từ thanh ghi eax vào biến memory.
+Chương trình bên dưới thực hiện sao chép dữ liệu từ thanh ghi `eax` vào biến `memory`.
 
 __moving_data_between_registers_and_memory.asm__
 

@@ -25,7 +25,7 @@ _Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfec
 
 ## Programming
 
-Chương trình bên dưới thực hiện di sao chép dữ liệu từ thanh ghi edx sang thanh ghi eax.
+Chương trình bên dưới thực hiện sao chép dữ liệu từ thanh ghi `edx` sang thanh ghi `eax`.
 
 __moving_data_between_registers.asm__
 
@@ -135,7 +135,7 @@ gs             0x0                 0
 
 ## Hacking
 
-Mục tiêu, dùng gdb để thay đổi giá trị của thanh ghi edx trước khi sao chép qua eax.
+Mục tiêu, dùng gdb để thay đổi giá trị của thanh ghi `edx` trước khi sao chép qua `eax`.
 
 ```conf
 (gdb) disassemble /r

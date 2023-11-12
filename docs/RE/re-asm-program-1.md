@@ -176,35 +176,6 @@ End of assembler dump.
 Mục tiêu, dùng gdb để thay đổi giá trị của thanh ghi eax.
 
 ```conf
-(gdb) disassemble /r
-Dump of assembler code for function moving_immediate_data_to_register:
-=> 0x08049001 <+0>:     b8 64 00 00 00          mov    eax,0x64
-   0x08049006 <+5>:     c6 05 00 a0 04 08 50    mov    BYTE PTR ds:0x804a000,0x50
-End of assembler dump.
-(gdb) stepi
-0x08049006 in moving_immediate_data_to_register ()
-(gdb) disassemble /r
-Dump of assembler code for function moving_immediate_data_to_register:
-   0x08049001 <+0>:     b8 64 00 00 00          mov    eax,0x64
-=> 0x08049006 <+5>:     c6 05 00 a0 04 08 50    mov    BYTE PTR ds:0x804a000,0x50
-End of assembler dump.
-(gdb) info registers
-eax            0x64                100
-ecx            0x0                 0
-edx            0x0                 0
-ebx            0x0                 0
-esp            0xffffd400          0xffffd400
-ebp            0x0                 0x0
-esi            0x0                 0
-edi            0x0                 0
-eip            0x8049006           0x8049006 <moving_immediate_data_to_register+5>
-eflags         0x202               [ IF ]
-cs             0x23                35
-ss             0x2b                43
-ds             0x2b                43
-es             0x2b                43
-fs             0x0                 0
-gs             0x0                 0
 (gdb) set $eax=120
 (gdb) info registers
 eax            0x78                120

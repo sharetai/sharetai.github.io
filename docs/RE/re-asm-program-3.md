@@ -25,7 +25,7 @@ _Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfec
 
 ## Programming
 
-Chương trình bên dưới thực hiện di sao chép dữ liệu từ biến memory vào thanh ghi ecx.
+Chương trình bên dưới thực hiện sao chép dữ liệu từ biến `memory` vào thanh ghi `ecx`.
 
 __moving_data_between_memory_and_registers.asm__
 
@@ -129,7 +129,7 @@ gs             0x0                 0
 
 ## Hacking
 
-Mục tiêu, dùng gdb để thay đổi giá trị của thanh ghi ecx.
+Mục tiêu, dùng gdb để thay đổi giá trị của thanh ghi `ecx`.
 
 ```conf
 (gdb) info registers
