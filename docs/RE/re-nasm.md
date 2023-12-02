@@ -2571,6 +2571,396 @@ ld -m elf_i386 -o printable printable.o
 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 ```
 
+## factorial.asm
+
+{% capture code %}
+{% highlight nasm linenos %}
+section	.text
+   global _start         ;must be declared for using gcc
+	
+_start:                  ;tell linker entry point
+
+   mov bx, 3             ;for calculating factorial 3
+   call  proc_fact
+   add   ax, 30h
+   mov  [fact], ax
+    
+   mov	  edx,len        ;message length
+   mov	  ecx,msg        ;message to write
+   mov	  ebx,1          ;file descriptor (stdout)
+   mov	  eax,4          ;system call number (sys_write)
+   int	  0x80           ;call kernel
+
+   mov   edx,1            ;message length
+   mov	  ecx,fact       ;message to write
+   mov	  ebx,1          ;file descriptor (stdout)
+   mov	  eax,4          ;system call number (sys_write)
+   int	  0x80           ;call kernel
+    
+   mov	  eax,1          ;system call number (sys_exit)
+   int	  0x80           ;call kernel
+	
+proc_fact:
+   cmp   bl, 1
+   jg    do_calculation
+   mov   ax, 1
+   ret
+	
+do_calculation:
+   dec   bl
+   call  proc_fact
+   inc   bl
+   mul   bl        ;ax = al * bl
+   ret
+
+section	.data
+msg db 'Factorial 3 is: '
+len equ $ - msg			
+
+section .bss
+fact resb 1
+{% endhighlight %}
+{% endcapture %}
+{% include fix_linenos.html code=code %}
+{% assign code = nil %}
+
+Biên dịch chương trình:
+
+```
+nasm -f elf32 factorial.asm
+ld -m elf_i386 -o factorial factorial.o
+./factorial
+Factorial 3 is: 6
+```
+
+Dùng __gef__ debug:
+
+```conf
+┌──(root㉿kali)-[~/box]
+└─# gdb-gef -q factorial
+Reading symbols from factorial...
+(No debugging symbols found in factorial)
+sError while writing index for `/root/box/factorial': No debugging symbols
+GEF for linux ready, type `gef' to start, `gef config' to configure
+89 commands loaded and 5 functions added for GDB 13.2 in 0.01ms using Python engine 3.11
+gef➤  start
+[+] Breaking at '0x8049000'
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x0
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd420│+0x0000: 0x00000001   ← $esp
+0xffffd424│+0x0004: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0008: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8048ffa 0000                                 add    BYTE PTR [eax], al
+    0x8048ffc 0000                                 add    BYTE PTR [eax], al
+    0x8048ffe 0000                                 add    BYTE PTR [eax], al
+ →  0x8049000 66bb0300            <_start+0>       mov    bx, 0x3
+    0x8049004 e83d000000          <_start+4>       call   0x8049046 <proc_fact>
+    0x8049009 6683c030            <_start+9>       add    ax, 0x30
+    0x804900d 66a310a00408        <_start+13>      mov    ds:0x804a010, ax
+    0x8049013 ba10000000          <_start+19>      mov    edx, 0x10
+    0x8049018 b900a00408          <_start+24>      mov    ecx, 0x804a000
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  disassemble /r _start,+92
+Dump of assembler code from 0x8049000 to 0x804905c:
+=> 0x08049000 <_start+0>:       66 bb 03 00             mov    bx,0x3
+   0x08049004 <_start+4>:       e8 3d 00 00 00          call   0x8049046 <proc_fact>
+   0x08049009 <_start+9>:       66 83 c0 30             add    ax,0x30
+   0x0804900d <_start+13>:      66 a3 10 a0 04 08       mov    ds:0x804a010,ax
+   0x08049013 <_start+19>:      ba 10 00 00 00          mov    edx,0x10
+   0x08049018 <_start+24>:      b9 00 a0 04 08          mov    ecx,0x804a000
+   0x0804901d <_start+29>:      bb 01 00 00 00          mov    ebx,0x1
+   0x08049022 <_start+34>:      b8 04 00 00 00          mov    eax,0x4
+   0x08049027 <_start+39>:      cd 80                   int    0x80
+   0x08049029 <_start+41>:      ba 01 00 00 00          mov    edx,0x1
+   0x0804902e <_start+46>:      b9 10 a0 04 08          mov    ecx,0x804a010
+   0x08049033 <_start+51>:      bb 01 00 00 00          mov    ebx,0x1
+   0x08049038 <_start+56>:      b8 04 00 00 00          mov    eax,0x4
+   0x0804903d <_start+61>:      cd 80                   int    0x80
+   0x0804903f <_start+63>:      b8 01 00 00 00          mov    eax,0x1
+   0x08049044 <_start+68>:      cd 80                   int    0x80
+   0x08049046 <proc_fact+0>:    80 fb 01                cmp    bl,0x1
+   0x08049049 <proc_fact+3>:    7f 05                   jg     0x8049050 <do_calculation>
+   0x0804904b <proc_fact+5>:    66 b8 01 00             mov    ax,0x1
+   0x0804904f <proc_fact+9>:    c3                      ret
+   0x08049050 <do_calculation+0>:       fe cb                   dec    bl
+   0x08049052 <do_calculation+2>:       e8 ef ff ff ff          call   0x8049046 <proc_fact>
+   0x08049057 <do_calculation+7>:       fe c3                   inc    bl
+   0x08049059 <do_calculation+9>:       f6 e3                   mul    bl
+   0x0804905b <do_calculation+11>:      c3                      ret
+End of assembler dump.
+gef➤  b *_start+9
+Breakpoint 1 at 0x8049009
+gef➤  b *proc_fact+3
+Breakpoint 2 at 0x8049049
+gef➤  b *do_calculation+2
+Breakpoint 3 at 0x8049052
+gef➤  continue
+Continuing.
+
+Breakpoint 2, 0x08049049 in proc_fact ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x3
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd41c│+0x0000: 0x08049009  →  <_start+9> add ax, 0x30       ← $esp
+0xffffd420│+0x0004: 0x00000001
+0xffffd424│+0x0008: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x000c: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804903f b801000000          <_start+63>      mov    eax, 0x1
+    0x8049044 cd80                <_start+68>      int    0x80
+    0x8049046 80fb01              <proc_fact+0>    cmp    bl, 0x1
+ →  0x8049049 7f05                <proc_fact+3>    jg     0x8049050 <do_calculation>    TAKEN [Reason: !Z && S==O]
+   ↳   0x8049050 <do_calculation+0> dec    bl
+       0x8049052 <do_calculation+2> call   0x8049046 <proc_fact>
+       0x8049057 <do_calculation+7> inc    bl
+       0x8049059 <do_calculation+9> mul    bl
+       0x804905b <do_calculation+11> ret
+       0x804905c                  add    BYTE PTR [eax], al
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+```
+
+`CALL` thực hiện jump đến `0x08049046 <proc_fact+0>` và đẩy vào stack `0x08049009 <_start+9>` toạ độ của lệnh tiếp theo sau `call`.
+
+```conf
+gef➤  continue
+Continuing.
+
+Breakpoint 3, 0x08049052 in do_calculation ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x2
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd41c│+0x0000: 0x08049009  →  <_start+9> add ax, 0x30       ← $esp
+0xffffd420│+0x0004: 0x00000001
+0xffffd424│+0x0008: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x000c: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804904b 66b80100            <proc_fact+5>    mov    ax, 0x1
+    0x804904f c3                  <proc_fact+9>    ret
+    0x8049050 fecb                <do_calculation+0> dec    bl
+ →  0x8049052 e8efffffff          <do_calculation+2> call   0x8049046 <proc_fact>
+   ↳   0x8049046 <proc_fact+0>    cmp    bl, 0x1
+       0x8049049 <proc_fact+3>    jg     0x8049050 <do_calculation>
+       0x804904b <proc_fact+5>    mov    ax, 0x1
+       0x804904f <proc_fact+9>    ret
+       0x8049050 <do_calculation+0> dec    bl
+       0x8049052 <do_calculation+2> call   0x8049046 <proc_fact>
+─────────────────────────────────────────────────────────────────────────────────────── arguments (guessed) ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 2, 0x08049049 in proc_fact ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x2
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd418│+0x0000: 0x08049057  →  <do_calculation+7> inc bl     ← $esp
+0xffffd41c│+0x0004: 0x08049009  →  <_start+9> add ax, 0x30
+0xffffd420│+0x0008: 0x00000001
+0xffffd424│+0x000c: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0010: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804903f b801000000          <_start+63>      mov    eax, 0x1
+    0x8049044 cd80                <_start+68>      int    0x80
+    0x8049046 80fb01              <proc_fact+0>    cmp    bl, 0x1
+ →  0x8049049 7f05                <proc_fact+3>    jg     0x8049050 <do_calculation>    TAKEN [Reason: !Z && S==O]
+   ↳   0x8049050 <do_calculation+0> dec    bl
+       0x8049052 <do_calculation+2> call   0x8049046 <proc_fact>
+       0x8049057 <do_calculation+7> inc    bl
+       0x8049059 <do_calculation+9> mul    bl
+       0x804905b <do_calculation+11> ret
+       0x804905c                  add    BYTE PTR [eax], al
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 3, 0x08049052 in do_calculation ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x1
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd418│+0x0000: 0x08049057  →  <do_calculation+7> inc bl     ← $esp
+0xffffd41c│+0x0004: 0x08049009  →  <_start+9> add ax, 0x30
+0xffffd420│+0x0008: 0x00000001
+0xffffd424│+0x000c: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0010: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804904b 66b80100            <proc_fact+5>    mov    ax, 0x1
+    0x804904f c3                  <proc_fact+9>    ret
+    0x8049050 fecb                <do_calculation+0> dec    bl
+ →  0x8049052 e8efffffff          <do_calculation+2> call   0x8049046 <proc_fact>
+   ↳   0x8049046 <proc_fact+0>    cmp    bl, 0x1
+       0x8049049 <proc_fact+3>    jg     0x8049050 <do_calculation>
+       0x804904b <proc_fact+5>    mov    ax, 0x1
+       0x804904f <proc_fact+9>    ret
+       0x8049050 <do_calculation+0> dec    bl
+       0x8049052 <do_calculation+2> call   0x8049046 <proc_fact>
+─────────────────────────────────────────────────────────────────────────────────────── arguments (guessed) ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 2, 0x08049049 in proc_fact ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x1
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd414│+0x0000: 0x08049057  →  <do_calculation+7> inc bl     ← $esp
+0xffffd418│+0x0004: 0x08049057  →  <do_calculation+7> inc bl
+0xffffd41c│+0x0008: 0x08049009  →  <_start+9> add ax, 0x30
+0xffffd420│+0x000c: 0x00000001
+0xffffd424│+0x0010: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0014: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804903f b801000000          <_start+63>      mov    eax, 0x1
+    0x8049044 cd80                <_start+68>      int    0x80
+    0x8049046 80fb01              <proc_fact+0>    cmp    bl, 0x1
+ →  0x8049049 7f05                <proc_fact+3>    jg     0x8049050 <do_calculation>    NOT taken [Reason: !(!Z && S==O)]
+    0x804904b 66b80100            <proc_fact+5>    mov    ax, 0x1
+    0x804904f c3                  <proc_fact+9>    ret
+    0x8049050 fecb                <do_calculation+0> dec    bl
+    0x8049052 e8efffffff          <do_calculation+2> call   0x8049046 <proc_fact>
+    0x8049057 fec3                <do_calculation+7> inc    bl
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  b *do_calculation+11
+Breakpoint 4 at 0x804905b
+gef➤  continue
+Continuing.
+
+Breakpoint 4, 0x0804905b in do_calculation ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x2
+$ebx   : 0x2
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd418│+0x0000: 0x08049057  →  <do_calculation+7> inc bl     ← $esp
+0xffffd41c│+0x0004: 0x08049009  →  <_start+9> add ax, 0x30
+0xffffd420│+0x0008: 0x00000001
+0xffffd424│+0x000c: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0010: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049052 e8efffffff          <do_calculation+2> call   0x8049046 <proc_fact>
+    0x8049057 fec3                <do_calculation+7> inc    bl
+    0x8049059 f6e3                <do_calculation+9> mul    bl
+ →  0x804905b c3                  <do_calculation+11> ret
+   ↳   0x8049057 <do_calculation+7> inc    bl
+       0x8049059 <do_calculation+9> mul    bl
+       0x804905b <do_calculation+11> ret
+       0x804905c                  add    BYTE PTR [eax], al
+       0x804905e                  add    BYTE PTR [eax], al
+       0x8049060                  add    BYTE PTR [eax], al
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 4, 0x0804905b in do_calculation ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x6
+$ebx   : 0x3
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd41c│+0x0000: 0x08049009  →  <_start+9> add ax, 0x30       ← $esp
+0xffffd420│+0x0004: 0x00000001
+0xffffd424│+0x0008: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x000c: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049052 e8efffffff          <do_calculation+2> call   0x8049046 <proc_fact>
+    0x8049057 fec3                <do_calculation+7> inc    bl
+    0x8049059 f6e3                <do_calculation+9> mul    bl
+ →  0x804905b c3                  <do_calculation+11> ret
+   ↳   0x8049009 <_start+9>       add    ax, 0x30
+       0x804900d <_start+13>      mov    ds:0x804a010, ax
+       0x8049013 <_start+19>      mov    edx, 0x10
+       0x8049018 <_start+24>      mov    ecx, 0x804a000
+       0x804901d <_start+29>      mov    ebx, 0x1
+       0x8049022 <_start+34>      mov    eax, 0x4
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 1, 0x08049009 in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x6
+$ebx   : 0x3
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd420│+0x0000: 0x00000001   ← $esp
+0xffffd424│+0x0004: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0008: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8048ffe 0000                                 add    BYTE PTR [eax], al
+    0x8049000 66bb0300            <_start+0>       mov    bx, 0x3
+    0x8049004 e83d000000          <_start+4>       call   0x8049046 <proc_fact>
+ →  0x8049009 6683c030            <_start+9>       add    ax, 0x30
+    0x804900d 66a310a00408        <_start+13>      mov    ds:0x804a010, ax
+    0x8049013 ba10000000          <_start+19>      mov    edx, 0x10
+    0x8049018 b900a00408          <_start+24>      mov    ecx, 0x804a000
+    0x804901d bb01000000          <_start+29>      mov    ebx, 0x1
+    0x8049022 b804000000          <_start+34>      mov    eax, 0x4
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  stepi
+0x0804900d in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x36
+$ebx   : 0x3
+...
+───────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
+0xffffd420│+0x0000: 0x00000001   ← $esp
+0xffffd424│+0x0004: 0xffffd59e  →  "/root/box/factorial"
+0xffffd428│+0x0008: 0x00000000
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049000 66bb0300            <_start+0>       mov    bx, 0x3
+    0x8049004 e83d000000          <_start+4>       call   0x8049046 <proc_fact>
+    0x8049009 6683c030            <_start+9>       add    ax, 0x30
+ →  0x804900d 66a310a00408        <_start+13>      mov    ds:0x804a010, ax
+    0x8049013 ba10000000          <_start+19>      mov    edx, 0x10
+    0x8049018 b900a00408          <_start+24>      mov    ecx, 0x804a000
+    0x804901d bb01000000          <_start+29>      mov    ebx, 0x1
+    0x8049022 b804000000          <_start+34>      mov    eax, 0x4
+    0x8049027 cd80                <_start+39>      int    0x80
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤
+```
+
 ## macro.asm
 
 ```
@@ -2626,4 +3016,418 @@ Hello, programmers!
 Welcome to the world of,
 Linux assembly programming!
 ```
+
+## file.asm
+
+{% capture code %}
+{% highlight nasm linenos %}
+section	.text
+   global _start           ;must be declared for using gcc
+	
+_start:                    ;tell linker entry point
+   ; create the file
+   mov  eax, 8             ;system call sys_creat() number 8 => EAX
+   mov  ebx, file_name     ;filename => EBX
+   mov  ecx, 0o644         ;644 = -rw-r--r--, file permissions => ECX (octal notation)
+   int  0x80               ;call kernel
+	
+   mov [fd_out], eax       ;file descriptor/error <= EAX
+    
+   ; write into the file
+   mov	eax, 4            ;system call sys_write() number 4 => EAX
+   mov	ebx, [fd_out]     ;file descriptor => EBX
+   mov	ecx, msg          ;message to write => ECX
+   mov	edx, len          ;number of bytes to write => EDX
+   int	0x80              ;call kernel
+	
+   ; close the file
+   mov eax, 6              ;system call sys_close() number 6 => EAX
+   mov ebx, [fd_out]       ;file descriptor => EBX
+   int 0x80                ;call kernel
+    
+   ; write the message indicating end of file write
+   mov eax, 4              
+   mov ebx, 1              
+   mov ecx, msg_done       
+   mov edx, len_done       
+   int 0x80
+    
+   ; open the file for reading
+   mov eax, 5              ;sys_open() number 5 => EAX
+   mov ebx, file_name      ;filename => EBX register
+   mov ecx, 0              ;access mode (read-only:0, write-only:1, read-write:2) => ECX
+   mov edx, 0o644          ;644 = -rw-r--r--, file permissions => ECX (octal notation)
+   int 0x80                ;call kernel
+	
+   mov  [fd_in], eax
+    
+   ; read from file
+   mov eax, 3              ;system call sys_read() number 3 => EAX
+   mov ebx, [fd_in]        ;file descriptor => EBX
+   mov ecx, content        ;pointer to the input buffer => ECX
+   mov edx, 26             ;buffer size, i.e., the number of bytes to read => EDX
+   int 0x80                ;call kernel
+    
+   ; close the file
+   mov eax, 6              ;system call sys_close() number 6 => EAX
+   mov ebx, [fd_in]        ;file descriptor => EBX
+   int 0x80                ;call kernel
+	
+   ; print the content of file 
+   mov eax, 4
+   mov ebx, 1
+   mov ecx, content
+   mov edx, 26
+   int 0x80                ;call kernel
+
+   ; exit    
+   mov	eax,1             ;system call number (sys_exit)
+   int	0x80              ;call kernel
+
+section	.data
+file_name db 'myfile.txt', 0x0         ;0x0 to stop read filename
+msg db 'Welcome to Tutorials Point'
+len equ  $-msg
+
+msg_done db 'Written to file', 0xa
+len_done equ $-msg_done
+
+section .bss
+fd_out resb 1
+fd_in  resb 1
+content resb  26
+{% endhighlight %}
+{% endcapture %}
+{% include fix_linenos.html code=code %}
+{% assign code = nil %}
+
+Biên dịch chương trình:
+
+```
+nasm -f elf32 file.asm
+ld -m elf_i386 -o file file.o
+./file
+```
+
+Dùng __gef__ debug:
+
+```conf
+┌──(root㉿kali)-[~/box]
+└─# gdb-gef -q file
+Reading symbols from file...
+(No debugging symbols found in file)
+Error while writing index for `/root/box/file': No debugging symbols
+GEF for linux ready, type `gef' to start, `gef config' to configure
+89 commands loaded and 5 functions added for GDB 13.2 in 0.01ms using Python engine 3.11
+gef➤  start
+[+] Breaking at '0x8049000'
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x0
+$ecx   : 0x0
+$edx   : 0x0
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8048ffa 0000                                 add    BYTE PTR [eax], al
+    0x8048ffc 0000                                 add    BYTE PTR [eax], al
+    0x8048ffe 0000                                 add    BYTE PTR [eax], al
+ →  0x8049000 b808000000          <_start+0>       mov    eax, 0x8
+    0x8049005 bb00a00408          <_start+5>       mov    ebx, 0x804a000
+    0x804900a b9a4010000          <_start+10>      mov    ecx, 0x1a4
+    0x804900f cd80                <_start+15>      int    0x80
+    0x8049011 a338a00408          <_start+17>      mov    ds:0x804a038, eax
+    0x8049016 b804000000          <_start+22>      mov    eax, 0x4
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  disassemble /r _start,+172
+Dump of assembler code from 0x8049000 to 0x80490ac:
+=> 0x08049000 <_start+0>:       b8 08 00 00 00          mov    eax,0x8
+   0x08049005 <_start+5>:       bb 00 a0 04 08          mov    ebx,0x804a000
+   0x0804900a <_start+10>:      b9 a4 01 00 00          mov    ecx,0x1a4
+   0x0804900f <_start+15>:      cd 80                   int    0x80
+   0x08049011 <_start+17>:      a3 38 a0 04 08          mov    ds:0x804a038,eax
+   0x08049016 <_start+22>:      b8 04 00 00 00          mov    eax,0x4
+   0x0804901b <_start+27>:      8b 1d 38 a0 04 08       mov    ebx,DWORD PTR ds:0x804a038
+   0x08049021 <_start+33>:      b9 0b a0 04 08          mov    ecx,0x804a00b
+   0x08049026 <_start+38>:      ba 1a 00 00 00          mov    edx,0x1a
+   0x0804902b <_start+43>:      cd 80                   int    0x80
+   0x0804902d <_start+45>:      b8 06 00 00 00          mov    eax,0x6
+   0x08049032 <_start+50>:      8b 1d 38 a0 04 08       mov    ebx,DWORD PTR ds:0x804a038
+   0x08049038 <_start+56>:      cd 80                   int    0x80
+   0x0804903a <_start+58>:      b8 04 00 00 00          mov    eax,0x4
+   0x0804903f <_start+63>:      bb 01 00 00 00          mov    ebx,0x1
+   0x08049044 <_start+68>:      b9 25 a0 04 08          mov    ecx,0x804a025
+   0x08049049 <_start+73>:      ba 10 00 00 00          mov    edx,0x10
+   0x0804904e <_start+78>:      cd 80                   int    0x80
+   0x08049050 <_start+80>:      b8 05 00 00 00          mov    eax,0x5
+   0x08049055 <_start+85>:      bb 00 a0 04 08          mov    ebx,0x804a000
+   0x0804905a <_start+90>:      b9 00 00 00 00          mov    ecx,0x0
+   0x0804905f <_start+95>:      ba a4 01 00 00          mov    edx,0x1a4
+   0x08049064 <_start+100>:     cd 80                   int    0x80
+   0x08049066 <_start+102>:     a3 39 a0 04 08          mov    ds:0x804a039,eax
+   0x0804906b <_start+107>:     b8 03 00 00 00          mov    eax,0x3
+   0x08049070 <_start+112>:     8b 1d 39 a0 04 08       mov    ebx,DWORD PTR ds:0x804a039
+   0x08049076 <_start+118>:     b9 3a a0 04 08          mov    ecx,0x804a03a
+   0x0804907b <_start+123>:     ba 1a 00 00 00          mov    edx,0x1a
+   0x08049080 <_start+128>:     cd 80                   int    0x80
+   0x08049082 <_start+130>:     b8 06 00 00 00          mov    eax,0x6
+   0x08049087 <_start+135>:     8b 1d 39 a0 04 08       mov    ebx,DWORD PTR ds:0x804a039
+   0x0804908d <_start+141>:     cd 80                   int    0x80
+   0x0804908f <_start+143>:     b8 04 00 00 00          mov    eax,0x4
+   0x08049094 <_start+148>:     bb 01 00 00 00          mov    ebx,0x1
+   0x08049099 <_start+153>:     b9 3a a0 04 08          mov    ecx,0x804a03a
+   0x0804909e <_start+158>:     ba 1a 00 00 00          mov    edx,0x1a
+   0x080490a3 <_start+163>:     cd 80                   int    0x80
+   0x080490a5 <_start+165>:     b8 01 00 00 00          mov    eax,0x1
+   0x080490aa <_start+170>:     cd 80                   int    0x80
+End of assembler dump.
+gef➤  memory watch 0x804a000 128 byte
+[+] Adding memwatch to 0x804a000
+gef➤  b *_start+17
+Breakpoint 1 at 0x8049011
+gef➤  b *_start+45
+Breakpoint 2 at 0x804902d
+gef➤  b *_start+58
+Breakpoint 3 at 0x804903a
+gef➤  b *_start+102
+Breakpoint 4 at 0x8049066
+gef➤  b *_start+130
+Breakpoint 6 at 0x8049082
+gef➤  b *_start+143
+Breakpoint 7 at 0x804908f
+gef➤  b *_start+165
+Breakpoint 8 at 0x80490a5
+gef➤  continue
+Continuing.
+
+Breakpoint 1, 0x08049011 in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x3
+$ebx   : 0x0804a000  →  "myfile.txt"
+$ecx   : 0x1a4
+$edx   : 0x0
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049005 bb00a00408          <_start+5>       mov    ebx, 0x804a000
+    0x804900a b9a4010000          <_start+10>      mov    ecx, 0x1a4
+    0x804900f cd80                <_start+15>      int    0x80
+ →  0x8049011 a338a00408          <_start+17>      mov    ds:0x804a038, eax
+    0x8049016 b804000000          <_start+22>      mov    eax, 0x4
+    0x804901b 8b1d38a00408        <_start+27>      mov    ebx, DWORD PTR ds:0x804a038
+    0x8049021 b90ba00408          <_start+33>      mov    ecx, 0x804a00b
+    0x8049026 ba1a000000          <_start+38>      mov    edx, 0x1a
+    0x804902b cd80                <_start+43>      int    0x80
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 00 00 00 00 00 00 00 00    file............
+0x0804a040 <content+0006>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a050 <content+0016>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+[#0] Id 1, Name: "file", stopped 0x8049011 in _start (), reason: BREAKPOINT
+───────────────────────────────────────────────────────────────────────────────────────────────────── trace ────
+[#0] 0x8049011 → _start()
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+gef➤  continue
+Continuing.
+
+Breakpoint 2, 0x0804902d in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x1a
+$ebx   : 0x3
+$ecx   : 0x0804a00b  →  "Welcome to Tutorials PointWritten to file\n"
+$edx   : 0x1a
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049021 b90ba00408          <_start+33>      mov    ecx, 0x804a00b
+    0x8049026 ba1a000000          <_start+38>      mov    edx, 0x1a
+    0x804902b cd80                <_start+43>      int    0x80
+ →  0x804902d b806000000          <_start+45>      mov    eax, 0x6
+    0x8049032 8b1d38a00408        <_start+50>      mov    ebx, DWORD PTR ds:0x804a038
+    0x8049038 cd80                <_start+56>      int    0x80
+    0x804903a b804000000          <_start+58>      mov    eax, 0x4
+    0x804903f bb01000000          <_start+63>      mov    ebx, 0x1
+    0x8049044 b925a00408          <_start+68>      mov    ecx, 0x804a025
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 03 00 00 00 00 00 00 00    file............
+0x0804a040 <content+0006>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a050 <content+0016>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 3, 0x0804903a in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x0
+$ebx   : 0x3
+$ecx   : 0x0804a00b  →  "Welcome to Tutorials PointWritten to file\n"
+$edx   : 0x1a
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804902d b806000000          <_start+45>      mov    eax, 0x6
+    0x8049032 8b1d38a00408        <_start+50>      mov    ebx, DWORD PTR ds:0x804a038
+    0x8049038 cd80                <_start+56>      int    0x80
+ →  0x804903a b804000000          <_start+58>      mov    eax, 0x4
+    0x804903f bb01000000          <_start+63>      mov    ebx, 0x1
+    0x8049044 b925a00408          <_start+68>      mov    ecx, 0x804a025
+    0x8049049 ba10000000          <_start+73>      mov    edx, 0x10
+    0x804904e cd80                <_start+78>      int    0x80
+    0x8049050 b805000000          <_start+80>      mov    eax, 0x5
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 03 00 00 00 00 00 00 00    file............
+0x0804a040 <content+0006>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a050 <content+0016>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+Written to file
+
+Breakpoint 4, 0x08049066 in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x3
+$ebx   : 0x0804a000  →  "myfile.txt"
+$ecx   : 0x0
+$edx   : 0x1a4
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x804905a b900000000          <_start+90>      mov    ecx, 0x0
+    0x804905f baa4010000          <_start+95>      mov    edx, 0x1a4
+    0x8049064 cd80                <_start+100>     int    0x80
+ →  0x8049066 a339a00408          <_start+102>     mov    ds:0x804a039, eax
+    0x804906b b803000000          <_start+107>     mov    eax, 0x3
+    0x8049070 8b1d39a00408        <_start+112>     mov    ebx, DWORD PTR ds:0x804a039
+    0x8049076 b93aa00408          <_start+118>     mov    ecx, 0x804a03a
+    0x804907b ba1a000000          <_start+123>     mov    edx, 0x1a
+    0x8049080 cd80                <_start+128>     int    0x80
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 03 00 00 00 00 00 00 00    file............
+0x0804a040 <content+0006>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a050 <content+0016>    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 6, 0x08049082 in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x1a
+$ebx   : 0x3
+$ecx   : 0x0804a03a  →  "Welcome to Tutorials Point"
+$edx   : 0x1a
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049076 b93aa00408          <_start+118>     mov    ecx, 0x804a03a
+    0x804907b ba1a000000          <_start+123>     mov    edx, 0x1a
+    0x8049080 cd80                <_start+128>     int    0x80
+ →  0x8049082 b806000000          <_start+130>     mov    eax, 0x6
+    0x8049087 8b1d39a00408        <_start+135>     mov    ebx, DWORD PTR ds:0x804a039
+    0x804908d cd80                <_start+141>     int    0x80
+    0x804908f b804000000          <_start+143>     mov    eax, 0x4
+    0x8049094 bb01000000          <_start+148>     mov    ebx, 0x1
+    0x8049099 b93aa00408          <_start+153>     mov    ecx, 0x804a03a
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 03 03 57 65 6c 63 6f 6d    file......Welcom
+0x0804a040 <content+0006>    65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20 50    e to Tutorials P
+0x0804a050 <content+0016>    6f 69 6e 74 00 00 00 00 00 00 00 00 00 00 00 00    oint............
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+
+Breakpoint 7, 0x0804908f in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0xfffffff7
+$ebx   : 0x6c655703
+$ecx   : 0x0804a03a  →  "Welcome to Tutorials Point"
+$edx   : 0x1a
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049082 b806000000          <_start+130>     mov    eax, 0x6
+    0x8049087 8b1d39a00408        <_start+135>     mov    ebx, DWORD PTR ds:0x804a039
+    0x804908d cd80                <_start+141>     int    0x80
+ →  0x804908f b804000000          <_start+143>     mov    eax, 0x4
+    0x8049094 bb01000000          <_start+148>     mov    ebx, 0x1
+    0x8049099 b93aa00408          <_start+153>     mov    ecx, 0x804a03a
+    0x804909e ba1a000000          <_start+158>     mov    edx, 0x1a
+    0x80490a3 cd80                <_start+163>     int    0x80
+    0x80490a5 b801000000          <_start+165>     mov    eax, 0x1
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 03 03 57 65 6c 63 6f 6d    file......Welcom
+0x0804a040 <content+0006>    65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20 50    e to Tutorials P
+0x0804a050 <content+0016>    6f 69 6e 74 00 00 00 00 00 00 00 00 00 00 00 00    oint............
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤  continue
+Continuing.
+Welcome to Tutorials Point
+Breakpoint 8, 0x080490a5 in _start ()
+[ Legend: Modified register | Code | Heap | Stack | String ]
+───────────────────────────────────────────────────────────────────────────────────────────────── registers ────
+$eax   : 0x1a
+$ebx   : 0x1
+$ecx   : 0x0804a03a  →  "Welcome to Tutorials Point"
+$edx   : 0x1a
+...
+─────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────
+    0x8049099 b93aa00408          <_start+153>     mov    ecx, 0x804a03a
+    0x804909e ba1a000000          <_start+158>     mov    edx, 0x1a
+    0x80490a3 cd80                <_start+163>     int    0x80
+ →  0x80490a5 b801000000          <_start+165>     mov    eax, 0x1
+    0x80490aa cd80                <_start+170>     int    0x80
+    0x80490ac 0000                                 add    BYTE PTR [eax], al
+    0x80490ae 0000                                 add    BYTE PTR [eax], al
+    0x80490b0 0000                                 add    BYTE PTR [eax], al
+    0x80490b2 0000                                 add    BYTE PTR [eax], al
+────────────────────────────────────────────────────────────────────────────────────────── memory:0x804a000 ────
+0x0804a000 <file_name+0000>    6d 79 66 69 6c 65 2e 74 78 74 00 57 65 6c 63 6f    myfile.txt.Welco
+0x0804a010 <msg+0005>    6d 65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20    me to Tutorials
+0x0804a020 <msg+0015>    50 6f 69 6e 74 57 72 69 74 74 65 6e 20 74 6f 20    PointWritten to
+0x0804a030 <msg_done+000b>    66 69 6c 65 0a 00 00 00 03 03 57 65 6c 63 6f 6d    file......Welcom
+0x0804a040 <content+0006>    65 20 74 6f 20 54 75 74 6f 72 69 61 6c 73 20 50    e to Tutorials P
+0x0804a050 <content+0016>    6f 69 6e 74 00 00 00 00 00 00 00 00 00 00 00 00    oint............
+0x0804a060     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+0x0804a070     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+─────────────────────────────────────────────────────────────────────────────────────────────────── threads ────
+...
+gef➤
+```
+
+
 
