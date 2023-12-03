@@ -11,7 +11,7 @@ parent: CCIE
 Point-to-Point Protocol over Ethernet
 {: .fs-6 .fw-300 }
 
-_Nguồn tham khảo: [http://ccie-in-2-months.blogspot.com/](http://ccie-in-2-months.blogspot.com/)_
+_Nguồn tham khảo: [http://ccie-in-2-months.blogspot.com/](http://ccie-in-2-months.blogspot.com/p/the-hints-series.html)_
 
 ---
 
