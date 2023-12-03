@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Multiprotocol Label Switching
+title: MPLS
 nav_order: 18
 parent: JN0
 ---
