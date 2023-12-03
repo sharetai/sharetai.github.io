@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html class="v2" dir="ltr" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/3566091532-css_bundle_v2.css" rel="stylesheet" type="text/css">
+<meta content="width=1100" name="viewport">
+
+<meta content="blogger" name="generator">
+<link href="http://ccie-in-2-months.blogspot.com/favicon.ico" rel="icon" type="image/x-icon">
+<link href="http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="CCIE in 2 months - Is it possible? - Atom" href="http://ccie-in-2-months.blogspot.com/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="CCIE in 2 months - Is it possible? - RSS" href="http://ccie-in-2-months.blogspot.com/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="CCIE in 2 months - Is it possible? - Atom" href="https://www.blogger.com/feeds/1312588810478429008/posts/default">
+
+<link rel="alternate" type="application/atom+xml" title="CCIE in 2 months - Is it possible? - Atom" href="http://ccie-in-2-months.blogspot.com/feeds/232786085594319152/comments/default">
+<!--Can't find substitution for tag [blog.ieCssRetrofitLinks]-->
+<meta content="http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html" property="og:url">
+<meta content="NTS: RIP/RIPng" property="og:title">
+<meta content="My personal blog about passing the CCIE CP lab in just two months." property="og:description">
+<title>CCIE in 2 months - Is it possible?: NTS: RIP/RIPng</title>
+<style id="page-skin-1" type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Awesome Inc.
+Designer: Tina Chen
+URL:      tinachen.org
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="keycolor" description="Main Color" type="color" default="#ffffff"/>
+<Group description="Page" selector="body">
+<Variable name="body.font" description="Font" type="font"
+default="normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="body.background.color" description="Background Color" type="color" default="#000000"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#ffffff"/>
+</Group>
+<Group description="Links" selector=".main-inner">
+<Variable name="link.color" description="Link Color" type="color" default="#888888"/>
+<Variable name="link.visited.color" description="Visited Color" type="color" default="#444444"/>
+<Variable name="link.hover.color" description="Hover Color" type="color" default="#cccccc"/>
+</Group>
+<Group description="Blog Title" selector=".header h1">
+<Variable name="header.font" description="Title Font" type="font"
+default="normal bold 40px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="header.text.color" description="Title Color" type="color" default="#333333" />
+<Variable name="header.background.color" description="Header Background" type="color" default="transparent" />
+</Group>
+<Group description="Blog Description" selector=".header .description">
+<Variable name="description.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="description.text.color" description="Text Color" type="color"
+default="#333333" />
+</Group>
+<Group description="Tabs Text" selector=".tabs-inner .widget li a">
+<Variable name="tabs.font" description="Font" type="font"
+default="normal bold 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="tabs.text.color" description="Text Color" type="color" default="#333333"/>
+<Variable name="tabs.selected.text.color" description="Selected Color" type="color" default="#333333"/>
+</Group>
+<Group description="Tabs Background" selector=".tabs-outer .PageList">
+<Variable name="tabs.background.color" description="Background Color" type="color" default="#141414"/>
+<Variable name="tabs.selected.background.color" description="Selected Color" type="color" default="#444444"/>
+<Variable name="tabs.border.color" description="Border Color" type="color" default="#aab123"/>
+</Group>
+<Group description="Date Header" selector=".main-inner .widget h2.date-header, .main-inner .widget h2.date-header span">
+<Variable name="date.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="date.text.color" description="Text Color" type="color" default="#666666"/>
+<Variable name="date.border.color" description="Border Color" type="color" default="#aab123"/>
+</Group>
+<Group description="Post Title" selector="h3.post-title, h4, h3.post-title a">
+<Variable name="post.title.font" description="Font" type="font"
+default="normal bold 22px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="post.title.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Post Background" selector=".post">
+<Variable name="post.background.color" description="Background Color" type="color" default="#fefdfa" />
+<Variable name="post.border.color" description="Border Color" type="color" default="#aab123" />
+<Variable name="post.border.bevel.color" description="Bevel Color" type="color" default="#aab123"/>
+</Group>
+<Group description="Gadget Title" selector="h2">
+<Variable name="widget.title.font" description="Font" type="font"
+default="normal bold 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="widget.title.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Gadget Text" selector=".sidebar .widget">
+<Variable name="widget.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="widget.text.color" description="Text Color" type="color" default="#333333"/>
+<Variable name="widget.alternate.text.color" description="Alternate Color" type="color" default="#666666"/>
+</Group>
+<Group description="Gadget Links" selector=".sidebar .widget">
+<Variable name="widget.link.color" description="Link Color" type="color" default="#cc0000"/>
+<Variable name="widget.link.visited.color" description="Visited Color" type="color" default="#d61111"/>
+<Variable name="widget.link.hover.color" description="Hover Color" type="color" default="#6aa84f"/>
+</Group>
+<Group description="Gadget Background" selector=".sidebar .widget">
+<Variable name="widget.background.color" description="Background Color" type="color" default="#141414"/>
+<Variable name="widget.border.color" description="Border Color" type="color" default="#222222"/>
+<Variable name="widget.border.bevel.color" description="Bevel Color" type="color" default="#000000"/>
+</Group>
+<Group description="Sidebar Background" selector=".column-left-inner .column-right-inner">
+<Variable name="widget.outer.background.color" description="Background Color" type="color" default="transparent" />
+</Group>
+<Group description="Images" selector=".main-inner">
+<Variable name="image.background.color" description="Background Color" type="color" default="transparent"/>
+<Variable name="image.border.color" description="Border Color" type="color" default="transparent"/>
+</Group>
+<Group description="Feed" selector=".blog-feeds">
+<Variable name="feed.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Feed Links" selector=".blog-feeds">
+<Variable name="feed.link.color" description="Link Color" type="color" default="#cc0000"/>
+<Variable name="feed.link.visited.color" description="Visited Color" type="color" default="#d61111"/>
+<Variable name="feed.link.hover.color" description="Hover Color" type="color" default="#6aa84f"/>
+</Group>
+<Group description="Pager" selector=".blog-pager">
+<Variable name="pager.background.color" description="Background Color" type="color" default="#fefdfa" />
+</Group>
+<Group description="Footer" selector=".footer-outer">
+<Variable name="footer.background.color" description="Background Color" type="color" default="#fefdfa" />
+<Variable name="footer.text.color" description="Text Color" type="color" default="#333333" />
+</Group>
+<Variable name="title.shadow.spread" description="Title Shadow" type="length" default="-1px"/>
+<Variable name="body.background" description="Body Background" type="background"
+color="#fcfbf5"
+default="$(color) none repeat scroll top left"/>
+<Variable name="body.background.gradient.cap" description="Body Gradient Cap" type="url"
+default="none"/>
+<Variable name="body.background.size" description="Body Background Size" type="string" default="auto"/>
+<Variable name="tabs.background.gradient" description="Tabs Background Gradient" type="url"
+default="none"/>
+<Variable name="header.background.gradient" description="Header Background Gradient" type="url" default="none" />
+<Variable name="header.padding.top" description="Header Top Padding" type="length" default="22px" />
+<Variable name="header.margin.top" description="Header Top Margin" type="length" default="0" />
+<Variable name="header.margin.bottom" description="Header Bottom Margin" type="length" default="0" />
+<Variable name="widget.padding.top" description="Widget Padding Top" type="length" default="8px" />
+<Variable name="widget.padding.side" description="Widget Padding Side" type="length" default="15px" />
+<Variable name="widget.outer.margin.top" description="Widget Top Margin" type="length" default="0" />
+<Variable name="widget.outer.background.gradient" description="Gradient" type="url" default="none" />
+<Variable name="widget.border.radius" description="Gadget Border Radius" type="length" default="0" />
+<Variable name="outer.shadow.spread" description="Outer Shadow Size" type="length" default="0" />
+<Variable name="date.header.border.radius.top" description="Date Header Border Radius Top" type="length" default="0" />
+<Variable name="date.header.position" description="Date Header Position" type="length" default="15px" />
+<Variable name="date.space" description="Date Space" type="length" default="30px" />
+<Variable name="date.position" description="Date Float" type="string" default="static" />
+<Variable name="date.padding.bottom" description="Date Padding Bottom" type="length" default="0" />
+<Variable name="date.border.size" description="Date Border Size" type="length" default="0" />
+<Variable name="date.background" description="Date Background" type="background" color="transparent"
+default="$(color) none no-repeat scroll top left" />
+<Variable name="date.first.border.radius.top" description="Date First top radius" type="length" default="5px" />
+<Variable name="date.last.space.bottom" description="Date Last Space Bottom" type="length"
+default="20px" />
+<Variable name="date.last.border.radius.bottom" description="Date Last bottom radius" type="length" default="5px" />
+<Variable name="post.first.padding.top" description="First Post Padding Top" type="length" default="0" />
+<Variable name="image.shadow.spread" description="Image Shadow Size" type="length" default="0"/>
+<Variable name="image.border.radius" description="Image Border Radius" type="length" default="0"/>
+<Variable name="separator.outdent" description="Separator Outdent" type="length" default="15px" />
+<Variable name="title.separator.border.size" description="Widget Title Border Size" type="length" default="1px" />
+<Variable name="list.separator.border.size" description="List Separator Border Size" type="length" default="1px" />
+<Variable name="shadow.spread" description="Shadow Size" type="length" default="0"/>
+<Variable name="startSide" description="Side where text starts in blog language" type="automatic" default="left"/>
+<Variable name="endSide" description="Side where text ends in blog language" type="automatic" default="right"/>
+<Variable name="date.side" description="Side where date header is placed" type="string" default="right"/>
+<Variable name="pager.border.radius.top" description="Pager Border Top Radius" type="length" default="5px" />
+<Variable name="pager.space.top" description="Pager Top Space" type="length" default="1em" />
+<Variable name="footer.background.gradient" description="Background Gradient" type="url" default="none" />
+<Variable name="mobile.background.size" description="Mobile Background Size" type="string"
+default="auto"/>
+<Variable name="mobile.background.overlay" description="Mobile Background Overlay" type="string"
+default="transparent none repeat scroll top left"/>
+<Variable name="mobile.button.color" description="Mobile Button Color" type="color" default="#ffffff" />
+*/
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #333333;
+background: #fcfbf5 none repeat scroll top left;
+}
+html body .content-outer {
+min-width: 0;
+max-width: 100%;
+width: 100%;
+}
+a:link {
+text-decoration: none;
+color: #cc0000;
+}
+a:visited {
+text-decoration: none;
+color: #d61111;
+}
+a:hover {
+text-decoration: underline;
+color: #6aa84f;
+}
+.body-fauxcolumn-outer .cap-top {
+position: absolute;
+z-index: 1;
+height: 276px;
+width: 100%;
+background: transparent none repeat-x scroll top left;
+_background-image: none;
+}
+/* Columns
+----------------------------------------------- */
+.content-inner {
+padding: 0;
+}
+.header-inner .section {
+margin: 0 16px;
+}
+.tabs-inner .section {
+margin: 0 16px;
+}
+.main-inner {
+padding-top: 30px;
+}
+.main-inner .column-center-inner,
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+padding: 0 5px;
+}
+*+html body .main-inner .column-center-inner {
+margin-top: -30px;
+}
+#layout .main-inner .column-center-inner {
+margin-top: 0;
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+margin: 0 0 0 0;
+background: transparent none repeat scroll 0 0;
+}
+.Header h1 {
+font: normal normal 48px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #333333;
+text-shadow: 0 0 -1px #000000;
+}
+.Header h1 a {
+color: #333333;
+}
+.Header .description {
+font: normal normal 20px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #908d6a;
+}
+.header-inner .Header .titlewrapper,
+.header-inner .Header .descriptionwrapper {
+padding-left: 0;
+padding-right: 0;
+margin-bottom: 0;
+}
+.header-inner .Header .titlewrapper {
+padding-top: 22px;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-outer {
+overflow: hidden;
+position: relative;
+background: #b3ca88 url(//www.blogblog.com/1kt/awesomeinc/tabs_gradient_light.png) repeat scroll 0 0;
+}
+#layout .tabs-outer {
+overflow: visible;
+}
+.tabs-cap-top, .tabs-cap-bottom {
+position: absolute;
+width: 100%;
+border-top: 1px solid #908d6a;
+}
+.tabs-cap-bottom {
+bottom: 0;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+margin: 0;
+padding: .6em 1.5em;
+font: normal bold 13px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #333333;
+border-top: 1px solid #908d6a;
+border-bottom: 1px solid #908d6a;
+border-left: 1px solid #908d6a;
+height: 16px;
+line-height: 16px;
+}
+.tabs-inner .widget li:last-child a {
+border-right: 1px solid #908d6a;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+background: #63704b url(//www.blogblog.com/1kt/awesomeinc/tabs_gradient_light.png) repeat-x scroll 0 -100px;
+color: #ffffff;
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+font: normal bold 14px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #333333;
+}
+/* Widgets
+----------------------------------------------- */
+.main-inner .section {
+margin: 0 27px;
+padding: 0;
+}
+.main-inner .column-left-outer,
+.main-inner .column-right-outer {
+margin-top: 0;
+}
+#layout .main-inner .column-left-outer,
+#layout .main-inner .column-right-outer {
+margin-top: 0;
+}
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+background: transparent none repeat 0 0;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+}
+#layout .main-inner .column-left-inner,
+#layout .main-inner .column-right-inner {
+margin-top: 0;
+}
+.sidebar .widget {
+font: normal normal 12px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #333333;
+}
+.sidebar .widget a:link {
+color: #cc0000;
+}
+.sidebar .widget a:visited {
+color: #d61111;
+}
+.sidebar .widget a:hover {
+color: #6aa84f;
+}
+.sidebar .widget h2 {
+text-shadow: 0 0 -1px #000000;
+}
+.main-inner .widget {
+background-color: #fefdfa;
+border: 1px solid #aab123;
+padding: 0 15px 15px;
+margin: 20px -16px;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+}
+.main-inner .widget h2 {
+margin: 0 -0;
+padding: .6em 0 .5em;
+border-bottom: 1px solid transparent;
+}
+.footer-inner .widget h2 {
+padding: 0 0 .4em;
+border-bottom: 1px solid transparent;
+}
+.main-inner .widget h2 + div, .footer-inner .widget h2 + div {
+border-top: 1px solid #aab123;
+padding-top: 8px;
+}
+.main-inner .widget .widget-content {
+margin: 0 -0;
+padding: 7px 0 0;
+}
+.main-inner .widget ul, .main-inner .widget #ArchiveList ul.flat {
+margin: -8px -15px 0;
+padding: 0;
+list-style: none;
+}
+.main-inner .widget #ArchiveList {
+margin: -8px 0 0;
+}
+.main-inner .widget ul li, .main-inner .widget #ArchiveList ul.flat li {
+padding: .5em 15px;
+text-indent: 0;
+color: #444444;
+border-top: 0 solid #aab123;
+border-bottom: 1px solid transparent;
+}
+.main-inner .widget #ArchiveList ul li {
+padding-top: .25em;
+padding-bottom: .25em;
+}
+.main-inner .widget ul li:first-child, .main-inner .widget #ArchiveList ul.flat li:first-child {
+border-top: none;
+}
+.main-inner .widget ul li:last-child, .main-inner .widget #ArchiveList ul.flat li:last-child {
+border-bottom: none;
+}
+.post-body {
+position: relative;
+}
+.main-inner .widget .post-body ul {
+padding: 0 2.5em;
+margin: .5em 0;
+line-height: 1.0; /*chatasos*/
+list-style: disc;
+}
+.main-inner .widget .post-body ul li {
+padding: 0.25em 0;
+margin-bottom: .25em;
+color: #333333;
+border: none;
+}
+.footer-inner .widget ul {
+padding: 0;
+list-style: none;
+}
+.widget .zippy {
+color: #444444;
+}
+/* Posts
+----------------------------------------------- */
+body .main-inner .Blog {
+padding: 0;
+margin-bottom: 1em;
+background-color: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+.main-inner .section:last-child .Blog:last-child {
+padding: 0;
+margin-bottom: 1em;
+}
+.main-inner .widget h2.date-header {
+margin: 0 -15px 1px;
+padding: 0 0 0 0;
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #908d6a;
+background: transparent none no-repeat scroll top left;
+border-top: 0 solid #aab123;
+border-bottom: 1px solid transparent;
+-moz-border-radius-topleft: 0;
+-moz-border-radius-topright: 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+position: static;
+bottom: 100%;
+right: 15px;
+text-shadow: 0 0 -1px #000000;
+}
+.main-inner .widget h2.date-header span {
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+display: block;
+padding: .5em 15px;
+border-left: 0 solid #aab123;
+border-right: 0 solid #aab123;
+}
+.date-outer {
+position: relative;
+margin: 30px 0 20px;
+padding: 0 15px;
+background-color: #fefdfa;
+border: 1px solid #aab123;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+}
+.date-outer:first-child {
+margin-top: 0;
+}
+.date-outer:last-child {
+margin-bottom: 20px;
+-moz-border-radius-bottomleft: 5px;
+-moz-border-radius-bottomright: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-webkit-border-bottom-right-radius: 5px;
+-goog-ms-border-bottom-left-radius: 5px;
+-goog-ms-border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+.date-posts {
+margin: 0 -0;
+padding: 0 0;
+clear: both;
+}
+.post-outer, .inline-ad {
+border-top: 1px solid #aab123;
+margin: 0 -0;
+padding: 15px 0;
+}
+.post-outer {
+padding-bottom: 10px;
+}
+.post-outer:first-child {
+padding-top: 0;
+border-top: none;
+}
+.post-outer:last-child, .inline-ad:last-child {
+border-bottom: none;
+}
+.post-body {
+position: relative;
+}
+.post-body img {
+padding: 8px;
+background: #ffffff;
+border: 1px solid #cccccc;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+h3.post-title, h4 {
+font: normal normal 22px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #cc0000;
+}
+h3.post-title a {
+font: normal normal 22px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #cc0000;
+}
+h3.post-title a:hover {
+color: #6aa84f;
+text-decoration: underline;
+}
+.post-header {
+margin: 0 0 1em;
+}
+.post-body {
+line-height: 1.4;
+}
+.post-outer h2 {
+color: #333333;
+}
+.post-footer {
+margin: 1.5em 0 0;
+}
+#blog-pager {
+padding: 15px;
+font-size: 120%;
+background-color: #fefdfa;
+border: 1px solid #aab123;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-goog-ms-border-top-left-radius: 5px;
+-goog-ms-border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius-topright: 5px;
+margin-top: 1em;
+}
+.blog-feeds, .post-feeds {
+margin: 1em 0;
+text-align: center;
+color: #333333;
+}
+.blog-feeds a, .post-feeds a {
+color: #cc0000;
+}
+.blog-feeds a:visited, .post-feeds a:visited {
+color: #d61111;
+}
+.blog-feeds a:hover, .post-feeds a:hover {
+color: #6aa84f;
+}
+.post-outer .comments {
+margin-top: 2em;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #908d6a;
+border-bottom: 1px solid #908d6a;
+}
+.comments .continue {
+border-top: 2px solid #908d6a;
+}
+/* Footer
+----------------------------------------------- */
+.footer-outer {
+margin: -20px 0 -1px;
+padding: 20px 0 0;
+color: #333333;
+overflow: hidden;
+}
+.footer-fauxborder-left {
+border-top: 1px solid #aab123;
+background: #fefdfa none repeat scroll 0 0;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+margin: 0 -20px;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile {
+background-size: auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+*+html body.mobile .main-inner .column-center-inner {
+margin-top: 0;
+}
+.mobile .main-inner .widget {
+padding: 0 0 15px;
+}
+.mobile .main-inner .widget h2 + div,
+.mobile .footer-inner .widget h2 + div {
+border-top: none;
+padding-top: 0;
+}
+.mobile .footer-inner .widget h2 {
+padding: 0.5em 0;
+border-bottom: none;
+}
+.mobile .main-inner .widget .widget-content {
+margin: 0;
+padding: 7px 0 0;
+}
+.mobile .main-inner .widget ul,
+.mobile .main-inner .widget #ArchiveList ul.flat {
+margin: 0 -15px 0;
+}
+.mobile .main-inner .widget h2.date-header {
+right: 0;
+}
+.mobile .date-header span {
+padding: 0.4em 0;
+}
+.mobile .date-outer:first-child {
+margin-bottom: 0;
+border: 1px solid #aab123;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-goog-ms-border-top-left-radius: 5px;
+-goog-ms-border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+}
+.mobile .date-outer {
+border-color: #aab123;
+border-width: 0 1px 1px;
+}
+.mobile .date-outer:last-child {
+margin-bottom: 0;
+}
+.mobile .main-inner {
+padding: 0;
+}
+.mobile .header-inner .section {
+margin: 0;
+}
+.mobile .post-outer, .mobile .inline-ad {
+padding: 5px 0;
+}
+.mobile .tabs-inner .section {
+margin: 0 10px;
+}
+.mobile .main-inner .widget h2 {
+margin: 0;
+padding: 0;
+}
+.mobile .main-inner .widget h2.date-header span {
+padding: 0;
+}
+.mobile .main-inner .widget .widget-content {
+margin: 0;
+padding: 7px 0 0;
+}
+.mobile #blog-pager {
+border: 1px solid transparent;
+background: #fefdfa none repeat scroll 0 0;
+}
+.mobile .main-inner .column-left-inner,
+.mobile .main-inner .column-right-inner {
+background: transparent none repeat 0 0;
+-moz-box-shadow: none;
+-webkit-box-shadow: none;
+-goog-ms-box-shadow: none;
+box-shadow: none;
+}
+.mobile .date-posts {
+margin: 0;
+padding: 0;
+}
+.mobile .footer-fauxborder-left {
+margin: 0;
+border-top: inherit;
+}
+.mobile .main-inner .section:last-child .Blog:last-child {
+margin-bottom: 0;
+}
+.mobile-index-contents {
+color: #333333;
+}
+.mobile .mobile-link-button {
+background: #cc0000 url(//www.blogblog.com/1kt/awesomeinc/tabs_gradient_light.png) repeat scroll 0 0;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background: transparent;
+border-top: 1px solid;
+border-color: #908d6a;
+color: #333333;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #908d6a;
+}
+
+--></style>
+<style id="template-skin-1" type="text/css"><!--
+body {
+min-width: 1024px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 1024px;
+max-width: 1024px;
+_width: 1024px;
+}
+.main-inner .columns {
+padding-left: 0px;
+padding-right: 260px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0px;
+right: 260px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0px") -
+parseInt("260px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0px;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 260px;
+}
+.main-inner .column-left-outer {
+width: 0px;
+right: 100%;
+margin-left: -0px;
+}
+.main-inner .column-right-outer {
+width: 260px;
+margin-right: -260px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+body#layout div.add_widget {
+padding: 8px;
+}
+body#layout div.add_widget a {
+margin-left: 32px;
+}
+--></style>
+<link href="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/authorization.css" media="all" onload="if(media!=&#39;all&#39;)media=&#39;all&#39;" rel="stylesheet"><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=1312588810478429008&amp;zx=81c11197-f10b-4da0-ab23-60c72f77de95' rel='stylesheet'/></noscript>
+<meta name="google-adsense-platform-account" content="ca-host-pub-1556223355139109">
+<meta name="google-adsense-platform-domain" content="blogspot.com">
+
+<!-- data-ad-client=ca-pub-7190208364857458 -->
+
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/f.txt"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/loader.js.download"></script><style>.gc-bubbleDefault{background-color:transparent!important;text-align:left;padding:0!important;margin:0!important;border:0!important;table-layout:auto!important}.gc-reset{background-color:transparent!important;border:0!important;padding:0!important;margin:0!important;text-align:left}.pls-bubbleTop{border-bottom:1px solid #ccc!important}.pls-contentLeft,.pls-topTail,.pls-vertShimLeft{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/border_3.gif)!important}.pls-topTail{background-repeat:repeat-x!important;background-position:bottom!important}.pls-vertShim{background-color:#fff!important;text-align:right}.tbl-grey .pls-vertShim{background-color:#f5f5f5!important}.pls-vertShimLeft{background-repeat:repeat-y!important;background-position:100%!important;height:4px}.pls-vertShimRight{height:4px}.pls-confirm-container .pls-vertShim{background-color:#fff3c2!important}.pls-contentWrap{background-color:#fff!important;position:relative!important;vertical-align:top}.pls-contentLeft{background-repeat:repeat-y;background-position:100%;vertical-align:top}.pls-dropRight{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropR_3.png)!important;background-repeat:repeat-y!important;vertical-align:top}.pls-dropBL,.pls-dropTR .pls-dropBR,.pls-tailleft,.pls-vert,.pls-vert img{vertical-align:top}.pls-dropBottom{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropB_3.png)!important;background-repeat:repeat-x!important;width:100%;vertical-align:top}.pls-topLeft{background:inherit!important;text-align:right;vertical-align:bottom}.pls-topRight{background:inherit!important;text-align:left;vertical-align:bottom}.pls-bottomLeft{background:inherit!important;text-align:right}.pls-bottomRight{background:inherit!important;text-align:left;vertical-align:top}.pls-tailbottom,.pls-tailleft,.pls-tailright,.pls-tailtop{display:none;position:relative}.pls-dropBL,.pls-dropBR,.pls-dropTR,.pls-tailbottom,.pls-tailleft,.pls-tailright,.pls-tailtop{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite_3.png)!important;background-repeat:no-repeat}.tbl-grey .pls-dropBL,.tbl-grey .pls-dropBR,.tbl-grey .pls-dropTR,.tbl-grey .pls-tailbottom,.tbl-grey .pls-tailleft,.tbl-grey .pls-tailright,.tbl-grey .pls-tailtop{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite-grey.png)!important}.pls-tailbottom{background-position:-23px 0}.pls-confirm-container .pls-tailbottom{background-position:-23px -10px}.pls-tailtop{background-position:-19px -20px}.pls-tailright{background-position:0 0}.pls-tailleft{background-position:-10px 0}.pls-tailtop{vertical-align:top}.gc-bubbleDefault td{line-height:0;font-size:0}.pls-tailbottom,.pls-topLeft img,.pls-topRight img{vertical-align:bottom}.bubbleDropTR,.pls-bottomLeft,.pls-bottomLeft img,.pls-dropBottom img,.pls-dropBottomL img,.pls-dropBottomR img{vertical-align:top}.pls-dropTR{background-position:0 -22px}.pls-dropBR{background-position:0 -27px}.pls-dropBL{background-position:0 -16px}.pls-spacerbottom,.pls-spacerleft,.pls-spacerright,.pls-spacertop{position:static!important}.pls-spinner{bottom:0;position:absolute;left:0;margin:auto;right:0;top:0}</style><link id="load-css-0" rel="stylesheet" type="text/css" href="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/tooltip.css"><link id="load-css-1" rel="stylesheet" type="text/css" href="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/util.css"><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/jsapi_compiled_default_module.js.download"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/jsapi_compiled_graphics_module.js.download"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/jsapi_compiled_ui_module.js.download"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/jsapi_compiled_corechart_module.js.download"></script></head>
+<body class="">
+<div class="navbar section" id="navbar" name="Navbar"><div class="widget Navbar" data-version="1" id="Navbar1"><script src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/cb=gapi(1).loaded_0" async=""></script><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="" tabindex="0" vspace="0" width="100%" id="navbar-iframe" name="navbar-iframe" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/navbar.html"></iframe></div>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/platform.js.download" gapi_processed="true"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d1312588810478429008\x26blogName\x3dCCIE+in+2+months+-+Is+it+possible?\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dLIGHT\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://ccie-in-2-months.blogspot.com/search\x26blogLocale\x3den\x26v\x3d2\x26homepageUrl\x3dhttp://ccie-in-2-months.blogspot.com/\x26targetPostID\x3d232786085594319152\x26blogPostOrPageUrl\x3dhttp://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html\x26vt\x3d-3224664088721151190',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div class="body-fauxcolumns">
+<div class="fauxcolumn-outer body-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="content-fauxcolumns">
+<div class="fauxcolumn-outer content-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content-outer">
+<div class="content-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left content-fauxborder-left">
+<div class="fauxborder-right content-fauxborder-right"></div>
+<div class="content-inner">
+<header>
+<div class="header-outer">
+<div class="header-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left header-fauxborder-left">
+<div class="fauxborder-right header-fauxborder-right"></div>
+<div class="region-inner header-inner">
+<div class="header section" id="header" name="Header"><div class="widget Header" data-version="1" id="Header1">
+<div id="header-inner">
+<a href="http://ccie-in-2-months.blogspot.com/" style="display: block">
+<img alt="CCIE in 2 months - Is it possible?" height="165px; " id="Header1_headerimg" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/dream2.png" style="display: block" width="758px; ">
+</a>
+<div class="descriptionwrapper">
+<p class="description"><span><b>CCIE in 2 months - Is it possible?</b><br>
+&nbsp;&nbsp;&nbsp;This is a journey to passing the <b>CCIE SP Lab</b> exam in a period of <b>2 months</b>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is my latest and hardest challenge, after completing my previous journey in just <a href="http://ccie-in-3-months.blogspot.gr/">3 months</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It started on 14th of December 2013 and ended at 10th of February 2014.<br>
+</span></p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="header-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</header>
+<div class="tabs-outer">
+<div class="tabs-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left tabs-fauxborder-left">
+<div class="fauxborder-right tabs-fauxborder-right"></div>
+<div class="region-inner tabs-inner">
+<div class="tabs section" id="crosscol" name="Cross-Column"><div class="widget PageList" data-version="1" id="PageList1">
+<h2>Pages</h2>
+<div class="widget-content">
+<ul>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/">Home</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/blog-page_7.html">The Trio of Success</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/virtual-lab.html">Home/Virtual Labs</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/the-hints-series.html">Notes: The Series (NTS)</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/progress.html">Exam Progress</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/blog-page_13.html">Lab Cost</a>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div></div>
+<div class="tabs no-items section" id="crosscol-overflow" name="Cross-Column 2"></div>
+</div>
+</div>
+<div class="tabs-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="main-outer">
+<div class="main-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left main-fauxborder-left">
+<div class="fauxborder-right main-fauxborder-right"></div>
+<div class="region-inner main-inner">
+<div class="columns fauxcolumns">
+<div class="fauxcolumn-outer fauxcolumn-center-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-left-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-right-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class="columns-inner">
+<div class="column-center-outer">
+<div class="column-center-inner">
+<div class="main section" id="main" name="Main"><div class="widget Blog" data-version="1" id="Blog1">
+<div class="blog-posts hfeed">
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>Thursday, February 6, 2014</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="1312588810478429008" itemprop="blogId">
+<meta content="232786085594319152" itemprop="postId">
+<a name="232786085594319152"></a>
+<h3 class="post-title entry-title" itemprop="name">
+NTS: RIP/RIPng
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-232786085594319152" itemprop="description articleBody">
+<h2>
+<u>RIP/RIPng</u></h2>
+<br>
+<hr>
+<br>
+<br>
+RIPv1 (Routing Information Protocol v1) is defined in <a href="http://tools.ietf.org/html/rfc1058" target="_blank">RFC 1058</a>. <br>
+RIPv2 is defined in <a href="http://tools.ietf.org/html/rfc2453" target="_blank">RFC 2453</a>.<br>
+RIPng (RIP for IPv6) is defined in <a href="http://tools.ietf.org/html/rfc2080" target="_blank">RFC 2080</a>.<br>
+<br>
+<hr>
+<b></b><br>
+RIP uses UDP port 520.<br>
+<br>
+Metric = hop count (1-16)&nbsp; - use offset-list to modify<br>
+<br>
+Admin distance is 120.<br>
+<br>
+<hr>
+<br>
+<u><b>RIP v1</b></u><br>
+<br>
+If the advertised prefix is part of a directly connected network, the subnet mask of that connected interface is used as the subnet mask of the prefix. Otherwise, major classes A/B/C are used accordingly.<br>
+<br>
+<span style="background-color: yellow;">Use secondary ip addresses on intermediate links to fix the discontinuous class issues in RIP v1.</span><br>
+<br>
+RIP v1 updates are sent as broadcast to 255.255.255.255<br>
+<br>
+<hr>
+<br>
+<b><u>RIP v2</u></b><br>
+<ul>
+<li>classless routing</li>
+<li>next-hop included in updates </li>
+<li>authentication</li>
+<li>external route tags</li>
+<li>multicast updates (to 224.0.0.9)</li>
+</ul>
+<br>
+<br>
+<u>RIP default mode</u><br>
+<ul>
+<li>send v1 updates</li>
+<li>listen to v1/v2 updates</li>
+</ul>
+<br>
+<u>Passive interface</u><br>
+<ul>
+<li>listens to RIP messages (use filtering to block if required)</li>
+<li>doesn't send RIP updates (unless a specific neighbor is configured)</li>
+<li>updates the routing table</li>
+</ul>
+<br>
+In <span style="background-color: #ead1dc;">IOS</span>, you can use "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ip rip triggered</span></span>" under serial interfaces (on both neighbors) to minimize the number of updates.<br>
+<br>
+<br>
+<u>Unicast updates</u><br>
+<br>
+You can specify a specific neighbor for sending unicast updates.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">router rip</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">neighbor</span> 10.1.1.2<br><br><span style="color: blue;"></span></span><br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">router rip<br>&nbsp;<span style="color: blue;">neighbor</span> 10.1.1.2</span><br>
+<br>
+<br>
+Use the command "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">no validate-update-source</span></span>" under the RIP process if you want to enable exchange of routes between neighbors with different networks.<br>
+<br>
+<hr>
+<br>
+<u><b>Configuration</b></u><br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;<span style="color: blue;">version 2</span><br>&nbsp;<span style="color: blue;">network</span> 10.0.0.0<br>&nbsp;<span style="color: blue;">no auto-summary</span></span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;<span style="color: blue;">interface</span> X<br>&nbsp;!<br>&nbsp;<span style="color: blue;">no auto-summary</span></span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;">IOS-XR</span> has v2 enabled by default. You need the change the send/receive version under the interface if v1 is required.<br>
+<br>
+<span style="background-color: yellow;">Unless told otherwise, always enable v2 and disable auto-summary.</span><br>
+<br>
+<hr>
+<br>
+<u><b>Route Summarization</b></u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface Serial2/0<br>&nbsp;<span style="color: blue;">ip summary-address rip</span> x.x.x.x y.y.y.y</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<i>not supported</i><br>
+<br>
+<hr>
+<br>
+<u><b>Route Filtering</b></u><br>
+<br>
+<ul>
+<li>prefix-list &amp; gateway</li>
+<ul>
+<li><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">distribute-list prefix</span> PREFIXES <span style="color: blue;">gateway</span> SOURCES in</span></li>
+</ul>
+<li>extended ACL </li>
+<ul>
+<li><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">distribute-list</span> X in</span></li>
+<li><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">access-list</span> x <span style="color: blue;">permit ip host</span> SOURCE <span style="color: blue;">host</span> PREFIX </span></li>
+</ul>
+</ul>
+<span style="background-color: yellow;"><br></span>
+<br>
+<hr>
+<br>
+<u><b>Authentication</b></u><br>
+<br>
+Two methods:<br>
+<ul>
+<li>clear text</li>
+<li>MD5</li>
+</ul>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface X</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">ip rip authentication mode</span> md5</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">ip rip authentication key-chain</span> KEYCHAIN<br>! </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">key chain</span> KEYCHAIN<br>&nbsp;key 1<br>&nbsp; key-string TESTPASS</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;interface TenGigE0/0/0/0<br>&nbsp; <span style="color: blue;">authentication keychain</span> KEYCHAIN <span style="color: blue;">mode</span> md5</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">! </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">key chain</span> KEYCHAIN<br>&nbsp;key 1<br>&nbsp; key-string TESTPASS</span><br>
+<br>
+<br>
+<hr>
+<b><br></b>
+<br>
+<u><b>PE-CE</b></u><br>
+<br>
+<u>CE</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;version 2<br>&nbsp;<span style="color: blue;">network</span> 10.0.0.0<br>&nbsp;no auto-summary</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;<span style="color: blue;">interface</span> X<br>&nbsp;!<br>&nbsp;<span style="color: blue;">no auto-summary</span></span><br>
+<br>
+<br>
+<u>PE</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;<span style="color: blue;">address-family ipv4 vrf</span> VPN<br>&nbsp; <span style="color: blue;">network</span> 10.0.0.0<br>&nbsp; no auto-summary<br>&nbsp; version 2<br>&nbsp;exit-address-family</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">router rip</span><br>&nbsp;<span style="color: blue;">vrf</span> VPN<br>&nbsp; <span style="color: blue;">interface</span> X<br>&nbsp; !<br>&nbsp; no auto-summary</span><br>
+<br>
+<br>
+<span style="background-color: yellow;">In IOS, if RIP v2 is to be used, then it must be defined under the ipv4 vrf address-family on the PE.</span><br>
+<br>
+<hr>
+<br>
+<u><b>RIPng (IPv6)</b></u><br>
+<br>
+Same as RIPv2, except:<br>
+<ul>
+<li>uses UDP port 521 (can be changed)</li>
+<li>updates are sent to FF02::9 (can be changed)</li>
+<li>metric can be changed per incoming interface (not per received/advertised prefix)</li>
+</ul>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface X</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">ipv6 rip</span> RIPNG <span style="color: blue;">enable</span><br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">ipv6 router rip</span> RIPNG<br>&nbsp;port 528 multicast-group FF02::8</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR </u></span><br>
+<i>not supported</i><br>
+<br>
+<br>
+Defining the RIPng process is not required in IOS; it gets automatically created once you enable it under an interface. <span style="background-color: yellow;">Removing the RIPng process will also remove all other configuration from interfaces.</span><br>
+<br>
+<span style="background-color: yellow;">Since you can have multiple RIPng processes, you must use a different UPD port for every RIPng process to differentiate the incoming updates.</span><br>
+<br>
+Process name is only locally significant.<br>
+<br>
+<hr>
+<br>
+<br>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1"><span class="post-author vcard">
+Posted by
+<span class="fn" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+<meta content="https://www.blogger.com/profile/04512662084752743003" itemprop="url">
+<a class="g-profile" href="https://www.blogger.com/profile/04512662084752743003" rel="author" title="author profile">
+<span itemprop="name">Tassos</span>
+</a>
+</span>
+</span>
+<span class="post-timestamp">
+at
+<meta content="http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html" itemprop="url">
+<a class="timestamp-link" href="http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2014-02-06T14:56:00+02:00">14:56</abbr></a>
+</span>
+<span class="post-comment-link">
+</span>
+<span class="post-icons">
+<span class="item-control blog-admin pid-187529974">
+<a href="https://www.blogger.com/post-edit.g?blogID=1312588810478429008&amp;postID=232786085594319152&amp;from=pencil" title="Edit Post">
+<img alt="" class="icon-action" height="18" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon18_edit_allbkg.gif" width="18">
+</a>
+</span>
+</span>
+<div class="post-share-buttons goog-inline-block">
+<a class="goog-inline-block share-button sb-email" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=232786085594319152&amp;target=email" target="_blank" title="Email This"><span class="share-button-link-text">Email This</span></a><a class="goog-inline-block share-button sb-blog" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=232786085594319152&amp;target=blog" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=270,width=475&quot;); return false;" target="_blank" title="BlogThis!"><span class="share-button-link-text">BlogThis!</span></a><a class="goog-inline-block share-button sb-twitter" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=232786085594319152&amp;target=twitter" target="_blank" title="Share to Twitter"><span class="share-button-link-text">Share to Twitter</span></a><a class="goog-inline-block share-button sb-facebook" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=232786085594319152&amp;target=facebook" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=430,width=640&quot;); return false;" target="_blank" title="Share to Facebook"><span class="share-button-link-text">Share to Facebook</span></a><a class="goog-inline-block share-button sb-pinterest" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=232786085594319152&amp;target=pinterest" target="_blank" title="Share to Pinterest"><span class="share-button-link-text">Share to Pinterest</span></a>
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2"><span class="post-labels">
+Labels:
+<a href="http://ccie-in-2-months.blogspot.com/search/label/RIP" rel="tag">RIP</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/RIPng" rel="tag">RIPng</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3"></div>
+</div>
+</div>
+<div class="comments" id="comments">
+<a name="comments"></a>
+<h4>No comments:</h4>
+<div id="Blog1_comments-block-wrapper">
+<dl class="avatar-comment-indent" id="comments-block">
+</dl>
+</div>
+<p class="comment-footer">
+</p><div class="comment-form">
+<a name="comment-form"></a>
+<h4 id="comment-post-message">Post a Comment</h4>
+<p>
+</p>
+<a href="https://www.blogger.com/comment/frame/1312588810478429008?po=232786085594319152&amp;hl=en&amp;blogspotRpcToken=1869799" id="comment-editor-src"></a>
+<iframe allowtransparency="true" class="blogger-iframe-colorize blogger-comment-from-post" frameborder="0" height="347px" id="comment-editor" name="comment-editor" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/1312588810478429008.html" width="100%" data-resized="true"></iframe>
+<script src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/4235886812-comment_from_post_iframe.js.download" type="text/javascript"></script>
+<script type="text/javascript">
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+<p></p>
+</div>
+</div>
+
+        </div></div>
+      
+</div>
+<div class="blog-pager" id="blog-pager">
+<span id="blog-pager-newer-link">
+<a class="blog-pager-newer-link" href="http://ccie-in-2-months.blogspot.com/2013/12/eigrp-hints.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+</span>
+<span id="blog-pager-older-link">
+<a class="blog-pager-older-link" href="http://ccie-in-2-months.blogspot.com/2013/12/frame-relay-hints.html" id="Blog1_blog-pager-older-link" title="Older Post">Older Post</a>
+</span>
+<a class="home-link" href="http://ccie-in-2-months.blogspot.com/">Home</a>
+</div>
+<div class="clear"></div>
+<div class="post-feeds">
+<div class="feed-links">
+Subscribe to:
+<a class="feed-link" href="http://ccie-in-2-months.blogspot.com/feeds/232786085594319152/comments/default" target="_blank" type="application/atom+xml">Post Comments (Atom)</a>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="column-left-outer">
+<div class="column-left-inner">
+<aside>
+</aside>
+</div>
+</div>
+<div class="column-right-outer">
+<div class="column-right-inner">
+<aside>
+<div class="sidebar section" id="sidebar-right-1"><div class="widget AdSense" data-version="1" id="AdSense2">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7190208364857458";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* ccie-in-2-months_sidebar-right-1_AdSense2_160x600_as */
+google_ad_slot = "8989396698";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/f(1).txt">
+</script>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML1">
+<h2 class="title">Countdown &amp; Readiness</h2>
+<div class="widget-content">
+<span id="countdown"><b>0</b>d, <b>0</b>h, <b>0</b>m, <b>0</b>s until CCIE Lab</span>
+
+<script language="javascript">
+// script to show a simple countdown
+
+// lab date
+var target_date = new Date("Feb 11, 2014, 00:00:00").getTime();
+
+// time variables 
+var days, hours, minutes, seconds;
+ 
+// find the tag element
+var countdown = document.getElementById("countdown");
+ 
+// update the id "countdown" every 1 second
+setInterval(function () {
+ 
+    // find the amount of "seconds" between now and target
+    //var current_date = new Date().getTime();
+    //var seconds_left = (target_date - current_date) / 1000;
+ 
+    //days = parseInt(seconds_left / 86400);
+    //seconds_left = seconds_left % 86400;
+     
+    //hours = parseInt(seconds_left / 3600);
+    //seconds_left = seconds_left % 3600;
+     
+    //minutes = parseInt(seconds_left / 60);
+    //seconds = parseInt(seconds_left % 60);
+     
+    // format countdown string
+    // countdown.innerHTML = "<b>" + days + "</b>d, <b>" + hours + "</b>h, <b>" + minutes + "</b>m, <b>" + seconds + "</b>s until CCIE Lab";  
+    countdown.innerHTML = "<b>0</b>d, <b>0</b>h, <b>0</b>m, <b>0</b>s until CCIE Lab";  
+
+ 
+}, 1000);
+</script>
+
+<br>
+
+<script language="javascript">
+// script to show a percentage bar
+
+function percentagebar(progress) {
+
+    var width = 190;
+    var bar = width * (progress / 100); 
+ 
+    document.write("<div style=\"position: relative; line-height: 1em; border: 1px solid black; width: " + width + "px\">"); 
+    document.write("<div style=\"height: 1.5em; width: " + bar + "px; background-color: #00AA00;\"></div>"); 
+    document.write("<div style=\"position: absolute; text-align: center; font-weight: bold; padding-top: .25em; width: " + width + "px; top: 0; left: 0\">" + progress + "%</div>"); 
+    document.write("</div>"); 
+    //document.write("<div style=\"text-align: center;\">...updated once per week...</div>"); 
+}
+
+percentagebar(77.3);
+
+
+</script><div style="position: relative; line-height: 1em; border: 1px solid black; width: 190px"><div style="height: 1.5em; width: 146.87px; background-color: #00AA00;"></div><div style="position: absolute; text-align: center; font-weight: bold; padding-top: .25em; width: 190px; top: 0; left: 0">77.3%</div></div>
+</div>
+<div class="clear"></div>
+</div><div class="widget Profile" data-version="1" id="Profile1">
+<h2>Guess Who</h2>
+<div class="widget-content">
+<a href="https://www.blogger.com/profile/04512662084752743003"><img alt="My photo" class="profile-img" height="80" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/_.jpg" width="59"></a>
+<dl class="profile-datablock">
+<dt class="profile-data">
+<a class="profile-name-link g-profile" href="https://www.blogger.com/profile/04512662084752743003" rel="author" style="background-image: url(//www.blogger.com/img/logo-16.png);">
+Tassos
+</a>
+</dt>
+<dd class="profile-data">Athens, Greece</dd>
+<dd class="profile-textblock">Just a crazy guy who enjoys putting himself into weird tests.
+Feel free to tickle me if you can handle so much craziness!
+Always open to new challenges.
+</dd>
+</dl>
+<a class="profile-link" href="https://www.blogger.com/profile/04512662084752743003" rel="author">View my complete profile</a>
+<div class="clear"></div>
+</div>
+</div><div class="widget Text" data-version="1" id="Text2">
+<h2 class="title">Contact me for any error</h2>
+<div class="widget-content">
+<span style="color:#ff4400;">If you think you have found something in my posts that doesn't seem right, please inform me (by writing a comment at the ambiguous post) as soon as possible. Don't forget that everyone can become better by learning from his mistakes.</span><br><br>
+</div>
+<div class="clear"></div>
+</div><div class="widget Poll" data-version="1" id="Poll1">
+<h2 class="title">Do you think it's possible to pass the CCIE lab in 2 months?</h2>
+<div class="widget-content">
+<iframe allowtransparency="true" frameborder="0" height="140" name="poll-widget-5240978320504195155" style="border:none; width:100%;" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/saved_resource(1).html"></iframe>
+<div class="clear"></div>
+</div>
+</div><div class="widget BlogSearch" data-version="1" id="BlogSearch1">
+<h2 class="title">Search for CCIE Content</h2>
+<div class="widget-content">
+<div id="BlogSearch1_form">
+<form action="http://ccie-in-2-months.blogspot.com/search" class="gsc-search-box" target="_top">
+<table cellpadding="0" cellspacing="0" class="gsc-search-box">
+<tbody>
+<tr>
+<td class="gsc-input">
+<input autocomplete="off" class="gsc-input" name="q" size="10" title="search" type="text" value="">
+</td>
+<td class="gsc-search-button">
+<input class="gsc-search-button" title="search" type="submit" value="Search">
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+<div class="clear"></div>
+</div><div class="widget Subscribe" data-version="1" id="Subscribe1">
+<div style="white-space:nowrap">
+<h2 class="title">Subscribe To</h2>
+<div class="widget-content">
+<div class="subscribe-wrapper subscribe-type-POST">
+<div class="subscribe expanded subscribe-type-POST" id="SW_READER_LIST_Subscribe1POST" style="display:none;">
+<div class="top">
+<span class="inner" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1POST&quot;));">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/arrow_dropdown.gif">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon_feed12.png">
+Posts
+</span>
+<div class="feed-reader-links">
+<a class="feed-reader-link" href="https://www.netvibes.com/subscribe.php?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/subscribe-netvibes.png">
+</a>
+<a class="feed-reader-link" href="https://add.my.yahoo.com/content?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/subscribe-yahoo.png">
+</a>
+<a class="feed-reader-link" href="http://ccie-in-2-months.blogspot.com/feeds/posts/default" target="_blank">
+<img align="absmiddle" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon_feed12.png">
+                  Atom
+                </a>
+</div>
+</div>
+<div class="bottom"></div>
+</div>
+<div class="subscribe" id="SW_READER_LIST_CLOSED_Subscribe1POST" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1POST&quot;));">
+<div class="top">
+<span class="inner">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/arrow_dropdown.gif">
+<span onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1POST&quot;));">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon_feed12.png">
+Posts
+</span>
+</span>
+</div>
+<div class="bottom"></div>
+</div>
+</div>
+<div class="subscribe-wrapper subscribe-type-PER_POST">
+<div class="subscribe expanded subscribe-type-PER_POST" id="SW_READER_LIST_Subscribe1PER_POST" style="display:none;">
+<div class="top">
+<span class="inner" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1PER_POST&quot;));">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/arrow_dropdown.gif">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon_feed12.png">
+Comments
+</span>
+<div class="feed-reader-links">
+<a class="feed-reader-link" href="https://www.netvibes.com/subscribe.php?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2F232786085594319152%2Fcomments%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/subscribe-netvibes.png">
+</a>
+<a class="feed-reader-link" href="https://add.my.yahoo.com/content?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2F232786085594319152%2Fcomments%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/subscribe-yahoo.png">
+</a>
+<a class="feed-reader-link" href="http://ccie-in-2-months.blogspot.com/feeds/232786085594319152/comments/default" target="_blank">
+<img align="absmiddle" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon_feed12.png">
+                  Atom
+                </a>
+</div>
+</div>
+<div class="bottom"></div>
+</div>
+<div class="subscribe" id="SW_READER_LIST_CLOSED_Subscribe1PER_POST" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1PER_POST&quot;));">
+<div class="top">
+<span class="inner">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/arrow_dropdown.gif">
+<span onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1PER_POST&quot;));">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/icon_feed12.png">
+Comments
+</span>
+</span>
+</div>
+<div class="bottom"></div>
+</div>
+</div>
+<div style="clear:both"></div>
+</div>
+</div>
+<div class="clear"></div>
+</div><div class="widget PopularPosts" data-version="1" id="PopularPosts1">
+<h2>Popular Posts</h2>
+<div class="widget-content popular-posts">
+<ul>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html">NTS: AToM/L2VPN/VPLS</a></div>
+<div class="item-snippet"> AToM/L2VPN/VPLS     PW (PseudoWire) architecture is described in RFC 3985 .  LDP for PWs is defined in RFC 4447 .  EoMPLS (Ethernet over MP...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2013/12/vrf-hints.html">NTS: VRF</a></div>
+<div class="item-snippet"> VRF     VRF Basic Configuration   IOS  ip vrf  VPN-A &nbsp; rd  100:1  &nbsp; route-target export  100:1  &nbsp; route-target import  100:1  !  vrf defini...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2013/12/is-is-hints.html">NTS: IS-IS</a></div>
+<div class="item-snippet"> IS-IS     IS-IS (Intermediate System to Intermediate System) is defined in ISO 10589 and in&nbsp; RFC 1142  and RFC 1195 .  IS-IS Multi-Instance...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-mpls-te.html">NTS: RSVP/MPLS-TE</a></div>
+<div class="item-snippet">  RSVP/MPLS-TE     MPLS-TE (MPLS Traffic Engineering) Requirements are described in RFC 2702 .  RSVP (Resource Reservation Protocol) is defi...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2013/12/mplsldp-hints.html">NTS: MPLS/LDP</a></div>
+<div class="item-snippet"> MPLS/LDP     LDP (Label Distribution Protocol) is defined in RFC 5036.  MPLS (Multi-Protocol Label Switching) architecture is defined in RF...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div><div class="widget BlogArchive" data-version="1" id="BlogArchive1">
+<h2>Blog Archive</h2>
+<div class="widget-content">
+<div id="ArchiveList">
+<div id="BlogArchive1_ArchiveList">
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2014/">
+2014
+</a>
+<span class="post-count" dir="ltr">(37)</span>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2014/02/">
+Feb 2014
+</a>
+<span class="post-count" dir="ltr">(29)</span>
+<ul class="posts">
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/the-chronicle-of-success.html">The chronicle of success</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/wtf-was-that.html">...wtf was that?</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/lab-week-9.html">Lab Week #9</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/countdown-continues3-days-left.html">Countdown continues...3 days left...</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/lab-week-8.html">Lab Week #8</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/nts-advanced-multicast.html">NTS: Advanced Multicast</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-advanced-mpls-te.html">NTS: Advanced MPLS-TE</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-ppp.html">NTS: PPP/Serial/POS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/redistribution-hints.html">NTS: L3VPN Redistribution</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/vrf-hints.html">NTS: VRF</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-csc.html">NTS: CsC</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/nts-qos.html">NTS: QoS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/bfd-hints.html">NTS: BFD</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-mpls-te.html">NTS: RSVP/MPLS-TE</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/bgp-hints.html">NTS: BGP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/ospfv2ospfv3-hints.html">NTS: OSPFv2/OSPFv3</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/eigrp-hints.html">NTS: EIGRP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html">NTS: RIP/RIPng</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/frame-relay-hints.html">NTS: Frame-Relay</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/other.html">NTS: Other</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/is-is-hints.html">NTS: IS-IS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/inter-as-mpls-l3vpn-hints.html">NTS: Inter-AS MPLS L3VPN</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-advanced-bgp.html">NTS: Advanced BGP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/uni-eni-vlans-vs-private-vlans-on-me.html">NTS: UNI-ENI Vlans vs Private Vlans</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/mplsldp-hints.html">NTS: MPLS/LDP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/multicast-vpn-hints.html">NTS: Multicast VPN</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html">NTS: AToM/L2VPN/VPLS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/multicast-hints.html">NTS: Multicast</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-6pe6vpe.html">NTS: 6PE/6VPE</a></li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2014/01/">
+Jan 2014
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/">
+2013
+</a>
+<span class="post-count" dir="ltr">(13)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/12/">
+Dec 2013
+</a>
+<span class="post-count" dir="ltr">(6)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/11/">
+Nov 2013
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/10/">
+Oct 2013
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div><div class="widget BlogList" data-version="1" id="BlogList1">
+<h2 class="title">Blog List RSS</h2>
+<div class="widget-content">
+<div class="blog-list-container" id="BlogList1_container">
+<ul id="BlogList1_blogs">
+<li style="display: block;">
+<div class="blog-icon">
+<img data-lateloadsrc="https://lh3.googleusercontent.com/blogger_img_proxy/ALY8t1vzgfTcOIDnOm8KEEKigsfU8J0qmvxqeMBVpxI9q49BNfqC3ghanQ6-GVcUJy-8rqGnNgN3OWS2JVUNxhJ_BGAsDsPzv6qPkMaIbJWQ10hS3H4zLg=s16-w16-h16" height="16" width="16" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/unnamed.png">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://ccie-in-3-months.blogspot.com/" target="_blank">
+CCIE in 3 months - Is it possible?</a>
+</div>
+<div class="item-content">
+<span class="item-title">
+<a href="http://ccie-in-3-months.blogspot.com/2014/02/ipv6-radius-accounting-is-still-mess.html" target="_blank">
+IPv6 radius accounting is still a mess
+</a>
+</span>
+<div class="item-time">
+9 years ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div>
+</div><div class="widget Stats" data-version="1" id="Stats1">
+<h2>Total Pageviews</h2>
+<div class="widget-content">
+<div id="Stats1_content" style="">
+<script src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/loader(1).js.download" type="text/javascript"></script>
+<span id="Stats1_sparklinespan" style="display:inline-block; width:75px; height:30px"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 75px; height: 30px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="75" height="30" aria-label="A chart." style="overflow: hidden;"><defs id="_ABSTRACT_RENDERER_ID_0"><clippath id="_ABSTRACT_RENDERER_ID_1"><rect x="0" y="0" width="75" height="30"></rect></clippath></defs><rect x="0" y="0" width="75" height="30" stroke="none" stroke-width="0" fill-opacity="0.1" fill="#000000"></rect><g><rect x="0" y="0" width="75" height="30" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html#_ABSTRACT_RENDERER_ID_1)"><g><g><path d="M0.5,29.5L0.5,29.5L0.5,21.510204081632654L3.0517241379310347,23.877551020408163L5.603448275862069,27.132653061224488L8.155172413793103,25.357142857142858L10.706896551724139,25.357142857142858L13.258620689655174,24.1734693877551L15.810344827586208,26.540816326530614L18.362068965517242,11.153061224489797L20.913793103448278,22.98979591836735L23.465517241379313,15.295918367346939L26.01724137931035,22.693877551020407L28.56896551724138,18.846938775510203L31.120689655172416,21.510204081632654L33.67241379310345,24.1734693877551L36.224137931034484,26.244897959183675L38.77586206896552,23.285714285714285L41.327586206896555,25.948979591836736L43.87931034482759,23.877551020408163L46.431034482758626,8.193877551020407L48.98275862068966,17.367346938775512L51.5344827586207,0.5L54.08620689655173,21.806122448979593L56.63793103448276,9.96938775510204L59.1896551724138,22.10204081632653L61.74137931034483,12.040816326530614L64.29310344827587,24.46938775510204L66.8448275862069,22.39795918367347L69.39655172413794,20.622448979591837L71.94827586206897,25.653061224489797L74.5,22.39795918367347L74.5,29.5L74.5,29.5Z" stroke="none" stroke-width="0" fill-opacity="0.3" fill="#202020"></path></g></g><g><rect x="0" y="0" width="1" height="30" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="0" y="29" width="75" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g><g><path d="M0.5,21.510204081632654L3.0517241379310347,23.877551020408163L5.603448275862069,27.132653061224488L8.155172413793103,25.357142857142858L10.706896551724139,25.357142857142858L13.258620689655174,24.1734693877551L15.810344827586208,26.540816326530614L18.362068965517242,11.153061224489797L20.913793103448278,22.98979591836735L23.465517241379313,15.295918367346939L26.01724137931035,22.693877551020407L28.56896551724138,18.846938775510203L31.120689655172416,21.510204081632654L33.67241379310345,24.1734693877551L36.224137931034484,26.244897959183675L38.77586206896552,23.285714285714285L41.327586206896555,25.948979591836736L43.87931034482759,23.877551020408163L46.431034482758626,8.193877551020407L48.98275862068966,17.367346938775512L51.5344827586207,0.5L54.08620689655173,21.806122448979593L56.63793103448276,9.96938775510204L59.1896551724138,22.10204081632653L61.74137931034483,12.040816326530614L64.29310344827587,24.46938775510204L66.8448275862069,22.39795918367347L69.39655172413794,20.622448979591837L71.94827586206897,25.653061224489797L74.5,22.39795918367347" stroke="#202020" stroke-width="2" fill-opacity="1" fill="none"></path></g></g><g></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>0</td><td>27</td></tr><tr><td>1</td><td>19</td></tr><tr><td>2</td><td>8</td></tr><tr><td>3</td><td>14</td></tr><tr><td>4</td><td>14</td></tr><tr><td>5</td><td>18</td></tr><tr><td>6</td><td>10</td></tr><tr><td>7</td><td>62</td></tr><tr><td>8</td><td>22</td></tr><tr><td>9</td><td>48</td></tr><tr><td>10</td><td>23</td></tr><tr><td>11</td><td>36</td></tr><tr><td>12</td><td>27</td></tr><tr><td>13</td><td>18</td></tr><tr><td>14</td><td>11</td></tr><tr><td>15</td><td>21</td></tr><tr><td>16</td><td>12</td></tr><tr><td>17</td><td>19</td></tr><tr><td>18</td><td>72</td></tr><tr><td>19</td><td>41</td></tr><tr><td>20</td><td>98</td></tr><tr><td>21</td><td>26</td></tr><tr><td>22</td><td>66</td></tr><tr><td>23</td><td>25</td></tr><tr><td>24</td><td>59</td></tr><tr><td>25</td><td>17</td></tr><tr><td>26</td><td>24</td></tr><tr><td>27</td><td>30</td></tr><tr><td>28</td><td>13</td></tr><tr><td>29</td><td>24</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 40px; left: 85px; white-space: nowrap; font-family: Arial; font-size: 6px; font-weight: bold;"></div><div></div></div></span>
+<span class="counter-wrapper graph-counter-wrapper" id="Stats1_totalCount">
+<span class="digit stage-0"><strong>3</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>7</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>9</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>5</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>2</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>4</strong><span class="blind-plate"></span></span></span>
+<div class="clear"></div>
+</div>
+</div>
+</div><div class="widget AdSense" data-version="1" id="AdSense4">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7190208364857458";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* ccie-in-2-months_sidebar-right-1_AdSense4_160x600_as */
+google_ad_slot = "6835215494";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/f(1).txt">
+</script>
+<div class="clear"></div>
+</div>
+</div><div class="widget AdSense" data-version="1" id="AdSense1">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7190208364857458";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* ccie-in-2-months_sidebar-right-1_AdSense1_160x600_as */
+google_ad_slot = "7512663496";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/f(1).txt">
+</script>
+<div class="clear"></div>
+</div>
+</div></div>
+</aside>
+</div>
+</div>
+</div>
+<div style="clear: both"></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class="main-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<footer>
+<div class="footer-outer">
+<div class="footer-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left footer-fauxborder-left">
+<div class="fauxborder-right footer-fauxborder-right"></div>
+<div class="region-inner footer-inner">
+<div class="foot section" id="footer-1"><div class="widget Text" data-version="1" id="Text1">
+<div class="widget-content">
+<span style="font-size:11;"><br><b>This material is not sponsored or endorsed by Cisco Systems, Inc.<br>Cisco, Cisco Systems, CCIE and the CCIE Logo are trademarks of Cisco Systems, Inc. and its affiliates.</b><br><br><span style="color:#009900;">The opinions expressed herein or statements made in <span style="font-weight: bold;">ccie-in-2-months.blogspot.com</span> are solely those of the author. The author accepts no legal liability or responsibility for any comments made herein by other blog readers.</span><br><br><span style="color:red;">The presence of an advertisement on </span><span style="font-weight: bold;color:red;">ccie-in-2-months.blogspot.com</span><span style="color:red;"> does not imply endorsement of the advertised company or product by the author. Advertisers must not make unsubstantiated claims or suggest that the author of this blog has endorsed a product. The author does not represent or endorse the accuracy  or reliability of any of the advertisements, links, or other information accessed directly or indirectly from advertisements contained on this blog, nor the quality of any products, information or other materials displayed, purchased or obtained by any consumer, as a result of an advertisement or any other information or offer in connection with the service or products.</span><br><br>The author accepts no legal liability or responsibility for any 3rd party content displayed on this blog.</span><br><br>
+</div>
+<div class="clear"></div>
+</div></div>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class="foot section" id="footer-3" name="Footer"><div class="widget Attribution" data-version="1" id="Attribution1">
+<div class="widget-content" style="text-align: center;">
+Powered by <a href="https://www.blogger.com/" target="_blank">Blogger</a>.
+</div>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="footer-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class="content-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ RIP_RIPng_files/325989852-widgets.js.download"></script>
+<script type="text/javascript">
+window['__wavt'] = 'AOuZoY6ugduEB7YTABVL13q-UD1jhcoJuA:1701583881867';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d1312588810478429008','//ccie-in-2-months.blogspot.com/2014/01/nts-rip.html','1312588810478429008');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '1312588810478429008', 'title': 'CCIE in 2 months - Is it possible?', 'url': 'http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html', 'canonicalUrl': 'http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html', 'homepageUrl': 'http://ccie-in-2-months.blogspot.com/', 'searchUrl': 'http://ccie-in-2-months.blogspot.com/search', 'canonicalHomepageUrl': 'http://ccie-in-2-months.blogspot.com/', 'blogspotFaviconUrl': 'http://ccie-in-2-months.blogspot.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'encoding': 'UTF-8', 'locale': 'en', 'localeUnderscoreDelimited': 'en', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - Atom\x22 href\x3d\x22http://ccie-in-2-months.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - RSS\x22 href\x3d\x22http://ccie-in-2-months.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/1312588810478429008/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - Atom\x22 href\x3d\x22http://ccie-in-2-months.blogspot.com/feeds/232786085594319152/comments/default\x22 /\x3e\n', 'meTag': '', 'adsenseClientId': 'ca-pub-7190208364857458', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': true, 'adsenseAutoAds': false, 'boqCommentIframeForm': true, 'loginRedirectParam': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/20dab6d510b63eb9', 'plusOneApiSrc': 'https://apis.google.com/js/platform.js', 'disableGComments': true, 'interstitialAccepted': false, 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Share to Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': false, 'jumpLinkMessage': 'Read more', 'pageType': 'item', 'postId': '232786085594319152', 'pageName': 'NTS: RIP/RIPng', 'pageTitle': 'CCIE in 2 months - Is it possible?: NTS: RIP/RIPng', 'metaDescription': ''}}, {'name': 'features', 'data': {}}, {'name': 'messages', 'data': {'edit': 'Edit', 'linkCopiedToClipboard': 'Link copied to clipboard!', 'ok': 'Ok', 'postLink': 'Post Link'}}, {'name': 'template', 'data': {'isResponsive': false, 'isAlternateRendering': false, 'isCustom': false}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'NTS: RIP/RIPng', 'description': 'My personal blog about passing the CCIE CP lab in just two months.', 'url': 'http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 232786085594319152}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'crosscol', document.getElementById('PageList1'), {'title': 'Pages', 'links': [{'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/', 'title': 'Home'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/blog-page_7.html', 'id': '6340391009981756487', 'title': 'The Trio of Success'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/virtual-lab.html', 'id': '5797313027145813843', 'title': 'Home/Virtual Labs'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/the-hints-series.html', 'id': '8944090118188496192', 'title': 'Notes: The Series (NTS)'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/progress.html', 'id': '2719648315530251542', 'title': 'Exam Progress'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/blog-page_13.html', 'id': '1383643103512861908', 'title': 'Lab Cost'}], 'mobile': false, 'showPlaceholder': false, 'hasCurrentPage': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/2258190084-lbx.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/3268905543-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense2', 'sidebar-right-1', document.getElementById('AdSense2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar-right-1', document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar-right-1', document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text2', 'sidebar-right-1', document.getElementById('Text2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PollView', new _WidgetInfo('Poll1', 'sidebar-right-1', document.getElementById('Poll1'), {'pollid': '-5240978320504195155', 'iframeurl': '/b/poll-results?pollWidget\x3dPoll1\x26txtclr\x3d%23333333\x26lnkclr\x3d%23cc0000\x26chrtclr\x3d%23cc0000\x26font\x3dnormal+normal+13px+Arial,+Tahoma,+Helvetica,+FreeSans,+sans-serif\x26hideq\x3dtrue\x26purl\x3dhttp://ccie-in-2-months.blogspot.com/'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogSearchView', new _WidgetInfo('BlogSearch1', 'sidebar-right-1', document.getElementById('BlogSearch1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_SubscribeView', new _WidgetInfo('Subscribe1', 'sidebar-right-1', document.getElementById('Subscribe1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'sidebar-right-1', document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogListView', new _WidgetInfo('BlogList1', 'sidebar-right-1', document.getElementById('BlogList1'), {'numItemsToShow': 25, 'totalItems': 1}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_StatsView', new _WidgetInfo('Stats1', 'sidebar-right-1', document.getElementById('Stats1'), {'title': 'Total Pageviews', 'showGraphicalCounter': true, 'showAnimatedCounter': true, 'showSparkline': true, 'statsUrl': '//ccie-in-2-months.blogspot.com/b/stats?style\x3dBLACK_TRANSPARENT\x26timeRange\x3dALL_TIME\x26token\x3dAPq4FmDDdD41fJ3Vesuj-6CC6pBf63HcL57RvT5phmGWPfppTTD-_8oOgBeZKbX3TS31DTyUwHFQRuiUe76Qxan7RoIE_AiyKw'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense4', 'sidebar-right-1', document.getElementById('AdSense4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense1', 'sidebar-right-1', document.getElementById('AdSense1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text1', 'footer-1', document.getElementById('Text1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', document.getElementById('Attribution1'), {}, 'displayModeFull'));
+</script>
+
+</body></html>

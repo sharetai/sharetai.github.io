@@ -1,0 +1,2479 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html class="v2" dir="ltr" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/3566091532-css_bundle_v2.css" rel="stylesheet" type="text/css">
+<meta content="width=1100" name="viewport">
+
+<meta content="blogger" name="generator">
+<link href="http://ccie-in-2-months.blogspot.com/favicon.ico" rel="icon" type="image/x-icon">
+<link href="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="CCIE in 2 months - Is it possible? - Atom" href="http://ccie-in-2-months.blogspot.com/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="CCIE in 2 months - Is it possible? - RSS" href="http://ccie-in-2-months.blogspot.com/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="CCIE in 2 months - Is it possible? - Atom" href="https://www.blogger.com/feeds/1312588810478429008/posts/default">
+
+<link rel="alternate" type="application/atom+xml" title="CCIE in 2 months - Is it possible? - Atom" href="http://ccie-in-2-months.blogspot.com/feeds/5428887964012484605/comments/default">
+<!--Can't find substitution for tag [blog.ieCssRetrofitLinks]-->
+<meta content="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html" property="og:url">
+<meta content="NTS: AToM/L2VPN/VPLS" property="og:title">
+<meta content="My personal blog about passing the CCIE CP lab in just two months." property="og:description">
+<title>CCIE in 2 months - Is it possible?: NTS: AToM/L2VPN/VPLS</title>
+<style id="page-skin-1" type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Awesome Inc.
+Designer: Tina Chen
+URL:      tinachen.org
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="keycolor" description="Main Color" type="color" default="#ffffff"/>
+<Group description="Page" selector="body">
+<Variable name="body.font" description="Font" type="font"
+default="normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="body.background.color" description="Background Color" type="color" default="#000000"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#ffffff"/>
+</Group>
+<Group description="Links" selector=".main-inner">
+<Variable name="link.color" description="Link Color" type="color" default="#888888"/>
+<Variable name="link.visited.color" description="Visited Color" type="color" default="#444444"/>
+<Variable name="link.hover.color" description="Hover Color" type="color" default="#cccccc"/>
+</Group>
+<Group description="Blog Title" selector=".header h1">
+<Variable name="header.font" description="Title Font" type="font"
+default="normal bold 40px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="header.text.color" description="Title Color" type="color" default="#333333" />
+<Variable name="header.background.color" description="Header Background" type="color" default="transparent" />
+</Group>
+<Group description="Blog Description" selector=".header .description">
+<Variable name="description.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="description.text.color" description="Text Color" type="color"
+default="#333333" />
+</Group>
+<Group description="Tabs Text" selector=".tabs-inner .widget li a">
+<Variable name="tabs.font" description="Font" type="font"
+default="normal bold 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="tabs.text.color" description="Text Color" type="color" default="#333333"/>
+<Variable name="tabs.selected.text.color" description="Selected Color" type="color" default="#333333"/>
+</Group>
+<Group description="Tabs Background" selector=".tabs-outer .PageList">
+<Variable name="tabs.background.color" description="Background Color" type="color" default="#141414"/>
+<Variable name="tabs.selected.background.color" description="Selected Color" type="color" default="#444444"/>
+<Variable name="tabs.border.color" description="Border Color" type="color" default="#aab123"/>
+</Group>
+<Group description="Date Header" selector=".main-inner .widget h2.date-header, .main-inner .widget h2.date-header span">
+<Variable name="date.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="date.text.color" description="Text Color" type="color" default="#666666"/>
+<Variable name="date.border.color" description="Border Color" type="color" default="#aab123"/>
+</Group>
+<Group description="Post Title" selector="h3.post-title, h4, h3.post-title a">
+<Variable name="post.title.font" description="Font" type="font"
+default="normal bold 22px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="post.title.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Post Background" selector=".post">
+<Variable name="post.background.color" description="Background Color" type="color" default="#fefdfa" />
+<Variable name="post.border.color" description="Border Color" type="color" default="#aab123" />
+<Variable name="post.border.bevel.color" description="Bevel Color" type="color" default="#aab123"/>
+</Group>
+<Group description="Gadget Title" selector="h2">
+<Variable name="widget.title.font" description="Font" type="font"
+default="normal bold 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="widget.title.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Gadget Text" selector=".sidebar .widget">
+<Variable name="widget.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="widget.text.color" description="Text Color" type="color" default="#333333"/>
+<Variable name="widget.alternate.text.color" description="Alternate Color" type="color" default="#666666"/>
+</Group>
+<Group description="Gadget Links" selector=".sidebar .widget">
+<Variable name="widget.link.color" description="Link Color" type="color" default="#cc0000"/>
+<Variable name="widget.link.visited.color" description="Visited Color" type="color" default="#d61111"/>
+<Variable name="widget.link.hover.color" description="Hover Color" type="color" default="#6aa84f"/>
+</Group>
+<Group description="Gadget Background" selector=".sidebar .widget">
+<Variable name="widget.background.color" description="Background Color" type="color" default="#141414"/>
+<Variable name="widget.border.color" description="Border Color" type="color" default="#222222"/>
+<Variable name="widget.border.bevel.color" description="Bevel Color" type="color" default="#000000"/>
+</Group>
+<Group description="Sidebar Background" selector=".column-left-inner .column-right-inner">
+<Variable name="widget.outer.background.color" description="Background Color" type="color" default="transparent" />
+</Group>
+<Group description="Images" selector=".main-inner">
+<Variable name="image.background.color" description="Background Color" type="color" default="transparent"/>
+<Variable name="image.border.color" description="Border Color" type="color" default="transparent"/>
+</Group>
+<Group description="Feed" selector=".blog-feeds">
+<Variable name="feed.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Feed Links" selector=".blog-feeds">
+<Variable name="feed.link.color" description="Link Color" type="color" default="#cc0000"/>
+<Variable name="feed.link.visited.color" description="Visited Color" type="color" default="#d61111"/>
+<Variable name="feed.link.hover.color" description="Hover Color" type="color" default="#6aa84f"/>
+</Group>
+<Group description="Pager" selector=".blog-pager">
+<Variable name="pager.background.color" description="Background Color" type="color" default="#fefdfa" />
+</Group>
+<Group description="Footer" selector=".footer-outer">
+<Variable name="footer.background.color" description="Background Color" type="color" default="#fefdfa" />
+<Variable name="footer.text.color" description="Text Color" type="color" default="#333333" />
+</Group>
+<Variable name="title.shadow.spread" description="Title Shadow" type="length" default="-1px"/>
+<Variable name="body.background" description="Body Background" type="background"
+color="#fcfbf5"
+default="$(color) none repeat scroll top left"/>
+<Variable name="body.background.gradient.cap" description="Body Gradient Cap" type="url"
+default="none"/>
+<Variable name="body.background.size" description="Body Background Size" type="string" default="auto"/>
+<Variable name="tabs.background.gradient" description="Tabs Background Gradient" type="url"
+default="none"/>
+<Variable name="header.background.gradient" description="Header Background Gradient" type="url" default="none" />
+<Variable name="header.padding.top" description="Header Top Padding" type="length" default="22px" />
+<Variable name="header.margin.top" description="Header Top Margin" type="length" default="0" />
+<Variable name="header.margin.bottom" description="Header Bottom Margin" type="length" default="0" />
+<Variable name="widget.padding.top" description="Widget Padding Top" type="length" default="8px" />
+<Variable name="widget.padding.side" description="Widget Padding Side" type="length" default="15px" />
+<Variable name="widget.outer.margin.top" description="Widget Top Margin" type="length" default="0" />
+<Variable name="widget.outer.background.gradient" description="Gradient" type="url" default="none" />
+<Variable name="widget.border.radius" description="Gadget Border Radius" type="length" default="0" />
+<Variable name="outer.shadow.spread" description="Outer Shadow Size" type="length" default="0" />
+<Variable name="date.header.border.radius.top" description="Date Header Border Radius Top" type="length" default="0" />
+<Variable name="date.header.position" description="Date Header Position" type="length" default="15px" />
+<Variable name="date.space" description="Date Space" type="length" default="30px" />
+<Variable name="date.position" description="Date Float" type="string" default="static" />
+<Variable name="date.padding.bottom" description="Date Padding Bottom" type="length" default="0" />
+<Variable name="date.border.size" description="Date Border Size" type="length" default="0" />
+<Variable name="date.background" description="Date Background" type="background" color="transparent"
+default="$(color) none no-repeat scroll top left" />
+<Variable name="date.first.border.radius.top" description="Date First top radius" type="length" default="5px" />
+<Variable name="date.last.space.bottom" description="Date Last Space Bottom" type="length"
+default="20px" />
+<Variable name="date.last.border.radius.bottom" description="Date Last bottom radius" type="length" default="5px" />
+<Variable name="post.first.padding.top" description="First Post Padding Top" type="length" default="0" />
+<Variable name="image.shadow.spread" description="Image Shadow Size" type="length" default="0"/>
+<Variable name="image.border.radius" description="Image Border Radius" type="length" default="0"/>
+<Variable name="separator.outdent" description="Separator Outdent" type="length" default="15px" />
+<Variable name="title.separator.border.size" description="Widget Title Border Size" type="length" default="1px" />
+<Variable name="list.separator.border.size" description="List Separator Border Size" type="length" default="1px" />
+<Variable name="shadow.spread" description="Shadow Size" type="length" default="0"/>
+<Variable name="startSide" description="Side where text starts in blog language" type="automatic" default="left"/>
+<Variable name="endSide" description="Side where text ends in blog language" type="automatic" default="right"/>
+<Variable name="date.side" description="Side where date header is placed" type="string" default="right"/>
+<Variable name="pager.border.radius.top" description="Pager Border Top Radius" type="length" default="5px" />
+<Variable name="pager.space.top" description="Pager Top Space" type="length" default="1em" />
+<Variable name="footer.background.gradient" description="Background Gradient" type="url" default="none" />
+<Variable name="mobile.background.size" description="Mobile Background Size" type="string"
+default="auto"/>
+<Variable name="mobile.background.overlay" description="Mobile Background Overlay" type="string"
+default="transparent none repeat scroll top left"/>
+<Variable name="mobile.button.color" description="Mobile Button Color" type="color" default="#ffffff" />
+*/
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #333333;
+background: #fcfbf5 none repeat scroll top left;
+}
+html body .content-outer {
+min-width: 0;
+max-width: 100%;
+width: 100%;
+}
+a:link {
+text-decoration: none;
+color: #cc0000;
+}
+a:visited {
+text-decoration: none;
+color: #d61111;
+}
+a:hover {
+text-decoration: underline;
+color: #6aa84f;
+}
+.body-fauxcolumn-outer .cap-top {
+position: absolute;
+z-index: 1;
+height: 276px;
+width: 100%;
+background: transparent none repeat-x scroll top left;
+_background-image: none;
+}
+/* Columns
+----------------------------------------------- */
+.content-inner {
+padding: 0;
+}
+.header-inner .section {
+margin: 0 16px;
+}
+.tabs-inner .section {
+margin: 0 16px;
+}
+.main-inner {
+padding-top: 30px;
+}
+.main-inner .column-center-inner,
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+padding: 0 5px;
+}
+*+html body .main-inner .column-center-inner {
+margin-top: -30px;
+}
+#layout .main-inner .column-center-inner {
+margin-top: 0;
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+margin: 0 0 0 0;
+background: transparent none repeat scroll 0 0;
+}
+.Header h1 {
+font: normal normal 48px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #333333;
+text-shadow: 0 0 -1px #000000;
+}
+.Header h1 a {
+color: #333333;
+}
+.Header .description {
+font: normal normal 20px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #908d6a;
+}
+.header-inner .Header .titlewrapper,
+.header-inner .Header .descriptionwrapper {
+padding-left: 0;
+padding-right: 0;
+margin-bottom: 0;
+}
+.header-inner .Header .titlewrapper {
+padding-top: 22px;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-outer {
+overflow: hidden;
+position: relative;
+background: #b3ca88 url(//www.blogblog.com/1kt/awesomeinc/tabs_gradient_light.png) repeat scroll 0 0;
+}
+#layout .tabs-outer {
+overflow: visible;
+}
+.tabs-cap-top, .tabs-cap-bottom {
+position: absolute;
+width: 100%;
+border-top: 1px solid #908d6a;
+}
+.tabs-cap-bottom {
+bottom: 0;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+margin: 0;
+padding: .6em 1.5em;
+font: normal bold 13px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #333333;
+border-top: 1px solid #908d6a;
+border-bottom: 1px solid #908d6a;
+border-left: 1px solid #908d6a;
+height: 16px;
+line-height: 16px;
+}
+.tabs-inner .widget li:last-child a {
+border-right: 1px solid #908d6a;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+background: #63704b url(//www.blogblog.com/1kt/awesomeinc/tabs_gradient_light.png) repeat-x scroll 0 -100px;
+color: #ffffff;
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+font: normal bold 14px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #333333;
+}
+/* Widgets
+----------------------------------------------- */
+.main-inner .section {
+margin: 0 27px;
+padding: 0;
+}
+.main-inner .column-left-outer,
+.main-inner .column-right-outer {
+margin-top: 0;
+}
+#layout .main-inner .column-left-outer,
+#layout .main-inner .column-right-outer {
+margin-top: 0;
+}
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+background: transparent none repeat 0 0;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+}
+#layout .main-inner .column-left-inner,
+#layout .main-inner .column-right-inner {
+margin-top: 0;
+}
+.sidebar .widget {
+font: normal normal 12px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #333333;
+}
+.sidebar .widget a:link {
+color: #cc0000;
+}
+.sidebar .widget a:visited {
+color: #d61111;
+}
+.sidebar .widget a:hover {
+color: #6aa84f;
+}
+.sidebar .widget h2 {
+text-shadow: 0 0 -1px #000000;
+}
+.main-inner .widget {
+background-color: #fefdfa;
+border: 1px solid #aab123;
+padding: 0 15px 15px;
+margin: 20px -16px;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+}
+.main-inner .widget h2 {
+margin: 0 -0;
+padding: .6em 0 .5em;
+border-bottom: 1px solid transparent;
+}
+.footer-inner .widget h2 {
+padding: 0 0 .4em;
+border-bottom: 1px solid transparent;
+}
+.main-inner .widget h2 + div, .footer-inner .widget h2 + div {
+border-top: 1px solid #aab123;
+padding-top: 8px;
+}
+.main-inner .widget .widget-content {
+margin: 0 -0;
+padding: 7px 0 0;
+}
+.main-inner .widget ul, .main-inner .widget #ArchiveList ul.flat {
+margin: -8px -15px 0;
+padding: 0;
+list-style: none;
+}
+.main-inner .widget #ArchiveList {
+margin: -8px 0 0;
+}
+.main-inner .widget ul li, .main-inner .widget #ArchiveList ul.flat li {
+padding: .5em 15px;
+text-indent: 0;
+color: #444444;
+border-top: 0 solid #aab123;
+border-bottom: 1px solid transparent;
+}
+.main-inner .widget #ArchiveList ul li {
+padding-top: .25em;
+padding-bottom: .25em;
+}
+.main-inner .widget ul li:first-child, .main-inner .widget #ArchiveList ul.flat li:first-child {
+border-top: none;
+}
+.main-inner .widget ul li:last-child, .main-inner .widget #ArchiveList ul.flat li:last-child {
+border-bottom: none;
+}
+.post-body {
+position: relative;
+}
+.main-inner .widget .post-body ul {
+padding: 0 2.5em;
+margin: .5em 0;
+line-height: 1.0; /*chatasos*/
+list-style: disc;
+}
+.main-inner .widget .post-body ul li {
+padding: 0.25em 0;
+margin-bottom: .25em;
+color: #333333;
+border: none;
+}
+.footer-inner .widget ul {
+padding: 0;
+list-style: none;
+}
+.widget .zippy {
+color: #444444;
+}
+/* Posts
+----------------------------------------------- */
+body .main-inner .Blog {
+padding: 0;
+margin-bottom: 1em;
+background-color: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+.main-inner .section:last-child .Blog:last-child {
+padding: 0;
+margin-bottom: 1em;
+}
+.main-inner .widget h2.date-header {
+margin: 0 -15px 1px;
+padding: 0 0 0 0;
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #908d6a;
+background: transparent none no-repeat scroll top left;
+border-top: 0 solid #aab123;
+border-bottom: 1px solid transparent;
+-moz-border-radius-topleft: 0;
+-moz-border-radius-topright: 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+position: static;
+bottom: 100%;
+right: 15px;
+text-shadow: 0 0 -1px #000000;
+}
+.main-inner .widget h2.date-header span {
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+display: block;
+padding: .5em 15px;
+border-left: 0 solid #aab123;
+border-right: 0 solid #aab123;
+}
+.date-outer {
+position: relative;
+margin: 30px 0 20px;
+padding: 0 15px;
+background-color: #fefdfa;
+border: 1px solid #aab123;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+}
+.date-outer:first-child {
+margin-top: 0;
+}
+.date-outer:last-child {
+margin-bottom: 20px;
+-moz-border-radius-bottomleft: 5px;
+-moz-border-radius-bottomright: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-webkit-border-bottom-right-radius: 5px;
+-goog-ms-border-bottom-left-radius: 5px;
+-goog-ms-border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+.date-posts {
+margin: 0 -0;
+padding: 0 0;
+clear: both;
+}
+.post-outer, .inline-ad {
+border-top: 1px solid #aab123;
+margin: 0 -0;
+padding: 15px 0;
+}
+.post-outer {
+padding-bottom: 10px;
+}
+.post-outer:first-child {
+padding-top: 0;
+border-top: none;
+}
+.post-outer:last-child, .inline-ad:last-child {
+border-bottom: none;
+}
+.post-body {
+position: relative;
+}
+.post-body img {
+padding: 8px;
+background: #ffffff;
+border: 1px solid #cccccc;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+h3.post-title, h4 {
+font: normal normal 22px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #cc0000;
+}
+h3.post-title a {
+font: normal normal 22px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #cc0000;
+}
+h3.post-title a:hover {
+color: #6aa84f;
+text-decoration: underline;
+}
+.post-header {
+margin: 0 0 1em;
+}
+.post-body {
+line-height: 1.4;
+}
+.post-outer h2 {
+color: #333333;
+}
+.post-footer {
+margin: 1.5em 0 0;
+}
+#blog-pager {
+padding: 15px;
+font-size: 120%;
+background-color: #fefdfa;
+border: 1px solid #aab123;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-goog-ms-border-radius: 5px;
+border-radius: 5px;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-goog-ms-border-top-left-radius: 5px;
+-goog-ms-border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius-topright: 5px;
+margin-top: 1em;
+}
+.blog-feeds, .post-feeds {
+margin: 1em 0;
+text-align: center;
+color: #333333;
+}
+.blog-feeds a, .post-feeds a {
+color: #cc0000;
+}
+.blog-feeds a:visited, .post-feeds a:visited {
+color: #d61111;
+}
+.blog-feeds a:hover, .post-feeds a:hover {
+color: #6aa84f;
+}
+.post-outer .comments {
+margin-top: 2em;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #908d6a;
+border-bottom: 1px solid #908d6a;
+}
+.comments .continue {
+border-top: 2px solid #908d6a;
+}
+/* Footer
+----------------------------------------------- */
+.footer-outer {
+margin: -20px 0 -1px;
+padding: 20px 0 0;
+color: #333333;
+overflow: hidden;
+}
+.footer-fauxborder-left {
+border-top: 1px solid #aab123;
+background: #fefdfa none repeat scroll 0 0;
+-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+margin: 0 -20px;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile {
+background-size: auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+*+html body.mobile .main-inner .column-center-inner {
+margin-top: 0;
+}
+.mobile .main-inner .widget {
+padding: 0 0 15px;
+}
+.mobile .main-inner .widget h2 + div,
+.mobile .footer-inner .widget h2 + div {
+border-top: none;
+padding-top: 0;
+}
+.mobile .footer-inner .widget h2 {
+padding: 0.5em 0;
+border-bottom: none;
+}
+.mobile .main-inner .widget .widget-content {
+margin: 0;
+padding: 7px 0 0;
+}
+.mobile .main-inner .widget ul,
+.mobile .main-inner .widget #ArchiveList ul.flat {
+margin: 0 -15px 0;
+}
+.mobile .main-inner .widget h2.date-header {
+right: 0;
+}
+.mobile .date-header span {
+padding: 0.4em 0;
+}
+.mobile .date-outer:first-child {
+margin-bottom: 0;
+border: 1px solid #aab123;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-goog-ms-border-top-left-radius: 5px;
+-goog-ms-border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+}
+.mobile .date-outer {
+border-color: #aab123;
+border-width: 0 1px 1px;
+}
+.mobile .date-outer:last-child {
+margin-bottom: 0;
+}
+.mobile .main-inner {
+padding: 0;
+}
+.mobile .header-inner .section {
+margin: 0;
+}
+.mobile .post-outer, .mobile .inline-ad {
+padding: 5px 0;
+}
+.mobile .tabs-inner .section {
+margin: 0 10px;
+}
+.mobile .main-inner .widget h2 {
+margin: 0;
+padding: 0;
+}
+.mobile .main-inner .widget h2.date-header span {
+padding: 0;
+}
+.mobile .main-inner .widget .widget-content {
+margin: 0;
+padding: 7px 0 0;
+}
+.mobile #blog-pager {
+border: 1px solid transparent;
+background: #fefdfa none repeat scroll 0 0;
+}
+.mobile .main-inner .column-left-inner,
+.mobile .main-inner .column-right-inner {
+background: transparent none repeat 0 0;
+-moz-box-shadow: none;
+-webkit-box-shadow: none;
+-goog-ms-box-shadow: none;
+box-shadow: none;
+}
+.mobile .date-posts {
+margin: 0;
+padding: 0;
+}
+.mobile .footer-fauxborder-left {
+margin: 0;
+border-top: inherit;
+}
+.mobile .main-inner .section:last-child .Blog:last-child {
+margin-bottom: 0;
+}
+.mobile-index-contents {
+color: #333333;
+}
+.mobile .mobile-link-button {
+background: #cc0000 url(//www.blogblog.com/1kt/awesomeinc/tabs_gradient_light.png) repeat scroll 0 0;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background: transparent;
+border-top: 1px solid;
+border-color: #908d6a;
+color: #333333;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #908d6a;
+}
+
+--></style>
+<style id="template-skin-1" type="text/css"><!--
+body {
+min-width: 1024px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 1024px;
+max-width: 1024px;
+_width: 1024px;
+}
+.main-inner .columns {
+padding-left: 0px;
+padding-right: 260px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0px;
+right: 260px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0px") -
+parseInt("260px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0px;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 260px;
+}
+.main-inner .column-left-outer {
+width: 0px;
+right: 100%;
+margin-left: -0px;
+}
+.main-inner .column-right-outer {
+width: 260px;
+margin-right: -260px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+body#layout div.add_widget {
+padding: 8px;
+}
+body#layout div.add_widget a {
+margin-left: 32px;
+}
+--></style>
+<link href="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/authorization.css" media="all" onload="if(media!=&#39;all&#39;)media=&#39;all&#39;" rel="stylesheet"><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=1312588810478429008&amp;zx=81c11197-f10b-4da0-ab23-60c72f77de95' rel='stylesheet'/></noscript>
+<meta name="google-adsense-platform-account" content="ca-host-pub-1556223355139109">
+<meta name="google-adsense-platform-domain" content="blogspot.com">
+
+<!-- data-ad-client=ca-pub-7190208364857458 -->
+
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/f.txt"></script><style>.gc-bubbleDefault{background-color:transparent!important;text-align:left;padding:0!important;margin:0!important;border:0!important;table-layout:auto!important}.gc-reset{background-color:transparent!important;border:0!important;padding:0!important;margin:0!important;text-align:left}.pls-bubbleTop{border-bottom:1px solid #ccc!important}.pls-contentLeft,.pls-topTail,.pls-vertShimLeft{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/border_3.gif)!important}.pls-topTail{background-repeat:repeat-x!important;background-position:bottom!important}.pls-vertShim{background-color:#fff!important;text-align:right}.tbl-grey .pls-vertShim{background-color:#f5f5f5!important}.pls-vertShimLeft{background-repeat:repeat-y!important;background-position:100%!important;height:4px}.pls-vertShimRight{height:4px}.pls-confirm-container .pls-vertShim{background-color:#fff3c2!important}.pls-contentWrap{background-color:#fff!important;position:relative!important;vertical-align:top}.pls-contentLeft{background-repeat:repeat-y;background-position:100%;vertical-align:top}.pls-dropRight{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropR_3.png)!important;background-repeat:repeat-y!important;vertical-align:top}.pls-dropBL,.pls-dropTR .pls-dropBR,.pls-tailleft,.pls-vert,.pls-vert img{vertical-align:top}.pls-dropBottom{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropB_3.png)!important;background-repeat:repeat-x!important;width:100%;vertical-align:top}.pls-topLeft{background:inherit!important;text-align:right;vertical-align:bottom}.pls-topRight{background:inherit!important;text-align:left;vertical-align:bottom}.pls-bottomLeft{background:inherit!important;text-align:right}.pls-bottomRight{background:inherit!important;text-align:left;vertical-align:top}.pls-tailbottom,.pls-tailleft,.pls-tailright,.pls-tailtop{display:none;position:relative}.pls-dropBL,.pls-dropBR,.pls-dropTR,.pls-tailbottom,.pls-tailleft,.pls-tailright,.pls-tailtop{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite_3.png)!important;background-repeat:no-repeat}.tbl-grey .pls-dropBL,.tbl-grey .pls-dropBR,.tbl-grey .pls-dropTR,.tbl-grey .pls-tailbottom,.tbl-grey .pls-tailleft,.tbl-grey .pls-tailright,.tbl-grey .pls-tailtop{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite-grey.png)!important}.pls-tailbottom{background-position:-23px 0}.pls-confirm-container .pls-tailbottom{background-position:-23px -10px}.pls-tailtop{background-position:-19px -20px}.pls-tailright{background-position:0 0}.pls-tailleft{background-position:-10px 0}.pls-tailtop{vertical-align:top}.gc-bubbleDefault td{line-height:0;font-size:0}.pls-tailbottom,.pls-topLeft img,.pls-topRight img{vertical-align:bottom}.bubbleDropTR,.pls-bottomLeft,.pls-bottomLeft img,.pls-dropBottom img,.pls-dropBottomL img,.pls-dropBottomR img{vertical-align:top}.pls-dropTR{background-position:0 -22px}.pls-dropBR{background-position:0 -27px}.pls-dropBL{background-position:0 -16px}.pls-spacerbottom,.pls-spacerleft,.pls-spacerright,.pls-spacertop{position:static!important}.pls-spinner{bottom:0;position:absolute;left:0;margin:auto;right:0;top:0}</style><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/loader.js.download"></script><link id="load-css-0" rel="stylesheet" type="text/css" href="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/tooltip.css"><link id="load-css-1" rel="stylesheet" type="text/css" href="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/util.css"><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/jsapi_compiled_default_module.js.download"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/jsapi_compiled_graphics_module.js.download"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/jsapi_compiled_ui_module.js.download"></script><script type="text/javascript" charset="UTF-8" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/jsapi_compiled_corechart_module.js.download"></script></head>
+<body class="">
+<div class="navbar section" id="navbar" name="Navbar"><div class="widget Navbar" data-version="1" id="Navbar1"><script src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/cb=gapi(1).loaded_0" async=""></script><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="" tabindex="0" vspace="0" width="100%" id="navbar-iframe" name="navbar-iframe" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/navbar.html"></iframe></div>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/platform.js.download" gapi_processed="true"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d1312588810478429008\x26blogName\x3dCCIE+in+2+months+-+Is+it+possible?\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dLIGHT\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://ccie-in-2-months.blogspot.com/search\x26blogLocale\x3den\x26v\x3d2\x26homepageUrl\x3dhttp://ccie-in-2-months.blogspot.com/\x26targetPostID\x3d5428887964012484605\x26blogPostOrPageUrl\x3dhttp://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html\x26vt\x3d-8557745411011293724',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div class="body-fauxcolumns">
+<div class="fauxcolumn-outer body-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="content-fauxcolumns">
+<div class="fauxcolumn-outer content-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content-outer">
+<div class="content-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left content-fauxborder-left">
+<div class="fauxborder-right content-fauxborder-right"></div>
+<div class="content-inner">
+<header>
+<div class="header-outer">
+<div class="header-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left header-fauxborder-left">
+<div class="fauxborder-right header-fauxborder-right"></div>
+<div class="region-inner header-inner">
+<div class="header section" id="header" name="Header"><div class="widget Header" data-version="1" id="Header1">
+<div id="header-inner">
+<a href="http://ccie-in-2-months.blogspot.com/" style="display: block">
+<img alt="CCIE in 2 months - Is it possible?" height="165px; " id="Header1_headerimg" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/dream2.png" style="display: block" width="758px; ">
+</a>
+<div class="descriptionwrapper">
+<p class="description"><span><b>CCIE in 2 months - Is it possible?</b><br>
+&nbsp;&nbsp;&nbsp;This is a journey to passing the <b>CCIE SP Lab</b> exam in a period of <b>2 months</b>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is my latest and hardest challenge, after completing my previous journey in just <a href="http://ccie-in-3-months.blogspot.gr/">3 months</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It started on 14th of December 2013 and ended at 10th of February 2014.<br>
+</span></p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="header-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</header>
+<div class="tabs-outer">
+<div class="tabs-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left tabs-fauxborder-left">
+<div class="fauxborder-right tabs-fauxborder-right"></div>
+<div class="region-inner tabs-inner">
+<div class="tabs section" id="crosscol" name="Cross-Column"><div class="widget PageList" data-version="1" id="PageList1">
+<h2>Pages</h2>
+<div class="widget-content">
+<ul>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/">Home</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/blog-page_7.html">The Trio of Success</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/virtual-lab.html">Home/Virtual Labs</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/the-hints-series.html">Notes: The Series (NTS)</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/progress.html">Exam Progress</a>
+</li>
+<li>
+<a href="http://ccie-in-2-months.blogspot.com/p/blog-page_13.html">Lab Cost</a>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div></div>
+<div class="tabs no-items section" id="crosscol-overflow" name="Cross-Column 2"></div>
+</div>
+</div>
+<div class="tabs-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="main-outer">
+<div class="main-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left main-fauxborder-left">
+<div class="fauxborder-right main-fauxborder-right"></div>
+<div class="region-inner main-inner">
+<div class="columns fauxcolumns">
+<div class="fauxcolumn-outer fauxcolumn-center-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-left-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-right-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class="columns-inner">
+<div class="column-center-outer">
+<div class="column-center-inner">
+<div class="main section" id="main" name="Main"><div class="widget Blog" data-version="1" id="Blog1">
+<div class="blog-posts hfeed">
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>Thursday, February 6, 2014</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="1312588810478429008" itemprop="blogId">
+<meta content="5428887964012484605" itemprop="postId">
+<a name="5428887964012484605"></a>
+<h3 class="post-title entry-title" itemprop="name">
+NTS: AToM/L2VPN/VPLS
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-5428887964012484605" itemprop="description articleBody">
+<h2>
+<u>AToM/L2VPN/VPLS</u></h2>
+<br>
+<hr>
+<br>
+PW (PseudoWire) architecture is described in <a href="http://tools.ietf.org/html/rfc3985" target="_blank">RFC 3985</a>. <br>
+LDP for PWs is defined in <a href="http://tools.ietf.org/html/rfc4447" target="_blank">RFC 4447</a>.<br>
+EoMPLS (Ethernet over MPLS) is defined in <a href="http://tools.ietf.org/html/rfc4448" target="_blank">RFC 4448</a>.<br>
+L2TPv3 (Layer 2 Tunneling Protocol v3) is defined in <a href="http://tools.ietf.org/html/rfc3931" target="_blank">RFC 3931</a>.<br>
+<br>
+<hr>
+<br>
+<u><b>L2VPN</b></u><br>
+<ul>
+<li>AToM</li>
+<ul>
+<li>requires MPLS connectivity from end to end</li>
+<li>source ip address is the one used for LDP</li>
+</ul>
+<li>L2TPv3</li>
+<ul>
+<li>requires IP connectivity from end to end</li>
+<li>source ip address is configured manually</li>
+</ul>
+</ul>
+<br>
+<span style="background-color: yellow;">If you are transferring Vlans and STP packets over the L2VPN connection, then you might need to disable STP for those specific vlans when using any type of PVST. Alternatively you can try to match vlans on either side.</span><br>
+<br>
+<hr>
+<br>
+<u><b>L2TPv3</b></u><br>
+<br>
+L2TPv3 is protocol 115.<br>
+<br>
+<u>Supported protocols over L2TPv3</u><br>
+<ul>
+<li>Frame-Relay</li>
+<li>Ethernet</li>
+<li>VLAN</li>
+<li>HDLC</li>
+<li>PPP</li>
+<li>IPv6 </li>
+</ul>
+<br>
+The L2TPv3&nbsp; keepalive mechanism consists of an exchange of L2TP hello messages. <br>
+<br>
+The
+ interface keepalive feature is automatically disabled on the interface 
+to which xconnect is applied, except for Frame-Relay encapsulation.<br>
+<br>
+The IP local interface must be a loopback interface.<br>
+<br>
+<span style="background-color: yellow;">To
+ convert an interface with AToM xconnect to L2TPv3 xconnect, remove the xconnect configuration from the interface and then configure L2TPv3. </span><br>
+<br>
+Each L2TPv3 tunneled packet includes the entire Layer 2 frame of the payload:<br>
+<ul>
+<li>20 bytes (IP packet header)</li>
+<li>12 bytes (L2TPv3 session header)&nbsp;</li>
+<li>4 bytes (if sequencing is enabled)</li>
+<li>payload (the complete frame received on the AC)</li>
+</ul>
+<br>
+You can have either <b>dynamic or static pseudowires</b> (where no signaling is required for session establishment).<br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">pseudowire-class</span> L2TP-PWCLASS<br>&nbsp;<b><span style="color: blue;">encapsulation l2tpv3</span></b><br>&nbsp;<b><span style="color: blue;">ip local interface</span></b> Loopback0<br>!<br><span style="color: blue;">interface</span> X</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">xconnect</span> 2.2.2.2 12 <span style="color: blue;">pw-class</span> L2TP-PWCLASS</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2vpn</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">pw-class</span> L2TP-PWCLASS<br>&nbsp; <b><span style="color: blue;">encapsulation l2tpv3</span></b><br>&nbsp;&nbsp; <b><span style="color: blue;">protocol l2tpv3</span></b><br>&nbsp;&nbsp; <b><span style="color: blue;">ipv4 source</span></b> 2.2.2.2</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;!<br>&nbsp;<span style="color: blue;">xconnect group</span> R2-R1-XCONGRP</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp; <span style="color: blue;">p2p</span> R2-R1-P2P<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> X<br>&nbsp;&nbsp; <span style="color: blue;">neighbor</span> 1.1.1.1 pw-id 12<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">pw-class</span> L2TP-PWCLASS</span><br>
+<br>
+<span style="background-color: yellow;">In IOS-XR, you have to define the signaling protocol, while in IOS it's enabled by default.</span><br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R6#<span style="color: blue;">sh l2tun tunnel all</span><br><br>L2TP Tunnel Information Total tunnels 1 sessions 1<br><br><span style="color: blue;">Tunnel id 1787404852 is up</span>, remote id is 3119273419, 1 active sessions<br>&nbsp; Remotely initiated tunnel<br>&nbsp; <span style="color: blue;">Tunnel state is established</span>, time since change 00:00:14<br>&nbsp; Tunnel transport is IP&nbsp; (115)<br>&nbsp; Remote tunnel name is R2<br>&nbsp;&nbsp;&nbsp; Internet Address 2.2.2.2, port 0<br>&nbsp; Local tunnel name is R1<br>&nbsp;&nbsp;&nbsp; Internet Address 1.1.1.1, port 0<br>&nbsp; L2TP class for tunnel is l2tp_default_class<br>&nbsp; Counters, taking last clear into account:<br>&nbsp;&nbsp;&nbsp; 0 packets sent, 0 received<br>&nbsp;&nbsp;&nbsp; 0 bytes sent, 0 received<br>&nbsp;&nbsp;&nbsp; Last clearing of counters never<br>&nbsp; Counters, ignoring last clear:<br>&nbsp;&nbsp;&nbsp; 0 packets sent, 0 received<br>&nbsp;&nbsp;&nbsp; 0 bytes sent, 0 received<br>&nbsp; Control Ns 2, Nr 3<br>&nbsp; Local RWS 1024 (default), Remote RWS 512<br>&nbsp; Control channel Congestion Control is disabled<br>&nbsp; Tunnel PMTU checking disabled<br>&nbsp; Retransmission time 1, max 2 seconds<br>&nbsp; Unsent queuesize 0, max 0<br>&nbsp; Resend queuesize 0, max 1<br>&nbsp; Total resends 1, ZLB ACKs sent 1<br>&nbsp; Total out-of-order dropped pkts 0 <br>&nbsp; Total out-of-order reorder pkts 0 <br>&nbsp; Total peer authentication failures 0<br>&nbsp; Current no session pak queue check 0 of 5<br>&nbsp; Retransmit time distribution: 0 1 0 0 0 0 0 0 0 <br>&nbsp; Control message authentication is disabled</span><br>
+<br>
+<br>
+<b>Static PWs</b> require you to define sessions &amp; cookie parameters under the neighbor where the PW is pointing to. <span style="background-color: yellow;">Using static PWs allows the traffic to pass over the PW as soon as possible (avoiding session parameter negotiation).</span><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">pseudowire-class</span> L2TP-CLASS<br>&nbsp;<span style="color: blue;">encapsulation l2tpv3</span><br>&nbsp;<b><span style="color: blue;">protocol none</span></b><br>&nbsp;<span style="color: blue;">ip local interface</span> Loopback0<br>!<br>interface POS2/0<br>&nbsp;<span style="color: blue;">xconnect</span> 2.2.2.2 12 <span style="color: blue;">e</span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">ncapsulation <b>l2tpv3 manual</b> pw-class</span> L2TP-CLASS</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp; <span style="color: blue;"><b>l2tp id</b></span> 1 2<br>&nbsp; <b><span style="color: blue;">l2tp cookie</span></b> local 4 4660<br>&nbsp; <b><span style="color: blue;">l2tp cookie</span></b> remote 8 4660 22136</span><br>
+<span style="background-color: yellow;"><br></span>
+<span style="background-color: yellow;">You need to define "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">protocol none</span></span>" under the pw-class, otherwise you won't be able to do the static configuration.</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn<br>&nbsp;xconnect group A-XCONGRP<br>&nbsp; p2p A-P2P<br>&nbsp;&nbsp; neighbor 1.1.1.1 pw-id 100<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">l2tp static</span> local cookie size 4 value 0x1234<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">l2tp static</span> local session 1<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">l2tp static</span> remote cookie size 8 value 0x1234 0x5678<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">l2tp static</span> remote session 2</span><br>
+<br>
+Local/remote values must be reversed on the other side.<br>
+<br>
+<span style="background-color: yellow;">When you use a static L2TPv3 session, you cannot perform interworking.</span><br>
+<br>
+<br>
+<u>Authentication </u><br>
+<ul>
+<li>L2TPv3 Control Message Hashing (<b>new method</b>)</li>
+<ul>
+<li>hash is computed of entire message</li>
+<li>all message types are hashed</li>
+</ul>
+<li>L2TP Control Channel Authentication (old method)</li>
+<ul>
+<li>hash is computed of Challenge AVP message only</li>
+<li>only SCCRP and SCCCN messages are hashed</li>
+</ul>
+</ul>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b><span style="color: blue;">l2tp-class</span></b> OLDAUTH-L2TP-CLASS<br>&nbsp;<span style="color: blue;">authentication</span><br>&nbsp;<span style="color: blue;">hostname</span> USER<br>&nbsp;<span style="color: blue;">password</span> PASS<br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b><span style="color: blue;">l2tp-class</span></b> NEWAUTH-L2TP-CLASS<br>&nbsp;<span style="color: blue;">digest secret</span> 0 PASS <span style="color: blue;">hash</span> SHA1</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">pseudowire-class</span> L2TP-PWCLASS<br>&nbsp;encapsulation l2tpv3<br>&nbsp;<span style="color: blue;">protocol l2tpv3</span> <b><span style="color: blue;">XXX-L2TP-CLASS</span></b><br>&nbsp;ip local interface Loopback0</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b><span style="color: blue;">l2tp-class</span></b> OLDAUTH-L2TP-CLASS<br>&nbsp;<span style="color: blue;">authentication</span><br>&nbsp;<span style="color: blue;">hostname</span> USER<br>&nbsp;<span style="color: blue;">password</span> PASS</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">! </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;"><b>l2tp-class</b></span> NEWAUTH-L2TP-CLASS<br>&nbsp;<span style="color: blue;">digest hash</span> SHA1<br>&nbsp;<span style="color: blue;">digest secret</span> PASS<br>!<br>l2vpn<br>&nbsp;pw-class L2TP-PWCLASS<br>&nbsp; encapsulation l2tpv3<br>&nbsp;&nbsp; <span style="color: blue;">protocol l2tpv3 <b>class</b> <b>XXX-L2TP-CLASS</b></span><br>&nbsp;&nbsp; ipv4 source 2.2.2.2</span><br>
+<br>
+<br>
+<span style="background-color: yellow;">In IOS-XR, the L2TP class used for authentication (and other parameters) is configured outside the l2vpn configuration, in the global configuration.</span><br>
+<br>
+<hr>
+<br>
+<u><b>AToM</b></u><br>
+<br>
+<ul>
+<li>A working LSP must exist between the PEs.</li>
+<li>If the configuration is correct, then a targeted LDP adjacency will be formed between the PEs and the pseudowire will come up (unless the PEs do not agree on some parameters).</li>
+<ul>
+<li>The PW-ID must agree on both sides. </li>
+<li><span style="background-color: yellow;">MTUs must agree on both ACs for the PW to come up (IOS-XR MTU includes the L2 header).</span></li>
+</ul>
+<li>The tLDP session is used to exchange labels for the pseudowire.</li>
+<li>The PW label is used to differentiate the local ACs, like the VPN label is used to differentiate the local VRFs.</li>
+</ul>
+<br>
+Interfaces at both sides of a local AC must have a common encapsulation (ppp, hdlc, frame-relay) in order for the local AC to come up.<br>
+<br>
+When you change the encapsulation of an interface, any xconnect configuration is removed.<br>
+<br>
+<span style="background-color: yellow;">You have to exit from the xconnect or pw-class config mode in order to have it activated. </span><br>
+<br>
+<span style="background-color: yellow;">If you have to change the MTU of the local AC in order to agree with the remote AC, then you must do the same for the interface on the other side of the local AC, to account for any IGPs passing over.</span><br>
+<br>
+Besides dynamic pseudowires (based on LDP), you can also create static pseudowires by having the labels statically defined on each PE.<br>
+<br>
+<hr>
+<br>
+<u><b>Logging</b></u><br>
+<br>
+Configure the following if you want to enable logging of various PW events.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xconnect logging pseudowire status</span></span> <br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2vpn</span><br>&nbsp;<span style="color: blue;">logging</span><br>&nbsp; <span style="color: blue;">bridge-domain</span><br>&nbsp; <span style="color: blue;">pseudowire</span><br>&nbsp; <span style="color: blue;">vfi</span></span><br>
+<br>
+<br>
+You can use the "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">clear xconnect</span></span>" command if you want to reset a pseudowire.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">clear xconnect</span> ?<br>&nbsp; all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All xconnect entries<br>&nbsp; interface&nbsp; All xconnects by interface<br>&nbsp; peer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All xconnects by Peer IP address</span><br>
+<br>
+<br>
+<hr>
+<br>
+<u><b>PPP Pseudowires</b></u><br>
+<br>
+<span style="background-color: yellow;">When using xconnect for PPP L2VPN connectivity, then the PPP process of the local AC is disabled.</span><br>
+<br>
+<u>no xconnect configured</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Serial2/0 is up, line protocol is up<br>&nbsp; Hardware is M4T<br>&nbsp; MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,<br>&nbsp;&nbsp;&nbsp;&nbsp; reliability 255/255, txload 1/255, rxload 1/255<br>&nbsp; Encapsulation PPP, <span style="color: blue;">LCP Open</span></span><br>
+<br>
+<u>xconnect configured</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Serial2/0 is up, line protocol is up<br>&nbsp; Hardware is M4T<br>&nbsp; MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,<br>&nbsp;&nbsp;&nbsp;&nbsp; reliability 255/255, txload 1/255, rxload 1/255<br>&nbsp; Encapsulation PPP, <span style="color: blue;">LCP Closed</span>, crc 16, loopback not set</span><br>
+<br>
+<br>
+<hr>
+<br>
+<u><b>Frame-Relay</b></u><br>
+<br>
+Each PW can be assigned to a single PVC/DLCI.<br>
+<br>
+If you need to transfer all DLCIs of a port, then you have to use HDLC as the interface encapsulation and do the usual xconnect under the interface.<br>
+<br>
+Frame-relay config on the other side of each AC doesn't have to agree, as long as the DLCIs are communicated correctly across the MPLS network.<br>
+<br>
+<span style="background-color: yellow;">IOS might require to have frame-relay switching enabled on the PE (IOS-XR and GNS3 don't require it).</span><br>
+<br>
+A PVC that is transferred across the PW is shown as "switched" under "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">show frame-relay pvc</span></span>", while another PVC that terminates locally is shown as "local".<br>
+<br>
+<span style="background-color: yellow;">Remember to configure appropriately the IGP network type on the interfaces, if the default isn't the right one.</span><br>
+<br>
+Wireshark might not decode correctly the FRoMPLS encapsulation.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface Serial2/0<br>&nbsp;encapsulation frame-relay<br>&nbsp;frame-relay intf-type dce<br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">pseudowire-class</span> FRoMPLS-PWCLASS<br>&nbsp;encapsulation mpls<br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">connect</span> FRCON Serial2/0 100 <span style="color: blue;">l2transport</span><br>&nbsp;<span style="color: blue;">xconnect 9.9.9.9 19 pw-class</span> FRoMPLS-PWCLASS</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">interface</span> POS0/0/0/0.100 <span style="color: blue;">l2transport</span><br>&nbsp;<span style="color: blue;">pvc</span> 100<br>!<br>interface POS0/0/0/0<br>&nbsp;encapsulation frame-relay<br>&nbsp;frame-relay intf-type dce</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">! </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2vpn</span><br>&nbsp;<span style="color: blue;">pw-class</span> FRoMPLS-PWCLASS<br>&nbsp; encapsulation mpls<br>&nbsp;!<br>&nbsp;<span style="color: blue;">xconnect group</span> FR-XCONGRP<br>&nbsp; <span style="color: blue;">p2p</span> R9R1-P2P<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> POS0/0/0/0.100<br>&nbsp;&nbsp; <span style="color: blue;">neighbor 1.1.1.1 pw-id 19</span><br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">pw-class</span> FRoMPLS-PWCLASS</span><br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh connection</span><br>ID&nbsp;&nbsp; Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Segment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State<br>================================================================================<br>2&nbsp;&nbsp;&nbsp; FRCON&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; Se2/0 100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9.9.9.9 19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP</span><br>
+<br>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh mpls l2transport vc</span> 19<br>Local intf&nbsp;&nbsp;&nbsp;&nbsp; Local circuit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dest address&nbsp;&nbsp;&nbsp; VC ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status<br>-------------&nbsp; -------------------------- --------------- ---------- ----------<br>Se2/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR DLCI 100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9.9.9.9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; UP</span><br>
+<br>
+<br>
+<hr>
+<br>
+<b><u>Ethernet Pseudowires</u></b><br>
+<ul>
+<li>Tagged mode (vlan mode)</li>
+<ul>
+<li>VC type 5</li>
+<li>VC type 4 (if vlan tag is to be transfered too)</li>
+</ul>
+<li>Raw mode (port mode)</li>
+<ul>
+<li>VC type 5</li>
+</ul>
+</ul>
+Usually the VC type is auto-negotiated while the PW is being setup.<br>
+<br>
+<br>
+<u>Configuration</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">pseudowire-class</span> EoMPLS-PWCLASS<br>&nbsp;encapsulation mpls<br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">interface</span> X<br>&nbsp;<span style="color: blue;">xconnect 9.9.9.9 19 pw-class</span> EoMPLS-PWCLASS</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">interface</span> X <span style="color: blue;">l2transport</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;"><span style="color: black;">!</span></span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2vpn</span><br>&nbsp;<span style="color: blue;">pw-class</span> EoMPLS-PWCLASS<br>&nbsp; encapsulation mpls<br>!<br>&nbsp;<span style="color: blue;">xconnect group</span> R9R1-XCONGRP<br>&nbsp; <span style="color: blue;">p2p</span> R9R1-P2P<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">X</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span>&nbsp; <span style="color: blue;">neighbor 1.1.1.1 pw-id 19</span><br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">pw-class</span> EoMPLS-PWCLASS</span><br>
+<br>
+<br>
+<span style="background-color: yellow;">In IOS-XR, you have to define as "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2transport</span></span>" the interface used as AC in the xconnect.</span> If there is existing configuration under the interface, it's better to remove the whole interface, make it L2 and then re-apply the old config (if it's still required.)<br>
+<br>
+<u>Verification</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh mpls l2 vc</span><br>Local intf&nbsp;&nbsp;&nbsp;&nbsp; Local circuit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dest address&nbsp;&nbsp;&nbsp; VC ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status<br>-------------&nbsp; -------------------------- --------------- ---------- ----------<br>Fa1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9.9.9.9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">UP</span></span><br>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh mpls l2 vc detail</span><br>Local interface: Fa1/0 up, line protocol up, Ethernet up<br>&nbsp; Destination address: 9.9.9.9, VC ID: 19, <span style="color: blue;">VC status: up</span><br>&nbsp;&nbsp;&nbsp; Output interface: Fa0/0.12, <span style="color: blue;">imposed label stack {26 16100}</span><br>&nbsp;&nbsp;&nbsp; Preferred path: not configured<br>&nbsp;&nbsp;&nbsp; Default path: active<br>&nbsp;&nbsp;&nbsp; Next hop: 10.1.2.2<br>&nbsp; Create time: 00:20:14, last status change time: 00:20:14<br>&nbsp; Signaling protocol: LDP, peer 9.9.9.9:0 up<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">Targeted Hello: 1.1.1.1(LDP Id) -&gt; 9.9.9.9, LDP is UP</span><br>&nbsp;&nbsp;&nbsp; Status TLV support (local/remote)&nbsp;&nbsp; : enabled/supported<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDP route watch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : enabled<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Label/status state machine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : established, LruRru<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last local dataplane&nbsp;&nbsp; status rcvd: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last local SSS circuit status rcvd: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last local SSS circuit status sent: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last local&nbsp; LDP TLV&nbsp;&nbsp;&nbsp; status sent: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last remote LDP TLV&nbsp;&nbsp;&nbsp; status rcvd: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last remote LDP ADJ&nbsp;&nbsp;&nbsp; status rcvd: No fault<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">MPLS VC labels: local 28, remote 16100</span><br>&nbsp;&nbsp;&nbsp; Group ID: local 0, remote 0<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">MTU: local 1500, remote 1500</span><br>&nbsp;&nbsp;&nbsp; Remote interface description:<br>&nbsp; Sequencing: receive disabled, send disabled<br>&nbsp; Control Word: Off (configured: autosense)<br>&nbsp; VC statistics:<br>&nbsp;&nbsp;&nbsp; transit packet totals: receive 169, send 771<br>&nbsp;&nbsp;&nbsp; transit byte totals:&nbsp;&nbsp; receive 21479, send 80640<br>&nbsp;&nbsp;&nbsp; transit packet drops:&nbsp; receive 0, seq error 0, send 0</span><br>
+<br>
+<span style="background-color: yellow;">"imposed label stack" shows the complete label stack (Transport label + PW label) used by the local PE to reach the remote PE.</span><br>
+<br>
+<span style="background-color: yellow;">"MPLS VC labels" shows the PW labels exchanged by the PEs.</span><br>
+<br>
+The status you see next to "Label/status state machine" translates to the following:<br>
+<ul>
+<li>L=Local, R=Remote</li>
+<li>r=ready, n=not ready</li>
+<li>u=up, d=down</li>
+</ul>
+<br>
+<span style="background-color: yellow;">In VC statistics, the send direction counts the traffic from the AC to the PW, while the receive direction counts the traffic from the PW to the AC.</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R9#sh l2vpn xconnect <span style="color: blue;">detail</span><br>Group R9R1-XCONGRP, XC R9R1-P2P, <span style="color: blue;">state is up</span>; Interworking none<br>&nbsp; <span style="color: blue;">AC: TenGigE0/0/0/9, state is up</span><br>&nbsp;&nbsp;&nbsp; Type Ethernet</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; MTU 1500; XC ID 0x40002; interworking none<br>&nbsp;&nbsp;&nbsp; Statistics:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; packets: received 2324, sent 4514</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bytes: received 1745, sent 4668<br>&nbsp; <span style="color: blue;">PW: neighbor 1.1.1.1, PW ID 19, state is up ( established )</span><br>&nbsp;&nbsp;&nbsp; PW class EoMPLS-PWCLASS, XC ID 0xc0000001<br>&nbsp;&nbsp;&nbsp; Encapsulation MPLS, protocol LDP<br>&nbsp;&nbsp;&nbsp; Source address 9.9.9.9</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; PW type Ethernet, control word disabled, interworking none<br>&nbsp;&nbsp;&nbsp; PW backup disable delay 0 sec<br>&nbsp;&nbsp;&nbsp; Sequencing not set<br>&nbsp;&nbsp;&nbsp; Load Balance Hashing: src-dst-ip<br>&nbsp;&nbsp;&nbsp; Flow Label flags configured (Tx=1,Rx=1), negotiated (Tx=0,Rx=0)<br><br>&nbsp;&nbsp;&nbsp; PW Status TLV in use<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MPLS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Local&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Remote<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ------------ ------------------------------ -----------------------------<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Group ID&nbsp;&nbsp;&nbsp;&nbsp; 0x1c0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interface&nbsp;&nbsp;&nbsp; TenGigE0/0/0/9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ** AC **</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">MTU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1500 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1500</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Control word disabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; disabled<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PW type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VCCV CV type 0x2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (LSP ping verification)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (LSP ping verification)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VCCV CC type 0x6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (router alert label)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (router alert label)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (TTL expiry)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ------------ ------------------------------ -----------------------------<br>&nbsp;&nbsp;&nbsp; Incoming Status (PW Status TLV):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status code: 0x0 (Up) in Notification message<br>&nbsp;&nbsp;&nbsp; Outgoing Status (PW Status TLV):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status code: 0x0 (Up) in Notification message<br>&nbsp;&nbsp;&nbsp; MIB cpwVcIndex: 3221225473<br>&nbsp;&nbsp;&nbsp; Create time: 27/12/2013 03:23:01</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; Last time status changed: 27/12/2013 03:26:49</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; Statistics:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; packets: received 4514, sent 2324</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bytes: received 4668, sent 1745</span><br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh xconnect all</span><br>Legend:&nbsp;&nbsp;&nbsp; XC ST=Xconnect State&nbsp; S1=Segment1 State&nbsp; S2=Segment2 State<br>&nbsp; UP=Up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DN=Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AD=Admin Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IA=Inactive<br>&nbsp; SB=Standby&nbsp; HS=Hot Standby&nbsp;&nbsp;&nbsp;&nbsp; RV=Recovering&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NH=No Hardware<br><br>XC ST&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S1 Segment 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S2<br>------+---------------------------------+--+---------------------------------+--<br>UP&nbsp;&nbsp;&nbsp;&nbsp; ac&nbsp;&nbsp; Fa1/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">UP</span> mpls 9.9.9.9:19&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; <span style="color: blue;">UP</span></span><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh xconnect all detail</span><br>Legend:&nbsp;&nbsp;&nbsp; XC ST=Xconnect State&nbsp; S1=Segment1 State&nbsp; S2=Segment2 State<br>&nbsp; UP=Up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DN=Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AD=Admin Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IA=Inactive<br>&nbsp; SB=Standby&nbsp; HS=Hot Standby&nbsp;&nbsp;&nbsp;&nbsp; RV=Recovering&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NH=No Hardware<br><br>XC ST&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S1 Segment 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S2<br>------+---------------------------------+--+---------------------------------+--<br>UP&nbsp;&nbsp;&nbsp;&nbsp; ac&nbsp;&nbsp; Fa1/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">UP</span> mpls 9.9.9.9:19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: blue;">UP</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interworking: none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Local&nbsp; VC label 28</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Remote VC label 16100</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw-class: EoMPLS-PWCLASS</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R9#<span style="color: blue;">sh l2vpn xconnect</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Legend: ST = State, UP = Up, DN = Down, AD = Admin Down, UR = Unresolved,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SB = Standby, SR = Standby Ready, (PP) = Partially Programmed<br><br>XConnect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Segment 2<br>Group&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Name&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp;&nbsp; Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp;&nbsp; Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ST<br>------------------------&nbsp;&nbsp; -----------------------&nbsp;&nbsp; ----------------------</span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R9R1-XCONGRP</span> </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R9R1-P2P</span> UP&nbsp;&nbsp; Te0/0/0/9 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">UP</span>&nbsp;&nbsp; 1.1.1.1 &nbsp;&nbsp; 19&nbsp; &nbsp;&nbsp; &nbsp; <span style="color: blue;">UP</span><br>---------------------------------------------------------------------------</span><br>
+<br>
+<br>
+<span style="background-color: yellow;">When viewing the LFIB, the direction is the opposite from L3VPNs, pointing towards the AC this time.</span><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh mpls forwarding-table</span><br>Local&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Outgoing&nbsp;&nbsp; Prefix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bytes Label&nbsp;&nbsp; Outgoing&nbsp;&nbsp; Next Hop<br>Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or Tunnel Id&nbsp;&nbsp;&nbsp;&nbsp; Switched&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; interface<br><span style="color: blue;">28</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No Label&nbsp;&nbsp; <span style="color: blue;">l2ckt(19)</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19658&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fa1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point2point</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R9#<span style="color: blue;">sh mpls forwarding</span><br>Local&nbsp; Outgoing&nbsp;&nbsp;&nbsp; Prefix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Outgoing&nbsp;&nbsp;&nbsp;&nbsp; Next Hop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bytes<br>Label&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Switched<br>------ ----------- ------------------ ------------ --------------- ------------<br><span style="color: blue;">16100</span>&nbsp; Pop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">PW(1.1.1.1:19)</span>&nbsp;&nbsp;&nbsp;&nbsp; Te0/0/0/9 &nbsp;&nbsp; point2point&nbsp;&nbsp;&nbsp;&nbsp; 464883</span><br>
+<br>
+<br>
+You can also use <b>ping and traceroute in order to verify the PW</b> (although it won't help you much in case of a core problem). In <span style="background-color: #d9ead3;">IOS-XR</span>, <b>mpls oam</b> must first be activated.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">ping mpls pseudowire 9.9.9.9 19 segment 1 verbose repeat 1</span><br>Sending 1, 100-byte MPLS Echos to 9.9.9.9,<br>&nbsp;&nbsp;&nbsp;&nbsp; timeout is 2 seconds, send interval is 0 msec:<br><br>Codes: '!' - success, 'Q' - request not sent, '.' - timeout,<br>&nbsp; 'L' - labeled output interface, 'B' - unlabeled output interface,<br>&nbsp; 'D' - DS Map mismatch, 'F' - no FEC mapping, 'f' - FEC mismatch,<br>&nbsp; 'M' - malformed request, 'm' - unsupported tlvs, 'N' - no label entry,<br>&nbsp; 'P' - no rx intf label prot, 'p' - premature termination of LSP,<br>&nbsp; 'R' - transit router, 'I' - unknown upstream index,<br>&nbsp; 'X' - unknown return code, 'x' - return code 0<br><br>Type escape sequence to abort.<br>!&nbsp;&nbsp;&nbsp; size 100, reply addr 10.8.9.9, return code 3[Labels: 16100 Exp: 0]<br>&nbsp;&nbsp;&nbsp;&nbsp; Rx Interface: 10.8.9.9<br>&nbsp;&nbsp;&nbsp; local 1.1.1.1 remote 9.9.9.9 vc id 19<br><br>Success rate is 100 percent (1/1), round-trip min/avg/max = 1/1/1 ms</span><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">traceroute mpls pseudowire 9.9.9.9 19 segment</span><br>Tracing MS-PW segments within range [1-1] peer address 9.9.9.9 and timeout 2 seconds<br><br>Codes: '!' - success, 'Q' - request not sent, '.' - timeout,<br>&nbsp; 'L' - labeled output interface, 'B' - unlabeled output interface,<br>&nbsp; 'D' - DS Map mismatch, 'F' - no FEC mapping, 'f' - FEC mismatch,<br>&nbsp; 'M' - malformed request, 'm' - unsupported tlvs, 'N' - no label entry,<br>&nbsp; 'P' - no rx intf label prot, 'p' - premature termination of LSP,<br>&nbsp; 'R' - transit router, 'I' - unknown upstream index,<br>&nbsp; 'X' - unknown return code, 'x' - return code 0<br><br>Type escape sequence to abort.<br>! 1 10.8.9.9 1 ms [Labels: 16100 Exp: 0]<br>&nbsp;&nbsp;&nbsp; local 1.1.1.1 remote 9.9.9.9 vc id 19</span><br>
+<br>
+<br>
+<hr>
+<br>
+<u><b>Static PWs</b></u><br>
+<br>
+You can also use <b>static pseudowires (without tLDP between PEs)</b> if you manually define the local/remote labels to be used.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">mpls label range</span> 100 200 <span style="color: blue;">static</span> 201 300<br>!<br>interface X<br>&nbsp;<span style="color: blue;">xconnect</span> 1.1.1.1 22 <span style="color: blue;">encapsulation mpls manual</span> pw-class STATICPW-PWCLASS<br>&nbsp; <span style="color: blue;">mpls label</span> 201 202</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn<br>&nbsp;xconnect group XCONGRP<br>&nbsp; p2p LS-P2P<br>&nbsp;&nbsp; neighbor 1.1.1.1 pw-id 22<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">mpls static label</span> local 201 remote 202</span><br>
+<br>
+<br>
+<span style="background-color: yellow;">In IOS-XR, labels 16 to 15999 are reserved (by default) for static L2VPN pseudowires.</span><br>
+<br>
+<hr>
+<br>
+<u><b>Interworking</b></u><br>
+<br>
+Interworking is actually a transforming function that is required to interconnect two heterogeneous ACs, by providing <span class="content">the translation between the different L2 encapsulations.&nbsp;&nbsp;</span><br>
+<span class="content"></span><br>
+There are 3 main modes:<br>
+<ul>
+<li>Ethernet (bridged)</li>
+<ul>
+<li>ethernet frames are extracted from the AC and sent over the PW</li>
+<li>non-ethernet frames are dropped</li>
+<li>ethernet frames with vlan tags, have their tags removed and then send over the PW</li>
+</ul>
+<li>Vlan </li>
+<ul>
+<li>ethernet frames are extracted from the AC and sent over the PW</li>
+<li>non-ethernet frames are dropped</li>
+<li>ethernet frames with vlan tags, are send with their tags over the PW</li>
+</ul>
+<li>IP (routed)</li>
+<ul>
+<li>ipv4 packets are extracted from the AC and sent over the PW</li>
+<li>non-ipv4 packets are dropped</li>
+</ul>
+</ul>
+<br>
+Supported modes/technologies:<br>
+<ul>
+<li>Ethernet/Vlan to Frame-Relay</li>
+<ul>
+<li>MPLS/L2TPv3</li>
+<li>Ethernet/IP </li>
+</ul>
+<li>Ethernet/Vlan to PPP</li>
+<ul>
+<li>MPLS</li>
+<li>IP </li>
+</ul>
+<li>Ethernet to Vlan</li>
+<ul>
+<li>MPLS/L2TPv3</li>
+<li>Ethernet/IP </li>
+</ul>
+<li>Frame-Relay to PPP </li>
+<ul>
+<li>MPLS/L2TPv3</li>
+<li>IP </li>
+</ul>
+</ul>
+<br>
+<span style="background-color: yellow;">When doing interworking with frame-relay, <b>you can't use inverse-arp</b> (because there is no ip address on the other side of the local AC, neither at the other side of the remote AC), so you'll have to either <b>use static mapping</b> or <b>change the frame-relay configuration to point-to-point</b>.</span><br>
+<br>
+In frame-relay interworking the PE router reports the PVC status to the CE router, based on the status of the pseudowire with the remote PE. Also the status of the local PVC detected by the PE router 
+will be reflected into the pseudowire status towards the remote PE.<br>
+<br>
+For ethernet, <span class="content">the PE acts like a proxy-ARP server to all ARP requests from the CE router. Sometimes you might need to clear the arp table on the CE after making changes on the PE.</span><br>
+<br>
+For PPP,&nbsp; proxy IPCP is automatically enabled on the PE router when IP interworking is configured on the pseudowire. <br>
+<br>
+<span style="background-color: yellow;">Most of the times, you must <b>configure all IGPs for point-to-point operation</b> between the
+ CE routers when configuring an Ethernet to non-Ethernet interworking setup. </span><span class="content"><br>
+</span><br>
+<br>
+Although it might not be applicable in the lab, generally you should take care of the AC MTU so that it doesn't exceed the core MTU.<br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">pseudowire-class EoMPLS-IW-PWCLASS<br>&nbsp;encapsulation mpls<br>&nbsp;<span style="color: blue;">interworking ip</span></span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn<br>&nbsp;xconnect group A-XCONGRP<br>&nbsp; p2p A-P2P<br>&nbsp;&nbsp; <span style="color: blue;">interworking ipv4</span></span><br>
+<br>
+<br>
+The rest of the configuration is the same as in normal L2VPN setup.<br>
+<br>
+Interworking doesn't apply in VPLS.<br>
+<br>
+<hr>
+<br>
+<u><b>PW Redundancy</b></u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<br>
+<u>Ethernet</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface FastEthernet1/0<br>&nbsp;xconnect 9.9.9.9 19 pw-class EoMPLS-IW-PWCLASS<br>&nbsp; <span style="color: blue;">backup peer</span> 8.8.8.8 18 pw-class EoMPLS-IW-PWCLASS</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br></span>
+<u>Frame-Relay</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">connect FRCON Serial2/0 100 l2transport<br>&nbsp;xconnect 9.9.9.9 19 pw-class FRoMPLS-PWCLASS<br>&nbsp; <span style="color: blue;">backup peer</span> 8.8.8.8 18 </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">pw-class FRoMPLS-PWCLASS</span><br>
+<br>
+<span style="background-color: yellow;">The "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">backup peer</span></span>" command is configured on the PE which will handle the redundancy.</span><br>
+<br>
+Configure the following if you want to enable logging of the PW redundancy events.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xconnect logging redundancy</span></span><br>
+<br>
+The PW status is signaled between the PEs, if it's supported (it's enabled by default).<br>
+<br>
+<u><span style="background-color: #ead1dc;">IOS</span></u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh xconnect all</span><br>Legend:&nbsp;&nbsp;&nbsp; XC ST=Xconnect State&nbsp; S1=Segment1 State&nbsp; S2=Segment2 State<br>&nbsp; UP=Up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DN=Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AD=Admin Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IA=Inactive<br>&nbsp; SB=Standby&nbsp; HS=Hot Standby&nbsp;&nbsp;&nbsp;&nbsp; RV=Recovering&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NH=No Hardware<br><br>XC ST&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S1 Segment 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S2<br>------+---------------------------------+--+---------------------------------+--<br>UP pri ac&nbsp;&nbsp; Fa1/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP mpls 9.9.9.9:19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; UP<br>IA sec ac&nbsp;&nbsp; Fa1/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP mpls 5.5.5.5:15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">SB</span></span><br>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh mpls l2transport vc</span><br><br>Local intf&nbsp;&nbsp;&nbsp;&nbsp; Local circuit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dest address&nbsp;&nbsp;&nbsp; VC ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status<br>-------------&nbsp; -------------------------- --------------- ---------- ----------<br>Fa1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.5.5.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">STANDBY</span><br>Fa1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9.9.9.9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP</span><br>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh mpls l2transport vc 15 detail</span><br>Local interface: Fa1/0 up, line protocol up, Ethernet up<br>&nbsp; Destination address: 5.5.5.5, VC ID: 15, <span style="color: blue;">VC status: standby</span><br>&nbsp;&nbsp;&nbsp; Output interface: Fa0/0.12, imposed label stack {17 27}<br>&nbsp;&nbsp;&nbsp; Preferred path: not configured<br>&nbsp;&nbsp;&nbsp; Default path: active<br>&nbsp;&nbsp;&nbsp; Next hop: 10.1.2.2<br>&nbsp; Create time: 00:04:30, last status change time: 00:03:36<br>&nbsp; Signaling protocol: LDP, peer 5.5.5.5:0 up<br>&nbsp;&nbsp;&nbsp; Targeted Hello: 1.1.1.1(LDP Id) -&gt; 5.5.5.5, LDP is UP<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">Status TLV support (local/remote)&nbsp;&nbsp; : enabled/supported</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDP route watch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : enabled<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Label/status state machine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : established, LrdRru</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last local dataplane&nbsp;&nbsp; status rcvd: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; L<span style="color: blue;">ast local SSS circuit status rcvd: DOWN(UP, standby)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last local SSS circuit status sent: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Last local&nbsp; LDP TLV&nbsp;&nbsp;&nbsp; status sent: DOWN(standby)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last remote LDP TLV&nbsp;&nbsp;&nbsp; status rcvd: No fault<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last remote LDP ADJ&nbsp;&nbsp;&nbsp; status rcvd: No fault<br>&nbsp;&nbsp;&nbsp; MPLS VC labels: local 32, remote 27<br>&nbsp;&nbsp;&nbsp; Group ID: local 0, remote 0<br>&nbsp;&nbsp;&nbsp; MTU: local 1500, remote 1500<br>&nbsp;&nbsp;&nbsp; Remote interface description:<br>&nbsp; Sequencing: receive disabled, send disabled<br>&nbsp; Control Word: On (configured: autosense)<br>&nbsp; VC statistics:<br>&nbsp;&nbsp;&nbsp; transit packet totals: receive 116, send 0<br>&nbsp;&nbsp;&nbsp; transit byte totals:&nbsp;&nbsp; receive 8221, send 0<br>&nbsp;&nbsp;&nbsp; transit packet drops:&nbsp; receive 0, seq error 0, send 0</span><br>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">ping mpls pseudowire 5.5.5.5 15</span><br>%Total number of MS-PW segments is less than segment number; Adjusting the segment number to 1<br>Sending 5, 100-byte MPLS Echos to 5.5.5.5,<br>&nbsp;&nbsp;&nbsp;&nbsp; timeout is 2 seconds, send interval is 0 msec:<br><br>Codes: '!' - success, 'Q' - request not sent, '.' - timeout,<br>&nbsp; 'L' - labeled output interface, 'B' - unlabeled output interface,<br>&nbsp; 'D' - DS Map mismatch, 'F' - no FEC mapping, 'f' - FEC mismatch,<br>&nbsp; 'M' - malformed request, 'm' - unsupported tlvs, 'N' - no label entry,<br>&nbsp; 'P' - no rx intf label prot, 'p' - premature termination of LSP,<br>&nbsp; 'R' - transit router, 'I' - unknown upstream index,<br>&nbsp; 'X' - unknown return code, 'x' - return code 0<br><br>Type escape sequence to abort.<br>!!!!!<br>Success rate is 100 percent (5/5), round-trip min/avg/max = 72/78/88 ms</span><br>
+<br>
+<br>
+<span style="background-color: yellow;">You can configure the topology as "dual-homed" under the pw-class, if you want to have both primary and backup pseudowires appear as active simultaneously. In any case, traffic will continue to pass through the primary PW only.</span><br>
+<br>
+<u><span style="background-color: #ead1dc;">IOS</span></u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">pseudowire-class EOMPLS-PWCLASS<br>&nbsp;encapsulation mpls<br>&nbsp;<span style="color: blue;">status peer topology dual-homed</span></span><br>
+<br>
+Keep in mind that the xconnect output is based on the configuration, while the mpls l2vc output is based on the result.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh xconnect all</span><br>Legend:&nbsp;&nbsp;&nbsp; XC ST=Xconnect State&nbsp; S1=Segment1 State&nbsp; S2=Segment2 State<br>&nbsp; UP=Up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DN=Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AD=Admin Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IA=Inactive<br>&nbsp; SB=Standby&nbsp; HS=Hot Standby&nbsp;&nbsp;&nbsp;&nbsp; RV=Recovering&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NH=No Hardware<br><br>XC ST&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S1 Segment 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S2<br>------+---------------------------------+--+---------------------------------+--<br>UP pri ac&nbsp;&nbsp; Fa1/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP mpls 9.9.9.9:19 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP<br>IA sec ac&nbsp;&nbsp; Fa1/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP mpls 5.5.5.5:15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">SB</span><br><br>R1#<span style="color: blue;">sh mpls l2 vc</span><br><br>Local intf&nbsp;&nbsp;&nbsp;&nbsp; Local circuit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dest address&nbsp;&nbsp;&nbsp; VC ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status<br>-------------&nbsp; -------------------------- --------------- ---------- ----------<br>Fa1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.5.5.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">UP</span><br>Fa1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ethernet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9.9.9.9 &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; 19&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP</span><br>
+<br>
+<br>
+<br>
+<u>Links</u><br>
+<ul>
+<li><a href="http://tools.ietf.org/html/rfc4447" target="_blank">IETF - RFC 4447</a></li>
+</ul>
+<br>
+<hr>
+<br>
+<u><b>IOS-XR l2vpn configuration</b></u><br>
+<br>
+Everything must be configured under the "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn</span></span>" hierarchy, including the pw-classes.<br>
+<br>
+<u>VPWS</u><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR </u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">xconnect group</span> A-XCONGRP</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp; <span style="color: blue;">p2p</span> A-P2P</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; <span style="color: blue;">interface</span> X</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; !</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; <span style="color: blue;">neighbor</span> Y pw-id k</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; pw-class Z </span><br>
+<br>
+<br>
+<u>VPLS</u><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR </u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">bridge group</span> A-BRGRP<br>&nbsp; <span style="color: blue;">bridge-domain</span> A-BRDOM<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> X1<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> X2</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; ! </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; <span style="color: blue;">vfi</span> A-VFI<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">neighbor</span> Y1 pw-id k1</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp; pw-class Z</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">neighbor</span> Y2 pw-id k2</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp; pw-class Z</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br></span>
+<br>
+<br>
+xconnect/bridge groups are used solely for configuration grouping; you can put all bridge-domains under the same bridge group and all the p2ps under the same xconnect group.<br>
+<br>
+You can have a neighbor directly under the bridge-domain, if you want to make this an access pseudowire. <span style="background-color: yellow;">For core pseudowires (which will be 99% the case) you need to define the neighbor under the vfi.</span><br>
+<br>
+Below you can find some useful commands for verification and troubleshooting.<br>
+<br>
+Check AToM (AC/PW details, status, MTU, traffic, etc.)<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ASR9k</span>#<span style="color: blue;">sh l2vpn xconnect</span> ?<br>&nbsp; brief&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Encapsulation brief<br>&nbsp; <span style="color: blue;">detail</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Detailed information<br>&nbsp; encapsulation&nbsp; Filter on encapsulation<br>&nbsp; group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on group<br>&nbsp; groups&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All groups information<br>&nbsp; interface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on interface<br>&nbsp; mp2mp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MP2MP Information<br>&nbsp; mspw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ms_pw Information<br>&nbsp; neighbor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on neighbor<br>&nbsp; private&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Private information<br>&nbsp; pw-class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on pseudowire class<br>&nbsp; state&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on xconnect state<br>&nbsp; summary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Summary information<br>&nbsp; type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on xconnect type<br>&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output Modifiers</span><br>
+<br>
+<br>
+Check VPLS (AC/PW details, status, MTU, traffic, split-horizon, L2 features like storm-control, unicast/multicast/broadcast flooding, etc.)<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ASR9k#<span style="color: blue;">sh l2vpn bridge-domain</span> ?<br>&nbsp; autodiscovery&nbsp; BGP/Radius autodiscovery information<br>&nbsp; bd-name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on bridge domain name<br>&nbsp; brief&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Brief information<br>&nbsp; <span style="color: blue;">detail</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Detailed information<br>&nbsp; group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on bridge domain group name<br>&nbsp; hardware&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hardware information<br>&nbsp; interface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on interface<br>&nbsp; neighbor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filter on neighbor<br>&nbsp; objects&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display bridge-domain objects information<br>&nbsp; pbb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Provider backbone bridge information<br>&nbsp; private&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Private information<br>&nbsp; summary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bridge domain summary information<br>&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output Modifiers</span><br>
+<br>
+<br>
+Check VPLS (mac-addresses and various L2 features like DHCP snooping, ARP inspection, etc.)<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ASR9k</span>#<span style="color: blue;">sh l2vpn forwarding bridge-domain</span> ?<br>&nbsp; WORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specify Bridge group name:Bridge domain name<br>&nbsp; debug&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Include debug information<br>&nbsp; <span style="color: blue;">detail</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Detailed information<br>&nbsp; hardware&nbsp;&nbsp;&nbsp;&nbsp; Read from hardware<br>&nbsp; <span style="color: blue;">location</span>&nbsp;&nbsp;&nbsp;&nbsp; Specify a location<br>&nbsp; <span style="color: blue;">mac-address</span>&nbsp; MAC address information<br>&nbsp; mroute&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; multicast route information<br>&nbsp; pbb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Provider backbone bridge information<br>&nbsp; private&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Include private information</span><br>
+<br>
+<br>
+<br>
+<u><b>L2transport ethertype</b></u><br>
+<br>
+When configuring a l2transport interface in IOS-XR you have the following options regarding its tagging/ethertype:<br>
+<br>
+<ul>
+<li>dot1q single vlan</li>
+<ul>
+<li>ethertype 0x8100 (default)</li>
+</ul>
+<li>dot1q double vlan (QinQ)</li>
+<ul>
+<li>ethertype 0x8100 (default)</li>
+<li>ethertype 0x9100</li>
+<li>ethertype 0x9200</li>
+</ul>
+<li>dot1ad single vlan</li>
+<ul>
+<li>ethertype 0x88a8 (default)</li>
+</ul>
+<li>dot1ad double vlan</li>
+<ul>
+<li>ethertype 0x88a8 (default)</li>
+</ul>
+</ul>
+<span style="background-color: yellow;">The above ethertype refers always to the outer vlan.</span><br>
+<br>
+dot1q refers to 802.1q, while dot1ad refers to 802.1ad (which is the standard).<br>
+<br>
+<hr>
+<br>
+<u><b>H-VPLS</b></u><br>
+<br>
+Instead of having a full-mesh of core pseudowires from end to end, <span style="background-color: yellow;">you partition the network into smaller access domains (containing U-PEs and CEs) and a core domain (containing N-PEs and Ps).</span><br>
+<br>
+N=Network<br>
+U= User<br>
+<br>
+<ul>
+<li>core domain</li>
+<ul>
+<li>core PWs between all N-PEs</li>
+</ul>
+<li>access domains</li>
+<ul>
+<li>access PWs between each U-PE and a core N-PE</li>
+</ul>
+</ul>
+You can also have simple L2 ethernet circuits instead of access PWs.<br>
+<br>
+Configuration-wise the idea is the same as above: <br>
+<br>
+<ul>
+<li>CE</li>
+<ul>
+<li>no change</li>
+</ul>
+<li>U-PE</li>
+<ul>
+<li>one (or two) p2p PW from the U-PE to one (or two) N-PE</li>
+</ul>
+<li>N-PE</li>
+<ul>
+<li>full-mesh of p2p PWs between all N-PEs </li>
+</ul>
+<li>P</li>
+<ul>
+<li>just MPLS switching </li>
+</ul>
+</ul>
+<br>
+<u>Example N-PE Config</u><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR </u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;<span style="color: blue;">bridge group</span> A-BRGRP<br>&nbsp; <span style="color: blue;">bridge-domain</span> A-BRDOM</span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; <span style="color: blue;">neighbor</span> U-PE1 pw-id k1</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; pw-class Z</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; ! </span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp; <span style="color: blue;">vfi</span> A-VFI<br>&nbsp;&nbsp;&nbsp; <span style="color: blue;">neighbor</span> N-PE2 pw-id k1</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp; pw-class Z</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">neighbor</span> N-PE3 pw-id k2</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp; pw-class Z</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br></span>
+<br>
+<br>
+The above N-PE is responsible for switching the traffic from the access PW (coming from U-PE1) to the core PWs (going to N-PE2 and N-PE3) and vice versa, based on the usual mac learning.<br>
+<br>
+<span style="background-color: yellow;">Remember that access PWs go outside the VFI and core PWs go inside the VFI, while everything goes under the bridge-domain.</span><br>
+<br>
+<hr>
+<br>
+<u><b>Local Switching</b></u><br>
+<br>
+<u>Vlan to Vlan</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface FastEthernet0/0.1<br>&nbsp;encapsulation dot1q 1<br>!<br>interface FastEthernet0/0.2<br>&nbsp;encapsulation dot1q 2<br>!<br><span style="color: blue;">connect</span> VLAN2VLAN FastEthernet0/0.1 FastEthernet0/0.2</span><br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface TenGigE0/0/0/0.1 <span style="color: blue;">l2transport</span><br>&nbsp;dot1q vlan 100<br>!<br>interface TenGigE0/0/0/0.2 <span style="color: blue;">l2transport</span><br>&nbsp;dot1q vlan 200<br>!<br>l2vpn<br>&nbsp;<span style="color: blue;">xconnect</span> group XCONGRP<br>&nbsp; <span style="color: blue;">p2p</span> LS-P2P<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> TenGigE0/0/0/0.1<br>&nbsp;&nbsp; <span style="color: blue;">interface</span> TenGigE0/0/0/0.2</span><br>
+<br>
+<br>
+<br>
+<u>Frame-Relay to Frame-Relay</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">frame-relay switching</span><br>!<br>interface Serial2/0<br>&nbsp;encapsulation frame-relay<br>&nbsp;frame-relay interface-dlci 100 switched<br>&nbsp;frame-relay intf-type dce<br>!<br>interface Serial2/1<br>&nbsp;encapsulation frame-relay<br>&nbsp;frame-relay interface-dlci 200 switched<br>&nbsp;frame-relay intf-type dce<br>!<br>connect FR2FR serial2/0 100 serial2/1 200 </span><br>
+<br>
+<br>
+<u>L2TPv3 Local Switching</u><br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: #674ea7;">pseudowire-class L2TP-1-CLASS<br>&nbsp;encapsulation l2tpv3<br>&nbsp;ip local interface Loopback0</span><br>!<br><span style="color: #45818e;">pseudowire-class L2TP-11-CLASS<br>&nbsp;encapsulation l2tpv3<br>&nbsp;ip local interface Loopback1</span><br>!<br><span style="color: #674ea7;">interface Loopback0<br>&nbsp;ip address 1.1.1.1 255.255.255.255</span><br>!<br><span style="color: #45818e;">interface Loopback1<br>&nbsp;ip address 11.11.11.11 255.255.255.255</span><br>!<br><span style="color: #674ea7;">interface FastEthernet0/0<br>&nbsp;xconnect 11.11.11.11 111 pw-class L2TP-1-CLASS</span><br>!<br><span style="color: #45818e;">interface FastEthernet0/1<br>&nbsp;xconnect 1.1.1.1 111 pw-class L2TP-11-CLASS</span></span><br>
+<br>
+<span style="background-color: yellow;">2 loopbacks are required for L2TPv3 local switching to work.</span><br>
+<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh xconnect all</span><br>Legend:&nbsp;&nbsp;&nbsp; XC ST=Xconnect State&nbsp; S1=Segment1 State&nbsp; S2=Segment2 State<br>&nbsp; UP=Up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DN=Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AD=Admin Down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IA=Inactive<br>&nbsp; SB=Standby&nbsp; HS=Hot Standby&nbsp;&nbsp;&nbsp;&nbsp; RV=Recovering&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NH=No Hardware<br><br>XC ST&nbsp; Segment 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S1 Segment 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S2<br>------+---------------------------------+--+---------------------------------+--<br>UP&nbsp;&nbsp;&nbsp;&nbsp; ac&nbsp;&nbsp; Fa0/1(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP l2tp 1.1.1.1:111&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP<br>UP&nbsp;&nbsp;&nbsp;&nbsp; ac&nbsp;&nbsp; Fa0/0(Ethernet)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP l2tp 11.11.11.11:111&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP</span><br>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">R1#<span style="color: blue;">sh l2tun tunnel sum</span><br><br>L2TP Tunnel Information Total tunnels 2 sessions 2<br><br>LocTunID&nbsp;&nbsp; RemTunID&nbsp;&nbsp; Remote Name&nbsp;&nbsp; State&nbsp; Remote Address&nbsp; Sessn L2TP Class/<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Count VPDN Group<br>1280397094 3308679294 R1&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; est&nbsp;&nbsp;&nbsp; 11.11.11.11&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp; l2tp_default_cl<br>3308679294 1280397094 R1&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; est&nbsp;&nbsp;&nbsp; 1.1.1.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp; l2tp_default_cl</span><br>
+<br>
+<br>
+<hr>
+<br>
+<u><b>L2VPN/AToM over GRE</b></u><br>
+<br>
+<u>Configuration Steps</u><br>
+<ul>
+<li>create a GRE tunnel with destination the remote L2VPN PE</li>
+<li>enable MPLS on the GRE tunnel</li>
+<li>route the PW through the GRE tunnel (using IGP, static route, preferred-path)</li>
+</ul>
+<br>
+<u>R2 (<span style="background-color: #ead1dc;">IOS</span>)</u><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface Tunnel0<br>&nbsp;ip unnumbered Loopback0<br>&nbsp;<span style="color: blue;">mpls ip</span><br>&nbsp;tunnel source </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">2.2.29.2</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;tunnel destination 2.2.79.7</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ip route 2.2.0.7 255.255.255.255 Tunnel0<br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface Ethernet1/0<br>&nbsp;<span style="color: blue;">xconnect</span> 2.2.0.7 27 pw-class PWCLASS</span><u></u><br>
+<br>
+<u>R7 (<span style="background-color: #ead1dc;">IOS</span>)</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface Tunnel0<br>&nbsp;ip unnumbered Loopback0<br>&nbsp;<span style="color: blue;">mpls ip</span><br>&nbsp;tunnel source </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">2.2.79.7</span></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span>tunnel destination 2.2.29.2<br>!</span>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ip route 2.2.0.2 255.255.255.255 Tunnel0<br>!</span>
+<br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface Ethernet1/0<br>&nbsp;<span style="color: blue;">xconnect</span> 2.2.0.2 27 pw-class PWCLASS</span><br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">interface tunnel-ip</span>0<br>&nbsp;ipv4 address 10.10.10.1/24<br>&nbsp;<span style="color: blue;">tunnel mode gre ipv4</span><br>&nbsp;tunnel source 11.11.11.1<br>&nbsp;tunnel destination 12.12.12.2<br>!</span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">mpls ldp</span><br>&nbsp;<span style="color: blue;">interface tunnel-ip</span>0<br>!<br>l2vpn<br>&nbsp;xconnect group XCONGRP<br>&nbsp; p2p P2P<br>&nbsp;&nbsp; neighbor 2.2.2.2 pw-id 12</span><br>
+<br>
+<br>
+The other end of the tunnel is also the remote PE where the PW terminates.<br>
+<br>
+<span style="background-color: yellow;">You must also enable an IGP on the tunnel (or create a static route for a different hop), in order to drive the PW destination across it. Be careful of recursive routing (tunnel destination must not go through the tunnel itself).</span><br>
+<br>
+In latest <span style="background-color: #d9ead3;">IOS-XR</span>, you can also use the <b>preferred tunnel-path</b> feature in order to map the PW to a specific GRE tunnel, instead of pointing the PW to the remote PE router..<br>
+<br>
+<br>
+<span style="background-color: #d9ead3;"><u>IOS-XR</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">l2vpn<br>&nbsp;pw-class GRE-PWCLASS<br>&nbsp; encapsulation mpls<br>&nbsp; <span style="color: blue;">preferred-path</span> interface tunnel-ip0</span><br>
+<br>
+<br>
+Only PE-to-PE tunnels are supported when using preferred-path.<br>
+<br>
+IOS supports something similar, but in very specific hardware and software.<br>
+<br>
+<hr>
+<br>
+<u><b>PW Switching or Multisegment PW</b></u><br>
+<br>
+An L2VPN multisegment PW (MS-PW, also known as switched PW) is a set of two or more PW segments that function as a single PW. They can be inside a single AS or they can span multiple AS.<br>
+<br>
+The end routers are called terminating PE routers (T-PEs) and the switching routers are called S-PE routers. <br>
+<br>
+S-PE's role is to<br>
+<ul>
+<li>terminate the tunnels of the preceding and succeeding PW segments</li>
+<li>switch the control and data planes of the preceding and succeeding PW segments</li>
+</ul>
+<br>
+<span style="background-color: yellow;">An MS-PW is declared to be up when all the single-segment PWs are up. </span><br>
+<br>
+<span style="background-color: yellow;">Interworking must be configured only at the edge PEs, not on the S-PEs.</span><br>
+<br>
+<br>
+In an MS-PW spanning PE-1 &lt;=&gt; S-PE-2 &lt;=&gt; S-PE-3 &lt;=&gt; PE-4, the configuration would be the following:<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<br>
+<u>PE-1</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface X<br>&nbsp;xconnect S-PE-2 12 encapsulation mpls</span><br>
+<br>
+<u>S-PE-2</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2 vfi</span> MS123-VFI <span style="color: blue;">point-to-point</span><br>&nbsp;<span style="color: blue;">neighbor</span> PE-1 12 encapsulation mpls<br>&nbsp;<span style="color: blue;">neighbor</span> S-PE-3 23 encapsulation mpls</span><br>
+<br>
+<u>S-PE-3</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2 vfi</span> MS234-VFI point-to-point<br>&nbsp;<span style="color: blue;">neighbor</span> S-PE-2 23 encapsulation mpls<br>&nbsp;<span style="color: blue;">neighbor</span> PE-4 34 encapsulation mpls</span><br>
+<br>
+<u>PE-4</u><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">interface X<br>&nbsp;xconnect S-PE-3 34 encapsulation mpls</span><br>
+<br>
+<br>
+<hr>
+<br>
+<u><b>BGP-Based VPLS Autodiscovery</b></u><br>
+<br>
+It enables each VPLS PE router to discover "automatically" the other PE routers that are part of the same VPLS domain using BGP.<br>
+<br>
+BGP uses the L2VPN RIB to store endpoint provisioning information, which is updated each time a L2 VFI is configured. When BGP distributes the endpoint provisioning information in an update message to all its BGP neighbors, the endpoint information is used to configure a PW mesh between these neighbors. <br>
+<br>
+In older releases, VPLS Autodiscovery is not supported with L2TPv3 or Inter-AS topologies.<br>
+<br>
+<span style="background-color: yellow;">You can configure both autodiscovered and manually configured PWs in the same VFI, but not for the same peer PE. If you need to do that, then configure appropriately the RT values to prevent each peer from receiving discovery data for that VPLS. </span><br>
+<br>
+You will want to configure extra static VPLS neighbors for:<br>
+<ul>
+<li>PEs that do not participate in the autodiscovery process (in order to join the VPLS)</li>
+<li>PEs that have been configured with the Tunnel Selection feature</li>
+<li>U-PEs in H-VPLS configurations that do not participate in the autodiscovery process and have split-horizon forwarding disabled </li>
+</ul>
+<br>
+The same RT is not allowed in multiple VFIs in the same PE router. <br>
+<br>
+In older releases, the BGP peer address must be a /32 address bound to the peer's LDP router-id. <br>
+<br>
+<span style="background-color: yellow;">Split-horizon should not be disabled on autodiscovered neighbors.</span><br>
+<br>
+Route reflectors can be used to reflect the BGP VPLS prefixes without having VPLS explicitly configured on them.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS</u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2 vfi</span> VPLSAUTO-VFI <span style="color: blue;">autodiscovery</span><br>&nbsp;vpn id 100<br>!<br>router bgp 1<br>&nbsp;no bgp default ipv4-unicast<br>&nbsp;neighbor 2.2.2.2 remote-as 1<br>&nbsp;neighbor 2.2.2.2 update-source Loopback0<br>!<br>&nbsp;<span style="color: blue;">address-family l2vpn vpls</span><br>&nbsp; <span style="color: blue;">neighbor</span> 2.2.2.2 <span style="color: blue;">activate</span><br>&nbsp; <span style="color: blue;">neighbor</span> 2.2.2.2 <span style="color: blue;">send-community extended</span>&nbsp; <br>&nbsp;exit-address-family </span><br>
+<br>
+<span style="background-color: yellow;">The same vpn id must be configured on all PEs that are part of the same VPN.</span><br>
+<br>
+It's good practice to also use "<span style="color: blue;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bgp update-delay 1</span></span>" in order to minimize the initial update time.<br>
+<br>
+There are various options you can configure under the l2 vfi, with the RT being the most important.<br>
+<br>
+<span style="background-color: #ead1dc;"><u>IOS </u></span><br>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">l2 vfi</span> VPLSAUTO-VFI autodiscovery<br>&nbsp;vpn id X<br>&nbsp;<span style="color: blue;">vpls-id</span> X:Y<br>&nbsp;<span style="color: blue;">rd</span> X:Y</span><br>
+&nbsp; <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="color: blue;">route-target</span> import/export X:Y<br>&nbsp;<span style="color: blue;">l2 router-id</span> x.x.x.x</span><br>
+<br>
+<br>
+Default values:<br>
+<ul>
+<li><b>vpls-id</b>: ASN:vpn-id</li>
+<li><b>rd</b>: ASN:vpn-id</li>
+<li><b>route-target</b>: lower 6 bytes of rd and vpls-id</li>
+<li><b>l2 router-id</b>: LDP router-id</li>
+</ul>
+<br>
+VPLS ID is a BGP extended community value that identifies the VPLS 
+domain. It must be the same between PEs of the same VPN and unique 
+between different VFIs of the same PE. <span style="background-color: yellow;">In
+ case of Inter-AS VPLS, it must be <b>defined manually</b> and be the same on 
+all PEs of the same VPLS domain, since ASNs are different.</span><br>
+<br>
+<hr>
+<br>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1"><span class="post-author vcard">
+Posted by
+<span class="fn" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+<meta content="https://www.blogger.com/profile/04512662084752743003" itemprop="url">
+<a class="g-profile" href="https://www.blogger.com/profile/04512662084752743003" rel="author" title="author profile">
+<span itemprop="name">Tassos</span>
+</a>
+</span>
+</span>
+<span class="post-timestamp">
+at
+<meta content="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html" itemprop="url">
+<a class="timestamp-link" href="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2014-02-06T01:17:00+02:00">01:17</abbr></a>
+</span>
+<span class="post-comment-link">
+</span>
+<span class="post-icons">
+<span class="item-control blog-admin pid-187529974">
+<a href="https://www.blogger.com/post-edit.g?blogID=1312588810478429008&amp;postID=5428887964012484605&amp;from=pencil" title="Edit Post">
+<img alt="" class="icon-action" height="18" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon18_edit_allbkg.gif" width="18">
+</a>
+</span>
+</span>
+<div class="post-share-buttons goog-inline-block">
+<a class="goog-inline-block share-button sb-email" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=5428887964012484605&amp;target=email" target="_blank" title="Email This"><span class="share-button-link-text">Email This</span></a><a class="goog-inline-block share-button sb-blog" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=5428887964012484605&amp;target=blog" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=270,width=475&quot;); return false;" target="_blank" title="BlogThis!"><span class="share-button-link-text">BlogThis!</span></a><a class="goog-inline-block share-button sb-twitter" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=5428887964012484605&amp;target=twitter" target="_blank" title="Share to Twitter"><span class="share-button-link-text">Share to Twitter</span></a><a class="goog-inline-block share-button sb-facebook" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=5428887964012484605&amp;target=facebook" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=430,width=640&quot;); return false;" target="_blank" title="Share to Facebook"><span class="share-button-link-text">Share to Facebook</span></a><a class="goog-inline-block share-button sb-pinterest" href="https://www.blogger.com/share-post.g?blogID=1312588810478429008&amp;postID=5428887964012484605&amp;target=pinterest" target="_blank" title="Share to Pinterest"><span class="share-button-link-text">Share to Pinterest</span></a>
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2"><span class="post-labels">
+Labels:
+<a href="http://ccie-in-2-months.blogspot.com/search/label/AToM" rel="tag">AToM</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/EoMPLS" rel="tag">EoMPLS</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/interworking" rel="tag">interworking</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/L2TPv3" rel="tag">L2TPv3</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/L2VPN" rel="tag">L2VPN</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/pseudowire" rel="tag">pseudowire</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/PW" rel="tag">PW</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/pw-class" rel="tag">pw-class</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/redundancy" rel="tag">redundancy</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/VFI" rel="tag">VFI</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/VPLS" rel="tag">VPLS</a>,
+<a href="http://ccie-in-2-months.blogspot.com/search/label/xconnect" rel="tag">xconnect</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3"></div>
+</div>
+</div>
+<div class="comments" id="comments">
+<a name="comments"></a>
+<h4>No comments:</h4>
+<div id="Blog1_comments-block-wrapper">
+<dl class="avatar-comment-indent" id="comments-block">
+</dl>
+</div>
+<p class="comment-footer">
+</p><div class="comment-form">
+<a name="comment-form"></a>
+<h4 id="comment-post-message">Post a Comment</h4>
+<p>
+</p>
+<a href="https://www.blogger.com/comment/frame/1312588810478429008?po=5428887964012484605&amp;hl=en&amp;blogspotRpcToken=5785304" id="comment-editor-src"></a>
+<iframe allowtransparency="true" class="blogger-iframe-colorize blogger-comment-from-post" frameborder="0" height="347px" id="comment-editor" name="comment-editor" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/1312588810478429008.html" width="100%" data-resized="true"></iframe>
+<script src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/4235886812-comment_from_post_iframe.js.download" type="text/javascript"></script>
+<script type="text/javascript">
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+<p></p>
+</div>
+</div>
+
+        </div></div>
+      
+</div>
+<div class="blog-pager" id="blog-pager">
+<span id="blog-pager-newer-link">
+<a class="blog-pager-newer-link" href="http://ccie-in-2-months.blogspot.com/2013/12/multicast-vpn-hints.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+</span>
+<span id="blog-pager-older-link">
+<a class="blog-pager-older-link" href="http://ccie-in-2-months.blogspot.com/2013/12/multicast-hints.html" id="Blog1_blog-pager-older-link" title="Older Post">Older Post</a>
+</span>
+<a class="home-link" href="http://ccie-in-2-months.blogspot.com/">Home</a>
+</div>
+<div class="clear"></div>
+<div class="post-feeds">
+<div class="feed-links">
+Subscribe to:
+<a class="feed-link" href="http://ccie-in-2-months.blogspot.com/feeds/5428887964012484605/comments/default" target="_blank" type="application/atom+xml">Post Comments (Atom)</a>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="column-left-outer">
+<div class="column-left-inner">
+<aside>
+</aside>
+</div>
+</div>
+<div class="column-right-outer">
+<div class="column-right-inner">
+<aside>
+<div class="sidebar section" id="sidebar-right-1"><div class="widget AdSense" data-version="1" id="AdSense2">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7190208364857458";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* ccie-in-2-months_sidebar-right-1_AdSense2_160x600_as */
+google_ad_slot = "8989396698";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/f(1).txt">
+</script>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML1">
+<h2 class="title">Countdown &amp; Readiness</h2>
+<div class="widget-content">
+<span id="countdown"><b>0</b>d, <b>0</b>h, <b>0</b>m, <b>0</b>s until CCIE Lab</span>
+
+<script language="javascript">
+// script to show a simple countdown
+
+// lab date
+var target_date = new Date("Feb 11, 2014, 00:00:00").getTime();
+
+// time variables 
+var days, hours, minutes, seconds;
+ 
+// find the tag element
+var countdown = document.getElementById("countdown");
+ 
+// update the id "countdown" every 1 second
+setInterval(function () {
+ 
+    // find the amount of "seconds" between now and target
+    //var current_date = new Date().getTime();
+    //var seconds_left = (target_date - current_date) / 1000;
+ 
+    //days = parseInt(seconds_left / 86400);
+    //seconds_left = seconds_left % 86400;
+     
+    //hours = parseInt(seconds_left / 3600);
+    //seconds_left = seconds_left % 3600;
+     
+    //minutes = parseInt(seconds_left / 60);
+    //seconds = parseInt(seconds_left % 60);
+     
+    // format countdown string
+    // countdown.innerHTML = "<b>" + days + "</b>d, <b>" + hours + "</b>h, <b>" + minutes + "</b>m, <b>" + seconds + "</b>s until CCIE Lab";  
+    countdown.innerHTML = "<b>0</b>d, <b>0</b>h, <b>0</b>m, <b>0</b>s until CCIE Lab";  
+
+ 
+}, 1000);
+</script>
+
+<br>
+
+<script language="javascript">
+// script to show a percentage bar
+
+function percentagebar(progress) {
+
+    var width = 190;
+    var bar = width * (progress / 100); 
+ 
+    document.write("<div style=\"position: relative; line-height: 1em; border: 1px solid black; width: " + width + "px\">"); 
+    document.write("<div style=\"height: 1.5em; width: " + bar + "px; background-color: #00AA00;\"></div>"); 
+    document.write("<div style=\"position: absolute; text-align: center; font-weight: bold; padding-top: .25em; width: " + width + "px; top: 0; left: 0\">" + progress + "%</div>"); 
+    document.write("</div>"); 
+    //document.write("<div style=\"text-align: center;\">...updated once per week...</div>"); 
+}
+
+percentagebar(77.3);
+
+
+</script><div style="position: relative; line-height: 1em; border: 1px solid black; width: 190px"><div style="height: 1.5em; width: 146.87px; background-color: #00AA00;"></div><div style="position: absolute; text-align: center; font-weight: bold; padding-top: .25em; width: 190px; top: 0; left: 0">77.3%</div></div>
+</div>
+<div class="clear"></div>
+</div><div class="widget Profile" data-version="1" id="Profile1">
+<h2>Guess Who</h2>
+<div class="widget-content">
+<a href="https://www.blogger.com/profile/04512662084752743003"><img alt="My photo" class="profile-img" height="80" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/_.jpg" width="59"></a>
+<dl class="profile-datablock">
+<dt class="profile-data">
+<a class="profile-name-link g-profile" href="https://www.blogger.com/profile/04512662084752743003" rel="author" style="background-image: url(//www.blogger.com/img/logo-16.png);">
+Tassos
+</a>
+</dt>
+<dd class="profile-data">Athens, Greece</dd>
+<dd class="profile-textblock">Just a crazy guy who enjoys putting himself into weird tests.
+Feel free to tickle me if you can handle so much craziness!
+Always open to new challenges.
+</dd>
+</dl>
+<a class="profile-link" href="https://www.blogger.com/profile/04512662084752743003" rel="author">View my complete profile</a>
+<div class="clear"></div>
+</div>
+</div><div class="widget Text" data-version="1" id="Text2">
+<h2 class="title">Contact me for any error</h2>
+<div class="widget-content">
+<span style="color:#ff4400;">If you think you have found something in my posts that doesn't seem right, please inform me (by writing a comment at the ambiguous post) as soon as possible. Don't forget that everyone can become better by learning from his mistakes.</span><br><br>
+</div>
+<div class="clear"></div>
+</div><div class="widget Poll" data-version="1" id="Poll1">
+<h2 class="title">Do you think it's possible to pass the CCIE lab in 2 months?</h2>
+<div class="widget-content">
+<iframe allowtransparency="true" frameborder="0" height="140" name="poll-widget-5240978320504195155" style="border:none; width:100%;" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/saved_resource(1).html"></iframe>
+<div class="clear"></div>
+</div>
+</div><div class="widget BlogSearch" data-version="1" id="BlogSearch1">
+<h2 class="title">Search for CCIE Content</h2>
+<div class="widget-content">
+<div id="BlogSearch1_form">
+<form action="http://ccie-in-2-months.blogspot.com/search" class="gsc-search-box" target="_top">
+<table cellpadding="0" cellspacing="0" class="gsc-search-box">
+<tbody>
+<tr>
+<td class="gsc-input">
+<input autocomplete="off" class="gsc-input" name="q" size="10" title="search" type="text" value="">
+</td>
+<td class="gsc-search-button">
+<input class="gsc-search-button" title="search" type="submit" value="Search">
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+<div class="clear"></div>
+</div><div class="widget Subscribe" data-version="1" id="Subscribe1">
+<div style="white-space:nowrap">
+<h2 class="title">Subscribe To</h2>
+<div class="widget-content">
+<div class="subscribe-wrapper subscribe-type-POST">
+<div class="subscribe expanded subscribe-type-POST" id="SW_READER_LIST_Subscribe1POST" style="display:none;">
+<div class="top">
+<span class="inner" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1POST&quot;));">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/arrow_dropdown.gif">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon_feed12.png">
+Posts
+</span>
+<div class="feed-reader-links">
+<a class="feed-reader-link" href="https://www.netvibes.com/subscribe.php?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/subscribe-netvibes.png">
+</a>
+<a class="feed-reader-link" href="https://add.my.yahoo.com/content?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/subscribe-yahoo.png">
+</a>
+<a class="feed-reader-link" href="http://ccie-in-2-months.blogspot.com/feeds/posts/default" target="_blank">
+<img align="absmiddle" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon_feed12.png">
+                  Atom
+                </a>
+</div>
+</div>
+<div class="bottom"></div>
+</div>
+<div class="subscribe" id="SW_READER_LIST_CLOSED_Subscribe1POST" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1POST&quot;));">
+<div class="top">
+<span class="inner">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/arrow_dropdown.gif">
+<span onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1POST&quot;));">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon_feed12.png">
+Posts
+</span>
+</span>
+</div>
+<div class="bottom"></div>
+</div>
+</div>
+<div class="subscribe-wrapper subscribe-type-PER_POST">
+<div class="subscribe expanded subscribe-type-PER_POST" id="SW_READER_LIST_Subscribe1PER_POST" style="display:none;">
+<div class="top">
+<span class="inner" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1PER_POST&quot;));">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/arrow_dropdown.gif">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon_feed12.png">
+Comments
+</span>
+<div class="feed-reader-links">
+<a class="feed-reader-link" href="https://www.netvibes.com/subscribe.php?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2F5428887964012484605%2Fcomments%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/subscribe-netvibes.png">
+</a>
+<a class="feed-reader-link" href="https://add.my.yahoo.com/content?url=http%3A%2F%2Fccie-in-2-months.blogspot.com%2Ffeeds%2F5428887964012484605%2Fcomments%2Fdefault" target="_blank">
+<img src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/subscribe-yahoo.png">
+</a>
+<a class="feed-reader-link" href="http://ccie-in-2-months.blogspot.com/feeds/5428887964012484605/comments/default" target="_blank">
+<img align="absmiddle" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon_feed12.png">
+                  Atom
+                </a>
+</div>
+</div>
+<div class="bottom"></div>
+</div>
+<div class="subscribe" id="SW_READER_LIST_CLOSED_Subscribe1PER_POST" onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1PER_POST&quot;));">
+<div class="top">
+<span class="inner">
+<img class="subscribe-dropdown-arrow" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/arrow_dropdown.gif">
+<span onclick="return(_SW_toggleReaderList(event, &quot;Subscribe1PER_POST&quot;));">
+<img align="absmiddle" alt="" border="0" class="feed-icon" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/icon_feed12.png">
+Comments
+</span>
+</span>
+</div>
+<div class="bottom"></div>
+</div>
+</div>
+<div style="clear:both"></div>
+</div>
+</div>
+<div class="clear"></div>
+</div><div class="widget PopularPosts" data-version="1" id="PopularPosts1">
+<h2>Popular Posts</h2>
+<div class="widget-content popular-posts">
+<ul>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html">NTS: AToM/L2VPN/VPLS</a></div>
+<div class="item-snippet"> AToM/L2VPN/VPLS     PW (PseudoWire) architecture is described in RFC 3985 .  LDP for PWs is defined in RFC 4447 .  EoMPLS (Ethernet over MP...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2013/12/vrf-hints.html">NTS: VRF</a></div>
+<div class="item-snippet"> VRF     VRF Basic Configuration   IOS  ip vrf  VPN-A &nbsp; rd  100:1  &nbsp; route-target export  100:1  &nbsp; route-target import  100:1  !  vrf defini...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2013/12/is-is-hints.html">NTS: IS-IS</a></div>
+<div class="item-snippet"> IS-IS     IS-IS (Intermediate System to Intermediate System) is defined in ISO 10589 and in&nbsp; RFC 1142  and RFC 1195 .  IS-IS Multi-Instance...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-mpls-te.html">NTS: RSVP/MPLS-TE</a></div>
+<div class="item-snippet">  RSVP/MPLS-TE     MPLS-TE (MPLS Traffic Engineering) Requirements are described in RFC 2702 .  RSVP (Resource Reservation Protocol) is defi...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-content">
+<div class="item-title"><a href="http://ccie-in-2-months.blogspot.com/2013/12/mplsldp-hints.html">NTS: MPLS/LDP</a></div>
+<div class="item-snippet"> MPLS/LDP     LDP (Label Distribution Protocol) is defined in RFC 5036.  MPLS (Multi-Protocol Label Switching) architecture is defined in RF...</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div><div class="widget BlogArchive" data-version="1" id="BlogArchive1">
+<h2>Blog Archive</h2>
+<div class="widget-content">
+<div id="ArchiveList">
+<div id="BlogArchive1_ArchiveList">
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2014/">
+2014
+</a>
+<span class="post-count" dir="ltr">(37)</span>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2014/02/">
+Feb 2014
+</a>
+<span class="post-count" dir="ltr">(29)</span>
+<ul class="posts">
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/the-chronicle-of-success.html">The chronicle of success</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/wtf-was-that.html">...wtf was that?</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/lab-week-9.html">Lab Week #9</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/countdown-continues3-days-left.html">Countdown continues...3 days left...</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/lab-week-8.html">Lab Week #8</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/nts-advanced-multicast.html">NTS: Advanced Multicast</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-advanced-mpls-te.html">NTS: Advanced MPLS-TE</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-ppp.html">NTS: PPP/Serial/POS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/redistribution-hints.html">NTS: L3VPN Redistribution</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/vrf-hints.html">NTS: VRF</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-csc.html">NTS: CsC</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/02/nts-qos.html">NTS: QoS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/bfd-hints.html">NTS: BFD</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-mpls-te.html">NTS: RSVP/MPLS-TE</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/bgp-hints.html">NTS: BGP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/ospfv2ospfv3-hints.html">NTS: OSPFv2/OSPFv3</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/eigrp-hints.html">NTS: EIGRP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-rip.html">NTS: RIP/RIPng</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/frame-relay-hints.html">NTS: Frame-Relay</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/other.html">NTS: Other</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/is-is-hints.html">NTS: IS-IS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/inter-as-mpls-l3vpn-hints.html">NTS: Inter-AS MPLS L3VPN</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-advanced-bgp.html">NTS: Advanced BGP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/uni-eni-vlans-vs-private-vlans-on-me.html">NTS: UNI-ENI Vlans vs Private Vlans</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/mplsldp-hints.html">NTS: MPLS/LDP</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/multicast-vpn-hints.html">NTS: Multicast VPN</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html">NTS: AToM/L2VPN/VPLS</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2013/12/multicast-hints.html">NTS: Multicast</a></li>
+<li><a href="http://ccie-in-2-months.blogspot.com/2014/01/nts-6pe6vpe.html">NTS: 6PE/6VPE</a></li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2014/01/">
+Jan 2014
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/">
+2013
+</a>
+<span class="post-count" dir="ltr">(13)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/12/">
+Dec 2013
+</a>
+<span class="post-count" dir="ltr">(6)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/11/">
+Nov 2013
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://ccie-in-2-months.blogspot.com/2013/10/">
+Oct 2013
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div><div class="widget BlogList" data-version="1" id="BlogList1">
+<h2 class="title">Blog List RSS</h2>
+<div class="widget-content">
+<div class="blog-list-container" id="BlogList1_container">
+<ul id="BlogList1_blogs">
+<li style="display: block;">
+<div class="blog-icon">
+<img data-lateloadsrc="https://lh3.googleusercontent.com/blogger_img_proxy/ALY8t1vzgfTcOIDnOm8KEEKigsfU8J0qmvxqeMBVpxI9q49BNfqC3ghanQ6-GVcUJy-8rqGnNgN3OWS2JVUNxhJ_BGAsDsPzv6qPkMaIbJWQ10hS3H4zLg=s16-w16-h16" height="16" width="16" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/unnamed.png">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://ccie-in-3-months.blogspot.com/" target="_blank">
+CCIE in 3 months - Is it possible?</a>
+</div>
+<div class="item-content">
+<span class="item-title">
+<a href="http://ccie-in-3-months.blogspot.com/2014/02/ipv6-radius-accounting-is-still-mess.html" target="_blank">
+IPv6 radius accounting is still a mess
+</a>
+</span>
+<div class="item-time">
+9 years ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+</div>
+</div>
+</div><div class="widget Stats" data-version="1" id="Stats1">
+<h2>Total Pageviews</h2>
+<div class="widget-content">
+<div id="Stats1_content" style="">
+<script src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/loader(1).js.download" type="text/javascript"></script>
+<span id="Stats1_sparklinespan" style="display:inline-block; width:75px; height:30px"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 75px; height: 30px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="75" height="30" aria-label="A chart." style="overflow: hidden;"><defs id="_ABSTRACT_RENDERER_ID_0"><clippath id="_ABSTRACT_RENDERER_ID_1"><rect x="0" y="0" width="75" height="30"></rect></clippath></defs><rect x="0" y="0" width="75" height="30" stroke="none" stroke-width="0" fill-opacity="0.1" fill="#000000"></rect><g><rect x="0" y="0" width="75" height="30" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html#_ABSTRACT_RENDERER_ID_1)"><g><g><path d="M0.5,29.5L0.5,29.5L0.5,21.510204081632654L3.0517241379310347,23.877551020408163L5.603448275862069,27.132653061224488L8.155172413793103,25.357142857142858L10.706896551724139,25.357142857142858L13.258620689655174,24.1734693877551L15.810344827586208,26.540816326530614L18.362068965517242,11.153061224489797L20.913793103448278,22.98979591836735L23.465517241379313,15.295918367346939L26.01724137931035,22.693877551020407L28.56896551724138,18.846938775510203L31.120689655172416,21.510204081632654L33.67241379310345,24.1734693877551L36.224137931034484,26.244897959183675L38.77586206896552,23.285714285714285L41.327586206896555,25.948979591836736L43.87931034482759,23.877551020408163L46.431034482758626,8.193877551020407L48.98275862068966,17.367346938775512L51.5344827586207,0.5L54.08620689655173,21.806122448979593L56.63793103448276,9.96938775510204L59.1896551724138,22.10204081632653L61.74137931034483,12.040816326530614L64.29310344827587,24.46938775510204L66.8448275862069,22.39795918367347L69.39655172413794,20.622448979591837L71.94827586206897,25.653061224489797L74.5,19.73469387755102L74.5,29.5L74.5,29.5Z" stroke="none" stroke-width="0" fill-opacity="0.3" fill="#202020"></path></g></g><g><rect x="0" y="0" width="1" height="30" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="0" y="29" width="75" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g><g><path d="M0.5,21.510204081632654L3.0517241379310347,23.877551020408163L5.603448275862069,27.132653061224488L8.155172413793103,25.357142857142858L10.706896551724139,25.357142857142858L13.258620689655174,24.1734693877551L15.810344827586208,26.540816326530614L18.362068965517242,11.153061224489797L20.913793103448278,22.98979591836735L23.465517241379313,15.295918367346939L26.01724137931035,22.693877551020407L28.56896551724138,18.846938775510203L31.120689655172416,21.510204081632654L33.67241379310345,24.1734693877551L36.224137931034484,26.244897959183675L38.77586206896552,23.285714285714285L41.327586206896555,25.948979591836736L43.87931034482759,23.877551020408163L46.431034482758626,8.193877551020407L48.98275862068966,17.367346938775512L51.5344827586207,0.5L54.08620689655173,21.806122448979593L56.63793103448276,9.96938775510204L59.1896551724138,22.10204081632653L61.74137931034483,12.040816326530614L64.29310344827587,24.46938775510204L66.8448275862069,22.39795918367347L69.39655172413794,20.622448979591837L71.94827586206897,25.653061224489797L74.5,19.73469387755102" stroke="#202020" stroke-width="2" fill-opacity="1" fill="none"></path></g></g><g></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>0</td><td>27</td></tr><tr><td>1</td><td>19</td></tr><tr><td>2</td><td>8</td></tr><tr><td>3</td><td>14</td></tr><tr><td>4</td><td>14</td></tr><tr><td>5</td><td>18</td></tr><tr><td>6</td><td>10</td></tr><tr><td>7</td><td>62</td></tr><tr><td>8</td><td>22</td></tr><tr><td>9</td><td>48</td></tr><tr><td>10</td><td>23</td></tr><tr><td>11</td><td>36</td></tr><tr><td>12</td><td>27</td></tr><tr><td>13</td><td>18</td></tr><tr><td>14</td><td>11</td></tr><tr><td>15</td><td>21</td></tr><tr><td>16</td><td>12</td></tr><tr><td>17</td><td>19</td></tr><tr><td>18</td><td>72</td></tr><tr><td>19</td><td>41</td></tr><tr><td>20</td><td>98</td></tr><tr><td>21</td><td>26</td></tr><tr><td>22</td><td>66</td></tr><tr><td>23</td><td>25</td></tr><tr><td>24</td><td>59</td></tr><tr><td>25</td><td>17</td></tr><tr><td>26</td><td>24</td></tr><tr><td>27</td><td>30</td></tr><tr><td>28</td><td>13</td></tr><tr><td>29</td><td>33</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 40px; left: 85px; white-space: nowrap; font-family: Arial; font-size: 6px; font-weight: bold;"></div><div></div></div></span>
+<span class="counter-wrapper graph-counter-wrapper" id="Stats1_totalCount">
+<span class="digit stage-0"><strong>3</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>7</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>9</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>5</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>4</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>2</strong><span class="blind-plate"></span></span></span>
+<div class="clear"></div>
+</div>
+</div>
+</div><div class="widget AdSense" data-version="1" id="AdSense4">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7190208364857458";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* ccie-in-2-months_sidebar-right-1_AdSense4_160x600_as */
+google_ad_slot = "6835215494";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/f(1).txt">
+</script>
+<div class="clear"></div>
+</div>
+</div><div class="widget AdSense" data-version="1" id="AdSense1">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7190208364857458";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* ccie-in-2-months_sidebar-right-1_AdSense1_160x600_as */
+google_ad_slot = "7512663496";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/f(1).txt">
+</script>
+<div class="clear"></div>
+</div>
+</div></div>
+</aside>
+</div>
+</div>
+</div>
+<div style="clear: both"></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class="main-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<footer>
+<div class="footer-outer">
+<div class="footer-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left footer-fauxborder-left">
+<div class="fauxborder-right footer-fauxborder-right"></div>
+<div class="region-inner footer-inner">
+<div class="foot section" id="footer-1"><div class="widget Text" data-version="1" id="Text1">
+<div class="widget-content">
+<span style="font-size:11;"><br><b>This material is not sponsored or endorsed by Cisco Systems, Inc.<br>Cisco, Cisco Systems, CCIE and the CCIE Logo are trademarks of Cisco Systems, Inc. and its affiliates.</b><br><br><span style="color:#009900;">The opinions expressed herein or statements made in <span style="font-weight: bold;">ccie-in-2-months.blogspot.com</span> are solely those of the author. The author accepts no legal liability or responsibility for any comments made herein by other blog readers.</span><br><br><span style="color:red;">The presence of an advertisement on </span><span style="font-weight: bold;color:red;">ccie-in-2-months.blogspot.com</span><span style="color:red;"> does not imply endorsement of the advertised company or product by the author. Advertisers must not make unsubstantiated claims or suggest that the author of this blog has endorsed a product. The author does not represent or endorse the accuracy  or reliability of any of the advertisements, links, or other information accessed directly or indirectly from advertisements contained on this blog, nor the quality of any products, information or other materials displayed, purchased or obtained by any consumer, as a result of an advertisement or any other information or offer in connection with the service or products.</span><br><br>The author accepts no legal liability or responsibility for any 3rd party content displayed on this blog.</span><br><br>
+</div>
+<div class="clear"></div>
+</div></div>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class="foot section" id="footer-3" name="Footer"><div class="widget Attribution" data-version="1" id="Attribution1">
+<div class="widget-content" style="text-align: center;">
+Powered by <a href="https://www.blogger.com/" target="_blank">Blogger</a>.
+</div>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="footer-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class="content-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+
+<script type="text/javascript" src="./CCIE in 2 months - Is it possible__ NTS_ AToM_L2VPN_VPLS_files/325989852-widgets.js.download"></script>
+<script type="text/javascript">
+window['__wavt'] = 'AOuZoY5iWtpGhBE13kSH6RlKxl5d9x4D1Q:1701583887603';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d1312588810478429008','//ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html','1312588810478429008');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '1312588810478429008', 'title': 'CCIE in 2 months - Is it possible?', 'url': 'http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html', 'canonicalUrl': 'http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html', 'homepageUrl': 'http://ccie-in-2-months.blogspot.com/', 'searchUrl': 'http://ccie-in-2-months.blogspot.com/search', 'canonicalHomepageUrl': 'http://ccie-in-2-months.blogspot.com/', 'blogspotFaviconUrl': 'http://ccie-in-2-months.blogspot.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'encoding': 'UTF-8', 'locale': 'en', 'localeUnderscoreDelimited': 'en', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - Atom\x22 href\x3d\x22http://ccie-in-2-months.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - RSS\x22 href\x3d\x22http://ccie-in-2-months.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/1312588810478429008/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22CCIE in 2 months - Is it possible? - Atom\x22 href\x3d\x22http://ccie-in-2-months.blogspot.com/feeds/5428887964012484605/comments/default\x22 /\x3e\n', 'meTag': '', 'adsenseClientId': 'ca-pub-7190208364857458', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': true, 'adsenseAutoAds': false, 'boqCommentIframeForm': true, 'loginRedirectParam': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/20dab6d510b63eb9', 'plusOneApiSrc': 'https://apis.google.com/js/platform.js', 'disableGComments': true, 'interstitialAccepted': false, 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Share to Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': false, 'jumpLinkMessage': 'Read more', 'pageType': 'item', 'postId': '5428887964012484605', 'pageName': 'NTS: AToM/L2VPN/VPLS', 'pageTitle': 'CCIE in 2 months - Is it possible?: NTS: AToM/L2VPN/VPLS', 'metaDescription': ''}}, {'name': 'features', 'data': {}}, {'name': 'messages', 'data': {'edit': 'Edit', 'linkCopiedToClipboard': 'Link copied to clipboard!', 'ok': 'Ok', 'postLink': 'Post Link'}}, {'name': 'template', 'data': {'isResponsive': false, 'isAlternateRendering': false, 'isCustom': false}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'NTS: AToM/L2VPN/VPLS', 'description': 'My personal blog about passing the CCIE CP lab in just two months.', 'url': 'http://ccie-in-2-months.blogspot.com/2014/01/nts-atoml2vpnvpls.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 5428887964012484605}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'crosscol', document.getElementById('PageList1'), {'title': 'Pages', 'links': [{'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/', 'title': 'Home'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/blog-page_7.html', 'id': '6340391009981756487', 'title': 'The Trio of Success'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/virtual-lab.html', 'id': '5797313027145813843', 'title': 'Home/Virtual Labs'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/the-hints-series.html', 'id': '8944090118188496192', 'title': 'Notes: The Series (NTS)'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/progress.html', 'id': '2719648315530251542', 'title': 'Exam Progress'}, {'isCurrentPage': false, 'href': 'http://ccie-in-2-months.blogspot.com/p/blog-page_13.html', 'id': '1383643103512861908', 'title': 'Lab Cost'}], 'mobile': false, 'showPlaceholder': false, 'hasCurrentPage': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/2258190084-lbx.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/3268905543-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense2', 'sidebar-right-1', document.getElementById('AdSense2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar-right-1', document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar-right-1', document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text2', 'sidebar-right-1', document.getElementById('Text2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PollView', new _WidgetInfo('Poll1', 'sidebar-right-1', document.getElementById('Poll1'), {'pollid': '-5240978320504195155', 'iframeurl': '/b/poll-results?pollWidget\x3dPoll1\x26txtclr\x3d%23333333\x26lnkclr\x3d%23cc0000\x26chrtclr\x3d%23cc0000\x26font\x3dnormal+normal+13px+Arial,+Tahoma,+Helvetica,+FreeSans,+sans-serif\x26hideq\x3dtrue\x26purl\x3dhttp://ccie-in-2-months.blogspot.com/'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogSearchView', new _WidgetInfo('BlogSearch1', 'sidebar-right-1', document.getElementById('BlogSearch1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_SubscribeView', new _WidgetInfo('Subscribe1', 'sidebar-right-1', document.getElementById('Subscribe1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'sidebar-right-1', document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogListView', new _WidgetInfo('BlogList1', 'sidebar-right-1', document.getElementById('BlogList1'), {'numItemsToShow': 25, 'totalItems': 1}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_StatsView', new _WidgetInfo('Stats1', 'sidebar-right-1', document.getElementById('Stats1'), {'title': 'Total Pageviews', 'showGraphicalCounter': true, 'showAnimatedCounter': true, 'showSparkline': true, 'statsUrl': '//ccie-in-2-months.blogspot.com/b/stats?style\x3dBLACK_TRANSPARENT\x26timeRange\x3dALL_TIME\x26token\x3dAPq4FmCH5ssFmnQLq5dmZctHMyWZuI4rDuybDyRRiaBtFNAVUi_-ZLjLWrwb7U4yxFZnQDO6Vfnvuj8uzwdRUKU-FeZuJF1jTA'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense4', 'sidebar-right-1', document.getElementById('AdSense4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense1', 'sidebar-right-1', document.getElementById('AdSense1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text1', 'footer-1', document.getElementById('Text1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', document.getElementById('Attribution1'), {}, 'displayModeFull'));
+</script>
+
+</body></html>
