@@ -11,6 +11,8 @@ parent: CCNA
 Mô hình OSI và mô hình TCP/IP
 {: .fs-6 .fw-300 }
 
+_Nguồn tham khảo đầy đủ: [Tự học CCNA](https://www.youtube.com/playlist?list=PLhchcQ1p5Tc9_LOTMsjK_Mk2xZZR1VChu)_
+
 ---
 
 ## Table of contents
@@ -44,7 +46,7 @@ Mô hình **OSI** bao gồm 7 lớp:
   </tr>
   <tr>
     <td><b>5.Session</b></td>
-    <td>Tầng phiên kiểm soát các (phiên) hội thoại giữa các máy tính.</td>
+    <td>Tầng phiên kiểm soát các (phiên) hội thoại giữa các máy tính. Mở nhiều ứng dụng đồng thời trên 1 card mạng duy nhất (Chơi game, nghe nhạc, mạng xã hội  )</td>
     <td>OS, Scheduling</td>
   </tr>
   <tr>
@@ -55,17 +57,17 @@ Mô hình **OSI** bao gồm 7 lớp:
   <tr>
     <td><b>3.Network</b></td>
     <td>Tầng mạng thực hiện chức năng định tuyến. Tầng này cung cấp việc đánh địa chỉ luận lý (*IP Addressing*) - định tuyến các gói dữ liệu.</td>
-    <td>IP, IPX</td>
+    <td>IPv4, IPv6, IPX, AppleTalk, OSPF, RIP, EIGRP</td>
   </tr>
   <tr>
     <td><b>2.Datalink</b></td>
     <td>Tầng liên kết dữ liệu truyền dữ liệu giữa các thực thể mạng, phát hiện và có thể sửa chữa các lỗi trong tầng vật lý nếu có. Đánh địa chỉ vật lý (*MAC Address*) được mã hóa cứng vào trong các card mạng khi chúng được sản xuất.</td>
-    <td>802.2, 802.3, HDLC</td>
+    <td>ARP, LAN, Ethernet, HDLC, PPP, VLAN, Trunk, STP, 802.2, 802.3</td>
   </tr>
   <tr>
     <td><b>1.Physical</b></td>
     <td>Tầng vật lý định nghĩa các đặc tả về điện và vật lý cho các thiết bị. Bao gồm bố trí các chân cắm (*pin*), hiệu điện thế (*volt*), và các cáp nối (*cable*); hay chuyển đổi giữa các loại tín hiệu điện như xung vuông trong thiết bị, sóng sin trong dây cáp đồng, ánh sáng trong cáp quang, sóng vô tuyến trong thiết bị không dây.</td>
-    <td>EIA/TIA, V.35</td>
+    <td>Cable, EIA/TIA, V.35</td>
   </tr>
 </table>
 
@@ -75,15 +77,17 @@ Dữ liệu trên máy tính có nhu cầu truyền sẽ chuyển từ tầng 7 
   <img alt="" alt="" src="https://vnpro.vn/upload/user/images/Tin%20T%E1%BB%A9c/1(2).jpg" />
 </div>
 
+Đóng gói dữ liệu
+
+![](/docs/CCNA/img/network_encap.png)
+
+Giải đóng gói dữ liệu
+
+![](/docs/CCNA/img/network_decap.png)
+
 ## MÔ HÌNH TCP/IP
 
 ![image](https://user-images.githubusercontent.com/56266496/165344536-78f1c219-76ea-4ecc-8529-2e24919026f7.png)
-
-Dữ liệu qua các tầng được đóng gói như sau:
-
-<div style="text-align:center">
-  <img alt="" alt="" style="max-width: 400px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/UDP_encapsulation.svg/1920px-UDP_encapsulation.svg.png" />
-</div>
 
 Dữ liệu và giao thức qua các tầng:
 
