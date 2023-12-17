@@ -30,7 +30,7 @@ _Nguồn tham khảo đầy đủ: [Tự học CCNA](https://www.youtube.com/pla
 ## Tốc độ
 
 Đảm bảo các thành phần đều hỗ trợ tốc độ mong muốn (ví dụ hình là 1 Gbps)
-- Cáp 1000BASE‑TX
+- Cáp 1000BASE‑T
 - Card mạng trên máy tính hỗ trợ tốc độ 1 Gbps
 - Modem và thiết bị di động hỗ trợ chuẩn 802.11 ac
 

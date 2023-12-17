@@ -21,6 +21,8 @@ Mạng LAN ảo
 
 ---
 
+![image](/docs/CCNA/img/vlan0.png)
+
 ![image](/docs/CCNA/img/vlan1.png)
 
 ## Chia vlan
