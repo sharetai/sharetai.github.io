@@ -422,3 +422,70 @@ Một cách tổng quát, các luật sau được dùng để mô tả tiến t
 - Nếu một router xuất hiện sau quá trình bầu chọn, hoặc nếu router hiện hành sửa đổi độ ưu tiên của nó, router sẽ không chiếm quyền các DR hiện hành và không đóng vai trò là DR (hoặc BDR).
 - Khi DR được bầu chọn, và DR bị lỗi, router BDR sẽ trở thành DR và một cuộc bầu chọn mới được tổ chức để tìm ra BDR. Khi DR đã được bầu chọn, quá trình phát tán LSA tiếp tục như đã mô tả trước đây.
 
+### 4. Các router DR trên WAN và các kiểu mạng OSPF
+
+Việc sử dụng DR trên môi trường LAN là hợp lý bởi vì nó cải tiến hiệu suất của quá trình phát tán. Tương tự, việc không sử dụng DR trên kết nối WAN dạng điểm-điểm cũng là hợp lý bởi vì chỉ với hai router trên mạng, sẽ không có điểm nào kém hiệu quả để cải tiến. Tuy nhiên trong môi trường đa truy cập không hỗ trợ broadcast (Non-Broadcast MultiAccess - NBMA), có thể nảy sinh vấn đề là một DR có hữu ích hay không. Vì vậy, OSPF bao gồm vài tùy chọn trong đó cho phép ta chọn lựa khi nào thì dùng DR trên cổng WAN.
+
+Các Router của Cisco có thể được cấu hình để dùng hoặc không dùng DR. Ngoài ra còn một vài trạng thái chủ chốt khác, dựa vào kiểu mạng OSPF cho từng cổng. Kiểu mạng OSPF xác định trạng thái của router liên quan đến những vấn đề sau:
+
+- Router có nên cố gắng bầu chọn DR trên cổng đó hay không.
+- Router có nên cấu hình láng giềng hoặc tìm láng giềng dùng các gói tin Hello dạng multicast.
+- Router có nên có nhiều hơn hai láng giềng trên cùng một mạng con hay không.
+
+Ví dụ, những cổng LAN mặc định sẽ dùng kiểu mạng OSPF là broadcast. Kiểu mạng OSPF là broadcast sẽ bầu chọn DR. Kiểu hoạt động này của OSPF dùng cơ chế Hello để tìm ra những láng giềng và cho phép có nhiều hơn hai router trong cùng mạng con trên LAN đó. Đối với những kết nối HDLC hay PPP, OSPF dùng kiểu mạng là điểm-điểm, nghĩa là sẽ không có bầu chọn DR, chỉ có hai địa chỉ IP là có trong mạng con và các láng giềng có thể tìm thấy thông qua Hello.
+
+Bảng dưới sẽ tóm tắt các kiểu cổng OSPF và các ý nghĩa của nó. Chú ý rằng kiểu cổng có thể được gán bằng lệnh `ip ospf network type`. Cột đầu tiên trong bảng liệt kê từ khóa chính xác tương ứng với lệnh này. Ngoài ra, cho những trường hợp trong đó DR không được bầu chọn, tất cả các router cũng trở thành láng giềng bằng cách trao đổi các gói DD, LSR và LSU.
+
+| Kiểu cổng | Có dùng DR/BDR | Giá trị thời gian hello mặc định | Có yêu cầu sử dụng câu lệnh neighbor | Nhiều hơn hai máy trên mạng con |
+| :-------------- | :---- | :---- | :---- | :---- |
+| Broadcast | Có | 10 | Không | Có |
+| Điểm - Điểm | Không | 10 | Không | Không |
+| Không  hỗ trợ broadcast | Có | 30 | Có | Có |
+| Điểm - Đa điểm | Không | 30 | Không | Có |
+| Điểm – Đa điểm nhưng không hỗ trợ Broadcast | Không | 30 | Có | Có |
+| Loopback | Không | - | - | Không |
+
+### 5. Tính toán SPF
+
+Khi các router đã có các thông tin của nó trong LSDB, nó sẽ dùng thuật toán Dijkstra SPF để kiểm tra các LSA trong LSDB và dẫn xuất ra một dạng hiển thị toán học của sơ đồ mạng. Mô hình toán này tượng trưng cho các router, kết nối và chi phí cho từng kết nối và trạng thái hiện hành (up/down) của từng kết nối. Hình dưới tượng trưng cho mô hình SPF của mạng.
+
+![Alt text](/docs/CCNA/img/ospf-spf.png)
+
+Một người có thể dễ dàng nhanh chóng rút ra cùng một kết quả mà thuật toán SPF sẽ cho ra, cho dù thuật toán SPF khá phức tạp. SPF trên router sẽ tìm ra tất cả các khả năng có thể để đến một mạng con, thêm chi phí vào từng cổng ra để đi về tuyến đó và sau đó sẽ chọn ra đường đi có chi phí thấp nhất. OSPF sẽ đưa các tuyến có đường đi ngắn nhất này vào trong bảng định tuyến. Ví dụ, S2 sẽ tính hai đường đi có thể về mạng 10.5.1.0/24 với đường đi tốt hơn sẽ thông qua cổng VLAN1 của S2, với R2 là địa chỉ chặng kế tiếp. Cũng lưu ý trong hình trên rằng các giá trị chi phí áp dụng cho từng cổng và SPF sẽ cộng vào chi phí từng cổng để ra tổng chi phí đi về tuyến đó.
+
+**Hoạt động ở trạng thái ổn định**
+
+Ngay cả khi một mạng đã ổn định, tất cả các router trong cùng một vùng có cùng LSA và từng route đã chọn tuyến đường tốt nhất dùng SPF, các sự kiện sau vẫn diễn ra với các router chạy OSPF:
+
+- Mỗi router gửi Hello theo các khoảng thời gian Hello.
+- Mỗi router mong đợi nhận được Hello từ láng giềng trong khoảng thời gian hết hạn trên từng cổng, nếu không, láng giềng sẽ bị xem như là bị lỗi.
+- Từng router sẽ quảng bá một LSA sẽ phát tán lại LSA (sau khi tăng chỉ số tuần tự lên 1) dựa trên khoảng thời gian làm mới lại trạng thái kết nối (LSRefresh), mặc định là 30 phút.
+- Từng router phải có LSA được cập nhật trong mỗi khoảng thời gian tồn tại tối đa của các LSA, mặc định là 60 phút.
+
+## II. MÔ HÌNH THIẾT KẾ OSPF VÀ CÁC LOẠI LSA
+
+Phần này mô tả hai chủ đề chính:
+
+- Mô hình thiết kế OSPF.
+- Các kiểu OSPF LSA.
+
+Mặc dù các chủ đề này có vẻ như là các khái niệm riêng biệt, phần lớn các chọn lựa thiết kế OSPF ảnh hưởng trực tiếp đến kiểu LSA trong mạng và đặt ra các ràng buộc trên những láng giềng có thể trao đổi các LSA này.
+
+Phần này bắt đầu bằng thiết kế OSPF và nhắc lại những thuật ngữ sau đó sẽ chuyển sang các kiểu LSA. Cuối của phần này, các kiểu *OSPF area* sẽ được đề cập đến, bao gồm việc mô tả từng biến thể thay đổi của các LSA trên các kiểu vùng ngõ cụt của OSPF.
+
+### 1.Các thuật ngữ thiết kế OSPF
+
+Thiết kế OSPF sử dụng một nhóm các kết nối vào các vùng liên tục. Các router có các kết nối đến các vùng khác nhau được gọi là router ở biên giới của vùng *(Area Border Router - ABR)*. Các router ABR phải được kết nối về vùng 0 *(area 0)* hay còn gọi là vùng xương sống *(backbone area)*. ASBR sẽ đưa các tuyến bên ngoài vào trong miền OSPF, những tuyến được học từ quá trình phân phối lại.
+
+![Alt text](/docs/CCNA/img/ospf-area.png)
+
+Các mạng có thể dùng mạng OSPF đơn vùng nhưng việc sử dụng các vùng OSPF sẽ giúp giảm thời gian hội tụ và giảm phí tổn trong mạng OSPF. OSPF dùng khái niệm vùng sẽ có các lợi điểm sau đây:
+
+- Các cơ sở dữ liệu cho từng vùng sẽ nhỏ hơn, yêu cầu tốn ít bộ nhớ hơn.
+- Tính toán nhanh hơn.
+- Một kết nối bị sự cố trong một vùng chỉ yêu cầu tính toán SPF lại một phần trong những vùng khác.
+- Các tuyến có thể được tóm tắt ở ABR và ASBR; giúp cho các vùng thực hiện tóm tắt để rút gọn LSDB và cải tiến hiệu suất tính toán SPF.
+
+Khi so sánh việc sử dụng một vùng với nhiều vùng, số router hay số kết nối không giảm đi nhưng kích thước của LSDB trên phần lớn các router sẽ giảm. LSDB giảm là do một ABR không truyền các LSA loại 1 và 2 từ vùng này sang vùng khác, thay vào nó truyền loại 3 tóm tắt LSA. LSA loại 1 và 2 có thể xem như là các thông tin chi tiết gây ra phần lớn tính toán trong thuật toán SPF. Bằng cách đại diện các chi tiết trong loại 1 và 2 LSA trong những cách khác nhau trong những vùng khác, OSPF sẽ đạt được mục đích giảm tác động của SPF.
+
+
