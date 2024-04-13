@@ -140,6 +140,11 @@ R3(config)#ip route 102.16.0.0 255.255.0.0 172.17.0.1
 * **R1**
 
 ```
+# Cách 1: Điều hướng lưu lượng cân bằng tải chạy trên 2 link (Load Balancing)
+R1(config)#ip route 192.168.2.0 255.255.255.0 10.0.0.2
+R1(config)#ip route 192.168.2.0 255.255.255.0 20.0.0.2
+
+# Cách 2: Điều hướng lưu lượng chỉ chạy trên 1 link
 R1(config)#ip route 192.168.2.0 255.255.255.0 10.0.0.2
 R1(config)#ip route 192.168.2.0 255.255.255.0 20.0.0.2 10
 ```

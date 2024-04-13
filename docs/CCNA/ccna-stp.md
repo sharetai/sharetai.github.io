@@ -53,3 +53,8 @@ SW(config)#spanning-tree vlan 1 root primary
 SW(config)#spanning-tree vlan 1 priority <number>
 ```
 
+## Giải pháp PVST trên switch cisco
+
+![Alt text](/docs/CCNA/img/stp-pvst-1.png)
+
+![Alt text](/docs/CCNA/img/stp-pvst-2.png)

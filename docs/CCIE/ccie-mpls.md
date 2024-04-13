@@ -139,7 +139,7 @@ router bgp 5
 
 ![Alt text](/docs/CCIE/img/mpls-vpn-l3.png)
 
-### Static
+### A. Static
 
 __<u>Config</u>__
 
@@ -362,7 +362,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R5A#
 ```
 
-### OSPF
+### B. OSPF
 
 __<u>Config</u>__
 
@@ -554,4 +554,210 @@ Packet sent with a source address of 5.5.5.5
 !!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R5B#
+```
+
+### C. BGP
+
+![Alt text](/docs/CCIE/img/mpls-vpn-l3-bgp.png)
+
+__<u>Config</u>__
+
+```conf
+# R2
+ip vrf C
+ rd 234:151
+ route-target export 234:11
+ route-target import 234:51
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+!
+interface Ethernet0/0
+ no shut
+ ip address 10.0.23.2 255.255.255.0
+ mpls ip
+!
+interface Ethernet0/3
+ no shut
+ ip vrf forwarding C
+ ip address 10.0.12.2 255.255.255.0
+!
+router ospf 1
+ network 2.2.2.2 0.0.0.0 area 0
+ network 10.0.23.2 0.0.0.0 area 0
+!
+router bgp 234
+ bgp log-neighbor-changes
+ neighbor 4.4.4.4 remote-as 234
+ neighbor 4.4.4.4 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 4.4.4.4 activate
+ !
+ address-family ipv4 vrf C
+  neighbor 10.0.12.1 remote-as 15
+  neighbor 10.0.12.1 activate
+  neighbor 10.0.12.1 as-override
+!
+
+# R3
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
+interface Ethernet0/0
+ no shut
+ ip address 10.0.34.3 255.255.255.0
+ mpls ip
+!
+interface Ethernet0/1
+ no shut
+ ip address 10.0.23.3 255.255.255.0
+ mpls ip
+!
+router ospf 1
+ network 3.3.3.3 0.0.0.0 area 0
+ network 10.0.23.3 0.0.0.0 area 0
+ network 10.0.34.3 0.0.0.0 area 0
+!
+
+# R4
+ip vrf C
+ rd 234:151
+ route-target export 234:51
+ route-target import 234:11
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Ethernet0/1
+ no shut
+ ip address 10.0.34.4 255.255.255.0
+ mpls ip
+!
+interface Ethernet0/3
+ no shut
+ ip vrf forwarding C
+ ip address 10.0.45.4 255.255.255.0
+!
+router ospf 1
+ network 4.4.4.4 0.0.0.0 area 0
+ network 10.0.34.4 0.0.0.0 area 0
+!
+router bgp 234
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 234
+ neighbor 2.2.2.2 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 2.2.2.2 activate
+ !
+ address-family ipv4 vrf C
+  neighbor 10.0.45.5 remote-as 15
+  neighbor 10.0.45.5 activate
+  neighbor 10.0.45.5 as-override
+!
+
+# R1C
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 10.0.12.1 255.255.255.0
+!
+router bgp 15
+ bgp log-neighbor-changes
+ network 1.1.1.1 mask 255.255.255.255
+ neighbor 10.0.12.2 remote-as 234
+!
+
+# R5C
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 10.0.45.5 255.255.255.0
+!
+router bgp 15
+ bgp log-neighbor-changes
+ network 5.5.5.5 mask 255.255.255.255
+ neighbor 10.0.45.4 remote-as 234
+!
+```
+
+__<u>Verify</u>__
+
+```conf
+R2#show bgp vpnv4 unicast vrf C summary
+BGP router identifier 2.2.2.2, local AS number 234
+BGP table version is 4, main routing table version 4
+2 network entries using 304 bytes of memory
+2 path entries using 160 bytes of memory
+3/2 BGP path/bestpath attribute entries using 456 bytes of memory
+1 BGP AS-PATH entries using 24 bytes of memory
+2 BGP extended community entries using 48 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 992 total bytes of memory
+BGP activity 2/0 prefixes, 2/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.0.12.1       4           15      20      21        4    0    0 00:13:49        1
+R2#show bgp vpnv4 unicast vrf C
+BGP table version is 4, local router ID is 2.2.2.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 234:151 (default for vrf C)
+ *>  1.1.1.1/32       10.0.12.1                0             0 15 i
+ *>i 5.5.5.5/32       4.4.4.4                  0    100      0 15 i
+R2#
+
+R4#show bgp vpnv4 unicast vrf C summary
+BGP router identifier 4.4.4.4, local AS number 234
+BGP table version is 4, main routing table version 4
+2 network entries using 304 bytes of memory
+2 path entries using 160 bytes of memory
+3/2 BGP path/bestpath attribute entries using 456 bytes of memory
+1 BGP AS-PATH entries using 24 bytes of memory
+2 BGP extended community entries using 48 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 992 total bytes of memory
+BGP activity 2/0 prefixes, 2/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.0.45.5       4           15      20      21        4    0    0 00:13:38        1
+R4#show bgp vpnv4 unicast vrf C
+BGP table version is 4, local router ID is 4.4.4.4
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 234:151 (default for vrf C)
+ *>i 1.1.1.1/32       2.2.2.2                  0    100      0 15 i
+ *>  5.5.5.5/32       10.0.45.5                0             0 15 i
+R4#
+
+R1C#ping 5.5.5.5 source 1.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 5.5.5.5, timeout is 2 seconds:
+Packet sent with a source address of 1.1.1.1
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+R1C#
+
+R5C#ping 1.1.1.1 source 5.5.5.5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+Packet sent with a source address of 5.5.5.5
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+R5C#
 ```

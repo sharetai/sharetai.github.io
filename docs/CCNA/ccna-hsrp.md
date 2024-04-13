@@ -43,6 +43,88 @@ R2(config)#int g0/0
 R2(config-if)#standby 1 ip 10.0.0.254
 ```
 
+*(Nhược điểm: Lưu lượng dồn về 1 mặt router ưu tiên)*
+
+## HSRP - Cân bằng tải bằng cách tạo 2 Default Gateway
+
+* __R1__
+
+```
+R1(config)#int g0/0
+R1(config-if)#standby 1 ip 10.0.0.254
+R1(config-if)#standby 1 priority 120
+R1(config-if)#standby 1 preempt
+R1(config-if)#standby 2 ip 10.0.0.253
+```
+
+* __R2__
+
+```
+R2(config)#int g0/0
+R2(config-if)#standby 1 ip 10.0.0.254
+R2(config-if)#standby 2 ip 10.0.0.253
+R2(config-if)#standby 2 priority 120
+R2(config-if)#standby 2 preempt
+```
+
+*(Nhược điểm: Không thể cấp ip dhcp được do chỉ có thể cấp 1 default gateway, nên phải cấu hình default gateway thủ công từng máy)*
+
+## HSRP - Cân bằng tải bằng cách tạo 2 vlan
+
+* __R1__
+
+```
+R1(config)#int g0/0.10
+R1(config-if)#encapsulation dot1q 10
+R1(config-if)#standby 1 ip 10.0.0.254
+R1(config-if)#standby 1 priority 120
+R1(config-if)#standby 1 preempt
+R1(config)#int g0/0.20
+R1(config-if)#encapsulation dot1q 20
+R1(config-if)#standby 2 ip 10.0.0.254
+R1(config-if)#standby 2 priority 100
+R1(config-if)#standby 2 preempt
+```
+
+* __R2__
+
+```
+R2(config)#int g0/0.10
+R2(config-if)#encapsulation dot1q 10
+R2(config-if)#standby 1 ip 10.0.0.254
+R2(config-if)#standby 1 priority 100
+R2(config-if)#standby 1 preempt
+R2(config)#int g0/0.20
+R2(config-if)#encapsulation dot1q 20
+R2(config-if)#standby 2 ip 10.0.0.254
+R2(config-if)#standby 2 priority 120
+R2(config-if)#standby 2 preempt
+```
+
+*(Nhược điểm: Phải chia thủ công vlan người dùng)*
+
+## HSRP - Track giám sát trạng thái port
+
+* __R1__
+
+```
+R1(config)#track 9 int g0/1 line-protocol
+R1(config)#int g0/0
+R1(config-if)#standby 1 ip 10.0.0.254
+R1(config-if)#standby 1 priority 120 -> 90 (trường hợp g0/1 down)
+R1(config-if)#standby 1 preempt
+R1(config-if)#standby 1 track 9 decrement 30
+```
+
+* __R2__
+
+```
+R2(config)#int g0/0
+R2(config-if)#standby 1 ip 10.0.0.254
+R2(config-if)#standby 1 priority 100
+R2(config-if)#standby 1 preempt
+```
+
 ## GLBP
 
 __Gateway Load Balancing Protocol (GLBP)__ là một giao thức độc quyền của Cisco cố gắng khắc phục những hạn chế của các giao thức bộ định tuyến dự phòng hiện có bằng cách thêm chức năng cân bằng tải cơ bản .

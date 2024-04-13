@@ -98,7 +98,6 @@ Mode Global Configuration
 (config) # enable password 456
 (config) # enable secret 789
 (config) # no ip doamin-lookup
-(config) # no ip doamin-lookup
 (config) # no logging console
 (config) # logging synchronous
 ```

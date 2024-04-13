@@ -48,6 +48,12 @@ Phần này tập trung vào cáp xoắn đôi được phổ biến nhiều hơ
 | 7 | 4 | Trắng Nâu | Phát | 7 | 4 | Trắng Nâu | Chưa dùng |
 | 8 | 4 | Nâu | Chưa dùng | 8 | 4 | Nâu | Chưa dùng |
 
+## Cáp thẳng hay cáp chéo?
+
+Phân nhóm:
+
+![Alt text](/docs/CCNA/img/cable.png)
+
 * 10/100 Mb/s
   * Cùng nhóm: cáp chéo (MDI - MDI)
   * Khác nhóm: cáp thẳng (MDI - MDIX)

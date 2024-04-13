@@ -29,7 +29,7 @@ Mạng LAN ảo
 
 ### Bước 1: Tạo Vlan
 
-* __R1__
+* __SW1__
 
 ```
 int g0/1
@@ -50,7 +50,7 @@ vtp domain ABC
 vtp pass 123
 ```
 
-* __R2__
+* __SW2__
 
 ```
 vtp mode client
@@ -70,7 +70,7 @@ switchport access vlan 101
 
 ## Inter Vlan
 
-### Cách 1: Sub interface
+### Cách 1: Sub interface (Giải pháp Router on a Stick)
 
 ![image](/docs/CCNA/img/vlan2.png)
 
@@ -92,7 +92,7 @@ encapsulation dot1Q 103
 ip address 192.168.103.254 255.255.255.0
 ```
 
-### Cách 2: SW Layer 3
+### Cách 2: SW Layer 3 (Giải pháp SVI - Switch Virtual Interface)
 
 ![image](/docs/CCNA/img/vlan3.png)
 
