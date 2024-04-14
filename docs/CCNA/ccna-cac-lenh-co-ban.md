@@ -97,7 +97,7 @@ Mode Global Configuration
 # conf t
 (config) # enable password 456
 (config) # enable secret 789
-(config) # no ip doamin-lookup
+(config) # no ip domain-lookup
 (config) # no logging console
 (config) # logging synchronous
 ```
