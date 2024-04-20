@@ -77,6 +77,7 @@ interface Tunnel123
 ```
 
 Verify
+
 ```conf
 R1#show ip nhrp
 10.0.123.2/32 via 10.0.123.2
@@ -145,6 +146,9 @@ tunnel protection ipsec profile MyP
 
 * R1 (HUB)
 ```conf
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
 interface Tunnel123
  ip ospf network broadcast
  ip ospf 1 area 0
@@ -156,6 +160,9 @@ router ospf 1
 
 * R2 (Spoke)
 ```conf
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+!
 interface Tunnel123
  ip ospf network broadcast
  ip ospf priority 0
@@ -168,6 +175,9 @@ router ospf 1
 
 * R3 (Spoke)
 ```conf
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
 interface Tunnel123
  ip ospf network broadcast
  ip ospf priority 0
@@ -234,18 +244,21 @@ R2#traceroute 3.3.3.3 source 2.2.2.2    <-- KQ 1 hop
 ```conf
 interface Tunnel123
  ip ospf network point-to-multipoint
+ ip nhrp redirect
 ```
 
 * R2 (Spoke)
 ```conf
 interface Tunnel123
  ip ospf network point-to-multipoint
+ ip nhrp shortcut
 ```
 
 * R3 (Spoke)
 ```conf
 interface Tunnel123
  ip ospf network point-to-multipoint
+ ip nhrp shortcut
 ```
 
 Verify
