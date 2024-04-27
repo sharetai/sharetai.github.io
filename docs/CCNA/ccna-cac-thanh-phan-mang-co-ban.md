@@ -28,7 +28,7 @@ _Nguồn tham khảo đầy đủ: [Tự học CCNA](https://www.youtube.com/pla
 2 dấu hiệu nhận biết:
 
 - 2 hay nhiều thiết bị kết nối với nhau
-- Truyền thông, chia sẻ dữ liệu cho nhau
+- Truyền thông, chia sẻ dữ liệu thành công cho nhau
 
 => Gọi là 1 hệ thống mạng
 
