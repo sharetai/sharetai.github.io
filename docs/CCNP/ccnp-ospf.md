@@ -43,6 +43,8 @@ OSPF có các chức năng sau:
 | Link State Update (LSU)              | Gửi LSA cần thiết cho hàng xóm.                                                                                    |
 | Link State Acknowledgement (LSAck)   | Xác nhận việc nhận LSA.                                                                                            |
 
+![Alt text](/docs/CCNP/img/ospf-lsa-area.png)
+
 * R1
 ```conf
 en
@@ -284,6 +286,8 @@ Loại 8,9,10,11 đọc thêm.
 
 ### Lab Common area
 
+
+
 * R1
 ```conf
 en
@@ -301,7 +305,7 @@ en
 conf t
 int lo20
 ip add 20.20.20.20 255.255.255.0
-ip ospf network point-to-point
+ip ospf network point-to-point      <== Add thêm network type để quảng bá /24 do mặc định OSPF quảng bá loopback với /32
 ip ospf 1 area 0
 end
 ```
