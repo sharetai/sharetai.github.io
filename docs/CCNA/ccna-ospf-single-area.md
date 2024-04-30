@@ -85,7 +85,7 @@ R3(config)#int Gi0/1
 R3(config-if)#ip ospf 1 area 0
 ```
 
-## Cách 2 (recommend)
+## Cách 2
 
 {: .note-title }
 > Syntax

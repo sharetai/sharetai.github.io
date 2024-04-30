@@ -21,6 +21,8 @@ Mạng riêng ảo đa điểm động
 
 ---
 
+![Alt text](/docs/CCNP/img/dmvpn-01.png)
+
 ![Alt text](/docs/CCNP/img/dmvpn.png)
 
 ## Tunnel
@@ -143,6 +145,8 @@ tunnel protection ipsec profile MyP
 
 
 ## OSPF
+
+![Alt text](/docs/CCNP/img/dmvpn-02.png)
 
 * R1 (HUB)
 ```conf
