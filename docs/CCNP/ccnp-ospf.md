@@ -43,6 +43,10 @@ OSPF có các chức năng sau:
 | Link State Update (LSU)              | Gửi LSA cần thiết cho hàng xóm.                                                                                    |
 | Link State Acknowledgement (LSAck)   | Xác nhận việc nhận LSA.                                                                                            |
 
+![Alt text](/docs/CCNP/img/ospf-state.png)
+
+* __<u>Topology</u>__
+
 ![Alt text](/docs/CCNP/img/ospf-lsa-area.png)
 
 * R1
@@ -742,3 +746,220 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R3#
 ```
 
+## Các loại Network Types trong OSPF
+
+| Network Type                         | When                        | Timers                   | DR/BDR | Multicast/Unicast                     | Nexthop            |
+| :----------------------------------- | :-------------------------- | :----------------------- | :----- | :------------------------------------ | :----------------- |
+| Broadcast                            | Ethernet                    | Hello: 10s<br>Dead: 40s  | Yes    | Multicast (.5, .6)<br>(auto neighbor) | unchanged          |
+| Non-Broadcast                        | FR Multipoint               | Hello: 30s<br>Dead: 120s | Yes    | Unicast<br>(manual neighbor)          | unchanged          |
+| Point to Point                       | FR P2P, PPP, HDLC           | Hello: 10s<br>Dead: 40s  | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
+| Point to Multipoint<br>Broadcast     | FR Multipoint, Partial mesh | Hello: 30s<br>Dead: 120s | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
+| Point to Multipoint<br>Non-Broadcast | FR Multipoint               | Hello: 30s<br>Dead: 120s | No     | Unicast<br>(manual neighbor)          | changed (neighbor) |
+
+## Cấu hình Virtual-Link OSPF
+
+![Alt text](/docs/CCNP/img/ospf-virtual-link.png)
+
+* R1
+```conf
+en
+conf t
+int e0/0
+ip add 10.0.12.1 255.255.255.0
+ip ospf 1 area 0
+no shut
+router ospf 1
+router-id 1.1.1.1
+end
+```
+
+* R2
+```conf
+en
+conf t
+int e0/0
+ip add 10.0.23.2 255.255.255.0
+ip ospf 1 area 1
+no shut
+int e0/1
+ip add 10.0.12.2 255.255.255.0
+ip ospf 1 area 0
+no shut
+router ospf 1
+router-id 2.2.2.2
+area 1 virtual-link 3.3.3.3
+end
+```
+
+* R3
+```conf
+en
+conf t
+int e0/0
+ip add 10.0.34.3 255.255.255.0
+ip ospf 1 area 2
+no shut
+int e0/1
+ip add 10.0.23.3 255.255.255.0
+ip ospf 1 area 1
+no shut
+router ospf 1
+router-id 3.3.3.3
+area 1 virtual-link 2.2.2.2
+area 2 virtual-link 4.4.4.4
+end
+```
+
+* R4
+```conf
+en
+conf t
+int e0/0
+ip add 10.0.45.4 255.255.255.0
+ip ospf 1 area 3
+no shut
+int e0/1
+ip add 10.0.34.4 255.255.255.0
+ip ospf 1 area 2
+no shut
+router ospf 1
+router-id 4.4.4.4
+area 2 virtual-link 3.3.3.3
+end
+```
+
+* R5
+```conf
+en
+conf t
+int e0/1
+ip add 10.0.45.5 255.255.255.0
+ip ospf 1 area 3
+no shut
+router ospf 1
+router-id 5.5.5.5
+end
+```
+
+* Verify
+
+```conf
+R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DR         00:00:32    10.0.12.2       Ethernet0/0
+R1#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+O IA     10.0.23.0/24 [110/20] via 10.0.12.2, 00:57:51, Ethernet0/0
+O IA     10.0.34.0/24 [110/30] via 10.0.12.2, 00:57:41, Ethernet0/0
+O IA     10.0.45.0/24 [110/40] via 10.0.12.2, 00:19:32, Ethernet0/0
+R1#
+
+R2#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -           -        10.0.23.3       OSPF_VL0
+1.1.1.1           1   FULL/BDR        00:00:38    10.0.12.1       Ethernet0/1
+3.3.3.3           1   FULL/DR         00:00:35    10.0.23.3       Ethernet0/0
+R2#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+O IA     10.0.34.0/24 [110/20] via 10.0.23.3, 00:58:57, Ethernet0/0
+O IA     10.0.45.0/24 [110/30] via 10.0.23.3, 00:20:53, Ethernet0/0
+R2#
+
+R3#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           0   FULL/  -           -        10.0.34.4       OSPF_VL1
+2.2.2.2           0   FULL/  -           -        10.0.23.2       OSPF_VL0
+2.2.2.2           1   FULL/BDR        00:00:38    10.0.23.2       Ethernet0/1
+4.4.4.4           1   FULL/DR         00:00:32    10.0.34.4       Ethernet0/0
+R3#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+O        10.0.12.0/24 [110/20] via 10.0.23.2, 00:58:42, Ethernet0/1
+O IA     10.0.45.0/24 [110/20] via 10.0.34.4, 00:20:30, Ethernet0/0
+R3#
+
+R4#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -           -        10.0.34.3       OSPF_VL1
+3.3.3.3           1   FULL/BDR        00:00:32    10.0.34.3       Ethernet0/1
+5.5.5.5           1   FULL/DR         00:00:39    10.0.45.5       Ethernet0/0
+R4#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+O        10.0.12.0/24 [110/30] via 10.0.34.3, 00:20:36, Ethernet0/1
+O IA     10.0.23.0/24 [110/20] via 10.0.34.3, 00:20:36, Ethernet0/1
+R4#
+
+R5#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           1   FULL/BDR        00:00:35    10.0.45.4       Ethernet0/1
+R5#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+O IA     10.0.12.0/24 [110/40] via 10.0.45.4, 00:21:28, Ethernet0/1
+O IA     10.0.23.0/24 [110/30] via 10.0.45.4, 00:21:28, Ethernet0/1
+O IA     10.0.34.0/24 [110/20] via 10.0.45.4, 00:21:32, Ethernet0/1
+R5#
+```

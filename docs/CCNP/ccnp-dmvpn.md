@@ -29,6 +29,8 @@ Mạng riêng ảo đa điểm động
 
 * R1 (HUB)
 ```conf
+en
+conf t
 interface Ethernet0/0
  no shut
  ip address 200.0.123.1 255.255.255.0
@@ -40,10 +42,13 @@ interface Tunnel123
  tunnel source Ethernet0/0
  tunnel mode gre multipoint
 !
+end
 ```
 
 * R2 (Spoke)
 ```conf
+en
+conf t
 interface Ethernet0/0
  no shut
  ip address 200.0.123.2 255.255.255.0
@@ -58,10 +63,13 @@ interface Tunnel123
  tunnel destination 200.0.123.1
  tunnel mode gre ip
 !
+end
 ```
 
 * R3 (Spoke)
 ```conf
+en
+conf t
 interface Ethernet0/0
  no shut
  ip address 200.0.123.3 255.255.255.0
@@ -76,6 +84,7 @@ interface Tunnel123
  tunnel destination 200.0.123.1
  tunnel mode gre ip
 !
+end
 ```
 
 Verify
@@ -129,6 +138,8 @@ R2#
 * IPSEC
 
 ```
+en
+conf t
 crypto isakmp policy 10
  encr aes
  hash md5
@@ -141,6 +152,7 @@ crypto ipsec profile MyP
 
 interface Tunnel123
 tunnel protection ipsec profile MyP
+end
 ```
 
 
@@ -150,22 +162,29 @@ tunnel protection ipsec profile MyP
 
 * R1 (HUB)
 ```conf
+en
+conf t
 interface Loopback0
  ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
 !
 interface Tunnel123
  ip ospf network broadcast
  ip ospf 1 area 0
 !
 router ospf 1
- network 1.1.1.1 0.0.0.0 area 0
+ router-id 1.1.1.1
 !
+end
 ```
 
 * R2 (Spoke)
 ```conf
+en
+conf t
 interface Loopback0
  ip address 2.2.2.2 255.255.255.255
+ ip ospf 1 area 0
 !
 interface Tunnel123
  ip ospf network broadcast
@@ -173,14 +192,18 @@ interface Tunnel123
  ip ospf 1 area 0
 !
 router ospf 1
- network 2.2.2.2 0.0.0.0 area 0
+ router-id 2.2.2.2
 !
+end
 ```
 
 * R3 (Spoke)
 ```conf
+en
+conf t
 interface Loopback0
  ip address 3.3.3.3 255.255.255.255
+ ip ospf 1 area 0
 !
 interface Tunnel123
  ip ospf network broadcast
@@ -188,8 +211,9 @@ interface Tunnel123
  ip ospf 1 area 0
 !
 router ospf 1
- network 3.3.3.3 0.0.0.0 area 0
+ router-id 3.3.3.3
 !
+end
 ```
 
 Verify
@@ -246,23 +270,22 @@ R2#traceroute 3.3.3.3 source 2.2.2.2    <-- KQ 1 hop
 
 * R1 (HUB)
 ```conf
+en
+conf t
 interface Tunnel123
  ip ospf network point-to-multipoint
  ip nhrp redirect
+end
 ```
 
-* R2 (Spoke)
+* R2/3 (Spoke)
 ```conf
+en
+conf t
 interface Tunnel123
  ip ospf network point-to-multipoint
  ip nhrp shortcut
-```
-
-* R3 (Spoke)
-```conf
-interface Tunnel123
- ip ospf network point-to-multipoint
- ip nhrp shortcut
+end
 ```
 
 Verify
@@ -274,18 +297,15 @@ R2#traceroute 3.3.3.3 source 2.2.2.2    <-- KQ 1 hop
 
 ## NHRP registration no-unique
 
-NHRP up phiên sẽ gán cứng ip tunnel map vs ip public. NHRP redirect and shortcut dùng trường hợp modem đk với nhà mạng là ip động có thể bị thay đổi khi reset phiên pppoe, có thể làm down phiên NHRP.
+NHRP up phiên sẽ gán cứng ip tunnel map vs ip public. NHRP redirect and shortcut dùng trường hợp modem đk với nhà mạng là ip động có thể bị thay đổi khi reset phiên pppoe, có thể làm down phiên NHRP. Giải quyết bằng cách cấu hình _NHRP registration no-unique_ (tuy nhiên với HUB thì yêu cầu ip static).
 
-* R2 (Spoke)
+* R2/3 (Spoke)
 ```conf
+en
+conf t
 interface Tunnel123
  ip nhrp registration no-unique
-```
-
-* R3 (Spoke)
-```conf
-interface Tunnel123
- ip nhrp registration no-unique
+end
 ```
 
 Verify
