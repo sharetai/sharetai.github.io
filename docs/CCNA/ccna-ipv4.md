@@ -98,7 +98,7 @@ Dạng 3: 200.0.0.64/26 chia 4
 * Bước nhảy gốc: 64 (do mượn 2 bit)
 * Bước nhảy mới: 16 (mượn thêm 2 bit)
 * Subnet mask gốc: 255.255.255.192
-* Subnet mask: 255.255.255.240
+* Subnet mask mới: 255.255.255.240
 * 4 mạng con:
   - 200.0.0.64/28
   - 200.0.0.80/28
