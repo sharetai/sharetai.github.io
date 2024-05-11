@@ -358,39 +358,35 @@ Cách này chỉ cần một dòng, điều mà ví dụ ban đầu sẽ mất h
 
 ### <u>Redistribution OSPF into RIP using Route-map + Prefix-list (set tag)</u>
 
-nháp
-```
-# R1
+#### <u>Routing loop in redistribution</u>
+
+* R1
+```conf
 en
 conf t
+int e0/1
+ip add 192.168.15.1 255.255.255.0
+no shut
 int e0/3
 ip add 192.168.14.1 255.255.255.0
 no shut
 end
+```
 
-# R2/4
+* R3
+```conf
 en
 conf t
-router ospf 1
-redistribute rip subnets
-end
-
-# R3
-en
-conf t
-int e0/0
-ip add 192.168.35.3 255.255.255.0
-ip ospf 1 area 0
-ip ospf network point-to-point
-no shut
 int e0/3
 ip add 192.168.34.3 255.255.255.0
 ip ospf 1 area 0
 ip ospf network point-to-point
 no shut
 end
+```
 
-# R4
+* R4
+```conf
 en
 conf t
 no ip domain-lookup
@@ -407,32 +403,370 @@ router rip
 version 2
 net 192.168.14.0
 no auto-summary
-redistribute ospf 1 metric 8
 end
+```
 
-# R5
+* R5
+```conf
 en
 conf t
 no ip domain-lookup
 host R5
 int lo0
 ip add 5.5.5.5 255.255.255.255
-ip ospf 1 area 0
-ip ospf network point-to-point
-int e0/0
-ip add 192.168.35.5 255.255.255.0
-ip ospf 1 area 0
-ip ospf network point-to-point
+int e0/1
+ip add 192.168.15.5 255.255.255.0
 no shut
+router rip
+version 2
+network 192.168.15.0
+no auto-summary
+redistribute connected metric 9
 end
+```
 
+* Verify
 
+```conf
+R1#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+R        5.5.5.5 [120/9] via 192.168.15.5, 00:00:04, Ethernet0/1
+      172.16.0.0/24 is subnetted, 2 subnets
+R        172.16.1.0 [120/1] via 192.168.12.2, 00:00:02, Ethernet0/0
+R        172.16.2.0 [120/5] via 192.168.12.2, 00:00:02, Ethernet0/0
+R     192.168.23.0/24 [120/10] via 192.168.12.2, 00:00:02, Ethernet0/0
+R     192.168.34.0/24 [120/10] via 192.168.12.2, 00:00:02, Ethernet0/0
+R1#ping 5.5.5.5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 5.5.5.5, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#traceroute 5.5.5.5
+Type escape sequence to abort.
+Tracing the route to 5.5.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.15.5 0 msec *  1 msec
+R1#
+
+R2#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+R        5.5.5.5 [120/10] via 192.168.12.1, 00:00:26, Ethernet0/1
+      172.30.0.0/24 is subnetted, 2 subnets
+R        172.30.1.0 [120/1] via 192.168.12.1, 00:00:26, Ethernet0/1
+R        172.30.2.0 [120/1] via 192.168.12.1, 00:00:26, Ethernet0/1
+R     192.168.14.0/24 [120/1] via 192.168.12.1, 00:00:26, Ethernet0/1
+R     192.168.15.0/24 [120/1] via 192.168.12.1, 00:00:26, Ethernet0/1
+R2#sh ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      172.16.0.0/24 is subnetted, 2 subnets
+O        172.16.1.0 [110/11] via 192.168.23.3, 1d23h, Ethernet0/0
+O        172.16.2.0 [110/11] via 192.168.23.3, 1d23h, Ethernet0/0
+O     192.168.34.0/24 [110/20] via 192.168.23.3, 1d23h, Ethernet0/0
+R2#
+
+R4#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+R        5.5.5.5 [120/10] via 192.168.14.1, 00:00:17, Ethernet0/2
+      172.30.0.0/24 is subnetted, 2 subnets
+R        172.30.1.0 [120/1] via 192.168.14.1, 00:00:17, Ethernet0/2
+R        172.30.2.0 [120/1] via 192.168.14.1, 00:00:17, Ethernet0/2
+R     192.168.12.0/24 [120/1] via 192.168.14.1, 00:00:17, Ethernet0/2
+R     192.168.15.0/24 [120/1] via 192.168.14.1, 00:00:17, Ethernet0/2
+R4#sh ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      172.16.0.0/24 is subnetted, 2 subnets
+O        172.16.1.0 [110/11] via 192.168.34.3, 00:08:27, Ethernet0/3
+O        172.16.2.0 [110/11] via 192.168.34.3, 00:08:27, Ethernet0/3
+O     192.168.23.0/24 [110/20] via 192.168.34.3, 00:08:27, Ethernet0/3
+R4#
+```
+
+* R2
+```conf
 en
 conf t
-route-map OSPF-into-RIP deny 5
- match tag 200
-route-map OSPF-into-RIP permit 7
- set tag 200
+router ospf 1
+redistribute rip subnets
 end
+```
 
+* Verify
+
+```conf
+R4#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+R4#sh ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+O E2     5.5.5.5 [110/20] via 192.168.34.3, 00:00:42, Ethernet0/3
+      172.16.0.0/24 is subnetted, 2 subnets
+O        172.16.1.0 [110/11] via 192.168.34.3, 00:09:44, Ethernet0/3
+O        172.16.2.0 [110/11] via 192.168.34.3, 00:09:44, Ethernet0/3
+      172.30.0.0/24 is subnetted, 2 subnets
+O E2     172.30.1.0 [110/20] via 192.168.34.3, 00:00:42, Ethernet0/3
+O E2     172.30.2.0 [110/20] via 192.168.34.3, 00:00:42, Ethernet0/3
+O E2  192.168.12.0/24 [110/20] via 192.168.34.3, 00:00:42, Ethernet0/3
+O E2  192.168.15.0/24 [110/20] via 192.168.34.3, 00:00:42, Ethernet0/3
+O     192.168.23.0/24 [110/20] via 192.168.34.3, 00:09:44, Ethernet0/3
+R4#
+```
+
+* R4
+```
+en
+conf t
+router rip
+redistribute ospf 1 metric 8
+end
+```
+
+* Verify
+
+```conf
+R2#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+R        5.5.5.5 [120/9] via 192.168.12.1, 00:00:16, Ethernet0/1
+      172.30.0.0/24 is subnetted, 2 subnets
+R        172.30.1.0 [120/1] via 192.168.12.1, 00:00:16, Ethernet0/1
+R        172.30.2.0 [120/1] via 192.168.12.1, 00:00:16, Ethernet0/1
+R     192.168.14.0/24 [120/1] via 192.168.12.1, 00:00:16, Ethernet0/1
+R     192.168.15.0/24 [120/1] via 192.168.12.1, 00:00:16, Ethernet0/1
+R2#
+
+R1#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+R        5.5.5.5 [120/8] via 192.168.14.4, 00:00:01, Ethernet0/3
+      172.16.0.0/24 is subnetted, 2 subnets
+R        172.16.1.0 [120/1] via 192.168.12.2, 00:00:28, Ethernet0/0
+R        172.16.2.0 [120/5] via 192.168.12.2, 00:00:28, Ethernet0/0
+R     192.168.23.0/24 [120/8] via 192.168.14.4, 00:00:01, Ethernet0/3
+R     192.168.34.0/24 [120/8] via 192.168.14.4, 00:00:01, Ethernet0/3
+R1#ping 5.5.5.5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 5.5.5.5, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+R1#traceroute 5.5.5.5
+Type escape sequence to abort.
+Tracing the route to 5.5.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.14.4 1 msec 0 msec 1 msec
+  2 192.168.34.3 1 msec 1 msec 0 msec
+  3 192.168.23.2 0 msec 1 msec 1 msec
+  4 192.168.12.1 0 msec 1 msec 0 msec
+  5 192.168.14.4 1 msec 1 msec 1 msec
+  6 192.168.34.3 1 msec 1 msec 1 msec
+  7 192.168.23.2 0 msec 0 msec 0 msec
+  8 192.168.12.1 1 msec 1 msec 1 msec
+  9 192.168.14.4 1 msec 2 msec 1 msec
+ 10 192.168.34.3 1 msec 1 msec 1 msec
+ 11 192.168.23.2 2 msec 1 msec 1 msec
+ 12 192.168.12.1 1 msec 1 msec 1 msec
+ 13 192.168.14.4 2 msec 1 msec 1 msec
+ 14 192.168.34.3 1 msec 3 msec 2 msec
+ 15 192.168.23.2 1 msec 2 msec 1 msec
+ 16 192.168.12.1 1 msec 2 msec 2 msec
+ 17 192.168.14.4 1 msec 2 msec 2 msec
+ 18 192.168.34.3 2 msec 2 msec 2 msec
+ 19 192.168.23.2 2 msec 2 msec 3 msec
+ 20 192.168.12.1 2 msec 2 msec 2 msec
+ 21 192.168.14.4 2 msec 2 msec 4 msec
+ 22 192.168.34.3 3 msec 2 msec 3 msec
+ 23 192.168.23.2 2 msec 2 msec 3 msec
+ 24 192.168.12.1 3 msec 2 msec 2 msec
+ 25 192.168.14.4 2 msec 2 msec 4 msec
+ 26 192.168.34.3 3 msec 2 msec 3 msec
+ 27 192.168.23.2 3 msec 3 msec 4 msec
+ 28 192.168.12.1 3 msec 3 msec 4 msec
+ 29 192.168.14.4 3 msec 3 msec 3 msec
+ 30 192.168.34.3 2 msec 3 msec 3 msec
+```
+
+Mô tả:<br>
+\- Ban đầu R1 học được mạng 5.5.5.5 thông qua RIP với metric là 9 (R5 cấu hình quảng bá mạng kết nối trực tiếp vào miền RIP với metric 9)<br>
+\- R1 chuyển tiếp mạng 5.5.5.5 học được đến R2 và R4 với metric là 10. Cả R2 và R4 đều xem R1 là nexthop của mạng 5.5.5.5<br>
+\- R2 cấu hình phân phối lại các route học được từ miền RIP đi vào miền OSPF, do đó R2 sẽ phân phối lại mạng 5.5.5.5 đến R4<br>
+\- R4 có 2 nguồn thông tin về mạng 5.5.5.5, 1 từ RIP và 2 từ OSPF. Do OSPF AD 110 < RIP AD 120, nên R4 xem OSPF là tin cậy hơn và thay thế toàn bộ routes từ RIP thay bằng OSPF external<br>
+\- R4 cấu hình phân phối lại các route học được từ miền OSPF đi vào miền RIP với metric là 8<br>
+\- R1 có 2 nguồn thông tin về mạng 5.5.5.5, 1 từ R5 với metric 9 và 2 từ R4 với metric 8. R1 chọn R4 là nexthop của mạng 5.5.5.5<br>
+\- Routing loop xảy ra: R1->(5.5.5.5)->R4->R2->R1
+
+#### <u>Route tagging</u>
+
+* R2
+```conf
+en
+conf t
+route-map into-OSPF deny 10
+ match tag 100
+route-map into-OSPF permit 20
+ set tag 200
+router ospf 1
+redistribute rip subnets route-map into-OSPF
+end
+```
+
+* R4
+```conf
+en
+conf t
+route-map into-RIP deny 10
+ match tag 200
+route-map into-RIP permit 20
+ set tag 100
+router rip
+redistribute ospf 1 metric 8 route-map into-RIP
+end
+```
+
+* Verify
+
+```conf
+R4#sh ip route 5.5.5.5
+Routing entry for 5.5.5.5/32
+  Known via "ospf 1", distance 110, metric 20
+  Tag 200, type extern 2, forward metric 20
+  Redistributing via rip
+  Last update from 192.168.34.3 on Ethernet0/3, 00:05:42 ago
+  Routing Descriptor Blocks:
+  * 192.168.34.3, from 192.168.23.2, 00:05:42 ago, via Ethernet0/3
+      Route metric is 20, traffic share count is 1
+      Route tag 200
+R4#
+
+R1#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      5.0.0.0/32 is subnetted, 1 subnets
+R        5.5.5.5 [120/9] via 192.168.15.5, 00:00:10, Ethernet0/1
+      172.16.0.0/24 is subnetted, 2 subnets
+R        172.16.1.0 [120/1] via 192.168.12.2, 00:00:09, Ethernet0/0
+R        172.16.2.0 [120/5] via 192.168.12.2, 00:00:09, Ethernet0/0
+R     192.168.23.0/24 [120/8] via 192.168.14.4, 00:00:25, Ethernet0/3
+R     192.168.34.0/24 [120/8] via 192.168.14.4, 00:00:25, Ethernet0/3
+R1#ping 5.5.5.5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 5.5.5.5, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#traceroute 5.5.5.5
+Type escape sequence to abort.
+Tracing the route to 5.5.5.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.15.5 1 msec *  1 msec
+R1#
 ```
