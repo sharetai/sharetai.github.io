@@ -27,6 +27,8 @@ Giao thức Internet phiên bản 6
 
 2001::A:0000:0000:0000:1
 
+![alt text](/docs/CCNA/img/ipv6-type.png)
+
 ## IPv6 Routing
 
 ![image](/docs/CCNA/img/ipv6-routing.png)
