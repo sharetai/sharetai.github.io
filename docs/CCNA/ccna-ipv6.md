@@ -57,7 +57,7 @@ IPv6 <br>
 
 <p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B<br></p>
 <p style="display:inline">2041</p><p style="display:inline;color:red">::</p><p style="display:inline">140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B<br></p>
-<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B<br></p><br>
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B<br></p>
 
 \- <u>Các số 0 đầu tiên trong 1 octet có thể được lược bỏ.</u> <br>
 
@@ -67,10 +67,10 @@ IPv6 <br>
 
 ### Prefix
 
-<p style="display:inline;color:blue">Prefix</p><p style="display:inline">:</p><p style="display:inline;color:green">Host</p> <br>
+<p style="display:inline;color:blue">Prefix</p><p style="display:inline">:</p><p style="display:inline;color:green">Host<br></p>
 <p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">5678:ABCD:EF12:1234<br></p>
 <p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">0000:0000:0000:0000<br></p>
-<p style="display:inline;color:blue">2001:1234:5678:1234::</p><p style="display:inline;color:green">/64<br></p> <br>
+<p style="display:inline;color:blue">2001:1234:5678:1234::</p><p style="display:inline;color:green">/64<br></p>
 
 ### Các loại địa chỉ IPv6
 
