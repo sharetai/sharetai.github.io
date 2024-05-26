@@ -11,7 +11,7 @@ parent: CCNA
 Giao thức Internet phiên bản 6
 {: .fs-6 .fw-300 }
 
----p
+---
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -55,11 +55,9 @@ IPv6 <br>
 
 \- Một chuỗi các số 0 liên tiếp có thể được lược bỏ, tuy nhiên chỉ được làm điều này một lần. <br>
 
-<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p><br>
-
-<p style="display:inline">2041</p><p style="display:inline;color:red">::</p><p style="display:inline">140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p><br>
-
-<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B</p><br><br>
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p>
+<p style="display:inline">2041</p><p style="display:inline;color:red">::</p><p style="display:inline">140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p>
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B</p><br>
 
 \- Các số 0 đầu tiên trong 1 octet có thể được lược bỏ. <br>
 
