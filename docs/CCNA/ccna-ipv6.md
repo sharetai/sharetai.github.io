@@ -11,7 +11,7 @@ parent: CCNA
 Giao thức Internet phiên bản 6
 {: .fs-6 .fw-300 }
 
----
+---p
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -21,13 +21,110 @@ Giao thức Internet phiên bản 6
 
 ---
 
-## Giới thiệu
+## Tổng quan
 
-2001:0000:0000:000A:0000:0000:0000:0001
+### Thiếu hụt IPv4
 
-2001::A:0000:0000:0000:1
+|          IPv4 |  ->  | IPv6                                                |
+| ------------: | :--: | :-------------------------------------------------- |
+|       32 bits |  ->  | 128 bits                                            |
+| 4,294,967,296 |  ->  | 340,282,366,920,938,463,463,374,607,431,768,211,456 |
+
+Để giải quyết việc thiếu hụt IPv4, 2 phương án: <br>
+\- VLSM <br>
+\- NAT <br>
+\-> Tuy nhiên vẫn thiếu, hiện tại đã cạn kiệt <br>
+
+IPv6 <br>
+\- 128-bits địa chỉ <br>
+\- Không có địa chỉ broadcast. Thay vào đó là anycast (cho phép trùng địa chỉ ipv6 trên nhiều node mạng, routing sẽ cần đến node gần nhất) <br>
+\- Đặt địa chỉ IPv6: static, eui-64, slaac (staless auto address configuration), dhcpv6 <br>
+\- Không cần NAT/PAT <br>
+\- Hỗ trợ IPSec <br>
+\- Header đơn giản hơn (40 bytes header ipv6 < 60 bytes header ipv4) <br>
+\- Công cụ chuyển giao Dual-stack IPv4/IPv6 <br>
+
+### Biểu diễn IPv6
+
+0010000001000001...0001001100011011 <br>
+0010 0000 0100 0001 .... 0001 0011 0001 1011 <br>
+  2    0    4    1  ....   1    3    1    B <br>
+2041:1234:140F:1122:AB91:564F:875B:131B <br>
+
+### Thu gọn địa chỉ IPv6
+
+\- Một chuỗi các số 0 liên tiếp có thể được lược bỏ, tuy nhiên chỉ được làm điều này một lần. <br>
+
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p><br>
+
+<p style="display:inline">2041</p><p style="display:inline;color:red">::</p><p style="display:inline">140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p><br>
+
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B</p><br><br>
+
+\- Các số 0 đầu tiên trong 1 octet có thể được lược bỏ. <br>
+
+<p style="display:inline">2001:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">000</p><p style="display:inline">1:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">000</p><p style="display:inline">2:</p><p style="display:inline;color:red">000</p><p style="display:inline">3:</p><p style="display:inline;color:red">000</p><p style="display:inline">4</p> <br>
+
+<p style="display:inline">2001:</p><p style="display:inline">0</p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">1:</p><p style="display:inline;color:red"></p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">2:</p><p style="display:inline;color:red"></p><p style="display:inline">3:</p><p style="display:inline;color:red"></p><p style="display:inline">4</p> <br>
+
+### Prefix
+
+<p style="display:inline;color:blue">Prefix</p><p style="display:inline">:</p><p style="display:inline;color:green">Host</p> <br>
+<p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">5678:ABCD:EF12:1234</p> <br>
+<p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">0000:0000:0000:0000</p> <br>
+<p style="display:inline;color:blue">2001:1234:5678:1234::</p><p style="display:inline;color:green">/64</p> <br>
+
+### Các loại địa chỉ IPv6
 
 ![alt text](/docs/CCNA/img/ipv6-type.png)
+
+### Quy hoạch địa chỉ IPv6
+
+IANA (2000:/3) <br>
+RIPE NCC (2001:4000::/23) ARIN (2001:0400::/23)<br>
+ISP (2001:41f0::/32) <br>
+Customer (2001:41f0:4060::/48) <br>
+LAN10 (2001:41f0:4060:10::/64) LAN20 (2001:41f0:4060:20::/64) <br>
+trong đó <br>
+< \-\-\-\-\-\-\- 48 bit \-\-\-\-\-\-\- >< \-\-\- 16 bit \-\-\- >< \-\-\-\-\- 64 bit \-\-\-\- > <br>
+< \-\- 2001:41f0:4060 \-\- >< \-\- Subnet \-\- >< \-\- InterfaceID \-\- > <br>
+
+### Các đặt địa chỉ IPv6
+
+\- IP tĩnh <br>
+```
+ipv6 address 2001:1234:A:B::1/64
+```
+\- EUI-64 <br>
+
+```
+ipv6 address 2001:1234:A:B::/64 eui-64
+```
+
+EUI-64 (Extended Unique Identifier) là một phương pháp dùng để tự động định cấu hình phần host của địa chỉ IPv6 dựa vào địa chỉ MAC. <br>
+Vấn đề là MAC dài 48 bit còn host thì cần 64 bit. Giải quyết bằng cách chèn thêm cho đủ:
+1\. Chia đôi địa chỉ MAC <br>
+2\. Chèn "FFFE" vào giữa => đủ 64 bit <br>
+3\. Đảo giá trị của bit thứ 7 <br>
+
+![alt text](/docs/CCNA/img/ipv6-eui-64.png)
+
+\- SLAAC (StaLess Auto Address Configuration) <br>
+
+```
+ipv6 address autoconfig
+```
+
+\-- SLAAC giống như một máy chủ "mini-DHCP" cho IPv6. <br>
+\-- Các router chạy IPv6 có thể cung cấp phần Prefix & Default Gateway cho các client chạy IPv6. <br>
+\-- IPv6 sử dụng NDP (Neighbor Discovery Protocol) và một trong những điều mà giao thức này cung cấp là các gói tin RS và RA giúp thiết bị tự động định cấu hình địa chỉ IPv6. <br>
+
+\* Vấn đề của SLAAC là không thể tự động cấp IP DNS Server. Do đó cần DHCPv6. <br>
+
+\- DHCPv6 <br>
+
+\-- **Stateful** khá giống IPv4. Máy chủ DHCPv6 sẽ gán địa chỉ IPv6 cho tất cả các máy khách và nó sẽ theo dõi các địa chỉ IP này. <br>
+\-- **Stateless** hoạt động khác một chút... Máy chủ DHCPv6 không gán địa chỉ IPv6 cho máy khách, mà việc này sẽ được thực hiện thông qua SLAAC. Máy chủ DHCPv6 chỉ gán thông tin mà SLAAC không cấp được, như DNS Server.<br>
 
 ## IPv6 Routing
 
