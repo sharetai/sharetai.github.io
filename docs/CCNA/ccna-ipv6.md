@@ -53,24 +53,24 @@ IPv6 <br>
 
 ### Thu gọn địa chỉ IPv6
 
-\- Một chuỗi các số 0 liên tiếp có thể được lược bỏ, tuy nhiên chỉ được làm điều này một lần. <br>
+\- <u>Một chuỗi các số 0 liên tiếp có thể được lược bỏ, tuy nhiên chỉ được làm điều này một lần.</u> <br>
 
-<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p>
-<p style="display:inline">2041</p><p style="display:inline;color:red">::</p><p style="display:inline">140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B</p>
-<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B</p><br>
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B<br></p>
+<p style="display:inline">2041</p><p style="display:inline;color:red">::</p><p style="display:inline">140F:</p><p style="display:inline;color:red">0000:0000:0000</p><p style="display:inline">:875B:131B<br></p>
+<p style="display:inline">2041:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:140F</p><p style="display:inline;color:red">::</p><p style="display:inline">875B:131B<br></p><br>
 
-\- Các số 0 đầu tiên trong 1 octet có thể được lược bỏ. <br>
+\- <u>Các số 0 đầu tiên trong 1 octet có thể được lược bỏ.</u> <br>
 
-<p style="display:inline">2001:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">000</p><p style="display:inline">1:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">000</p><p style="display:inline">2:</p><p style="display:inline;color:red">000</p><p style="display:inline">3:</p><p style="display:inline;color:red">000</p><p style="display:inline">4</p> <br>
+<p style="display:inline">2001:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">000</p><p style="display:inline">1:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">0000</p><p style="display:inline">:</p><p style="display:inline;color:red">000</p><p style="display:inline">2:</p><p style="display:inline;color:red">000</p><p style="display:inline">3:</p><p style="display:inline;color:red">000</p><p style="display:inline">4<br></p>
 
-<p style="display:inline">2001:</p><p style="display:inline">0</p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">1:</p><p style="display:inline;color:red"></p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">2:</p><p style="display:inline;color:red"></p><p style="display:inline">3:</p><p style="display:inline;color:red"></p><p style="display:inline">4</p> <br>
+<p style="display:inline">2001:</p><p style="display:inline">0</p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">1:</p><p style="display:inline;color:red"></p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">2:</p><p style="display:inline;color:red"></p><p style="display:inline">3:</p><p style="display:inline;color:red"></p><p style="display:inline">4<br></p>
 
 ### Prefix
 
 <p style="display:inline;color:blue">Prefix</p><p style="display:inline">:</p><p style="display:inline;color:green">Host</p> <br>
-<p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">5678:ABCD:EF12:1234</p> <br>
-<p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">0000:0000:0000:0000</p> <br>
-<p style="display:inline;color:blue">2001:1234:5678:1234::</p><p style="display:inline;color:green">/64</p> <br>
+<p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">5678:ABCD:EF12:1234<br></p>
+<p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">0000:0000:0000:0000<br></p>
+<p style="display:inline;color:blue">2001:1234:5678:1234::</p><p style="display:inline;color:green">/64<br></p> <br>
 
 ### Các loại địa chỉ IPv6
 
@@ -89,11 +89,11 @@ trong đó <br>
 
 ### Các đặt địa chỉ IPv6
 
-\- IP tĩnh <br>
+\- <u>IP tĩnh</u> <br>
 ```
 ipv6 address 2001:1234:A:B::1/64
 ```
-\- EUI-64 <br>
+\- <u>EUI-64</u> <br>
 
 ```
 ipv6 address 2001:1234:A:B::/64 eui-64
@@ -107,7 +107,7 @@ Vấn đề là MAC dài 48 bit còn host thì cần 64 bit. Giải quyết bằ
 
 ![alt text](/docs/CCNA/img/ipv6-eui-64.png)
 
-\- SLAAC (StaLess Auto Address Configuration) <br>
+\- <u>SLAAC (StaLess Auto Address Configuration)</u> <br>
 
 ```
 ipv6 address autoconfig
@@ -119,7 +119,7 @@ ipv6 address autoconfig
 
 \* Vấn đề của SLAAC là không thể tự động cấp IP DNS Server. Do đó cần DHCPv6. <br>
 
-\- DHCPv6 <br>
+\- <u>DHCPv6</u> <br>
 
 \-- **Stateful** khá giống IPv4. Máy chủ DHCPv6 sẽ gán địa chỉ IPv6 cho tất cả các máy khách và nó sẽ theo dõi các địa chỉ IP này. <br>
 \-- **Stateless** hoạt động khác một chút... Máy chủ DHCPv6 không gán địa chỉ IPv6 cho máy khách, mà việc này sẽ được thực hiện thông qua SLAAC. Máy chủ DHCPv6 chỉ gán thông tin mà SLAAC không cấp được, như DNS Server.<br>
