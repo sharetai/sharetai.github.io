@@ -71,7 +71,7 @@ Cách 2
 
 ```
 R1(config)#access-list 1 permit any
-R1(config)#ip nat inside source list 1 int g0/1 overload
+R1(config)#ip nat inside source list 1 int g0/0 overload
 ```
 
 ## PAT static (NAT port forwarding)

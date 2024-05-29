@@ -99,11 +99,13 @@ Hội tụ là quá trình các bộ định tuyến nhận ra thay đổi, liê
 \-- L2 MPLS _ Sử dụng pseudowire <br>
 \--\-- VPWS (Virtual Private Wire Service) _ point-to-point L2 MPLS tương tự leased line <br>
 \--\-- VPLS (Virtual Private LAN Service) _ point-to-multipoint L2 MPLS tương tự môi trường ethernet (tương tự switch) <br>
-\+ Tunneling VPNs <br>
+\+ Tunneling VPNs _ Đóng gói lưu lượng trong một giao thức mang <br>
 \-- GRE <br>
 \-- IPsec <br>
 \-- DMVPN (Dynamic Multipoint VPN) <br>
 \+ Hybrid VPNs <br>
+
+
 
 
 
