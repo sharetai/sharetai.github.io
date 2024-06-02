@@ -35,13 +35,13 @@ Giao thức Internet phiên bản 6
 \- NAT <br>
 \-> Tuy nhiên vẫn thiếu, hiện tại đã cạn kiệt <br>
 
-IPv6 <br>
+### IPv6 <br>
 \- 128-bits địa chỉ <br>
 \- Không có địa chỉ broadcast. Thay vào đó là anycast (cho phép trùng địa chỉ ipv6 trên nhiều node mạng, routing sẽ cần đến node gần nhất) <br>
 \- Đặt địa chỉ IPv6: static, eui-64, slaac (staless auto address configuration), dhcpv6 <br>
 \- Không cần NAT/PAT <br>
 \- Hỗ trợ IPSec <br>
-\- Header đơn giản hơn (40 bytes header ipv6 < 60 bytes header ipv4) <br>
+\- Header đơn giản hơn <br>
 \- Công cụ chuyển giao Dual-stack IPv4/IPv6 <br>
 
 ### Biểu diễn IPv6

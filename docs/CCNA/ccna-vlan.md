@@ -21,11 +21,29 @@ Mạng LAN ảo
 
 ---
 
+## Mô hình phân cấp ba lớp của Cisco
+
+Do mạng có thể cực kỳ phức tạp với nhiều giao thức và công nghệ đa dạng nên Cisco đã phát triển mô hình phân cấp nhiều lớp để thiết kế cơ sở hạ tầng mạng đáng tin cậy. Mô hình ba lớp này giúp thiết kế, triển khai và duy trì mạng có thể mở rộng, đáng tin cậy và tiết kiệm chi phí. Mỗi lớp có các tính năng và chức năng riêng, giúp giảm độ phức tạp của mạng.
+
+<img src="/docs/CCNA/img/cisco_hierarchical_model.png" height="540" width="802">
+
+### Three-Tier Network Architecture
+
+<img src="/docs/CCNA/img/three-tier-architecture.png" height="428" width="547">
+
+### Collapsed Core Architecture
+
+<img src="/docs/CCNA/img/collapsed-core-architecture.png" height="375" width="526">
+
+### Spine and Leaf Network Architecture
+
+<img src="/docs/CCNA/img/spine-and-leaf-architecture.png" height="272" width="705">
+
+## Chia vlan
+
 ![image](/docs/CCNA/img/vlan0.png)
 
 ![image](/docs/CCNA/img/vlan1.png)
-
-## Chia vlan
 
 ### Bước 1: Tạo Vlan
 
@@ -57,6 +75,8 @@ vtp mode client
 vtp domain ABC
 vtp pass 123
 ```
+
+*(vtp có 3 mode: server có thể tạo và xoá vlan, gửi đi cập nhật; client không thể thay đổi vlan, nhận cập nhật và chuyển tiếp; transparent không cập nhật, chỉ chuyển tiếp trong suốt)*
 
 ### Bước 2: Đưa port vào Vlan
 

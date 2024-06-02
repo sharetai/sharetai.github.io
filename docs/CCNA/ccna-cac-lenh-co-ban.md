@@ -85,8 +85,8 @@ Mode Priviledge hay mode Enable
 # exit
 # show run
 # show start
-# copy run start | write
-# erase start | write erase
+# copy run start || write
+# erase start || write erase
 # reload
 # show ip int brief
 ```

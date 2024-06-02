@@ -1,14 +1,14 @@
 ---
 layout: default
-title: HSRP
+title: FHRP
 nav_order: 17
 parent: CCNA
 ---
 
-# Hot Standby Router Protocol
+# First Hop Redundancy Protocol
 {: .no_toc }
 
-Giao thức Bộ định tuyến Dự phòng Nóng
+Giao thức dự phòng bước nhảy đầu tiên
 {: .fs-6 .fw-300 }
 
 ---

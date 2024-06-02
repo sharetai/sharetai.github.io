@@ -21,7 +21,9 @@ Giao thức cấp phát địa chỉ IP động
 
 ---
 
-![image](/docs/CCNA/img/dhcp.png)
+![Alt text](/docs/CCNA/img/dhcp-process.png)
+
+![image](/docs/CCNA/img/dhcp-lap.png)
 
 ## Routing
 
@@ -76,3 +78,8 @@ R1(dhcp-config)#default-router 192.168.2.254
 R2(config)#int g0/1
 R2(config-if)#ip helper-address 10.0.0.1
 ```
+
+## APIPA (Automatic Private IP Addressing)
+
+Là tính năng trong hệ điều hành (chẳng hạn như Windows) cho phép máy tính tự động định cấu hình địa chỉ IP và subnet mask khi máy chủ DHCP không thể truy cập được. Phạm vi địa chỉ IP cho APIPA là __169.254.0.1-169.254.255.254__, subnet mask là __255.255.0.0__.
+

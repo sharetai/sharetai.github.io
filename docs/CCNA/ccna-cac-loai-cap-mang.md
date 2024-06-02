@@ -50,6 +50,10 @@ Phần này tập trung vào cáp xoắn đôi được phổ biến nhiều hơ
 
 ## Cáp thẳng hay cáp chéo?
 
+Cáp chéo được sử dụng để kết nối hai thiết bị mạng cùng loại với nhau. Lý do cần dùng cáp chéo là vì nó đảo ngược thứ tự các chân truyền và nhận dữ liệu giữa hai thiết bị. Điều này đảm bảo rằng dữ liệu được gửi từ chân truyền của thiết bị này sẽ được kết nối với chân nhận của thiết bị kia, và ngược lại.
+
+![Alt text](/docs/CCNA/img/cable-crossover.png)
+
 Phân nhóm:
 
 ![Alt text](/docs/CCNA/img/cable.png)
@@ -59,3 +63,8 @@ Phân nhóm:
   * Khác nhóm: cáp thẳng (MDI - MDIX)
 * 1 Gb/s
   * auto MDIX -> cáp thẳng tùy chọn chuẩn (thường là T-568B)
+
+## Power over Ethernet (PoE)
+
+Công nghệ cho phép cấp nguồn điện một chiều (DC) cho các thiết bị mạng qua cáp Ethernet. Ví dụ: Camera IP, điện thoại VoIP.
+

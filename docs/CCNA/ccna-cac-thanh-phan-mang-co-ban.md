@@ -67,3 +67,12 @@ Sự xuất hiện của router. Router chia 1 vùng mạng lớn thành nhiều
 
 ![](/docs/CCNA/img/network_7.png)
 
+## Các loại mạng phổ biến
+
+__LAN (Local Area Network)__: Mạng cục bộ <br>
+\- Mạng LAN SOHO (small office/home office) điển hình bao gồm PCs, máy in, bộ chuyển mạch, bộ định tuyến và cáp kết nối tất cả các thiết bị này với nhau. <br>
+__PAN (Personal Area Network)__: Mạng cá nhân <br>
+__MAN (Metropolitan Area Network)__: Mạng đô thị <br>
+__WAN (Wide Area Network)__: Mạng diện rộng <br>
+__WLAN (Wireless Local Area Network)__: Mạng cục bộ không dây <br>
+

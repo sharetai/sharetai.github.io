@@ -21,7 +21,7 @@ Giao thức Internet phiên bản 4
 
 ---
 
-## Thông tin cần nhớ
+## Phân lớp địa chỉ
 
 Toàn bộ địa chỉ IP được chia thành 5 nhóm gọi là Class IP. 5 nhóm này phân biệt dựa vào giá trị nhóm octet đầu tiên như sau:
 
@@ -33,7 +33,16 @@ Toàn bộ địa chỉ IP được chia thành 5 nhóm gọi là Class IP. 5 nh
 | 1 1 1 0 _ _ _ _ | D     | 224 - 239   |                     | Multicast (IP nhóm)                          |
 | 1 1 1 1 _ _ _ _ | E     | 240 - 255   |                     | Experimental                                 |
 
-### Private network:
+### Địa chỉ đặc biệt:
+
+| Phạm vi địa chỉ IP | Mô tả                        |
+| :----------------- | :--------------------------- |
+| 0.0.0.0/8          | local network                |
+| 127.0.0.0/8        | loopback addresses           |
+| 169.254.0.0/16     | link-local addresses (APIPA) |
+
+
+### Địa chỉ mạng riêng:
 
 | Phạm vi địa chỉ IP            | Số lượng địa chỉ | Khối CIDR lớn nhất (mặt nạ mạng con) | Kích thước ID máy chủ | Mặt nạ bit | 
 | :---------------------------- | :--------------- | :----------------------------------- | :-------------------- | :--------- |

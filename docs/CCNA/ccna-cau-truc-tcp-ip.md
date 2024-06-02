@@ -20,19 +20,15 @@ Cấu trúc header một số giao thức cơ bản
 {:toc}
 
 ---
+## ARP Header
 
-## ICMP Header
+![Alt text](/docs/CCNA/img/tcp-ip-arp-header.png)
 
-![image](https://user-images.githubusercontent.com/56266496/165346980-739b5c06-6856-468b-9d0e-446dc1ccc5fc.png)
-
-* Chức năng: Kiểm tra kết nối giữa các thiết bị và truyền thông điệp lỗi.
-* Giải thích các field cần nhớ:
-  * Type: Loại gói ICMP (Vd: 8 - Echo request, 0 - Echo reply, ...)
-  * Code: Chi tiết gói ICMP khi có Type: 3, 5, 11, 12
+* Chức năng: Được sử dụng để liên kết địa chỉ IP với địa chỉ MAC.
 
 ## IP Header
 
-![image](https://user-images.githubusercontent.com/56266496/165347257-95cb23ca-f323-40c9-9e37-0e4fa4731cf5.png)
+![Alt text](/docs/CCNA/img/tcp-ip-ipv4-header.png)
 
 * Chức năng: Định tuyến
 * Giải thích các field cần nhớ:
@@ -41,9 +37,18 @@ Cấu trúc header một số giao thức cơ bản
   * Protocol: Thông tin giao thức lớp trên (Vd: 1 - ICMP, 6 - TCP, ...)
   * TTL: Dùng để tránh lặp gói tin vô hạn trong hệ thống (khi qua Router TTL sẽ giảm 1, gói tin sẽ bị hủy khi TTL=0)
 
+## ICMP Header
+
+![Alt text](/docs/CCNA/img/tcp-ip-icmp-header.png)
+
+* Chức năng: Kiểm tra kết nối giữa các thiết bị và truyền thông điệp lỗi.
+* Giải thích các field cần nhớ:
+  * Type: Loại gói ICMP (Vd: 8 - Echo request, 0 - Echo reply, ...)
+  * Code: Chi tiết gói ICMP khi có Type: 3, 5, 11, 12
+
 ## TCP Header
 
-![image](https://user-images.githubusercontent.com/56266496/165347318-7a7fe6b7-5b07-4520-9382-413966c3e954.png)
+![Alt text](/docs/CCNA/img/tcp-ip-tcp-header.png)
 
 * Chức năng: Kiểm soát việc gửi dữ liệu giữa các thiết bị đầu cuối được chính xác đầy đủ
 * Giải thích các field cần nhớ:
@@ -53,7 +58,7 @@ Cấu trúc header một số giao thức cơ bản
 
 ## UDP Header
 
-![image](https://user-images.githubusercontent.com/56266496/165347348-6856c549-3497-488f-95e3-e86e81db329a.png)
+![Alt text](/docs/CCNA/img/tcp-ip-udp-header.png)
 
 * Chức năng: Là giao thức cùng lớp với TCP, nhưng được rút gọn. UDP không được thiết kế để kiểm soát chính xác và đầy đủ việc truyền dữ liệu nhưng hoạt động nhanh hơn.
 * Giao thức UDP chỉ được sử dụng khi:
