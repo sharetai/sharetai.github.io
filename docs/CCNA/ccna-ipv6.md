@@ -100,7 +100,7 @@ ipv6 address 2001:1234:A:B::/64 eui-64
 ```
 
 EUI-64 (Extended Unique Identifier) là một phương pháp dùng để tự động định cấu hình phần host của địa chỉ IPv6 dựa vào địa chỉ MAC. <br>
-Vấn đề là MAC dài 48 bit còn host thì cần 64 bit. Giải quyết bằng cách chèn thêm cho đủ:
+Vấn đề là MAC dài 48 bit còn host thì cần 64 bit. Giải quyết bằng cách chèn thêm cho đủ: <br>
 1\. Chia đôi địa chỉ MAC <br>
 2\. Chèn "FFFE" vào giữa => đủ 64 bit <br>
 3\. Đảo giá trị của bit thứ 7 <br>
