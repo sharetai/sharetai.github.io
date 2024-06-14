@@ -25,6 +25,14 @@ Giao thức dự phòng bước nhảy đầu tiên
 
 __Hot Standby Router Protocol (HSRP)__ cung cấp tính năng dự phòng cho router. Nếu một router gặp sự cố thay vì cấu hình chuyển đổi router cho máy tính người dùng bằng tay, giao thức này sẽ tự động hoá cho hệ thống
 
+__HSRP state__ <br>
+Active – Trạng thái chủ động chuyển tiếp lưu lượng. <br>
+Init or Disabled – Trạng thái khởi động, chưa sẵn sàng hoặc chưa thể tham gia HSRP. <br>
+Learn – Trạng thái chưa xác định địa chỉ IP ảo và chờ tin nhắn hello. <br>
+Listen – Trạng thái đã xác định địa chỉ IP ảo và đang nhận tin nhắn hello. <br>
+Speak – Trạng thái đang gửi và nhận tin nhắn hello. <br>
+Standby – Trạng thái sẵn sàng tiếp quản nhiệm vụ chuyển tiếp lưu lượng từ thiết bị đang Active. <br>
+
 ![image](/docs/CCNA/img/hsrp.png)
 
 * __R1__

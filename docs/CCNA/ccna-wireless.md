@@ -46,10 +46,10 @@ Mạng không dây
 \--\-- nhiều *LAP* quản lý bởi **Wireless LAN Controller (WLC)** <br>
 
 \! WiFi security protocols: <br>
-\-- **WEP** - **RC4** cipher <br>
-\-- **WPA** - **TKIP** protocol, RC4 <br>
-\-- **WPA2** - **AES**-CCMP encryption <br>
-\-- **WPA3** - **AES**-GCMP encryption, Simultaneous Authentication of Equals (**SAE**) <br>
+\-- **WEP** - **RC4 40-bit**, **PWE**<br>
+\-- **WPA** - **TKIP 128-bit with RC4**, **PSK & 802.1x**<br>
+\-- **WPA2** - **AES 128-bit**, CCMP encryption, **PSK & 802.1x** <br>
+\-- **WPA3** - **AES 128-bit (personal) 192-bit (enterprise)**-GCMP encryption, Simultaneous Authentication of Equals (**SAE**) & **802.1x** <br>
 
 <table class="wikitable floatright mw-datatable">
 <caption>Wi-Fi generations</caption>
@@ -171,4 +171,32 @@ Mạng không dây
 <tr>
 <td colspan="5"><b>*</b><i>Wi‑Fi 0</i>, <i>1</i>, <i>2</i>, and <i>3</i> are named by retroactive inference.<br>They do not exist in the official nomenclature.
 </td></tr></tbody></table>
+
+
+## <u>Cisco WLC Interfaces, Ports</u>
+
+**<u>WLC Ports (Physical Interfaces)</u>**
+
+![Alt text](/docs/CCNA/img/wlc-phy-int.png)
+
+**Redundancy Port** - Cổng sử dụng cho **High-Availability (HA)** khi có 2 WLC. 2 port redun của 2 WLC sẽ đấu nhau.
+
+**Service Port** - Cổng sử dụng cho **out-of-band management** bảo trì khi mạng lỗi. Là **access port**, không hỗ trợ trunk.
+
+**SFP Distribution Port** - Kết nối với cổng logic bên trong và chứa lưu lượng không dây của máy khách.
+
+**<u>WLC INTERFACES (LOGICAL INTERFACES)</u>**
+
+![Alt text](/docs/CCNA/img/wlc-logic-int.png)
+
+**Service Interface** - Giao diện quản trị, tách biệt với lưu lượng máy khách.
+
+**Management Interface** - Giao diện quản trị, chung với lưu lượng máy khách.
+
+**AP-Manager Interface** - Giao diện giao tiếp giữa controller và lightweight access points. AP-Manager IP address sử dụng như tunnel source cho các gói CAPWAP/LWAPP.
+
+**Virtual Interface** - Giao diện cung cấp DHCP relay, authentication.
+
+**Dynamic Interface** - Giao diện máy khách.
+
 
