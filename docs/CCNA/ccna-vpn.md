@@ -149,3 +149,17 @@ crypto map VPNMAP 10 ipsec-isakmp dynamic DMAP
 int g0/0
 crypto map VPNMAP
 ```
+
+## Authentication Header (AH) và Encapsulating Security (ESP)
+
+AH thực hiện băm (hash) phần data và một phần ip header.
+
+![Alt text](/docs/CCNA/img/vpn-ip-header.png)
+
+Hình trên mô tả các phần màu đen là phần sẽ bị sửa đổi trong quá trình truyền, AH không băm các phần này.
+
+Có thể xem: <br>
+\- Ở chế độ transport, cần giữ lại origin ip header. AH sẽ đảm bảo không bị sửa đổi phần ip header và data nhờ chuỗi băm đính kèm, phần data sẽ là bản rõ. ESP sẽ không đảm bảo phần ip header, phần data sẽ được mã hoá. AH+ESP sẽ đảm bảo không bị sửa đổi phần ip header và data, phần data sẽ được mã hoá. <br>
+\- Ở chế độ tunnel, ESP có thể mã hoá cả origin ip header, do sẽ có ip header mới. AH sẽ đảm bảo không bị sửa đổi phần ip header và data nhờ chuỗi băm đính kèm, phần data sẽ là bản rõ. ESP sẽ không đảm bảo phần ip header mới, phần origin ip header và data sẽ được mã hoá. AH+ESP sẽ đảm bảo không bị sửa đổi phần ip header mới và data, phần origin ip header và data sẽ được mã hoá. <br>
+
+![Alt text](/docs/CCNA/img/vpn-ah-esp.png)
