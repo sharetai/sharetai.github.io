@@ -152,3 +152,11 @@ R1(config-if)#glbp 1 preempt
 R2(config)#int g0/0
 R2(config-if)#glbp 1 ip 10.0.0.254
 ```
+
+## HSRP & VRRP & GLBP
+
+| FHRP | Term           | Virtual MAC                                            |
+| :--- | :------------- | :----------------------------------------------------- |
+| HSRP | Active/Standby | v1: 0000.0c07.ac<u>XX</u><br>v1: 0000.0c9f.f<u>XXX</u> |
+| VRRP | Master/Backup  | 0000.5e00.01<u>XX</u>                                  |
+| GLBP | AVG/AVF        | 0007.b400.<u>XXYY</u>                                  |

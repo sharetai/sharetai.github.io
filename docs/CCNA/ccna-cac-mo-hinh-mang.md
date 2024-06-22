@@ -11,8 +11,6 @@ parent: CCNA
 Mô hình OSI và mô hình TCP/IP
 {: .fs-6 .fw-300 }
 
-_Nguồn tham khảo đầy đủ: [Tự học CCNA](https://www.youtube.com/playlist?list=PLhchcQ1p5Tc9_LOTMsjK_Mk2xZZR1VChu)_
-
 ---
 
 ## Table of contents

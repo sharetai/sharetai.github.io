@@ -23,11 +23,11 @@ Một số lệnh cơ bản ở các mode
 
 Các thành phần bên trong thiết bị cisco cơ bản gồm có:
 
-* CPU: trung tâm xử lý
-* RAM: bộ nhớ đệm
-* Flash: bên trong lưu trữ hệ điều hành IOS (Internetwork Operating System), cấu hình configuration
-* NVRAM (có ở router): lưu trữ cấu hình khởi động ban đầu (starup-config)
-* ROM: lưu trữ chương trình POST (Power On Self Test) dùng để test phần cứng trước khi khởi động, ngoài ra còn có ROMMON, Bootstrap
+* __CPU - Central Processing Unit__: trung tâm xử lý
+* __RAM - Random Access Memory__: bộ nhớ đệm
+* __Flash__: bên trong lưu trữ hệ điều hành IOS (Internetwork Operating System), cấu hình configuration
+* __NVRAM - Nonvolatile RAM__ (có ở router): lưu trữ cấu hình khởi động ban đầu (starup-config)
+* __ROM - Read-only memory__: lưu trữ chương trình POST (Power On Self Test) dùng để test phần cứng trước khi khởi động, ngoài ra còn có ROMMON, Bootstrap
 
 Quy trình khởi động cơ bản: POST (ROM) -> Bootstrap (ROM) -> IOS (Flash) -> config (Flash/NVRAM)
 
@@ -46,26 +46,31 @@ Quy trình khởi động cơ bản: POST (ROM) -> Bootstrap (ROM) -> IOS (Flash
   </tr>
   <tr>
     <td>Ctrl D</td>
-    <td>delete</td>
+    <td>delete a character</td>
     <td>xoá 1 ký tự phía sau</td>
+  </tr>
+  <tr>
+    <td>Ctrl U</td>
+    <td>delete all characters</td>
+    <td>xoá toàn bộ hàng</td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td>Ambigous command</td>
+    <td>! Ambigous command</td>
     <td>từ gõ vào trùng nhiều lệnh</td>
   </tr>
   <tr>
-    <td>Incomplete command</td>
+    <td>! Incomplete command</td>
     <td>lệnh chưa hoàn tất</td>
   </tr>
   <tr>
-    <td>Invalid command</td>
+    <td>! Invalid command</td>
     <td>giá trị nhập sai</td>
   </tr>
   <tr>
-    <td>Unknown command</td>
+    <td>! Unknown command</td>
     <td>lệnh không có hay không hỗ trợ trong mode này</td>
   </tr>
 </table>

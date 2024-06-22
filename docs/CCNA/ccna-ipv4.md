@@ -1,7 +1,7 @@
 ---
 layout: default
 title: IPv4
-nav_order: 10
+nav_order: 3.3
 parent: CCNA
 ---
 

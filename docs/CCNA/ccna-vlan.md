@@ -52,6 +52,8 @@ Do mạng có thể cực kỳ phức tạp với nhiều giao thức và công 
 ```
 int g0/1
 switchport mode trunk
+switchport trunk allowed vlan 101,102,103
+switchport trunk native vlan 3999
 ```
 
 ```

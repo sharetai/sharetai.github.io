@@ -93,6 +93,9 @@ R(config-ext-nacl)#permit ip any any
 >
 > __interface__ _{interface}_ <br/>
 > __ip access-group__ _{acl-id}_ _{in \| out}_
+>
+> __line vty 0 4__ <br/>
+> __ip access-class__ _{acl-id}_ _{in \| out}_
 
 ```
 int g0/0

@@ -38,16 +38,21 @@ Bật tắt CDP:
 ```
 (config)# no cdp run
 (config)# cdp run
-(config)# interface e0
+(config)# interface e0/0
 (config-if)# no cdp enable
 ```
 
 ## LLDP
 
-Tương tự CDP.
+Tương tự CDP. Khác, LLDP là chuẩn mở.
 
 ```
-(config)# lldp run
 # show lldp neighbors
 ```
 
+```
+(config)# lldp run
+(config)# interface e0/0
+(config-if)# no cdp receive
+(config-if)# no cdp transmit
+```

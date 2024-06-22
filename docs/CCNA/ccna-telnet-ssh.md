@@ -28,7 +28,7 @@ Telnet là giao thức đầu cuối ảo (virtual terminal) và là một phầ
 Virtual terminal (VTY) lines cho phép truy cập vào thiết bị thông qua các phiên kết nối. Khi người dùng kết nối vào thiết bị bằng VTY line, người đó đang kết nối vào một cổng ảo trên interface.
 
 ```
-(config)# line vty 0 4 -> mở 5 phiên vty từ 0 đến 4 (có thể tăng hoặc giảm tuỳ theo số lượng cho phép kết nối)
+(config)# line vty 0 4 <- mở 5 phiên vty từ 0 đến 4 (có thể tăng hoặc giảm tuỳ theo số lượng cho phép kết nối)
 (config-line)# pass [123]
 (config-line)# login
 ```
@@ -36,7 +36,9 @@ Virtual terminal (VTY) lines cho phép truy cập vào thiết bị thông qua c
 Ngoài dùng pass để login, có thể dùng user pass thay thế.
 
 ```
-(config)# user [admin] secret [456]
+(config)# enable secret 789 <- Cấu hình remote bắt buộc thêm pass để có thể vào được enable
+(config)# username [admin] secret [456]
+(config)# username [root] privilege 15 secret [456] <- level 15 cao nhất, login ko cần pass enable
 (config)# line vty 0 4
 (config-line)# login local
 ```
@@ -47,9 +49,9 @@ SSH là Secure Shell - là giao thức cho phép kết nối truyền dữ liệ
 
 ```
 (config)# user [admin] secret [456]
-(config)# ip domain-name box.local -> cần có do được sử dụng để tạo cặp key rsa
-(config)# crypto key generate rsa -> sinh cặp key rsa
-(config)# ip ssh version 2 -> sử dụng khi module cũ đang sử dụng ssh version cũ
+(config)# ip domain-name box.local <- cần có do được sử dụng để tạo cặp key rsa
+(config)# crypto key generate rsa general-keys modulus 1024 <- sinh cặp key rsa
+(config)# ip ssh version 2 <- sử dụng khi module cũ đang sử dụng ssh version cũ
 
 (config)# line vty 0 4
 (config-line)# login local

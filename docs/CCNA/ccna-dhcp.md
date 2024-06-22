@@ -77,6 +77,8 @@ R1(dhcp-config)#default-router 192.168.2.254
 ```
 R2(config)#int g0/1
 R2(config-if)#ip helper-address 10.0.0.1
+
+R2#show ip int g0/1
 ```
 
 ## APIPA (Automatic Private IP Addressing)

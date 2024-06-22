@@ -69,6 +69,6 @@ Kiến trúc SDN được chia thành ba lớp – Lớp cơ sở hạ tầng, L
 
 Do đó, liên kết giữa lớp cơ sở hạ tầng và lớp điều khiển đang sử dụng API hướng Nam và liên kết giữa lớp điều khiển và lớp ứng dụng đang sử dụng API hướng Bắc. API hướng Nam cho phép bộ điều khiển lập trình các bảng chuyển tiếp mặt phẳng dữ liệu của thiết bị mạng.
 
-API southbound sử dụng OpenFlow, SNMP, NETCONF, SSH. API Northbound sử dụng API REST, TLS, SOAP.
+API southbound sử dụng **SSH**, **NETCONF**, **OpenFlow**, SNMP. API Northbound sử dụng API **REST**, **SOAP**, TLS.
 
 ![Alt text](/docs/CCNA/img/software-defined-networking.png)

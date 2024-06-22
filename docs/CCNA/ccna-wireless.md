@@ -43,7 +43,8 @@ Mạng không dây
 \-- **Autonomous Access Point (AP)** <br>
 \--\-- độc lập <br>
 \-- **Lightweight Access Point (LAP)** <br>
-\--\-- nhiều *LAP* quản lý bởi **Wireless LAN Controller (WLC)** <br>
+\--\-- nhiều *LAP* được quản lý bởi **Wireless LAN Controller (WLC)** <br>
+\--\-- có 2 mode: local và flexconnect (sẽ chuyển autonomous khi mất kết nối với WLC)
 
 \! WiFi security protocols: <br>
 \-- **WEP** - **RC4 40-bit**, **PWE**<br>
@@ -199,4 +200,12 @@ Mạng không dây
 
 **Dynamic Interface** - Giao diện máy khách.
 
+## <u>802.1x</u>
 
+Khi truy cập vào wifi, thường chỉ cần mật khẩu. Người quản trị chỉ xác định được số lượng truy cập, ip hay mac. Thiếu định danh, nhận dạng thiết bị an toàn hay được cho phép.
+
+802.1x cung cấp đăng nhập yêu cầu username và password hay yêu cầu chứng chỉ CA được phép.
+
+![Alt text](/docs/CCNA/img/802.1x_wired_protocols.png)
+
+![Alt text](/docs/CCNA/img/802.1x.png)

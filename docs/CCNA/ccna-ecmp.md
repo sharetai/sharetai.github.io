@@ -26,9 +26,9 @@ __Equal Cost Multi-Path__ hay __ECMP__ là chiến lược định tuyến trong
 ## Khái niệm định tuyến của Cisco
 
 Thiết bị Cisco Lớp 3, chẳng hạn như bộ định tuyến, quyết định sử dụng tuyến đường dựa trên: <br>
-1\. __Prefix length__ <br>
-2\. __Administrative Distance (AD)__ <br>
-3\. __Metric__ <br>
+1\. __Longest Prefix length__ <br>
+2\. __Lowest Administrative Distance (AD)__ <br>
+3\. __Lowest Metric__ <br>
 
 <table class="wikitable" style="text-align:center">
 <tbody><tr>
