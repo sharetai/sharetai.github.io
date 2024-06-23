@@ -165,3 +165,20 @@ R2(config-if)#ipv6 ospf 1 area 0
 R2(config-if)#int g0/1
 R2(config-if)#ipv6 ospf 1 area 0
 ```
+
+## <u> Chia subnet IPv6 </u>
+
+2001:DB8::/50 chia 16
+
+```
+* Số bit mượn (n): 4
+* Subnet mask mới: /54
+[ ] dùng biểu diễn nhị phân
+2001:0DB8:0000:[00xx xx00 0000 0000]::/54 <- x là bit mượn
+* 16 mạng con:
+  - 2001:DB8::/54
+  - 2001:DB8:0:400::/54
+  - 2001:DB8:0:800::/54
+  ...
+  - 2001:0DB8:0:3C00:/54
+```
