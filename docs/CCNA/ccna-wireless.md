@@ -21,7 +21,12 @@ Mạng không dây
 
 ---
 
-## <u>Dump</u>
+{: .highlight-title }
+> Note
+>
+> Bản chất điểm truy cập không dây (access points) là kết nối các thiết bị không dây (wireless devices) vào mạng có dây (wired network)
+
+## <u>802.11</u>
 
 \! Chuẩn **IEEE 802.11** mô tả một giao tiếp "truyền qua không khí" _(over-the-air)_ sử dụng sóng vô tuyến để truyền nhận tín hiệu <br>
 
@@ -29,7 +34,11 @@ Mạng không dây
 
 \! Vùng tập trung các pc truy cập không dây gọi là **Basic Service Set (BSS)** và trung tâm là **Wireless Access Point (WAP)** <br>
 
-\! **Frame Type**s:  <br>
+\! **2.4GHz vs 2.5GHz**:  <br>
+\-- 2.4GHz có 3 kênh không chồng chéo là kênh 1, 6, 11<br>
+\-- 2.5GHz có 23 kênh không chồng chéo <br>
+
+\! **Frame Types**:  <br>
 \-- Association | Management <br>
 \-- Authentication | Management <br>
 \-- Beacon | Management <br>
@@ -44,7 +53,7 @@ Mạng không dây
 \--\-- độc lập <br>
 \-- **Lightweight Access Point (LAP)** <br>
 \--\-- nhiều *LAP* được quản lý bởi **Wireless LAN Controller (WLC)** <br>
-\--\-- có 2 mode: local và flexconnect (sẽ chuyển autonomous khi mất kết nối với WLC)
+\--\-- có 2 mode: local và flexconnect (với flexconnect sẽ chuyển autonomous khi mất kết nối với WLC)
 
 \! WiFi security protocols: <br>
 \-- **WEP** - **RC4 40-bit**, **PWE**<br>
@@ -173,6 +182,11 @@ Mạng không dây
 <td colspan="5"><b>*</b><i>Wi‑Fi 0</i>, <i>1</i>, <i>2</i>, and <i>3</i> are named by retroactive inference.<br>They do not exist in the official nomenclature.
 </td></tr></tbody></table>
 
+{: .highlight-title }
+> Note
+>
+> __- 802.11r__ hay __fast BSS transition (FT)__ - hỗ trợ chuyển vùng nhanh <br>
+> __- 802.11w__ - tăng cường bảo mật cho các frame quản lý được bảo vệ <br>
 
 ## <u>Cisco WLC Interfaces, Ports</u>
 
@@ -209,3 +223,5 @@ Khi truy cập vào wifi, thường chỉ cần mật khẩu. Người quản tr
 ![Alt text](/docs/CCNA/img/802.1x_wired_protocols.png)
 
 ![Alt text](/docs/CCNA/img/802.1x.png)
+
+## (lab is comming soon)

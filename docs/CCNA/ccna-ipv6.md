@@ -87,13 +87,13 @@ trong đó <br>
 < \-\-\-\-\-\-\- 48 bit \-\-\-\-\-\-\- >< \-\-\- 16 bit \-\-\- >< \-\-\-\-\- 64 bit \-\-\-\- > <br>
 < \-\- 2001:41f0:4060 \-\- >< \-\- Subnet \-\- >< \-\- InterfaceID \-\- > <br>
 
-### <u> Các đặt địa chỉ IPv6 </u>
+### <u> Cách đặt địa chỉ IPv6 </u>
 
-\- <u>IP tĩnh</u> <br>
+\- <u>Gán IPv6 tĩnh</u> <br>
 ```
 ipv6 address 2001:1234:A:B::1/64
 ```
-\- <u>EUI-64</u> <br>
+\- <u>Gán IPv6 động theo EUI-64</u> <br>
 
 ```
 ipv6 address 2001:1234:A:B::/64 eui-64
@@ -107,7 +107,7 @@ Vấn đề là MAC dài 48 bit còn host thì cần 64 bit. Giải quyết bằ
 
 ![alt text](/docs/CCNA/img/ipv6-eui-64.png)
 
-\- <u>SLAAC (StaLess Auto Address Configuration)</u> <br>
+\- <u>Gán IPv6 động theo SLAAC (StaLess Auto Address Configuration)</u> <br>
 
 ```
 ipv6 address autoconfig
@@ -119,7 +119,7 @@ ipv6 address autoconfig
 
 \* Vấn đề của SLAAC là không thể tự động cấp IP DNS Server. Do đó cần DHCPv6. <br>
 
-\- <u>DHCPv6</u> <br>
+\- <u>Dùng DHCPv6</u> <br>
 
 \-- **Stateful** khá giống IPv4. Máy chủ DHCPv6 sẽ gán địa chỉ IPv6 cho tất cả các máy khách và nó sẽ theo dõi các địa chỉ IP này. <br>
 \-- **Stateless** hoạt động khác một chút... Máy chủ DHCPv6 không gán địa chỉ IPv6 cho máy khách, mà việc này sẽ được thực hiện thông qua SLAAC. Máy chủ DHCPv6 chỉ gán thông tin mà SLAAC không cấp được, như DNS Server.<br>
@@ -182,3 +182,12 @@ R2(config-if)#ipv6 ospf 1 area 0
   ...
   - 2001:0DB8:0:3C00:/54
 ```
+
+## <u> Một vài khái niệm </u>
+
+__* 6 to 4 tunneling__ - Công nghệ sử dụng cơ sở hạ tầng mạng IPv4 để truyền tải gói tin IPv6, phục vụ cho kết nối IPv6. <br>
+_(lab is comming soon)_ <br>
+__* dual-stack__ - Cho phép IPv4 và IPv6 cùng tồn tại trong cùng một thiết bị mạng. <br>
+_(lab is comming soon)_ <br>
+__* NAT-PT (Network Address Translation-Protocol Translation)__ - Là một dạng của công nghệ NAT, cho phép thiết bị chỉ hỗ trợ IPv6 có thể giao tiếp với thiết bị chỉ hỗ trợ IPv4. <br>
+_(lab is comming soon)_ <br>

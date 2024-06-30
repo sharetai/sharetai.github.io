@@ -64,6 +64,8 @@ Phân nhóm:
 
 ## Cáp quang (Fiber-optic)
 
+<image src="/docs/CCNA/img/cable-Fiber-optic-working.png" width="50%"/>
+
 ![alt text](/docs/CCNA/img/cable-Fiber-optic.png)
 
 ## Power over Ethernet (PoE)

@@ -13,6 +13,8 @@ Xác thực, Ủy quyền và Tính cước
 
 ---
 
+## AAA
+
 __AAA__ (**A**uthentication, **A**uthorization, and **A**ccouting) là phương thức cấu hình dùng để xác thực, cấp quyền và ghi thông tin người dùng khi sử dụng thiết bị và dịch vụ trên thiết bị Cisco. 
 
 __Authentication__: xác định người dùng nào được phép kết nối vào thiết bị, tài khoản người dùng có thể tạo local trên thiết bị hoặc trên server dùng giao thức TACACS+ hoặc RADIUS để hỗ trợ chứng thực.
@@ -35,3 +37,13 @@ Switch(config-line)#login authentication ABC
 
 Switch(config)#enable secret 789
 ```
+
+## RADIUS vs TACACS+
+
+| RADIUS                            | TACACS+                                       |
+| :-------------------------------: | :-------------------------------------------: |
+| Chuẩn mở                          | Chuẩn của Cisco                               |
+| Sử dụng UDP                       | Sử dụng TCP                                   |
+| Hỗ trợ 802.1x                     | Không hỗ trợ 802.1x                           |
+| Gom 2 phần xác thực và phân quyền | Tách 3 phần xác thực và phân quyền, tính cước |
+| Chỉ password được mã hóa          | Toàn bộ payload được mã hóa                   |

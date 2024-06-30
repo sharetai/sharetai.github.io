@@ -29,7 +29,7 @@ parent: CCNA
 
 ## <u>Hypervisor</u>
 
-Hypervisor phần mềm cho phép chia một máy tính vật lý thành nhiều máy tính ảo riêng biệt, mỗi máy ảo có hệ điều hành và ứng dụng riêng.
+Hypervisor phần mềm cho phép chia một máy tính vật lý (CPU, memory, storage) thành nhiều máy tính ảo riêng biệt, mỗi máy ảo có hệ điều hành và ứng dụng riêng.
 
 Có hai loại hypervisor chính: <br>
 \- Hypervisor loại 1 (Hypervisor Bare-metal): Cài đặt trực tiếp trên phần cứng máy tính, không cần hệ điều hành trung gian. Loại này thường được sử dụng cho các ứng dụng đòi hỏi hiệu suất cao và tính ổn định cao, ví dụ như ảo hóa máy chủ. VMware ESXi, Microsoft Hyper-V <br>
