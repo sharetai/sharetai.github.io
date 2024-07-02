@@ -1,7 +1,7 @@
 ---
 layout: default
 title: OSPF
-nav_order: 2
+nav_order: 100
 parent: CCNP
 ---
 
