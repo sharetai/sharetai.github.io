@@ -23,27 +23,28 @@ Giao thức định tuyến OSPF
 
 ## \# Tổng quan về OSPF
 <br>
-\- Giao thức ___Open Shortest Path First (OSPF)___, được phát triển bởi tổ chức ___Internet Engineering Task Force (IETF)___, là giao thức định tuyến nội hay ___link-state Interior Gateway Protocol (IGP)___. <br>
-\- Hiện tại, ___OSPF Version 2___ được định nghĩa trong ___RFC 2328___ dành cho ___IPv4___ và ___OSPF Version 3___ được định nghĩa trong ___RFC 2740___ dành cho ___IPv6___. <br>
+\- Giao thức ___Open Shortest Path First (OSPF)___, được phát triển bởi tổ chức ___Internet Engineering Task Force (IETF)___, là giao thức ___link-state Interior Gateway Protocol (IGP)___. <br>
+\- Hiện tại, ___OSPF Version 2___ được định nghĩa trong ___RFC 2328___ cho ___IPv4___ và ___OSPF Version 3___ được định nghĩa trong ___RFC 2740___ cho ___IPv6___. <br>
 
 ![alt text](/docs/CCNP/img/ospf-types-of-routing-protocols.png)
+<br>
 
 ## \# Chức năng của OSPF
 <br>
 \- Chia Hệ thống tự trị (AS - Autonomous System) thành một hoặc nhiều vùng logic (gọi là ___area___). <br>
 \- Quảng bá các tuyến đường bằng cách gửi các ___LSAs___ - Link State Advertisements. <br>
 \- Trao đổi các gói OSPF giữa các thiết bị trong vùng OSPF để đồng bộ hóa thông tin định tuyến ___LSDB___. <br>
-\- Đóng gói các gói OSPF thành các gói IP và gửi các gói ở chế độ ___unicast___ hoặc ___multicast___. <br>
+\- Đóng gói các gói OSPF thành các gói IP và gửi các gói ở chế độ ___unicast___ hoặc ___multicast___. <br><br>
 
 ## \# Cấu hình OSPF cơ bản
 
 ### \#\# Router ID
 <br>
-Router yêu cầu 1 ___Router ID___ để chạy OSPF. 1 Router ID ___dài 32 bit dạng thập phân___, là duy nhất trong 1 miền AS. <br>
+___Yêu cầu 1 Router ID___ để chạy OSPF. 1 Router ID ___dài 32 bit dạng thập phân___, là duy nhất trong 1 miền AS. <br>
 ___Router ID có thể được cấu hình thủ công hoặc router chọn tự động___, thứ tự chọn Router ID như sau:
 1. ___Sử dụng Router ID được cấu hình thủ công___ bằng câu lệnh `router-id` mode `router ospf`.
-2. ___Sử dụng địa chỉ IP cao nhất trên cổng loopback___ nào đang trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
-3. ___Sử dụng địa chỉ IP cao nhất trên cổng vật lý___ nào không phải là loopback và trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
+2. ___Sử dụng địa chỉ IP cao nhất trên cổng loopback___ đang trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
+3. ___Sử dụng địa chỉ IP cao nhất trên cổng vật lý___ không phải là loopback và trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
 
 Thứ tự đơn giản, nhưng một vài chi tiết bị che dấu bên dưới thứ tự được nêu ra ở trên. Các chi tiết đó như sau:
 - Cổng mà từ đó Router ID được chọn ra không nhất thiết phải so trùng với một câu lệnh `network`. Nói cách khác, cổng đó không bắt buộc phải chạy OSPF.
@@ -220,7 +221,7 @@ OSPF đóng gói trực tiếp ___5___ kiểu thông điệp OSPF khác nhau bê
 
 | Loại gói                             | Chức năng                                                                                                          |
 | :----------------------------------- | :----------------------------------------------------------------------------------------------------------------- |
-| Hello                                | Được gửi định kỳ để khám phá, thoả hiệp và duy trì các mối quan hệ lân cận OSPF.                                   |
+| Hello                                | Được gửi định kỳ để khám phá, thoả hiệp và duy trì các mối quan hệ neighbor.                                   |
 | Database Description (DD)            | Chứa thông tin ngắn gọn về cơ sở dữ liệu trạng thái liên kết cục bộ (LSDB) và đồng bộ hóa LSDB trên hai thiết bị.  |
 | Link State Request (LSR)             | Yêu cầu LSA cần thiết từ hàng xóm. Các gói LSR chỉ được gửi sau khi các gói DD được trao đổi thành công.           |
 | Link State Update (LSU)              | Gửi LSA cần thiết cho hàng xóm.                                                                                    |
@@ -233,6 +234,7 @@ OSPF đóng gói trực tiếp ___5___ kiểu thông điệp OSPF khác nhau bê
 
 ![Alt text](/docs/CCNP/img/ospf-state.png)
 
+OSPF lắng nghe những thông điệp Hello được gửi đến 224.0.0.5. Đây là địa chỉ multicast cho tất cả các router chạy OSPF, trên bất cứ cổng nào đã bật OSPF. Các gói Hello sẽ lấy nguồn từ địa chỉ chính trên cổng.
 Khi hai router tìm ra nhau thông qua các gói Hello, các router thực hiện các phép kiểm tra các thông số như sau:
 
 - Các router phải vượt qua tiến trình xác thực.
@@ -253,10 +255,10 @@ Nếu bất kỳ điều kiện nào nêu trên không thỏa mãn, hai router �
 | :------------------------    | :------------------------------------------------------------------------------------------------------- |
 | Router-LSA (Type 1)          | Các router cùng area trao đổi trạng thái liên kết cho nhau để xây dựng routes nội vùng (internal routes) |
 | Network-LSA (Type 2)         | Thông báo vị trí của DR trong 1 area                                                                     |
-| Network-summary-LSA (Type 3) | Quảng bá routes thuộc miền ospf đến các area (inter area routes)                                         |
+| Network-summary-LSA (Type 3) | Quảng bá routes giữa các area trong cùng miền OSPF (inter area routes)                                         |
 | ASBR-summary-LSA (Type 4)    | Thông báo vị trí của ASBR trong 1 miền OSPF                                                              |
 | AS-external-LSA (Type 5)     | Quảng bá routes bên ngoài vào trong miền OSPF (external routes)                                          |
-| NSSA-LSA (Type 7)            | Quảng bá routes bên ngoài vào trong miền OSPF nhưng để đi qua NSSA (nssa external routes)                |
+| NSSA-LSA (Type 7)            | Quảng bá routes bên ngoài vào trong miền OSPF nhưng để đi qua vùng NSSA (nssa external routes)                |
 
 <u>LSA Type 1: OSPF Router LSA</u>
 
