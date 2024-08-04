@@ -23,8 +23,8 @@ Thao túng cập nhật định tuyến
 
 ## Route Redistribution (Phân phối lại tuyến đường)
 
-### <u>Default Seed Metrics</u>
-
+### Default Seed Metrics
+<br>
 ![Alt text](/docs/CCNP/img/default-seed-metric.png)
 
 ![Alt text](/docs/CCNP/img/route-redistribution-1.png)
@@ -152,9 +152,10 @@ Gateway of last resort is not set
 
 R3#
 ```
+<br>
 
-### <u>Redistribution OSPF into RIP</u>
-
+### Redistribution OSPF into RIP
+<br>
 * R2 (manual seed metric)
 ```conf
 en
@@ -221,9 +222,10 @@ R        172.16.2.0 [120/10] via 192.168.12.2, 00:00:02, Ethernet0/0
 R     192.168.23.0/24 [120/10] via 192.168.12.2, 00:00:02, Ethernet0/0
 R1#
 ```
+<br>
 
-### <u>Redistribution OSPF into RIP using Route-map + ACL</u>
-
+### Redistribution OSPF into RIP using Route-map + ACL
+<br>
 * R2
 ```conf
 en
@@ -265,9 +267,10 @@ R        172.16.2.0 [120/5] via 192.168.12.2, 00:00:02, Ethernet0/0
 R     192.168.23.0/24 [120/10] via 192.168.12.2, 00:00:02, Ethernet0/0
 R1#
 ```
+<br>
 
-### <u>Redistribution OSPF into RIP using Route-map + Prefix-list</u>
-
+### Redistribution OSPF into RIP using Route-map + Prefix-list
+<br>
 * R2
 ```conf
 en
@@ -390,10 +393,16 @@ ip prefix-list MASK-24 permit 192.168.0.0/16 ge 24 le 24
 
 Cách này chỉ cần một dòng, điều mà ví dụ ban đầu sẽ mất hơn 200 dòng để hoàn thành.
 
-### <u>Redistribution OSPF into RIP using Route-map + Prefix-list (set tag)</u>
+<br>
 
-#### <u>Routing loop in redistribution</u>
-
+### Redistribution OSPF into RIP using Route-map + Prefix-list (set tag)
+<br>
+2 vấn đề cần lưu ý khi phân phối routes từ trên 2 điểm: <br>
+\- suboptimal (không tối ưu, không phải đường đi tốt nhất) <br>
+\- loop (vòng lặp) <br>
+<br>
+#### Routing loop in redistribution
+<br>
 * R1
 ```conf
 en
@@ -729,8 +738,10 @@ Mô tả:<br>
 \- R1 có 2 nguồn thông tin về mạng 5.5.5.5, 1 từ R5 với metric 9 và 2 từ R4 với metric 8. R1 chọn R4 là nexthop của mạng 5.5.5.5<br>
 \- Routing loop xảy ra: R1->(5.5.5.5)->R4->R2->R1
 
-#### <u>Route tagging</u>
+<br>
 
+#### Route tagging
+<br>
 * R2
 ```conf
 en
@@ -804,9 +815,10 @@ VRF info: (vrf in name/id, vrf out name/id)
   1 192.168.15.5 1 msec *  1 msec
 R1#
 ```
+<br>
 
-### <u>Redistribution using Distribute-list</u>
-
+### Redistribution using Distribute-list
+<br>
 ![Alt text](/docs/CCNP/img/route-redistribution-2.png)
 
 * R1
@@ -1050,7 +1062,7 @@ R        4.4.4.4 [120/2] via 10.0.234.2, 00:00:04, Ethernet0/0
 R3#
 ```
 
-* R1 (cấu hình Distribute-list + ACL + Prefix-list chỉ quảng bá 2.2.2.2/32 và 4.4.4.4/42 cho R2, chỉ quảng bá 3.3.3.3/32 và 4.4.4.4/32 cho R3)
+* R1 (cấu hình Distribute-list + ACL + Prefix-list chỉ quảng bá 2.2.2.2/32 và 4.4.4.4/32 cho R2, chỉ quảng bá 3.3.3.3/32 và 4.4.4.4/32 cho R3)
 ```conf
 en
 conf t
@@ -1269,7 +1281,7 @@ distribute-list 3 out
 end
 ```
 
-* Verify (không thay đổi)
+* Verify (kết quả không thay đổi)
 
 ```conf
 R1#sh ip route ospf
@@ -1305,7 +1317,7 @@ distribute-list 3 in
 end
 ```
 
-* Verify (không thay đổi)
+* Verify (kết quả có thay đổi)
 
 ```conf
 R1#sh ip route ospf
@@ -1330,8 +1342,10 @@ R1#
 
 <b><u>Kết luận: OSPF là giao thức định tuyến link state khác với RIP thay vì quảng bá routes thì OSPF chỉ quảng bá trạng thái liên kết. Do đó OSPF trong cùng area chỉ có thể lọc routes chiều in.</u></b>
 
-### <u>Redistribution using Filter-list</u>
+<br>
 
+### Redistribution using Filter-list
+<br>
 ![Alt text](/docs/CCNP/img/route-redistribution-4.png)
 
 * R1
@@ -1519,6 +1533,8 @@ router ospf 1
 area 1 filter-list prefix 1 out
 end
 ```
+
+_* (Lưu ý: Câu lệnh area filter-list chỉ có thể dùng với prefix-list)_
 
 * Verify
 
