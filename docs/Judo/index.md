@@ -13,19 +13,19 @@ Nhu đạo
 
 ## Ukemi Waza (Kỹ thuật té ngã)
 
-### Mae Ukemi
+### Mae Ukemi (Té ngã phía trước)
 
 ![alt text](/docs/Judo/img/judo-ukemi-waza-mae-ukemi.png)
 
-### Ushiro Ukemi
+### Ushiro Ukemi (Té ngã phía sau)
 
 ![alt text](/docs/Judo/img/judo-ukemi-waza-ushiro-ukemi.png)
 
-### (Migi/Hidari) Yoko Ukemi
+### Migi/Hidari Yoko Ukemi (Té ngã một bên phải/trái)
 
 ![alt text](/docs/Judo/img/judo-ukemi-waza-yoko-ukemi.png)
 
-### (Migi/Hidari) Zempo Kaiten Ukemi
+### Migi/Hidari Zempo Kaiten Ukemi (Té ngã cuộn tròn một bên phải/trái)
 
 ![alt text](/docs/Judo/img/judo-ukemi-waza-zempo-kaiten-ukemi.png)
 
