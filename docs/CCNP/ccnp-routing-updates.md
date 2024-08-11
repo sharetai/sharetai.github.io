@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Manipulating Routing Updates
-nav_order: 100
+title: Routing Updates
+nav_order: 30
 parent: CCNP
 ---
 
-# Manipulating Routing Updates
+# Routing Updates
 {: .no_toc }
 
-Thao túng cập nhật định tuyến
+Manipulating Routing Updates - Thao túng cập nhật định tuyến
 {: .fs-6 .fw-300 }
 
 ---
@@ -1595,4 +1595,239 @@ O IA     4.4.4.4 [110/11] via 10.0.24.4, 00:08:38, Ethernet0/0
 O IA     10.0.14.0/24 [110/20] via 10.0.24.4, 00:08:34, Ethernet0/0
 O IA     10.0.34.0/24 [110/20] via 10.0.24.4, 00:08:34, Ethernet0/0
 R2#
+```
+
+### PBR - Policy Based Routing
+<br>
+![Alt text](/docs/CCNP/img/route-pbr.png)
+
+* R1
+```conf
+en
+conf t
+no ip domain-lookup
+host R1
+int e0/0
+ip add 192.168.12.1 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+no shut
+int lo1
+ip add 1.1.1.1 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+int lo2
+ip add 2.2.2.2 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+end
+```
+
+* R2
+```conf
+en
+conf t
+no ip domain-lookup
+host R2
+int e0/0
+ip add 192.168.12.2 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+no shut
+int e0/1
+ip add 192.168.213.2 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+bandwidth 4000
+no shut
+int e0/2
+ip add 192.168.223.2 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+no shut
+end
+```
+
+* R3
+```conf
+en
+conf t
+no ip domain-lookup
+host R3
+int e0/1
+ip add 192.168.213.3 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+no shut
+int e0/2
+ip add 192.168.223.3 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+no shut
+int lo3
+ip add 3.3.3.3 255.255.255.0
+ip ospf 1 area 0
+ip ospf network point-to-point
+end
+```
+
+* Verify (traceroute 1.1.1.1 và 2.2.2.2 đều đi đường e0/2 192.168.223.0/24)
+
+```conf
+R2#sh ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      1.0.0.0/24 is subnetted, 1 subnets
+O        1.1.1.0 [110/11] via 192.168.12.1, 00:05:15, Ethernet0/0
+      2.0.0.0/24 is subnetted, 1 subnets
+O        2.2.2.0 [110/11] via 192.168.12.1, 00:05:15, Ethernet0/0
+      3.0.0.0/24 is subnetted, 1 subnets
+O        3.3.3.0 [110/11] via 192.168.223.3, 00:04:47, Ethernet0/2
+R2#
+
+R1#traceroute 3.3.3.3 source 1.1.1.1
+Type escape sequence to abort.
+Tracing the route to 3.3.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.12.2 0 msec 1 msec 0 msec
+  2 192.168.223.3 1 msec *  1 msec
+R1#traceroute 3.3.3.3 source 2.2.2.2
+Type escape sequence to abort.
+Tracing the route to 3.3.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.12.2 1 msec 0 msec 0 msec
+  2 192.168.223.3 0 msec *  1 msec
+R1#
+```
+
+* R2 (PBR -> Lái lưu lượng 1.1.1.1 đi 3.3.3.3 sẽ đi qua e0/1 192.168.213.0/24)
+```conf
+en
+conf t
+access-list 1 permit 1.1.1.1 0.0.0.255
+route-map A1 permit 10
+match ip address 1
+set interface e0/1
+exit
+int e0/0
+set ip next-hop 192.168.213.3
+end
+```
+
+* Verify (traceroute 1.1.1.1 và 2.2.2.2 đi 2 hướng khác nhau)
+
+```conf
+R1#traceroute 3.3.3.3 source 1.1.1.1
+Type escape sequence to abort.
+Tracing the route to 3.3.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.12.2 1 msec 0 msec 1 msec
+  2 192.168.213.3 0 msec *  1 msec
+R1#traceroute 3.3.3.3 source 2.2.2.2
+Type escape sequence to abort.
+Tracing the route to 3.3.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.12.2 0 msec 1 msec 0 msec
+  2 192.168.223.3 1 msec *  2 msec
+R1#
+```
+
+### Offset-list
+<br>
+![Alt text](/docs/CCNP/img/route-offset-list.png)
+
+* R1
+```conf
+en
+conf t
+no ip domain-lookup
+host R1
+int e0/0
+ip add 10.0.12.1 255.255.255.0
+no shut
+router rip
+version 2
+net 0.0.0.0
+no auto-summary
+end
+```
+
+* R2
+```conf
+en
+conf t
+no ip domain-lookup
+host R2
+int e0/1
+ip add 10.0.12.2 255.255.255.0
+no shut
+int lo0
+ip add 2.2.2.2 255.255.255.255
+router rip
+version 2
+net 0.0.0.0
+no auto-summary
+end
+```
+
+* Verify (R1 học được 2.2.2.2 với metric 1)
+
+```conf
+R1#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+R        2.2.2.2 [120/1] via 10.0.12.2, 00:00:12, Ethernet0/0
+R1#
+```
+
+* R1
+```conf
+en
+conf t
+access-list 2 permit host 2.2.2.2
+router rip
+offset-list 2 in 4
+end
+```
+
+* Verify (R1 học được 2.2.2.2 với metric 1+4 là 5)
+
+```conf
+R1#sh ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+R        2.2.2.2 [120/5] via 10.0.12.2, 00:00:02, Ethernet0/0
+R1#
 ```
