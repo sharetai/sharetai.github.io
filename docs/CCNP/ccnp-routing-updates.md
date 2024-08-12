@@ -1599,6 +1599,17 @@ R2#
 
 ### PBR - Policy Based Routing
 <br>
+
+{: .highlight-title }
+> Note
+>
+> Routers support 3 packet-forwarding mechanisms: <br>
+> \- Process Switching <br>
+> \- Fast Switching <br>
+> \- Cisco Express Forwaring (CEF) <br>
+
+<br>
+
 ![Alt text](/docs/CCNP/img/route-pbr.png)
 
 * R1
