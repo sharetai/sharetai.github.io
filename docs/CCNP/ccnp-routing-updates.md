@@ -1596,6 +1596,7 @@ O IA     10.0.14.0/24 [110/20] via 10.0.24.4, 00:08:34, Ethernet0/0
 O IA     10.0.34.0/24 [110/20] via 10.0.24.4, 00:08:34, Ethernet0/0
 R2#
 ```
+<br>
 
 ### PBR - Policy Based Routing
 <br>
@@ -1752,6 +1753,7 @@ VRF info: (vrf in name/id, vrf out name/id)
   2 192.168.223.3 1 msec *  2 msec
 R1#
 ```
+<br>
 
 ### Offset-list
 <br>
@@ -1842,3 +1844,248 @@ Gateway of last resort is not set
 R        2.2.2.2 [120/5] via 10.0.12.2, 00:00:02, Ethernet0/0
 R1#
 ```
+<br>
+
+### IP SLA - IP Service Level Agreement
+<br>
+![Alt text](/docs/CCNP/img/route-ip-sla.png)
+
+* R1
+```conf
+en
+conf t
+no ip domain-lookup
+host R1
+int e0/0
+ip add 10.0.12.1 255.255.255.0
+no shut
+end
+```
+
+* R2
+```conf
+en
+conf t
+no ip domain-lookup
+host R2
+int e0/1
+ip add 10.0.12.2 255.255.255.0
+no shut
+int lo0
+ip add 2.2.2.2 255.255.255.255
+end
+```
+
+* R1 (IP SLA with ping)
+```conf
+en
+conf t
+ip sla 1
+icmp-echo 2.2.2.2
+ip sla schedule 1 start-time now life forever
+track 10 ip sla 1 reachability
+ip route 2.2.2.2 255.255.255.255 10.0.12.2 track 10
+end
+```
+
+* Verify
+
+```conf
+R1#sh ip sla configuration 1
+IP SLAs Infrastructure Engine-III
+Entry number: 1
+Owner:
+Tag:
+Operation timeout (milliseconds): 5000
+Type of operation to perform: icmp-echo
+Target address/Source address: 2.2.2.2/0.0.0.0
+Type Of Service parameter: 0x0
+Request size (ARR data portion): 28
+Data pattern: 0xABCDABCD
+Verify data: No
+Vrf Name:
+Schedule:
+   Operation frequency (seconds): 60  (not considered if randomly scheduled)
+   Next Scheduled Start Time: Start Time already passed
+   Group Scheduled : FALSE
+   Randomly Scheduled : FALSE
+   Life (seconds): Forever
+   Entry Ageout (seconds): never
+   Recurring (Starting Everyday): FALSE
+   Status of entry (SNMP RowStatus): Active
+Threshold (milliseconds): 5000
+Distribution Statistics:
+   Number of statistic hours kept: 2
+   Number of statistic distribution buckets kept: 1
+   Statistic distribution interval (milliseconds): 20
+Enhanced History:
+History Statistics:
+   Number of history Lives kept: 0
+   Number of history Buckets kept: 15
+   History Filter Type: None
+
+
+R1#sh ip sla statistics 1
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 1
+        Latest RTT: 1 milliseconds
+Latest operation start time: 16:38:27 UTC Tue Aug 13 2024
+Latest operation return code: OK
+Number of successes: 1
+Number of failures: 0
+Operation time to live: Forever
+
+
+R1#sh track 10
+Track 10
+  IP SLA 1 reachability
+  Reachability is Up
+    2 changes, last change 00:00:35
+  Latest operation return code: OK
+  Latest RTT (millisecs) 1
+R1#sh ip route static
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+S        2.2.2.2 [1/0] via 10.0.12.2
+R1#
+```
+
+* R1 (Thay đổi `threshold` 0s `timeout` 1s `frequency` 5s, để `return code` là `Over threshold` nhưng `track` vẫn up do `track` ban đầu cấu hình là `reachability`)
+```conf
+en
+conf t
+no ip sla schedule 1
+ip sla 1
+threshold 0
+timeout 1000
+frequency 5
+ip sla schedule 1 start-time now life forever
+end
+```
+
+* Verify
+
+```conf
+R1#sh ip sla configuration 1
+IP SLAs Infrastructure Engine-III
+Entry number: 1
+Owner:
+Tag:
+Operation timeout (milliseconds): 1000
+Type of operation to perform: icmp-echo
+Target address/Source address: 2.2.2.2/0.0.0.0
+Type Of Service parameter: 0x0
+Request size (ARR data portion): 28
+Data pattern: 0xABCDABCD
+Verify data: No
+Vrf Name:
+Schedule:
+   Operation frequency (seconds): 5  (not considered if randomly scheduled)
+   Next Scheduled Start Time: Start Time already passed
+   Group Scheduled : FALSE
+   Randomly Scheduled : FALSE
+   Life (seconds): Forever
+   Entry Ageout (seconds): never
+   Recurring (Starting Everyday): FALSE
+   Status of entry (SNMP RowStatus): Active
+Threshold (milliseconds): 0
+Distribution Statistics:
+   Number of statistic hours kept: 2
+   Number of statistic distribution buckets kept: 1
+   Statistic distribution interval (milliseconds): 20
+Enhanced History:
+History Statistics:
+   Number of history Lives kept: 0
+   Number of history Buckets kept: 15
+   History Filter Type: None
+
+
+R1#sh ip sla statistics 1
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 1
+        Latest RTT: 1 milliseconds
+Latest operation start time: 16:47:38 UTC Tue Aug 13 2024
+Latest operation return code: Over threshold
+Number of successes: 9
+Number of failures: 0
+Operation time to live: Forever
+
+
+R1#sh track 10
+Track 10
+  IP SLA 1 reachability
+  Reachability is Up
+    12 changes, last change 00:00:50
+  Latest operation return code: Over threshold
+  Latest RTT (millisecs) 1
+  Tracked by:
+    Static IP Routing 0
+R1#
+```
+
+* R1 (Thay đổi `track` là `state`, `return code` là `Over threshold` sẽ làm `down` `track`)
+```conf
+en
+conf t
+track 10 ip sla 1 state
+end
+```
+
+* Verify
+
+```conf
+R1#sh ip sla statistics 1
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 1
+        Latest RTT: 1 milliseconds
+Latest operation start time: 16:53:23 UTC Tue Aug 13 2024
+Latest operation return code: Over threshold
+Number of successes: 78
+Number of failures: 0
+Operation time to live: Forever
+
+
+R1#sh track 10
+Track 10
+  IP SLA 1 state
+  State is Down
+    13 changes, last change 00:00:13
+  Latest operation return code: Over threshold
+  Latest RTT (millisecs) 1
+  Tracked by:
+    Static IP Routing 0
+R1#sh ip route static
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+R1#ping 2.2.2.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2.2.2.2, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+R1#
+```
+<br>
