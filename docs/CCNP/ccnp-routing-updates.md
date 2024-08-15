@@ -1729,9 +1729,6 @@ conf t
 access-list 1 permit 1.1.1.1 0.0.0.255
 route-map A1 permit 10
 match ip address 1
-set interface e0/1
-exit
-int e0/0
 set ip next-hop 192.168.213.3
 end
 ```
@@ -2086,6 +2083,235 @@ Type escape sequence to abort.
 Sending 5, 100-byte ICMP Echos to 2.2.2.2, timeout is 2 seconds:
 .....
 Success rate is 0 percent (0/5)
+R1#
+```
+<br>
+
+### IP SLA + PBR
+<br>
+
+![Alt text](/docs/CCNP/img/route-pbr.png)
+
+_(*) Dùng lại lab PBR ([link](http://127.0.0.1:4000/docs/CCNP/ccnp-routing-updates/#pbr---policy-based-routing))_
+
+* R2 (PBR -> Lái lưu lượng 1.1.1.1 đi 3.3.3.3 sẽ đi qua e0/1 192.168.213.0/24 + IP SLA -> Chỉ lái khi test ping 3.3.3.3 ok)
+```conf
+en
+conf t
+no ip sla 1
+ip sla 1
+icmp-echo 3.3.3.3
+ip sla schedule 1 start-time now life forever
+track 10 ip sla 1 reachability
+access-list 1 permit 1.1.1.1 0.0.0.255
+route-map A1 permit 10
+match ip address 1
+no set ip next-hop 192.168.213.3
+set ip next-hop verify-availability 192.168.213.3 10 track 10
+end
+```
+
+* Verify
+
+```conf
+R2#sh ip sla statistics 1
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 1
+        Latest RTT: 1 milliseconds
+Latest operation start time: 15:00:47 UTC Thu Aug 15 2024
+Latest operation return code: OK
+Number of successes: 2
+Number of failures: 0
+Operation time to live: Forever
+
+
+R2#sh track 10
+Track 10
+  IP SLA 1 reachability
+  Reachability is Up
+    2 changes, last change 00:04:36
+  Latest operation return code: OK
+  Latest RTT (millisecs) 1
+  Tracked by:
+    Route Map 0
+R2#
+
+R1#traceroute 3.3.3.3 source 1.1.1.1
+Type escape sequence to abort.
+Tracing the route to 3.3.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.12.2 0 msec 1 msec 0 msec
+  2 192.168.213.3 0 msec *  1 msec
+R1#traceroute 3.3.3.3 source 2.2.2.2
+Type escape sequence to abort.
+Tracing the route to 3.3.3.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.12.2 1 msec 1 msec 0 msec
+  2 192.168.223.3 1 msec *  1 msec
+R1#
+```
+<br>
+
+### Change AD
+<br>
+
+![Alt text](/docs/CCNP/img/route-change-ad.png)
+
+* R1
+```conf
+en
+conf t
+no ip domain-lookup
+host R1
+int e0/0
+ip add 10.0.12.1 255.255.255.0
+no shut
+int e0/1
+ip add 10.0.13.1 255.255.255.0
+no shut
+int e0/2
+ip add 10.0.14.1 255.255.255.0
+no shut
+router rip
+version 2
+net 0.0.0.0
+no auto-summary
+router eigrp 13
+net 0.0.0.0
+router ospf 14
+router-id 1.1.1.1
+net 0.0.0.0 255.255.255.255 area 0
+end
+```
+
+* R2
+```conf
+en
+conf t
+no ip domain-lookup
+host R2
+int lo0
+ip add 2.2.2.2 255.255.255.255
+int e0/0
+ip add 10.0.12.2 255.255.255.0
+no shut
+router rip
+version 2
+net 0.0.0.0
+no auto-summary
+end
+```
+
+* R3
+```conf
+en
+conf t
+no ip domain-lookup
+host R3
+int lo0
+ip add 3.3.3.3 255.255.255.255
+int lo1
+ip add 3.3.3.7 255.255.255.255
+int e0/1
+ip add 10.0.13.3 255.255.255.0
+no shut
+router eigrp 13
+net 10.0.13.3 0.0.0.0
+net 3.3.3.3 0.0.0.0
+redistribute connected
+end
+```
+
+* R4
+```conf
+en
+conf t
+no ip domain-lookup
+host R4
+int lo0
+ip add 4.4.4.4 255.255.255.255
+int lo1
+ip add 4.4.4.8 255.255.255.255
+int lo2
+ip add 4.4.4.16 255.255.255.255
+int e0/2
+ip add 10.0.14.4 255.255.255.0
+no shut
+router ospf 14
+router-id 4.4.4.4
+net 10.0.14.4 0.0.0.0 area 0
+net 4.4.4.4 0.0.0.0 area 0
+net 4.4.4.8 0.0.0.0 area 1
+redistribute connected subnets
+end
+```
+
+* Verify
+
+```conf
+R1#sh ip route | e C|L
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+R        2.2.2.2 [130/1] via 10.0.12.2, 00:00:09, Ethernet0/0
+      3.0.0.0/32 is subnetted, 2 subnets
+D        3.3.3.3 [90/409600] via 10.0.13.3, 00:05:48, Ethernet0/1
+D EX     3.3.3.7 [170/409600] via 10.0.13.3, 00:05:48, Ethernet0/1
+      4.0.0.0/32 is subnetted, 3 subnets
+O        4.4.4.4 [110/11] via 10.0.14.4, 00:01:44, Ethernet0/2
+O IA     4.4.4.8 [110/11] via 10.0.14.4, 00:01:44, Ethernet0/2
+O E2     4.4.4.16 [110/20] via 10.0.14.4, 00:01:44, Ethernet0/2
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+
+R1#
+```
+
+* R1
+```conf
+en
+conf t
+router rip
+distance 130
+distance 140 10.0.12.2 0.0.0.0
+router eigrp 13
+distance eigrp 100 180
+router ospf 14
+distance ospf intra-area 120 inter-area 130 external 140
+end
+```
+
+* Verify
+
+```conf
+R1#sh ip route | e C|L
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+R        2.2.2.2 [140/1] via 10.0.12.2, 00:00:03, Ethernet0/0
+      3.0.0.0/32 is subnetted, 2 subnets
+D        3.3.3.3 [100/409600] via 10.0.13.3, 00:00:09, Ethernet0/1
+D EX     3.3.3.7 [180/409600] via 10.0.13.3, 00:00:09, Ethernet0/1
+      4.0.0.0/32 is subnetted, 3 subnets
+O        4.4.4.4 [120/11] via 10.0.14.4, 00:00:09, Ethernet0/2
+O IA     4.4.4.8 [130/11] via 10.0.14.4, 00:00:09, Ethernet0/2
+O E2     4.4.4.16 [140/20] via 10.0.14.4, 00:00:09, Ethernet0/2
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+
 R1#
 ```
 <br>
