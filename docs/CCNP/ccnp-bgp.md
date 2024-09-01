@@ -67,7 +67,7 @@ _(*) Tại sao có eBGP rồi, lại có thêm iBGP? Vì, ta có thể redistrib
 ## [Cheat sheet](/docs/CCNP/img/BGP-1.png)
 <br>
 
-## Cấu hình eBGP neighbor, iBGP neighbor, quảng bá bgp, next-hop-self, route reflector
+## Cấu hình eBGP neighbor, iBGP neighbor, quảng bá bgp, Next-Hop-Self, Route Reflector, Peer Group
 <br>
 
 ![alt text](/docs/CCNP/img/bgp-ebgp-ibgp-nhs-rr.png)
@@ -298,20 +298,22 @@ R2#
 
 __<u>Quảng bá BGP</u>__
 
-* __R1 (quảng bá 10.10.10.10 vào BGP)__
+* __R1 (quảng bá 1.1.1.1 và 10.10.10.10 vào BGP)__
 ```
 en
 conf t
 router bgp 1
+network 1.1.1.1 mask 255.255.255.255
 network 10.10.10.10 mask 255.255.255.255
 end
 ```
 
-* __R5 (quảng bá 50.50.50.50 vào BGP)__
+* __R5 (quảng bá 5.5.5.5 và 50.50.50.50 vào BGP)__
 ```
 en
 conf t
 router bgp 5
+network 5.5.5.5 mask 255.255.255.255
 network 50.50.50.50 mask 255.255.255.255
 end
 ```
@@ -342,7 +344,7 @@ __Verify__
 
 ```conf
 R1#sh bgp
-BGP table version is 3, local router ID is 10.10.10.10
+BGP table version is 5, local router ID is 10.10.10.10
 Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
               r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
               x best-external, a additional-path, c RIB-compressed,
@@ -351,12 +353,14 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 RPKI validation codes: V valid, I invalid, N Not found
 
      Network          Next Hop            Metric LocPrf Weight Path
+ *>   1.1.1.1/32       0.0.0.0                  0         32768 i
+ *>   5.5.5.5/32       117.0.12.2                             0 234 5 i
  *>   10.10.10.10/32   0.0.0.0                  0         32768 i
  *>   50.50.50.50/32   117.0.12.2                             0 234 5 i
 R1#
 
-R5#sh bgp
-BGP table version is 3, local router ID is 50.50.50.50
+R2#sh bgp
+BGP table version is 5, local router ID is 2.2.2.2
 Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
               r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
               x best-external, a additional-path, c RIB-compressed,
@@ -365,6 +369,59 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 RPKI validation codes: V valid, I invalid, N Not found
 
      Network          Next Hop            Metric LocPrf Weight Path
+ *>   1.1.1.1/32       117.0.12.1               0             0 1 i
+ *>i  5.5.5.5/32       4.4.4.4                  0    100      0 5 i
+ *>   10.10.10.10/32   117.0.12.1               0             0 1 i
+ *>i  50.50.50.50/32   4.4.4.4                  0    100      0 5 i
+R2#
+
+R3#sh bgp
+BGP table version is 5, local router ID is 3.3.3.3
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>i  1.1.1.1/32       2.2.2.2                  0    100      0 1 i
+ *>i  5.5.5.5/32       4.4.4.4                  0    100      0 5 i
+ *>i  10.10.10.10/32   2.2.2.2                  0    100      0 1 i
+ *>i  50.50.50.50/32   4.4.4.4                  0    100      0 5 i
+R3#
+
+R4#sh bgp
+BGP table version is 5, local router ID is 4.4.4.4
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>i  1.1.1.1/32       2.2.2.2                  0    100      0 1 i
+ r>   5.5.5.5/32       5.5.5.5                  0             0 5 i
+ *>i  10.10.10.10/32   2.2.2.2                  0    100      0 1 i
+ *>   50.50.50.50/32   5.5.5.5                  0             0 5 i
+R4#sh ip bgp rib-failure
+  Network            Next Hop                      RIB-failure   RIB-NH Matches
+5.5.5.5/32         5.5.5.5             Higher admin distance              n/a
+R4#
+
+R5#sh bgp
+BGP table version is 5, local router ID is 50.50.50.50
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   1.1.1.1/32       4.4.4.4                                0 234 1 i
+ *>   5.5.5.5/32       0.0.0.0                  0         32768 i
  *>   10.10.10.10/32   4.4.4.4                                0 234 1 i
  *>   50.50.50.50/32   0.0.0.0                  0         32768 i
 R5#
@@ -469,7 +526,7 @@ Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State
 R4#
 
 R1#sh bgp
-BGP table version is 5, local router ID is 10.10.10.10
+BGP table version is 9, local router ID is 10.10.10.10
 Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
               r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
               x best-external, a additional-path, c RIB-compressed,
@@ -478,12 +535,14 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 RPKI validation codes: V valid, I invalid, N Not found
 
      Network          Next Hop            Metric LocPrf Weight Path
+ *>   1.1.1.1/32       0.0.0.0                  0         32768 i
+ *>   5.5.5.5/32       117.0.12.2                             0 234 5 i
  *>   10.10.10.10/32   0.0.0.0                  0         32768 i
  *>   50.50.50.50/32   117.0.12.2                             0 234 5 i
 R1#
 
 R5#sh bgp
-BGP table version is 5, local router ID is 50.50.50.50
+BGP table version is 9, local router ID is 50.50.50.50
 Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
               r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
               x best-external, a additional-path, c RIB-compressed,
@@ -492,6 +551,8 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 RPKI validation codes: V valid, I invalid, N Not found
 
      Network          Next Hop            Metric LocPrf Weight Path
+ *>   1.1.1.1/32       4.4.4.4                                0 234 1 i
+ *>   5.5.5.5/32       0.0.0.0                  0         32768 i
  *>   10.10.10.10/32   4.4.4.4                                0 234 1 i
  *>   50.50.50.50/32   0.0.0.0                  0         32768 i
 R5#
@@ -503,6 +564,44 @@ Packet sent with a source address of 10.10.10.10
 !!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/3 ms
 R1#
+```
+
+__<u>Peer Group</u>__
+
+* __R3__
+```
+en
+conf t
+router bgp 234
+no neighbor 2.2.2.2
+no neighbor 4.4.4.4
+neighbor rr-client peer-group
+neighbor rr-client remote-as 234
+neighbor rr-client route-reflector-client
+neighbor 2.2.2.2 peer-group rr-client
+neighbor 4.4.4.4 peer-group rr-client
+end
+```
+
+__Verify__
+
+```conf
+R3#sh bgp sum
+BGP router identifier 3.3.3.3, local AS number 234
+BGP table version is 9, main routing table version 9
+2 network entries using 288 bytes of memory
+2 path entries using 168 bytes of memory
+2/2 BGP path/bestpath attribute entries using 320 bytes of memory
+2 BGP AS-PATH entries using 48 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 824 total bytes of memory
+BGP activity 4/2 prefixes, 5/3 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+2.2.2.2         4          234       5       8        9    0    0 00:00:00        1
+4.4.4.4         4          234       5       5        9    0    0 00:00:08        1
+R3#
 ```
 
 <br>
@@ -925,3 +1024,394 @@ R4#
 ```
 
 <br>
+
+## BGP Regular Expression (Regex)
+<br>
+`show ip bgp regexp <regex>`
+
+```
+ip as-path access-list <as-path acl number> permit <regex>
+route-map <route-map name> permit 10
+match as-path <as-path acl number>
+route-map abc deny 100
+```
+
+<br>
+
+## Cấu hình BGP Confederation - Allowas in - AS override - Community
+<br>
+
+![alt text](/docs/CCNP/img/bgp-confederation-allowasin-asoveride-community.png)
+
+__<u>Init</u>__
+
+* __R1__
+```
+en
+conf t
+no ip domain-lookup
+host R1
+int e0/0
+ip addr 10.0.12.1 255.255.255.0
+no shut
+end
+```
+
+* __R2__
+```
+en
+conf t
+no ip domain-lookup
+host R2
+int e0/1
+ip addr 10.0.12.2 255.255.255.0
+no shut
+int e0/0
+ip addr 10.0.23.2 255.255.255.0
+no shut
+router ospf 1
+net 0.0.0.0 255.255.255.255 area 0
+end
+```
+
+* __R3__
+```
+en
+conf t
+no ip domain-lookup
+host R3
+int e0/1
+ip addr 10.0.23.3 255.255.255.0
+no shut
+int e0/0
+ip addr 10.0.34.3 255.255.255.0
+no shut
+router ospf 1
+net 0.0.0.0 255.255.255.255 area 0
+end
+```
+
+* __R4__
+```
+en
+conf t
+no ip domain-lookup
+host R4
+int e0/1
+ip addr 10.0.34.4 255.255.255.0
+no shut
+int e0/0
+ip addr 10.0.45.4 255.255.255.0
+no shut
+router ospf 1
+net 0.0.0.0 255.255.255.255 area 0
+end
+```
+
+* __R5__
+```
+en
+conf t
+no ip domain-lookup
+host R5
+int e0/1
+ip addr 10.0.45.5 255.255.255.0
+no shut
+int lo5
+ip addr 5.5.5.5 255.255.255.255
+int lo50
+ip addr 50.50.50.50 255.255.255.255
+int lo55
+ip addr 55.55.55.55 255.255.255.255
+end
+```
+
+__<u>BGP Confederation</u>__
+
+* __R1__
+```
+en
+conf t
+router bgp 15
+neighbor 10.0.12.2 remote-as 234
+end
+```
+
+* __R2 (cấu hình bgp confederation)__
+```
+en
+conf t
+router bgp 2
+bgp confederation identifier 234
+bgp confederation peers 34
+neighbor 10.0.12.1 remote-as 15
+neighbor 10.0.23.3 remote-as 34
+end
+```
+
+* __R3 (cấu hình bgp confederation)__
+```
+en
+conf t
+router bgp 34
+bgp confederation identifier 234
+bgp confederation peers 2
+neighbor 10.0.23.2 remote-as 2
+neighbor 10.0.34.4 remote-as 34
+end
+```
+
+* __R4 (cấu hình bgp confederation)__
+```
+en
+conf t
+router bgp 34
+bgp confederation identifier 234
+neighbor 10.0.45.5 remote-as 15
+neighbor 10.0.34.3 remote-as 34
+neighbor 10.0.34.3 next-hop-self
+end
+```
+
+* __R5__
+```
+en
+conf t
+router bgp 15
+neighbor 10.0.45.4 remote-as 234
+network 5.5.5.5 mask 255.255.255.255
+network 50.50.50.50 mask 255.255.255.255
+network 55.55.55.55 mask 255.255.255.255
+end
+```
+
+* __Verify__
+
+```conf
+R2#sh bgp
+BGP table version is 4, local router ID is 10.0.23.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>i  5.5.5.5/32       10.0.34.4                0    100      0 (4) 15 i
+ *>i  50.50.50.50/32   10.0.34.4                0    100      0 (4) 15 i
+ *>i  55.55.55.55/32   10.0.34.4                0    100      0 (4) 15 i
+R2#
+```
+
+__<u>Allowas in</u>__
+
+* __R1__
+```
+en
+conf t
+router bgp 15
+neighbor 10.0.12.2 allowas-in
+end
+```
+
+* __Verify__
+
+```conf
+R1#sh bgp
+BGP table version is 4, local router ID is 10.0.12.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   5.5.5.5/32       10.0.12.2                              0 234 15 i
+ *>   50.50.50.50/32   10.0.12.2                              0 234 15 i
+ *>   55.55.55.55/32   10.0.12.2                              0 234 15 i
+R1#
+```
+
+__<u>AS override</u>__
+
+* __R1__
+```
+en
+conf t
+router bgp 15
+no neighbor 10.0.12.2 allowas-in
+end
+```
+
+* __R2__
+```
+en
+conf t
+router bgp 2
+neighbor 10.0.12.1 as-override
+end
+```
+
+* __Verify__
+
+```conf
+R1#sh bgp
+BGP table version is 10, local router ID is 10.0.12.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   5.5.5.5/32       10.0.12.2                              0 234 234 i
+ *>   50.50.50.50/32   10.0.12.2                              0 234 234 i
+ *>   55.55.55.55/32   10.0.12.2                              0 234 234 i
+R1#
+```
+
+__<u>Community</u>__
+
+* __R2__
+```
+en
+conf t
+router bgp 2
+neighbor 10.0.12.1 send-community both
+end
+```
+
+* __R3__
+```
+en
+conf t
+router bgp 34
+neighbor 10.0.23.2 send-community both
+end
+```
+
+* __R4__
+```
+en
+conf t
+router bgp 34
+neighbor 10.0.34.3 send-community both
+end
+```
+
+* __R5__
+```
+en
+conf t
+access-list 5 permit 5.5.5.5
+access-list 50 permit 50.50.50.50
+access-list 55 permit 55.55.55.55
+route-map R4 permit 5
+match ip address 5
+set community no-export
+route-map R4 permit 50
+match ip address 50
+set community no-advertise
+route-map R4 permit 55
+match ip address 55
+set community local-AS
+route-map R4 permit 1000
+router bgp 15
+neighbor 10.0.45.4 route-map R4 out
+neighbor 10.0.45.4 send-community both
+end
+```
+
+```
+no-export <== Nhận route nhưng không quảng bá sang as khác
+no-advertise <== Nhận route nhưng không quảng bá
+local-AS <== Nhận route và chỉ quảng bá trong cùng as
+```
+
+* __Verify__
+
+```conf
+R4#sh bgp 5.5.5.5
+BGP routing table entry for 5.5.5.5/32, version 7
+Paths: (1 available, best #1, table default, not advertised to EBGP peer)
+  Advertised to update-groups:
+     8
+  Refresh Epoch 2
+  15
+    10.0.45.5 from 10.0.45.5 (55.55.55.55)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Community: no-export
+      rx pathid: 0, tx pathid: 0x0
+R4#sh bgp 50.50.50.50
+BGP routing table entry for 50.50.50.50/32, version 6
+Paths: (1 available, best #1, table default, not advertised to any peer)
+  Not advertised to any peer
+  Refresh Epoch 2
+  15
+    10.0.45.5 from 10.0.45.5 (55.55.55.55)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Community: no-advertise
+      rx pathid: 0, tx pathid: 0x0
+R4#sh bgp 55.55.55.55
+BGP routing table entry for 55.55.55.55/32, version 5
+Paths: (1 available, best #1, table default, not advertised outside local AS)
+  Not advertised to any peer
+  Refresh Epoch 2
+  15
+    10.0.45.5 from 10.0.45.5 (55.55.55.55)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Community: local-AS
+      rx pathid: 0, tx pathid: 0x0
+R4#
+
+R4#sh bgp
+BGP table version is 4, local router ID is 10.0.45.4
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   5.5.5.5/32       10.0.45.5                0             0 15 i
+ *>   50.50.50.50/32   10.0.45.5                0             0 15 i
+ *>   55.55.55.55/32   10.0.45.5                0             0 15 i
+R4#
+
+R3#sh bgp
+BGP table version is 5, local router ID is 10.0.34.3
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>i  5.5.5.5/32       10.0.34.4                0    100      0 15 i
+ *>i  55.55.55.55/32   10.0.34.4                0    100      0 15 i
+R3#
+
+R2#sh bgp
+BGP table version is 5, local router ID is 10.0.23.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   5.5.5.5/32       10.0.34.4                0    100      0 (34) 15 i
+R2#
+
+R1#sh bgp
+R1#
+```
+
+<br>
+
