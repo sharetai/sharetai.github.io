@@ -125,7 +125,7 @@ no shut
 end
 ```
 
-__<u>Static</u>__
+### Static
 
 * __R1__
 ```
@@ -169,7 +169,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 4/4/5 ms
 R1#
 ```
 
-__<u>RIPng</u>__
+### RIPng
 
 * __R2__
 ```
@@ -234,7 +234,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/4/19 ms
 R2#
 ```
 
-__<u>EIGRP</u>__
+### EIGRP
 
 * __R3__
 ```
@@ -340,7 +340,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/4/19 ms
 R3#
 ```
 
-__<u>OSPFv3</u>__
+### OSPFv3
 
 * __R4__
 ```
@@ -417,7 +417,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/6/18 ms
 R4#
 ```
 
-__<u>BGP</u>__
+### BGP
 
 * __R5__
 ```
@@ -503,7 +503,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R5#
 ```
 
-__<u>Redistribute Staic to RIPng</u>__
+### Redistribute Staic to RIPng
 
 * __R1__
 ```
@@ -549,7 +549,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R3#
 ```
 
-__<u>Redistribute EIGRP to RIPng</u>__
+### Redistribute EIGRP to RIPng
 
 * __R3__
 ```
@@ -581,7 +581,7 @@ R   2004::/64 [120/2]
 R2#
 ```
 
-__<u>Redistribute RIPng to EIGRP</u>__
+### Redistribute RIPng to EIGRP
 
 * __R3__
 ```
@@ -621,7 +621,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R4#
 ```
 
-__<u>Redistribute OSPFv3 to EIGRP</u>__
+### Redistribute OSPFv3 to EIGRP
 
 * __R4__
 ```
@@ -653,7 +653,7 @@ EX  2005::/64 [170/2560025600]
 R3#
 ```
 
-__<u>Redistribute EIGRP to OSPFv3</u>__
+### Redistribute EIGRP to OSPFv3
 
 * __R4__
 ```
@@ -695,7 +695,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R5#
 ```
 
-__<u>Redistribute BGP to OSPFv3</u>__
+### Redistribute BGP to OSPFv3
 
 * __R5 (mặc định ebgp có thể redistribute bằng lệnh `redistribute bgp`, tuy nhiên với ibgp thì cần bổ sung câu lệnh `bgp redistribute-internal`)__
 ```
@@ -730,7 +730,7 @@ OE2 2006::/64 [110/1]
 R4#
 ```
 
-__<u>Redistribute OSPFv3 to BGP</u>__
+### Redistribute OSPFv3 to BGP
 
 * __R5__
 ```
@@ -795,3 +795,452 @@ R6#
 ```
 
 <br>
+
+
+## Cấu hình các loại IPv6 tunnel
+<br>
+
+![alt text](/docs/CCNP/img/ipv6-tunneling.png)
+
+__<u>Init</u>__
+
+* __R1__
+```
+en
+conf t
+no ip domain-lookup
+host R1
+int lo0
+ip address 1.1.1.1 255.255.255.255
+ipv6 address 1:1:1:1::/128
+int e0/0
+ip address 10.0.12.1 255.255.255.0
+ipv6 address 2012::1/64
+no shut
+end
+```
+
+* __R2__
+```
+en
+conf t
+no ip domain-lookup
+host R2
+int e0/1
+ip address 10.0.12.2 255.255.255.0
+ipv6 address 2012::2/64
+no shut
+int e0/0
+ip address 10.0.23.2 255.255.255.0
+ipv6 address 2023::2/64
+no shut
+end
+```
+
+* __R3__
+```
+en
+conf t
+no ip domain-lookup
+host R3
+int lo0
+ip address 3.3.3.3 255.255.255.255
+ipv6 address 3:3:3:3::/128
+int e0/1
+ip address 10.0.23.3 255.255.255.0
+ipv6 address 2023::3/64
+no shut
+end
+```
+
+### Dual-stack
+
+Dual-stack có thể hiểu là vừa chạy ipv4 vừa chạy ipv6.
+
+* __R1__
+```
+en
+conf t
+router ospf 1
+router-id 1.1.1.1
+ipv6 unicast-routing
+ipv6 router ospf 1
+router-id 1.1.1.1
+int lo0
+ip ospf 1 area 0
+ip ospf network point-to-point
+ipv6 ospf 1 area 0
+ipv6 ospf network point-to-point
+int e0/0
+ip ospf 1 area 0
+ip ospf network point-to-point
+ipv6 ospf 1 area 0
+ipv6 ospf network point-to-point
+end
+```
+
+* __R2__
+```
+en
+conf t
+router ospf 1
+router-id 2.2.2.2
+ipv6 unicast-routing
+ipv6 router ospf 1
+router-id 2.2.2.2
+int e0/0
+ip ospf 1 area 0
+ip ospf network point-to-point
+ipv6 ospf 1 area 0
+ipv6 ospf network point-to-point
+int e0/1
+ip ospf 1 area 0
+ip ospf network point-to-point
+ipv6 ospf 1 area 0
+ipv6 ospf network point-to-point
+end
+```
+
+* __R3__
+```
+en
+conf t
+router ospf 1
+router-id 3.3.3.3
+ipv6 unicast-routing
+ipv6 router ospf 1
+router-id 3.3.3.3
+int lo0
+ip ospf 1 area 0
+ip ospf network point-to-point
+ipv6 ospf 1 area 0
+ipv6 ospf network point-to-point
+int e0/1
+ip ospf 1 area 0
+ip ospf network point-to-point
+ipv6 ospf 1 area 0
+ipv6 ospf network point-to-point
+end
+```
+
+* __Verify__
+
+```
+R1#sh ip route 3.3.3.3 255.255.255.255
+Routing entry for 3.3.3.3/32
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Last update from 10.0.12.2 on Ethernet0/0, 00:01:50 ago
+  Routing Descriptor Blocks:
+  * 10.0.12.2, from 3.3.3.3, 00:01:50 ago, via Ethernet0/0
+      Route metric is 21, traffic share count is 1
+R1#sh ipv6 route 3:3:3:3::/128
+Routing entry for 3:3:3:3::/128
+  Known via "ospf 1", distance 110, metric 20, type intra area
+  Route count is 1/1, share count 0
+  Routing paths:
+    FE80::A8BB:CCFF:FE00:8010, Ethernet0/0
+      From FE80::A8BB:CCFF:FE00:8010
+      Last updated 00:01:52 ago
+
+R1#ping 3.3.3.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3.3.3.3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#ping 3:3:3:3::
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3:3:3:3::, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/4/16 ms
+R1#
+```
+
+<br>
+
+### 6 to 4 tunneling
+
+__<u>Init</u>__
+
+* __R1__
+```
+en
+conf t
+no router ospf 1
+no ipv6 router ospf 1
+int e0/0
+no ipv6 address
+end
+```
+
+* __R2__
+```
+en
+conf t
+no router ospf 1
+no ipv6 router ospf 1
+int e0/0
+no ipv6 address
+int e0/1
+no ipv6 address
+end
+```
+
+* __R3__
+```
+en
+conf t
+no router ospf 1
+no ipv6 router ospf 1
+int e0/1
+no ipv6 address
+end
+```
+
+#### Manual IPv6IP Tunnel
+
+* __R1__
+```
+en
+conf t
+int tunnel 13
+ipv6 addr 13::1/64
+tunnel source e0/0
+tunnel destination 10.0.23.3
+tunnel mode ipv6ip
+ip route 0.0.0.0 0.0.0.0 e0/0
+ipv6 route 3:3:3:3::/128 tunnel 13
+end
+```
+
+* __R3__
+```
+en
+conf t
+int tunnel 13
+ipv6 addr 13::3/64
+tunnel source e0/1
+tunnel destination 10.0.12.1
+tunnel mode ipv6ip
+ip route 0.0.0.0 0.0.0.0 e0/1
+ipv6 route 1:1:1:1::/128 tunnel 13
+end
+```
+
+* __Verify__
+
+```
+R1#ping 3:3:3:3:: source 1:1:1:1::
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3:3:3:3::, timeout is 2 seconds:
+Packet sent with a source address of 1:1:1:1::
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#
+```
+
+#### Manual GRE Tunnel
+
+* __R1__
+```
+en
+conf t
+int tunnel 13
+ipv6 addr 13::1/64
+tunnel source e0/0
+tunnel destination 10.0.23.3
+tunnel mode gre ip
+ip route 0.0.0.0 0.0.0.0 e0/0
+ipv6 route 3:3:3:3::/128 tunnel 13
+end
+```
+
+* __R3__
+```
+en
+conf t
+int tunnel 13
+ipv6 addr 13::3/64
+tunnel source e0/1
+tunnel destination 10.0.12.1
+tunnel mode gre ip
+ip route 0.0.0.0 0.0.0.0 e0/1
+ipv6 route 1:1:1:1::/128 tunnel 13
+end
+```
+
+* __Verify__
+
+```
+R1#ping 3:3:3:3:: source 1:1:1:1::
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3:3:3:3::, timeout is 2 seconds:
+Packet sent with a source address of 1:1:1:1::
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#
+```
+
+#### Dynamic 6to4 Tunnel
+
+* __R1 (đổi ipv4 trên cổng e0/0 10.0.12.1 ra ipv6 2002:a00:c01:: với octet đầu bắt buộc là 2002)__
+```
+en
+conf t
+int tunnel 13
+no ipv6 addr
+ipv6 addr 2002:a00:c01::/128
+tunnel source e0/0
+no tunnel destination
+tunnel mode ipv6ip 6to4
+ip route 0.0.0.0 0.0.0.0 e0/0
+no ipv6 route 3:3:3:3::/128
+ipv6 route 2002::/16 tunnel 13
+ipv6 route 3:3:3:3::/128 2002:a00:1703::
+end
+```
+
+* __R3 (đổi ipv4 trên cổng e0/1 10.0.23.3 ra ipv6 2002:a00:1703:: với octet đầu bắt buộc là 2002)__
+```
+en
+conf t
+int tunnel 13
+no ipv6 addr
+ipv6 addr 2002:a00:1703::/128
+tunnel source e0/1
+no tunnel destination
+tunnel mode ipv6ip 6to4
+ip route 0.0.0.0 0.0.0.0 e0/1
+no ipv6 route 1:1:1:1::/128
+ipv6 route 2002::/16 tunnel 13
+ipv6 route 1:1:1:1::/128 2002:a00:c01::
+end
+```
+
+* __Verify__
+
+```
+R1#ping 3:3:3:3:: source 1:1:1:1::
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3:3:3:3::, timeout is 2 seconds:
+Packet sent with a source address of 1:1:1:1::
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#
+```
+
+#### Dynamic ISATAP (intra-site automatic tunnel addressing protocol) Tunnel
+
+* __R1 (13::/64 có thể lấy tuỳ ý, 13::5EFE:A00:1703 lấy trên R3 bằng lệnh sh ipv6 int tun13)__
+```
+en
+conf t
+int tunnel 13
+no ipv6 addr
+ipv6 addr 13::/64 eui-64
+tunnel source e0/0
+no tunnel destination
+tunnel mode ipv6ip isatap
+ip route 0.0.0.0 0.0.0.0 e0/0
+no ipv6 route 2002::/16
+no ipv6 route 3:3:3:3::/128
+ipv6 route 3:3:3:3::/128 13::5EFE:A00:1703
+end
+```
+
+* __R3 (13::/64 có thể lấy tuỳ ý, 13::5EFE:A00:C01 lấy trên R1 bằng lệnh sh ipv6 int tun13)__
+```
+en
+conf t
+int tunnel 13
+no ipv6 addr
+ipv6 addr 13::/64 eui-64
+tunnel source e0/1
+no tunnel destination
+tunnel mode ipv6ip isatap
+ip route 0.0.0.0 0.0.0.0 e0/1
+no ipv6 route 2002::/16
+no ipv6 route 1:1:1:1::/128
+ipv6 route 1:1:1:1::/128 13::5EFE:A00:C01
+end
+```
+
+* __Verify__
+
+```
+R1#ping 3:3:3:3:: source 1:1:1:1::
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3:3:3:3::, timeout is 2 seconds:
+Packet sent with a source address of 1:1:1:1::
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#
+```
+
+### NAT-PT
+
+* __R1__
+```
+en
+conf t
+int lo0
+no ip addr
+int e0/0
+no ip addr
+ipv6 addr 12::1/64
+no int tun13
+no ip route *
+no ipv6 route 3:3:3:3::/128
+ipv6 route 13::/96 12::2
+end
+```
+
+* __R2 (NAT-PT)__
+```
+en
+conf t
+int e0/1
+no ip address
+ipv6 addr 12::2/64
+ipv6 nat
+int e0/0
+no ipv6 address
+ipv6 nat
+exit
+ipv6 nat v4v6 source 10.0.23.3 13::3
+ipv6 nat v6v4 source 12::1 10.0.23.1
+! Tat ca dia chi dich 13::/96 se dc kiem tra boi NAT-PT thay vi drop
+ipv6 nat prefix 13::/96
+end
+```
+
+* __R3__
+```
+en
+conf t
+int lo0
+no ipv6 addr
+int e0/1
+no ipv6 addr
+no int tun13
+no ip route *
+no ipv6 route 1:1:1:1::/128
+end
+```
+
+* __Verify__
+
+```
+R1#ping 13::3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 13::3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R1#
+
+R3#ping 10.0.23.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.0.23.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R3#
+```
