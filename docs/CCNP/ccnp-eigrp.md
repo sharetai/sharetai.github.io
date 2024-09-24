@@ -33,6 +33,11 @@ EIGRP xem như sự kết hợp giữa distance vector và link state. Vì có c
      > __Topology table__ – lưu thông tin định tuyến học từ các EIGRP neighbors <br>
      > __Routing table__ –  lưu best routes <br>
 
+<br>
+
+## [\<Cheat sheet\>](/docs/CCNP/img/EIGRP.png)
+<br>
+
 ## Cấu hình
 <br>
 ![alt text](/docs/CCNP/img/eigrp-lab.png)

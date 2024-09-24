@@ -26,7 +26,7 @@ Cấu hình xong thiết bị thì ta nên backup để đề phòng khi sự c�
 * File **startup-config** chứa thông tin cấu hình
 * Hệ điều hành **IOS**
 
-## BACKUP
+## Backup
 
 Backup sử dụng lệnh copy file đến TFTP server
 
@@ -42,7 +42,7 @@ Backup file **IOS**
 # copy flash tftp
 ```
 
-## RESTORE
+## Restore
 
 Restore ta tiến hành copy theo chiều ngược lại với backup
 

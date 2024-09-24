@@ -5,7 +5,10 @@ h1,
 .text-alpha {
   @include fs-8;
 
-  font-weight: 300;
+  // font-weight: 300;
+
+  // [New]
+  font-weight: 500;
 }
 
 h2,

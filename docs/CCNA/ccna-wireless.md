@@ -26,7 +26,7 @@ Mạng không dây
 >
 > Bản chất điểm truy cập không dây (access points) là kết nối các thiết bị không dây (wireless devices) vào mạng có dây (wired network)
 
-## <u>802.11</u>
+## 802.11
 
 \! Chuẩn **IEEE 802.11** mô tả một giao tiếp "truyền qua không khí" _(over-the-air)_ sử dụng sóng vô tuyến để truyền nhận tín hiệu <br>
 
@@ -188,7 +188,7 @@ Mạng không dây
 > __- 802.11r__ hay __fast BSS transition (FT)__ - hỗ trợ chuyển vùng nhanh <br>
 > __- 802.11w__ - tăng cường bảo mật cho các frame quản lý được bảo vệ <br>
 
-## <u>Cisco WLC Interfaces, Ports</u>
+## Cisco WLC Interfaces, Ports
 
 **<u>WLC Ports (Physical Interfaces)</u>**
 
@@ -214,7 +214,7 @@ Mạng không dây
 
 **Dynamic Interface** - Giao diện máy khách.
 
-## <u>802.1x</u>
+## 802.1x
 
 Khi truy cập vào wifi, thường chỉ cần mật khẩu. Người quản trị chỉ xác định được số lượng truy cập, ip hay mac. Thiếu định danh, nhận dạng thiết bị an toàn hay được cho phép.
 

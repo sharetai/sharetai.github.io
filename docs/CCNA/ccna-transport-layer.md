@@ -27,8 +27,14 @@ Lớp vận chuyển
 
 ---
 
-## <u>Chức năng của lớp transport</u>
+## Tại sao có lớp transport? (why?)
+<br>
+___- Đảm bảo truyền dữ liệu đáng tin cậy:___ dữ liệu được truyền đúng thứ tự, không bị mất mát hoặc hư hỏng. <br>
+___- Kiểm soát luồng:___ điều chỉnh tốc độ truyền dữ liệu để tránh quá tải mạng. <br>
+___- Đa luồng:___ cho phép nhiều luồng dữ liệu được truyền cùng lúc trên một kết nối. <br>
 
+## Chức năng của lớp transport? (what?)
+<br>
 - Ghép phiên kết nối
 - Phân mảnh dữ liệu
 - 3 bước bắt tay
@@ -47,9 +53,12 @@ TCP đảm bảo truyền thông tin cậy. UDP đảm bảo truyền dữ liệ
 
 TCP có thể cải thiện tốc độ nhờ vào việc điều chỉnh trường `window size` để điều tiết lưu lượng.
 
-## <u>TCP vs UDP</u>
-
+## TCP vs UDP (how?)
+<br>
 ![](/docs/CCNA/img/tcp-udp.gif)
+
+___Giao thức TCP:___ Giao thức TCP (Transmission Control Protocol) là giao thức phổ biến nhất ở Transport Layer. Nó cung cấp dịch vụ truyền dữ liệu đáng tin cậy bằng cách kiểm tra lỗi, điều khiển luồng và đa luồng. <br>
+___Giao thức UDP:___ Giao thức UDP (User Datagram Protocol) là một giao thức không đáng tin cậy, không đảm bảo truyền dữ liệu đúng thứ tự hoặc không bị mất mát. Nó được sử dụng trong các ứng dụng không yêu cầu độ tin cậy cao, như truyền âm thanh và video trực tuyến. <br>
 
 | TCP                                                 | UDP                                                       |
 | :-------------------------------------------------: | :-------------------------------------------------------: |
@@ -64,12 +73,14 @@ TCP có thể cải thiện tốc độ nhờ vào việc điều chỉnh trư�
 
 ![Alt text](/docs/CCNA/img/tcp-udp.png)
 
-## <u>Session</u>
-
+## Một số khái niệm (who?)
+<br>
+### Session
+<br>
 ![](/docs/CCNA/img/tcp-udp-session.png)
 
-## <u>Flow control</u>
-
+### Flow control
+<br>
 Điều tiết luồng thông qua trường `window size`
 
 ![](/docs/CCNA/img/tcp-udp-flow-control_1.png)

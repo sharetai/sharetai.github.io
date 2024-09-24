@@ -21,6 +21,8 @@ Giao thức Internet phiên bản 4
 
 ---
 
+<h2 style="display:inline-block">why?</h2><p style="display:inline-block">&nbsp;&nbsp;Địa chỉ IPv4 giúp các máy tính trên mạng xác định chính xác thiết bị mà chúng muốn giao tiếp. Các gói tin dữ liệu được chuyển qua mạng Internet dựa trên địa chỉ IPv4 của đích đến. Để truy cập Internet, mỗi thiết bị cần có một địa chỉ IPv4 hợp lệ.</p>
+
 ## Phân lớp địa chỉ
 
 Toàn bộ địa chỉ IP được chia thành 5 nhóm gọi là Class IP. 5 nhóm này phân biệt dựa vào giá trị nhóm octet đầu tiên như sau:
@@ -41,7 +43,6 @@ Toàn bộ địa chỉ IP được chia thành 5 nhóm gọi là Class IP. 5 nh
 | 127.0.0.0/8        | loopback addresses           |
 | 169.254.0.0/16     | link-local addresses (APIPA) |
 
-
 ### Địa chỉ mạng riêng:
 
 | Phạm vi địa chỉ IP            | Số lượng địa chỉ | Khối CIDR lớn nhất (mặt nạ mạng con) | Kích thước ID máy chủ | Mặt nạ bit | 
@@ -49,6 +50,13 @@ Toàn bộ địa chỉ IP được chia thành 5 nhóm gọi là Class IP. 5 nh
 | 10.0.0.0 - 10.255.255.255     | 16777216         | 10.0.0.0/8 (255.0.0.0)               | 24 bit                | 8 bit      |
 | 172.16.0.0 - 172.31.255.255   | 1048576          | 172.16.0.0/12 (255.240.0.0)          | 20 bit                | 12 bit     |
 | 192.168.0.0 - 192.168.255.255 | 65536            | 192.168.0.0/16 (255.255.0.0)         | 16 bit                | 16 bit     |
+
+### Địa chỉ mạng Carrier-Grade NAT:
+
+| Phạm vi địa chỉ IP            | Số lượng địa chỉ | Khối CIDR lớn nhất (mặt nạ mạng con) | Kích thước ID máy chủ | Mặt nạ bit | 
+| :---------------------------- | :--------------- | :----------------------------------- | :-------------------- | :--------- |
+| 100.64.0.0 – 100.127.255.255  | 4194304          | 100.64.0.0/10 (255.192.0.0)          | 22 bit                | 10 bit     |
+
 
 ### Bảng phân hoạch IP:
 

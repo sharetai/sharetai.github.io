@@ -154,9 +154,11 @@ R3(config-router)#network 192.168.3.0 0.0.0.255 area 0
 ## Các lệnh debug
 
 ```
-R# sh ip int bri
-R# sh ip ospf
-R# sh ip ospf int
-R# sh ip ospf nei
+R# show ip int bri
+R# show ip route ospf
+R# show ip ospf
+R# show ip ospf interface
+R# show ip ospf neighbor
+R# show ip ospf database
 ```
 

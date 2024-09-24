@@ -21,11 +21,11 @@ Nhật ký hệ thống và Giao thức quản lý mạng đơn giản
 
 ---
 
-## <u>Syslog explained</u>
+## Syslog explained
 
 **Syslog** là một tiêu chuẩn để ghi nhật ký tin nhắn
 
-## <u>Syslog message format</u>
+## Syslog message format
 
 ```
 *Jan 18 03:02:42: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
@@ -48,7 +48,7 @@ Nhật ký hệ thống và Giao thức quản lý mạng đơn giản
 **6 – informational** events (Chỉ tin nhắn thông tin) <br>
 **7 – debug** messages (Chỉ xuất hiện trong quá trình gỡ lỗi) <br>
 
-## <u>Cisco IOS Syslog Logging Locations</u>
+## Cisco IOS Syslog Logging Locations
 
 \- Logging Buffer - các sự kiện sẽ được lưu trong bộ nhớ RAM <br>
 \- Console Line - các sự kiện sẽ được hiển thị trong CLI khi truy cập qua console <br>
@@ -103,7 +103,7 @@ Mặc định không gửi timestamp, nên cần bổ sung:
 R1(config)#service timestamps log datetime msec
 ```
 
-## <u>The logging synchronous Cisco Command</u>
+## The logging synchronous Cisco Command
 
 ```
 logging synchronous [level [severity-level | all] | limit number-of-buffers]
@@ -132,7 +132,7 @@ disable synchronization
 no logging synchronous
 ```
 
-## <u>SNMP (Simple Network Management Protocol)</u>
+## SNMP (Simple Network Management Protocol)
 
 SNMP là chương trình giám sát tài nguyên mạng, server-client, udp, port 25.
 

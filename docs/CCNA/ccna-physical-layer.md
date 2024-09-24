@@ -21,15 +21,17 @@ Lớp vật lý
 
 ---
 
-## Cáp xoắn đôi (Twisted Pair)
+<h2 style="display:inline-block">why?</h2><p style="display:inline-block">&nbsp;&nbsp;Là môi trường truyền dẫn giữa các thiết bị mạng.</p>
 
+## Cáp xoắn đôi (Twisted Pair)
+<br>
 ![alt text](/docs/CCNA/img/cable-Twisted-Pair.png)
 
 |  |  | Băng thông | Ứng dụng |  |
 | --- | --- | --- | --- | --- |
 | * | Cat 5e | 100 MHz | 1 Gb/s, 2.5 Gb/s | 100 m |
-|  | Cat 6 | 250 MHz | 10 Gb/s | 55 m |
-| * | Cat 6a | 500 MHz | 10 Gb/s | 100 m |
+|  | Cat 6 | 250 MHz | 5 Gb/s, 10 Gb/s | 55 m |
+| * | Cat 6a | 500 MHz | 5 Gb/s, 10 Gb/s | 100 m |
 
 <div style="text-align:center">
   <img alt="" style="max-width: 800px" src="https://differencecamp.com/wp-content/uploads/2021/03/T568A-and-T568B.jpg?ezimgfmt=ng:webp/ngcb7" />
@@ -63,13 +65,20 @@ Phân nhóm:
   * auto MDIX -> cáp thẳng tùy chọn chuẩn (thường là T-568B)
 
 ## Cáp quang (Fiber-optic)
-
+<br>
 <image src="/docs/CCNA/img/cable-Fiber-optic-working.png" width="50%"/>
 
 ![alt text](/docs/CCNA/img/cable-Fiber-optic.png)
 
-## Power over Ethernet (PoE)
+## Sóng vô tuyến (Wireless)
+<br>
+\- Bluetooth<br>
+\- Cellular networks: 2G, 3G, 4G, 5G, 6G<br>
+\- Wireless networks: Wireless LAN (WLAN), Wi-Fi (IEEE 802.11)<br>
+\- Viba<br>
 
+## Power over Ethernet (PoE)
+<br>
 Là công nghệ cho phép cấp nguồn điện một chiều (DC) cho các thiết bị mạng qua cáp Ethernet. Ví dụ: Camera IP, điện thoại VoIP.
 
 ![alt text](/docs/CCNA/img/PoE.png)

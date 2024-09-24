@@ -25,13 +25,13 @@ Khi số lượng lớn người dùng, máy chủ, thiết bị mạng, dịch 
 
 Nếu tất cả người dùng truy cập cùng một lúc. Sẽ tiêu tốn rất nhiều tài nguyên của router, router sẽ phải sắp hàng đợi và buộc phải loại bỏ phần lưu lượng hay gói tin gây ra tắc nghẽn.
 
-## <u>QoS là gì?</u>
+## QoS là gì?
 
 Để giải quyết vấn đề tắc nghẽn do nhiều người dùng sử dụng chung tài nguyên mạng. QoS cần được triển khai. QoS là kỹ thuật phân loại (**classify**) và ưu tiên (**priority**) loại lưu lượng, như dữ liệu nhạy cảm hay không nhảy cảm.
 
 Dữ liệu nhạy cảm, voice hay video, thường dùng UDP, cần đảm bảo băng thông trên thời gian thực. Không như TCP, dữ liệu ít nhạy cảm hơn, web hay mail, có thể không yêu cầu đảm bảo băng thông do có thể xử lý gửi lại cái gói tin lỗi bị loại bỏ khi tắt nghẽn. Với QoS, hiệu suất mạng và trải nghiệm người dùng có thể được tối ưu tốt hơn.
 
-## <u>4 đặc điểm của lưu lượng mạng</u>
+## 4 đặc điểm của lưu lượng mạng
 
 1\. **Bandwidth** - Băng thông là khả năng truyền dữ liệu trên link. Có thể hiểu càng rộng càng tốt.
 
@@ -41,7 +41,7 @@ Dữ liệu nhạy cảm, voice hay video, thường dùng UDP, cần đảm b�
 
 4\. **Loss** - Độ rớt gói.
 
-## <u>QoS tools</u>
+## QoS tools
 
 ![Alt text](/docs/CCNA/img/QoS-tools.png)
 
@@ -59,7 +59,7 @@ Dữ liệu nhạy cảm, voice hay video, thường dùng UDP, cần đảm b�
 
 7\. **Shaping** - Giới hạn băng thông. Đưa các gói vào bộ đệm chờ 1 lúc.
 
-## <u>Classification and Marking</u>
+## Classification and Marking
 
 Phân loại dựa trên mô tả chuẩn.
 
@@ -155,7 +155,7 @@ Layer 7 – Next Generation Network-Based Application Recognition (NBAR2) <br>
   </tbody>
 </table>
 
-## <u>Queues and Queuing</u>
+## Queues and Queuing
 
 Hàng đợi là bộ đệm trên thiết bị mạng được sử dụng để lưu trữ các gói dựa trên lớp khi cổng bận hoặc hết băng thông. Lưu lượng ở hàng đợi có thể được xử lý sau khi cổng hoặc băng thông khả dụng trở lại.
 
@@ -175,7 +175,7 @@ Low Latency Queuing (LLQ) <br>
 IP RTP Priority <br>
 Class-Based WFQ (CBWFQ) <br>
 
-## <u>Network Congestion Management</u>
+## Network Congestion Management
 
 Có 2 kiểu drop gói khi tắt nghẽn: <br>
 \- Tail Drop. Drop gói đến sau. <br>

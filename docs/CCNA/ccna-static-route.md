@@ -36,7 +36,7 @@ Cấu hình định tuyến tĩnh cho Router
 {: .note-title }
 > Syntax
 >
-> Router(config)#__ip route__ {ip-prefix \| ip-addr ip-mask} {next-hop \| interface next-hop} [pref]
+> Router(config)#__ip route__ {_ip-prefix_ \| _ip-addr ip-mask_} {_next-hop_ \| _interface next-hop_} [_pref_]
 
 __<u>Init</u>__
 

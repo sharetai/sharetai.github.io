@@ -21,6 +21,8 @@ Một số lệnh cơ bản ở các mode
 
 ---
 
+## Các thành phần bên trong thiết bị cisco
+
 Các thành phần bên trong thiết bị cisco cơ bản gồm có:
 
 * __CPU - Central Processing Unit__: trung tâm xử lý
@@ -33,47 +35,34 @@ Quy trình khởi động cơ bản: POST (ROM) -> Bootstrap (ROM) -> IOS (Flash
 
 ## Các phím tắt và thông báo lỗi
 
-<table>
-  <tr>
-    <td>Ctrl A</td>
-    <td>ahead</td>
-    <td>về đầu dòng lệnh</td>
-  </tr>
-  <tr>
-    <td>Ctrl E</td>
-    <td>end</td>
-    <td>về cuối dòng lệnh</td>
-  </tr>
-  <tr>
-    <td>Ctrl D</td>
-    <td>delete a character</td>
-    <td>xoá 1 ký tự phía sau</td>
-  </tr>
-  <tr>
-    <td>Ctrl U</td>
-    <td>delete all characters</td>
-    <td>xoá toàn bộ hàng</td>
-  </tr>
-</table>
+```
+> help
+HELP:
+Special keys:
+DEL, BS... delete previous character
+Ctrl-A .... go to beginning of line
+Ctrl-E .... go to end of line
+Ctrl-F .... go forward one character
+Ctrl-B .... go backward one character
+Ctrl-D .... delete current character
+Ctrl-U, X. delete to beginning of line
+Ctrl-K .... delete to end of line
+Ctrl-W .... delete previous word
+Ctrl-T .... transpose previous character
+Ctrl-P .... go to previous line in history buffer
+Ctrl-N .... go to next line in history buffer
+Ctrl-Z .... return to root command prompt
+Tab, <SPACE> command-line completion
+Exit .... go to next lower command prompt
+? .... list choices```
+```
 
-<table>
-  <tr>
-    <td>! Ambigous command</td>
-    <td>từ gõ vào trùng nhiều lệnh</td>
-  </tr>
-  <tr>
-    <td>! Incomplete command</td>
-    <td>lệnh chưa hoàn tất</td>
-  </tr>
-  <tr>
-    <td>! Invalid command</td>
-    <td>giá trị nhập sai</td>
-  </tr>
-  <tr>
-    <td>! Unknown command</td>
-    <td>lệnh không có hay không hỗ trợ trong mode này</td>
-  </tr>
-</table>
+```
+! Ambigous command    từ gõ vào trùng nhiều lệnh 
+! Incomplete command  lệnh chưa hoàn tất 
+! Invalid command     giá trị nhập sai
+! Unknown command     lệnh không có hay không hỗ trợ trong mode này
+```
 
 ## Các lệnh cơ bản
 
@@ -90,8 +79,10 @@ Mode Priviledge hay mode Enable
 # exit
 # show run
 # show start
-# copy run start || write
-# erase start || write erase
+# copy run start
+# write
+# erase start
+# write erase
 # reload
 # show ip int brief
 ```

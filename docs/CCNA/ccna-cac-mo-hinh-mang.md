@@ -5,7 +5,7 @@ nav_order: 1
 parent: CCNA
 ---
 
-# Các Mô Hình Mạng
+# Open Standard Interconnection Model<br>and<br>Transmission Control Protocol/Internet Protocol Model
 {: .no_toc }
 
 Mô hình OSI và mô hình TCP/IP
@@ -21,7 +21,12 @@ Mô hình OSI và mô hình TCP/IP
 
 ---
 
-## MÔ HÌNH OSI
+## Tại sao có các mô hình mạng (why?)
+<br>
+Cần có một khung tham chiếu chung để các nhà sản xuất thiết bị mạng thiết kế và phát triển các sản phẩm tương thích với nhau.
+
+## MÔ HÌNH OSI (what?)
+<br>
 
 <div style="text-align:center">
   <img alt="" alt="" style="max-width: 400px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/OSI_Model_v1.svg/800px-OSI_Model_v1.svg.png" />
@@ -83,7 +88,10 @@ Giải đóng gói dữ liệu
 
 ![](/docs/CCNA/img/network_decap.png)
 
-## MÔ HÌNH TCP/IP
+## MÔ HÌNH TCP/IP (what?)
+<br>
+
+__Mô hình TCP/IP:__ Là một bộ giao thức truyền thông được sử dụng rộng rãi trên Internet. Nó chia quá trình truyền thông thành 4 lớp, đơn giản hơn so với OSI nhưng vẫn đảm bảo chức năng. TCP/IP Được sử dụng rộng rãi trong các mạng máy tính, từ mạng LAN nhỏ đến Internet. Mô hình TCP/IP đơn giản hơn OSI, tập trung vào các giao thức chính như TCP (Transmission Control Protocol) và IP (Internet Protocol). TCP đảm bảo dữ liệu được truyền đi một cách chính xác và đầy đủ, trong khi IP chịu trách nhiệm định tuyến các gói tin.
 
 ![image](https://user-images.githubusercontent.com/56266496/165344536-78f1c219-76ea-4ecc-8529-2e24919026f7.png)
 

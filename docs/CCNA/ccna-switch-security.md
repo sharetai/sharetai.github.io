@@ -21,7 +21,7 @@ Bảo mật trên Switch
 
 ---
 
-## <u>Các bước bảo mật cho Layer 2</u>
+## Các bước bảo mật cho Layer 2
 
 1. Bỏ qua VLAN 1, không sử dụng. Tạo VLAN mới làm native VLAN
 2. Tắt chế độ thương lượng (negotiate) trên các cổng kết nối với người dùng.
@@ -29,7 +29,7 @@ Bảo mật trên Switch
 4. Shutdown các cổng không dùng, đưa các port này vào VLAN dành riêng.
 5. Giới hạn MAC trên các cổng.
 
-## <u>Port Security</u>
+## Port Security
 
 **Sẽ ra sao nếu có nhiều mac đẩy lên 1 cổng? Do người dùng tự ý cắm vào 1 switch? Do người dùng xấu tạo nhiều mac ảo?**
 
@@ -49,19 +49,19 @@ Các mode xử lý vi phạm:
 * restrict: loại bỏ gói vi phạm và ghi lại log
 * shutdown: loại bỏ gói vi phạm và shutdown port
 
-## <u>AAA and 802.1X</u>
+## AAA and 802.1X
 
 **Sẽ ra sao nếu người dùng tự ý cắm vào 1 access point? Cần 1 cơ chế xác thực, phân quyền, ghi nhận hoạt động?**
 
 *(lab is comming soon)*
 
-## <u>VLAN Access-List (VACL)</u>
+## VLAN Access-List (VACL)
 
 **Cần 1 chính sách truy cập cho vlan?**
 
 *(lab is comming soon)*
 
-## <u>Storm Control</u>
+## Storm Control
 
 **Sẽ ra sao nếu có một lượng lớn yêu cầu liên tục (có thể là unicast, multicast, broadcast)? Là yêu cầu dịch vụ hay tấn công?**
 
@@ -77,7 +77,7 @@ Switch(config-if)#storm-control ?
 
 *(lab is comming soon)*
 
-## <u>VLAN Hopping</u>
+## VLAN Hopping
 
 VLAN Hopping là kỹ thuật cho phép nhảy *(hopping)* truy cập từ vlan này sang vlan khác. Có 2 kỹ thuật:
 
@@ -89,7 +89,7 @@ VLAN Hopping là kỹ thuật cho phép nhảy *(hopping)* truy cập từ vlan 
 
 *(lab is comming soon)*
 
-## <u>DHCP Snooping</u>
+## DHCP Snooping
 
 ![image](/docs/CCNA/img/dhcp-snooping.png)
 
@@ -115,7 +115,7 @@ Switch(config-if)#ip dhcp snooping trust
 Switch#show ip dhcp snooping binding
 ```
 
-## <u>ARP Spoisoning</u>
+## ARP Spoisoning
 
 Có 2 kỹ thuật áp dụng:
 

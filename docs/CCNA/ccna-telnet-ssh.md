@@ -39,7 +39,7 @@ Ngoài dùng pass để login, có thể dùng user pass thay thế.
 (config)# enable secret 789 <- Cấu hình remote bắt buộc thêm pass để có thể vào được enable
 (config)# username [admin] secret [456]
 (config)# username [admin] privilege 15 secret [456] <- có thể thêm level cho user, level 15 cao nhất login ko cần pass enable
-(config)# username [admin] privilege 15 algorithm-type scrypt secret 456 <- có thể thêm hash vào pass
+(config)# username [admin] privilege 15 algorithm-type scrypt secret [456] <- có thể thêm hash vào pass
 (config)# line vty 0 4
 (config-line)# login local
 ```

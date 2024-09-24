@@ -64,7 +64,7 @@ _(*) Tại sao có eBGP rồi, lại có thêm iBGP? Vì, ta có thể redistrib
 
 <br>
 
-## [Cheat sheet](/docs/CCNP/img/BGP-1.png)
+## [\<Cheat sheet\>](/docs/CCNP/img/BGP-1.png)
 <br>
 
 ## Cấu hình eBGP neighbor, iBGP neighbor, quảng bá bgp, Next-Hop-Self, Route Reflector, Peer Group

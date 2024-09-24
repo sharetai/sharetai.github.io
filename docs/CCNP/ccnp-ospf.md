@@ -21,7 +21,7 @@ Giao thức định tuyến OSPF
 
 ---
 
-## \# Tổng quan về OSPF
+## Tổng quan về OSPF
 <br>
 \- Giao thức ___Open Shortest Path First (OSPF)___, được phát triển bởi tổ chức ___Internet Engineering Task Force (IETF)___, là giao thức ___link-state Interior Gateway Protocol (IGP)___. <br>
 \- Hiện tại, ___OSPF Version 2___ được định nghĩa trong ___RFC 2328___ cho ___IPv4___ và ___OSPF Version 3___ được định nghĩa trong ___RFC 2740___ cho ___IPv6___. <br>
@@ -29,16 +29,16 @@ Giao thức định tuyến OSPF
 ![alt text](/docs/CCNP/img/ospf-types-of-routing-protocols.png)
 <br>
 
-## \# Chức năng của OSPF
+## Chức năng của OSPF
 <br>
 \- Chia Hệ thống tự trị (AS - Autonomous System) thành một hoặc nhiều vùng logic (gọi là ___area___). <br>
 \- Quảng bá các tuyến đường bằng cách gửi các ___LSAs___ - Link State Advertisements. <br>
 \- Trao đổi các gói OSPF giữa các thiết bị trong vùng OSPF để đồng bộ hóa thông tin định tuyến ___LSDB___. <br>
 \- Đóng gói các gói OSPF thành các gói IP và gửi các gói ở chế độ ___unicast___ hoặc ___multicast___. <br><br>
 
-## \# Cấu hình OSPF cơ bản
+## Cấu hình OSPF cơ bản
 
-### \#\# Router ID
+### Router ID
 <br>
 ___Yêu cầu 1 Router ID___ để chạy OSPF. 1 Router ID ___dài 32 bit dạng thập phân___, là duy nhất trong 1 miền AS. <br>
 ___Router ID có thể được cấu hình thủ công hoặc router chọn tự động___, thứ tự chọn Router ID như sau:
@@ -198,7 +198,7 @@ R2#
 ```
 <br>
 
-### \#\# Link State
+### Link State
 <br>
 ___Link State___ - Là thông tin trạng thái kết nối của router. <br>
 Bao gồm: <br>
@@ -208,14 +208,14 @@ Bao gồm: <br>
 \- ___Neighbor routers___ của link <br>
 <br>
 
-### \#\# Cost
+### Cost
 <br>
 \- ___OSPF sử dụng cost làm metric.___ <br>
 \- Công thức tính: ___cost = 100M / Interface bandwidth___. 100 Mbit/s là OSPF reference bandwidth. _(Note: Đối với các giao diện trên 100M, chi phí sẽ làm tròn là 1, không chính xác. Do đó sử dụng lệnh `auto-cost reference-bandwidth` trong mode `router ospf` để thay đổi reference bandwidth)_ <br>
 \- ___Cost của tuyến đường là tổng giá trị cost của tất cả các interface từ router nguồn đến router đích.___ <br>
 <br>
 
-### \#\# Packet Types
+### Packet Types
 <br>
 OSPF đóng gói trực tiếp ___5___ kiểu thông điệp OSPF khác nhau bên trong gói tin IP, dùng giao thức ___IP 89___
 
@@ -229,7 +229,7 @@ OSPF đóng gói trực tiếp ___5___ kiểu thông điệp OSPF khác nhau bê
 
 <br>
 
-### \#\# Adjacency establishment
+### Adjacency establishment
 <br>
 
 ![Alt text](/docs/CCNP/img/ospf-state.png)
@@ -248,7 +248,7 @@ Khi hai router tìm ra nhau thông qua các gói Hello, các router thực hiệ
 Nếu bất kỳ điều kiện nào nêu trên không thỏa mãn, hai router đơn giản sẽ không hình thành quan hệ láng giềng. Cũng lưu ý rằng một trong những điều kiện quan trọng nhất mà hai bên không cần giống là chỉ số Proces ID của tiến trình OSPF, như được cấu hình trong câu lệnh `router ospf process-id`. Cũng nên lưu ý rằng giá trị MTU phải bằng nhau để các gói tin DD được gửi thành công giữa những láng giềng nhưng thông số này không được kiểm tra trong tiến trình Hello.
 <br><br>
 
-### \#\# LSA Types
+### LSA Types
 <br>
 
 | Loại LSA                     | Chức năng                                                                                                |
@@ -316,7 +316,7 @@ Loại 6 không còn hỗ trợ.<br>
 Loại 8,9,10,11 đọc thêm.<br>
 <br>
 
-### \#\# Area types and accepted LSAs
+### Area types and accepted LSAs
 <br>
 
 <table class="wikitable mw-collapsible mw-made-collapsible" style="text-align:center;">
@@ -434,7 +434,7 @@ Loại 8,9,10,11 đọc thêm.<br>
 </td></tr></tbody></table>
 <br>
 
-### \#\# Router Types
+### Router Types
 <br>
 ![alt text](/docs/CCNP/img/ospf-router-types.png)
 
@@ -447,7 +447,7 @@ Loại 8,9,10,11 đọc thêm.<br>
 
 <br>
 
-### \#\# Route Types
+### Route Types
 <br>
 
 | Loại Route            | Mô tả                |
@@ -459,7 +459,7 @@ Loại 8,9,10,11 đọc thêm.<br>
 
 <br>
 
-### \#\# Network Types
+### Network Types
 <br>
 
 | Network Type                         | When                        | Timers                   | DR/BDR | Multicast/Unicast                     | Nexthop            |
@@ -472,7 +472,7 @@ Loại 8,9,10,11 đọc thêm.<br>
 
 <br>
 
-### \#\# LAB1
+### LAB1
 <br>
 
 ![Alt text](/docs/CCNA/img/ospf-topo.png)
@@ -537,7 +537,7 @@ end
 
 ![Alt text](/docs/CCNA/img/ospf-process-13.png)
 
-### \#\# LAB2
+### LAB2
 <br>
 
 ![Alt text](/docs/CCNP/img/ospf-lsa-area.png)
@@ -1322,7 +1322,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R3#
 ```
 
-## \# Cấu hình Virtual-Link OSPF
+## Cấu hình Virtual-Link OSPF
 
 ![Alt text](/docs/CCNP/img/ospf-virtual-link.png)
 
@@ -1535,7 +1535,7 @@ O IA     10.0.34.0/24 [110/20] via 10.0.45.4, 00:21:32, Ethernet0/1
 R5#
 ```
 
-## \# Cấu hình Route Summary OSPF
+## Cấu hình Route Summary OSPF
 
 ![Alt text](/docs/CCNP/img/ospf-route-summary.png)
 

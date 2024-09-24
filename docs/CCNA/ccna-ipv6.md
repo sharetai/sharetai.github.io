@@ -21,9 +21,9 @@ Giao thức Internet phiên bản 6
 
 ---
 
-## <u> Tổng quan </u>
+## Tổng quan
 
-### <u> Thiếu hụt IPv4 </u>
+### Thiếu hụt IPv4
 
 |          IPv4 |  ->  | IPv6                                                |
 | ------------: | :--: | :-------------------------------------------------- |
@@ -35,7 +35,8 @@ Giao thức Internet phiên bản 6
 \- NAT <br>
 \-> Tuy nhiên vẫn thiếu, hiện tại đã cạn kiệt <br>
 
-### <u> IPv6 </u><br>
+### IPv6
+
 \- 128-bits địa chỉ <br>
 \- Không có địa chỉ broadcast. Thay vào đó là anycast (cho phép trùng địa chỉ ipv6 trên nhiều node mạng, routing sẽ cần đến node gần nhất) <br>
 \- Đặt địa chỉ IPv6: static, eui-64, slaac (staless auto address configuration), dhcpv6 <br>
@@ -44,14 +45,14 @@ Giao thức Internet phiên bản 6
 \- Header đơn giản hơn <br>
 \- Công cụ chuyển giao Dual-stack IPv4/IPv6 <br>
 
-### <u> Biểu diễn IPv6 </u>
+### Biểu diễn IPv6
 
 0010000001000001...0001001100011011 <br>
 0010 0000 0100 0001 .... 0001 0011 0001 1011 <br>
   2    0    4    1  ....   1    3    1    B <br>
 2041:1234:140F:1122:AB91:564F:875B:131B <br>
 
-### <u> Thu gọn địa chỉ IPv6 </u>
+### Thu gọn địa chỉ IPv6
 
 \- <u>Một chuỗi các số 0 liên tiếp có thể được lược bỏ, tuy nhiên chỉ được làm điều này một lần.</u> <br>
 
@@ -65,18 +66,18 @@ Giao thức Internet phiên bản 6
 
 <p style="display:inline">2001:</p><p style="display:inline">0</p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">1:</p><p style="display:inline;color:red"></p><p style="display:inline">:</p><p style="display:inline;color:red"></p><p style="display:inline">2:</p><p style="display:inline;color:red"></p><p style="display:inline">3:</p><p style="display:inline;color:red"></p><p style="display:inline">4<br></p>
 
-### <u> Prefix </u>
+### Prefix
 
 <p style="display:inline;color:blue">Prefix</p><p style="display:inline">:</p><p style="display:inline;color:green">Host<br></p>
 <p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">5678:ABCD:EF12:1234<br></p>
 <p style="display:inline;color:blue">2001:1234:5678:1234</p><p style="display:inline">:</p><p style="display:inline;color:green">0000:0000:0000:0000<br></p>
 <p style="display:inline;color:blue">2001:1234:5678:1234::</p><p style="display:inline;color:green">/64<br></p>
 
-### <u> Các loại địa chỉ IPv6 </u>
+### Các loại địa chỉ IPv6
 
 ![alt text](/docs/CCNA/img/ipv6-type.png)
 
-### <u> Quy hoạch địa chỉ IPv6 </u>
+### Quy hoạch địa chỉ IPv6
 
 IANA (2000:/3) <br>
 RIPE NCC (2001:4000::/23) ARIN (2001:0400::/23)<br>
@@ -87,7 +88,7 @@ trong đó <br>
 < \-\-\-\-\-\-\- 48 bit \-\-\-\-\-\-\- >< \-\-\- 16 bit \-\-\- >< \-\-\-\-\- 64 bit \-\-\-\- > <br>
 < \-\- 2001:41f0:4060 \-\- >< \-\- Subnet \-\- >< \-\- InterfaceID \-\- > <br>
 
-### <u> Cách đặt địa chỉ IPv6 </u>
+### Cách đặt địa chỉ IPv6
 
 \- <u>Gán IPv6 tĩnh</u> <br>
 ```
@@ -124,11 +125,11 @@ ipv6 address autoconfig
 \-- **Stateful** khá giống IPv4. Máy chủ DHCPv6 sẽ gán địa chỉ IPv6 cho tất cả các máy khách và nó sẽ theo dõi các địa chỉ IP này. <br>
 \-- **Stateless** hoạt động khác một chút... Máy chủ DHCPv6 không gán địa chỉ IPv6 cho máy khách, mà việc này sẽ được thực hiện thông qua SLAAC. Máy chủ DHCPv6 chỉ gán thông tin mà SLAAC không cấp được, như DNS Server.<br>
 
-## <u> IPv6 Routing </u>
+## IPv6 Routing
 
 ![image](/docs/CCNA/img/ipv6-routing.png)
 
-### <u> IPv6 Static Route </u>
+### IPv6 Static Route
 
 ```
 R1(config)#ipv6 unicast-routing 
@@ -138,7 +139,7 @@ R2(config)#ipv6 unicast-routing
 R2(config)#ipv6 route FC00:1::/64 2001::1
 ```
 
-### <u> IPv6 OSPF Route </u>
+### IPv6 OSPF Route
 
 * __R1__
 
@@ -166,7 +167,7 @@ R2(config-if)#int g0/1
 R2(config-if)#ipv6 ospf 1 area 0
 ```
 
-## <u> Chia subnet IPv6 </u>
+## Chia subnet IPv6
 
 2001:DB8::/50 chia 16
 
@@ -183,11 +184,8 @@ R2(config-if)#ipv6 ospf 1 area 0
   - 2001:0DB8:0:3C00:/54
 ```
 
-## <u> Một vài khái niệm </u>
+## Tunneling
 
 __* 6 to 4 tunneling__ - Công nghệ sử dụng cơ sở hạ tầng mạng IPv4 để truyền tải gói tin IPv6, phục vụ cho kết nối IPv6. <br>
-_(lab is comming soon)_ <br>
 __* dual-stack__ - Cho phép IPv4 và IPv6 cùng tồn tại trong cùng một thiết bị mạng. <br>
-_(lab is comming soon)_ <br>
 __* NAT-PT (Network Address Translation-Protocol Translation)__ - Là một dạng của công nghệ NAT, cho phép thiết bị chỉ hỗ trợ IPv6 có thể giao tiếp với thiết bị chỉ hỗ trợ IPv4. <br>
-_(lab is comming soon)_ <br>

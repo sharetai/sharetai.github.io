@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Password recovery
+title: Reset Password
 nav_order: 7
 parent: CCNA
 ---

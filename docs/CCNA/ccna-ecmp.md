@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ECMP
+title: Equal Cost Multi-Path
 nav_order: 13.7
 parent: CCNA
 ---
@@ -24,6 +24,7 @@ parent: CCNA
 __Equal Cost Multi-Path__ hay __ECMP__ là chiến lược định tuyến trong đó các gói hướng tới một địa chỉ IP đích duy nhất được cân bằng tải trên nhiều đường đi tốt nhất với metric bằng nhau.
 
 ## Khái niệm định tuyến của Cisco
+<br>
 
 {: .important-title }
 > Thiết bị Cisco Lớp 3, ví dụ router, quyết định sử dụng tuyến đường dựa trên:
@@ -32,12 +33,13 @@ __Equal Cost Multi-Path__ hay __ECMP__ là chiến lược định tuyến trong
 > 2\. __Lowest Administrative Distance (AD)__ <br>
 > 3\. __Lowest Metric__ <br>
 
+<br>
 Ví dụ lấy từ câu 2 trong bộ đề CCNA 200-301:
 
 ![alt text](/docs/CCNA/img/ecmp.png)
 
-<u>Bảng giá trị AD mặc định của Cisco</u>
-
+## Bảng giá trị AD mặc định của Cisco
+<br>
 <table class="wikitable" style="text-align:center">
 <tbody><tr>
 <th>Routing protocol</th>
@@ -113,7 +115,7 @@ Ví dụ lấy từ câu 2 trong bộ đề CCNA 200-301:
 </td></tr></tbody></table>
 
 ## Load Balancing Methods
-
+<br>
 __Per-Destination Load Balancing –__ _(default)_ Các gói tin cho một cặp máy chủ nguồn và đích nhất định được đảm bảo đi theo cùng một đường dẫn, ngay cả khi có nhiều đường dẫn ECMP khả dụng. (Per-flow load balancing)
 
 __Per-Packet Load Balancing –__ Sử dụng phương pháp round-robin để xác định đường dẫn mà mỗi gói tin sẽ đi đến IP đích. Điều này không phù hợp với một số loại lưu lượng truy cập nhất định, chẳng hạn như Voice over IP (VoIP), vốn phụ thuộc vào việc các gói tin đến đích theo trình tự.

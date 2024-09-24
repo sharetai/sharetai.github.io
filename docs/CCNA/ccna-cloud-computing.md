@@ -21,13 +21,13 @@ parent: CCNA
 
 ---
 
-## <u>Server Virtualization</u>
+## Server Virtualization
 
 Ảo hoá máy chủ là xây dựng nhiều máy chủ ảo trên một máy chủ vật lý. Tiết kiệm chi phí, tài nguyên, điện, diện tích, không gian làm mát.
 
 ![Alt text](/docs/CCNA/img/Server-Virtualization.png)
 
-## <u>Hypervisor</u>
+## Hypervisor
 
 Hypervisor phần mềm cho phép chia một máy tính vật lý (CPU, memory, storage) thành nhiều máy tính ảo riêng biệt, mỗi máy ảo có hệ điều hành và ứng dụng riêng.
 
@@ -37,12 +37,12 @@ Có hai loại hypervisor chính: <br>
 
 ![Alt text](/docs/CCNA/img/Types-of-Hypervisors.png)
 
-## <u>Virtual Routing and Forwarding (VRF)</u>
+## Virtual Routing and Forwarding (VRF)
 
 Chia 1 router vật lý thành nhiều router ảo.
 
 <img src="/docs/CCNA/img/Virtual-Routing-and-Forwarding.png" height="355" width="518" />
 
-## <u>On-Premise vs. IaaS vs. PaaS vs. SaaS</u>
+## On-Premise vs. IaaS vs. PaaS vs. SaaS
 
 ![Alt text](/docs/CCNA/img/IaaS-PaaS-SaaS.png)
