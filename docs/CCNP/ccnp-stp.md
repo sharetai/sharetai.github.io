@@ -1,6 +1,6 @@
 ---
 layout: default
-title: STP 802.1d
+title: STP RSTP PVST MST
 nav_order: 60
 parent: CCNP
 ---

@@ -21,6 +21,8 @@ Giao thức dự phòng bước nhảy đầu tiên
 
 ---
 
+<h2 style="display:inline-block">why?</h2><p style="display:inline-block">&nbsp;&nbsp;Khi gateway duy nhất gặp sự cố, cần có 1 gateway dự phòng sẵn sàng thay thế, tự động chuyển tiếp các gói tin, đảm bảo lưu lượng mạng không bị gián đoạn.</p>
+
 ## HSRP
 
 __Hot Standby Router Protocol (HSRP)__ cung cấp tính năng dự phòng cho router. Nếu một router gặp sự cố thay vì cấu hình chuyển đổi router cho máy tính người dùng bằng tay, giao thức này sẽ tự động hoá cho hệ thống
