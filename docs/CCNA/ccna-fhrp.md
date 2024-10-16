@@ -157,8 +157,9 @@ R2(config-if)#glbp 1 ip 10.0.0.254
 
 ## HSRP & VRRP & GLBP
 
-| FHRP | Term           | Virtual MAC                                            |
-| :--- | :------------- | :----------------------------------------------------- |
-| HSRP | Active/Standby | v1: 0000.0c07.ac<u>XX</u><br>v1: 0000.0c9f.f<u>XXX</u> |
-| VRRP | Master/Backup  | 0000.5e00.01<u>XX</u>                                  |
-| GLBP | AVG/AVF        | 0007.b400.<u>XXYY</u>                                  |
+| FHRP         | HSRP                                                   | VRRP                         | GLBP                                                                     |
+| :----------- | :----------------------------------------------------- | :--------------------------- | :----------------------------------------------------------------------- |
+| Term         | 1 Active<br>1 Standby<br>1 or more listening           | 1 Master<br>1 or more Backup | 1 AVG (Active Virtual Gateway)<br>Up to 4 AVF (Active Virtual Forwarder) |
+| Virtual MAC  | v1: 0000.0c07.ac<u>XX</u><br>v2: 0000.0c9f.f<u>XXX</u> | 0000.5e00.01<u>XX</u>        | 0007.b400.<u>XXYY</u>                                                    |
+| Multicast IP | v1: 224.0.0.2 - UDP 1985<br>v2: 224.0.0.102 - UDP 1985 | 224.0.0.18 - UDP 112         | 224.0.0.18 - UDP 3222                                                    |
+
