@@ -31,7 +31,7 @@ Bảo mật trên Switch
 
 ## Port Security
 
-**Sẽ ra sao nếu có nhiều mac đẩy lên 1 cổng? Do người dùng tự ý cắm vào 1 switch? Do người dùng xấu tạo nhiều mac ảo?**
+**Sẽ ra sao nếu có nhiều mac đẩy lên 1 cổng? Do người dùng tự ý cắm vào 1 switch? Do người dùng xấu tạo nhiều mac ảo? Bảng mac bị tràn thì các gói tin có mac đích không không có trong bảng mac sẽ được chuyển tiếp như thế nào?**
 
 ![image](/docs/CCNA/img/port-security.png)
 
@@ -42,6 +42,12 @@ SW1(config-if-range)#switchport port-security
 SW1(config-if-range)#switchport port-security max 1
 SW1(config-if-range)#switchport port-security mac-address sticky 
 SW1(config-if-range)#switchport port-security violation <protect/restrict/shutdown>
+```
+
+```
+show port-security
+show port-security interface f0/1
+show port-security address
 ```
 
 Các mode xử lý vi phạm:
@@ -97,7 +103,7 @@ VLAN Hopping là kỹ thuật cho phép nhảy *(hopping)* truy cập từ vlan 
 
 **Cần 1 cơ chế chỉ định port tin cậy dành riêng cho DHCP server**
 
-DHCP Snooping: <br>
+__DHCP Snooping:__ <br>
 \- **Trusted** hoặc **Untrusted Port** <br>
 \- **Chặn** các gói tin **DHCP OFFER** và **DHCP ACK** trên các port Untrusted <br>
 \- Đồng thời lưu 1 databse về **IP-MAC binding** <br>
@@ -108,20 +114,30 @@ DHCP Snooping: <br>
 ```
 Switch(config)#ip dhcp snooping 
 Switch(config)#ip dhcp snooping vlan 1
-Switch(config)#no ip dhcp snooping information option //Disable DHCP Option-82 data insertion
+Switch(config)#!Disable DHCP Option-82 data insertion
+Switch(config)#no ip dhcp snooping information option
 Switch(config)#int fa0/24
 Switch(config-if)#ip dhcp snooping trust 
 
+Switch#show ip dhcp snooping
 Switch#show ip dhcp snooping binding
 ```
 
-## ARP Spoisoning
+__IP Source Guard:__ <br>
+\- Chỉ cho phép 1 ip source map 1 cổng (lấy từ bảng ip dhcp snooping binding)
 
-Có 2 kỹ thuật áp dụng:
+```
+Switch(config)#int fa0/24
+Switch(config-if)#ip verify source
+Switch(config-if)#ip verify source vlan dhcp-snooping port-security
+```
 
-\- MITM (Man in the middle): Kẻ tấn công giả ARP reply với mac độc hại, khi máy tính nạn nhân yêu cầu phân giải 1 địa chỉ ip. Máy tính nạn nhân sẽ cập nhật mac độc vào bảng ARP. Kẻ tấn công sẽ có thể nghe được mọi yêu cầu khi máy tính nạn nhân giao tiếp với địa chỉ ip bị đầu độc.
+__Dynamic ARP Inspection:__ <br>
+\- Chỉ cho phép 1 ip map 1 mac (lấy từ bảng ip dhcp snooping binding)
 
-\- DOS (Denial of Service): Kẻ tấn công giả vô số ARP reply, toàn bộ máy tính trong cùng vlan sẽ phải cập nhật liên tục, làm quá tải truy cập.
+Có 2 kỹ thuật ARP Spoisoning/ARP Spoofing áp dụng: <br>
+\- MITM (Man in the middle): Kẻ tấn công giả ARP reply với mac độc hại, khi máy tính nạn nhân yêu cầu phân giải 1 địa chỉ ip. Máy tính nạn nhân sẽ cập nhật mac độc vào bảng ARP. Kẻ tấn công sẽ có thể nghe được mọi yêu cầu khi máy tính nạn nhân giao tiếp với địa chỉ ip bị đầu độc. <br>
+\- DOS (Denial of Service): Kẻ tấn công giả vô số ARP reply, toàn bộ máy tính trong cùng vlan sẽ phải cập nhật liên tục, làm quá tải truy cập. <br>
 
 ```
 Switch(config)#ip arp inspection vlan 1
