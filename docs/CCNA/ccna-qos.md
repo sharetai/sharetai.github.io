@@ -26,13 +26,15 @@ Khi số lượng lớn người dùng, máy chủ, thiết bị mạng, dịch 
 Nếu tất cả người dùng truy cập cùng một lúc. Sẽ tiêu tốn rất nhiều tài nguyên của router, router sẽ phải sắp hàng đợi và buộc phải loại bỏ phần lưu lượng hay gói tin gây ra tắc nghẽn.
 
 ## QoS là gì?
-
+<br>
 Để giải quyết vấn đề tắc nghẽn do nhiều người dùng sử dụng chung tài nguyên mạng. QoS cần được triển khai. QoS là kỹ thuật phân loại (**classify**) và ưu tiên (**priority**) loại lưu lượng, như dữ liệu nhạy cảm hay không nhảy cảm.
 
 Dữ liệu nhạy cảm, voice hay video, thường dùng UDP, cần đảm bảo băng thông trên thời gian thực. Không như TCP, dữ liệu ít nhạy cảm hơn, web hay mail, có thể không yêu cầu đảm bảo băng thông do có thể xử lý gửi lại cái gói tin lỗi bị loại bỏ khi tắt nghẽn. Với QoS, hiệu suất mạng và trải nghiệm người dùng có thể được tối ưu tốt hơn.
 
-## 4 đặc điểm của lưu lượng mạng
+<br>
 
+## 4 đặc điểm của lưu lượng mạng
+<br>
 1\. **Bandwidth** - Băng thông là khả năng truyền dữ liệu trên link. Có thể hiểu càng rộng càng tốt.
 
 2\. **Delay** - Độ trễ thời gian cần thiết để gói tin đi từ nguồn đến đích.
@@ -41,8 +43,18 @@ Dữ liệu nhạy cảm, voice hay video, thường dùng UDP, cần đảm b�
 
 4\. **Loss** - Độ rớt gói.
 
-## QoS tools
+{: .highlight-title }
+> Note
+>
+> __QoS needs of video__ conferencing traffic are __similar to those for voice__: <br>
+> \- __Loss__ should be no more than 1% <br>
+> \- __One-way latency__ should be no more than 150-200ms <br>
+> \- __Average Jitter__ should be no more than 30ms <br>
 
+<br>
+
+## QoS tools
+<br>
 ![Alt text](/docs/CCNA/img/QoS-tools.png)
 
 1\. **Classification** - Áp vào chân router để phân loại gói.
@@ -59,8 +71,28 @@ Dữ liệu nhạy cảm, voice hay video, thường dùng UDP, cần đảm b�
 
 7\. **Shaping** - Giới hạn băng thông. Đưa các gói vào bộ đệm chờ 1 lúc.
 
-## Classification and Marking
+<br>
 
+## QoS models
+<br>
+Có ba mô hình triển khai khác nhau:
+
+__Best Effort__
+
+Nỗ lực chuyển tiếp khi có thể. Xem các dự liệu là ngang hàng. Không cần cấu hình.
+
+__Integrated Services (IntServ)__
+
+IntServ sử dụng giao thức đặt trước tài nguyên __Resource Reservation Protocol (RSVP)__ để báo hiệu và dành riêng các tài nguyên mạng cần thiết cho một ứng dụng cụ thể.
+
+__Differentiated Services (DiffServ)__
+
+DiffServ phân loại lưu lượng IP và đánh dấu chúng bằng cách sử dụng các byte __Type-of-Service (ToS)__ của _IP header_. Theo cách này, mỗi lớp lưu lượng có thể được chỉ định một mức dịch vụ khác nhau. Các thiết bị mạng nhận dạng 1 _IP packet class_ thông qua việc đánh dấu của nó, triển khai hàng đợi thông minh, điều hòa lưu lượng, định hình và kiểm soát lưu lượng.
+
+<br>
+
+## Classification and Marking
+<br>
 Phân loại dựa trên mô tả chuẩn.
 
 Layer 1 – Physical interface <br>
@@ -70,23 +102,39 @@ Layer 3 – Differentiated Services Code Point (**DSCP**) value, IP Precedence v
 Layer 4 – TCP and UDP ports <br>
 Layer 7 – Next Generation Network-Based Application Recognition (NBAR2) <br>
 
-<u>CoS và ứng dụng:</u> <br>
-7 | Network Control <br>
-6 | Internetwork Control <br>
-5 | Voice <br>
-4 | Video <br>
-3 | Call Signaling <br>
-2 | Transactional Data <br>
-1 | Bulk Data <br>
-0 | Best Effort <br>
+<br>
 
-<u>Precedence/DSCP</u>
+__Layer 2 QoS Marking__
+<br>
+Tiêu chuẩn IEEE 802.1Q định nghĩa 2 trường được đưa vào khung Ethernet:
 
-```
-| 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-|-----------------------|-------|
-|      DSCP (8 bits)    |       |
-```
+1. Tag Protocol Identifier (TPID)
+2. Tag Control Information (TCI)
+
+![alt text](/docs/CCNA/img/qos-cos.png)
+
+TPID là trường 2-byte hoặc 16-bit có giá trị 0x8100, biểu thị đây là khung được gắn thẻ 802.1Q. TCI cũng là trường 2-byte hoặc 16-bit và bao gồm ba trường:
+
+- Priority Code Point (PCP)
+- Drop Eligible Indicator (DEI)
+- VLAN Identifier (VLAN ID)
+
+<u>Priority Code Point (PCP)</u>
+
+0 (lowest) | Background (BK) <br>
+1 (default) | Best effort (BE) <br>
+2 | Excellent effort (EE) <br>
+3 | Critical applications (CA) <br>
+4 | Video with < 100 ms latency and jitter (VI) <br>
+5 | Voice with < 10 ms latency and jitter (VO) <br>
+6 | Internetwork control (IC) <br>
+7 (highest) | Network control (NC) <br>
+
+<br>
+
+__Layer 3 QoS Marking__
+<br>
+![alt text](/docs/CCNA/img/qos-tos.png)
 
 <table>
   <thead>
@@ -155,8 +203,12 @@ Layer 7 – Next Generation Network-Based Application Recognition (NBAR2) <br>
   </tbody>
 </table>
 
-## Queues and Queuing
+![alt text](/docs/CCNA/img/qos-dscp.png)
 
+<br>
+
+## Queues and Queuing
+<br>
 Hàng đợi là bộ đệm trên thiết bị mạng được sử dụng để lưu trữ các gói dựa trên lớp khi cổng bận hoặc hết băng thông. Lưu lượng ở hàng đợi có thể được xử lý sau khi cổng hoặc băng thông khả dụng trở lại.
 
 <u>Cisco QoS Queues</u>
@@ -175,10 +227,13 @@ Low Latency Queuing (LLQ) <br>
 IP RTP Priority <br>
 Class-Based WFQ (CBWFQ) <br>
 
-## Network Congestion Management
+<br>
 
+## Network Congestion Management
+<br>
 Có 2 kiểu drop gói khi tắt nghẽn: <br>
 \- Tail Drop. Drop gói đến sau. <br>
 \- Random Early Detection (RED) and Weighted Random Early Detection (WRED). Drop gói ngẫu nhiên trong hàng đợi. <br>
 
+<br>
 
