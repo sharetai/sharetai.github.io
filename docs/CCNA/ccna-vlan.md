@@ -34,8 +34,8 @@ Do mạng có thể cực kỳ phức tạp với nhiều giao thức và công 
 >
 > \- Gồm 3 lớp Core, Distribution, Access <br>
 > \- Lớp Access kết nối trực tiếp thiết bị đầu cuối <br>
-> \- Lớp Distribution sử dụng như thiết bị tổng hợp lưu lượng từ access và đẩy lên Core <br>
-> \- Lớp Core là lớp quyết định tuyến đường, thay đổi thông tin định tuyến toàn mạng, thường có 2 thiết bị trở lên để đảm bảo lưu lượng luôn được tiếp tục <br>
+> \- Lớp Distribution sử dụng như thiết bị tổng hợp lưu lượng từ access và đẩy lên Core. Định tuyến và lọc các lưu lượng đẩy lên core. <br>
+> \- Lớp Core là lớp chịu trách nhiệm vận chuyển lượng lớn lưu lượng một cách nhanh chóng, thường có 2 thiết bị trở lên để đảm bảo lưu lượng luôn được tiếp tục <br>
 > \- Khi nâng cấp thì phương án sẽ là (scale up) nâng cấp thiết bị <br>
 
 <img src="/docs/CCNA/img/three-tier-architecture.png" height="428" width="547">
@@ -55,6 +55,7 @@ Do mạng có thể cực kỳ phức tạp với nhiều giao thức và công 
 {: .highlight-title }
 > Note
 >
+> \- Phù hợp với mạng trung tâm dữ liệu. Khi lưu lượng đông-tây nhiều hơn lưu lượng bắc-nam (lưu lượng giữa các máy trạm nhiều hơn lưu lượng đi internet). <br>
 > \- 1 Leaf sẽ kết nối đến tất cả các Spine và ngược lại <br>
 > \- Khi nâng cấp thì phương án sẽ là (scale ngang) thêm 1 Leaf hoặc 1 Spine <br>
 > \- Chi phí từ 1 host đến 1 host là như nhau, số hop giống nhau <br>
