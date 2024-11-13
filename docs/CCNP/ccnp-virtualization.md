@@ -21,7 +21,7 @@ parent: CCNP
 
 ---
 
-## Cisco VRF Virtual Routing and Forwarding
+## Virtual Routing and Forwarding (VRF)
 <br>
 Với Switch ta có kỹ thuật VLAN chia switch thành nhiều switch nhỏ. Với Router ta có kỹ thuật VRF chia router thành nhiều router nhỏ với các bảng định tuyến khác nhau.
 
@@ -114,7 +114,7 @@ Router#
 
 <br>
 
-## Cisco Locator ID Separation Protocol (LISP)
+## Locator ID Separation Protocol (LISP)
 <br>
 ___Locator ID Separation Protocol (LISP)___ là cách tiếp cận kiến trúc định tuyến mới cho phép việc mở rộng hệ thống định tuyến hiệu quả hơn so với hiện tại, ứng dụng cho cả môi trường doanh nghiệp và ISP.
 
@@ -172,7 +172,7 @@ Sau khi nhận được ánh xạ EID-to-RLOC từ Router ETR (hoặc Router MS)
 
 <br>
 
-## Cisco Virtual Extensible LAN (VXLAN)
+## Virtual Extensible LAN (VXLAN)
 <br>
 VLAN thì đã biết, chức năng của VLAN là phân chia và hiểu một cách đơn giản là mỗi frame dán thêm 1 nhãn (VLAN ID) vào để phân tách lưu lượng.
 

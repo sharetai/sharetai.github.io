@@ -21,9 +21,12 @@ Giao thức định tuyến vectơ khoảng cách tiên tiến
 
 ---
 
+## [\<Cheat sheet\>](/docs/CCNP/img/EIGRP.png)
+<br>
+
 ## Tổng quan
 <br>
-__EIGRP (Enhanced Interior Gateway Routing Protocol)__ là giao thức __độc quyền của Cisco__. EIGRP hỗ trợ _classless routing_ và _VLSM_, route _summarization_, _incremental updates_, _load balacing_ và nhiều tính năng hữu ích khác.
+__EIGRP (Enhanced Interior Gateway Routing Protocol)__ là giao thức __độc quyền của Cisco__. EIGRP hỗ trợ _classless routing_ và _VLSM_, route _summarization_, _incremental updates_, _quick convergence_, hỗ trợ cả _equal-cost load balancing_ và _unequal-cost load balancing_, hỗ trợ lên đến _255 hops_ và nhiều tính năng hữu ích khác.
 
 EIGRP xem như sự kết hợp giữa distance vector và link state. Vì có các đặc điểm:
 - Các router chạy EIGRP phải trở thành __neighbor__ rồi mới trao đổi thông tin định tuyến.
@@ -33,9 +36,6 @@ EIGRP xem như sự kết hợp giữa distance vector và link state. Vì có c
      > __Topology table__ – lưu thông tin định tuyến học từ các EIGRP neighbors <br>
      > __Routing table__ –  lưu best routes <br>
 
-<br>
-
-## [\<Cheat sheet\>](/docs/CCNP/img/EIGRP.png)
 <br>
 
 ## Cấu hình
