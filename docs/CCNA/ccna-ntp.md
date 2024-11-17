@@ -13,10 +13,14 @@ Giao thức đồng bộ thời gian mạng
 
 ---
 
+## Network Time Protocol (NTP)
+<br>
 **NTP (Network Time Protocol)** là giao thức lớp ứng dụng được sử dụng để đồng bộ hóa thời gian. Mục tiêu của NTP là đảm bảo rằng tất cả các thiết bị trên mạng đều đồng nhất về thời gian, thuận lợi cho việc chẩn đoán thời điểm lỗi trên mạng. NTP sử dụng kiến ​​trúc server-client.
 
 	R1 10.0.12.1 (e0/0)-----(e0/0) 10.0.12.2 R2
 
+## NTP Server
+<br>
 * __R1__
 
 ```
@@ -57,4 +61,12 @@ address         ref clock       st   when     poll    reach  delay          offs
  * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
 R2#sh clock
 0:5:5.764 UTC Sat Aug 24 2024
+```
+
+## NTP Peer
+<br>
+Trong trường hợp máy khách NTP không đồng bộ thời gian với máy chủ NTP, 2 thiết bị ngang hàng cục bộ và khác nhau nguồn đồng bộ NTP có thể đồng bộ lẫn nhau.
+
+```
+ntp peer <ip-address>
 ```

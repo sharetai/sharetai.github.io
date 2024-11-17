@@ -22,7 +22,7 @@ Mạng LAN ảo
 ---
 
 ## Mô hình phân cấp ba lớp của Cisco
-
+<br>
 Do mạng có thể cực kỳ phức tạp với nhiều giao thức và công nghệ đa dạng nên Cisco đã phát triển mô hình phân cấp nhiều lớp để thiết kế cơ sở hạ tầng mạng đáng tin cậy. Mô hình ba lớp này giúp thiết kế, triển khai và duy trì mạng có thể mở rộng, đáng tin cậy và tiết kiệm chi phí. Mỗi lớp có các tính năng và chức năng riêng, giúp giảm độ phức tạp của mạng.
 
 <img src="/docs/CCNA/img/cisco_hierarchical_model.png" height="540" width="802">
@@ -62,8 +62,10 @@ Do mạng có thể cực kỳ phức tạp với nhiều giao thức và công 
 
 <img src="/docs/CCNA/img/spine-and-leaf-architecture.png" height="272" width="705">
 
-## Chia vlan
+<br>
 
+## Chia vlan
+<br>
 ![image](/docs/CCNA/img/vlan0.png)
 
 ![image](/docs/CCNA/img/vlan1.png)
@@ -122,8 +124,10 @@ switchport access vlan 101
 ... (tương tự cho đưa port vào vlan phù hợp)
 ```
 
-## Inter Vlan
+<br>
 
+## Inter Vlan
+<br>
 ### Cách 1: Sub interface (Giải pháp Router on a Stick)
 
 ![image](/docs/CCNA/img/vlan2.png)
@@ -165,3 +169,31 @@ ip add 192.168.102.254 255.255.255.0
 int vlan 103
 ip add 192.168.103.254 255.255.255.0
 ```
+
+<br>
+
+## Dynamic Trunking Protocol (DTP)
+<br>
+__DTP__, __Dynamic Trunking Protocol__, là giao thức trunking được phát triển và độc quyền của Cisco, được sử dụng để tự động đàm phán thiết lập trunk giữa các thiết bị chuyển mạch của Cisco. DTP chỉ hoạt động nếu cổng được kết nối trực tiếp với nhau.
+
+<h3> Các mode DTP </h3>
+
+__switchport mode access__ - cổng sẽ trở thành port access, không trunk kể cả khi cổng kết nối là trunk, chỉ cho phép 1 vlan đi qua.
+
+__switchport mode trunk__ - cổng sẽ trở thành port trunk kể cả khi cổng kết nối không là trunk, cho phép nhiều vlan đi qua và có gắn tag.
+
+__switchport mode dynamic auto__ - cổng sẽ chờ để có thể trở thành port trunk hay không, là trunk khi cổng kết nối ở mode trunk hoặc dynamic desirable, là chế độ mặc định ban đầu của các dòng switch mới.
+
+__switchport mode dynamic desirable__ - cổng sẽ chủ động đàm phán trunk, là trunk khi cổng kết nối ở mode trunk hoặc dynamic desirable hay dynamic auto, là chế độ mặc định ban đầu của các dòng switch cũ.
+
+__switchport nonegotiate__ - lệnh này sẽ vô hiệu hóa DTP.
+
+<h3> DTP negotiation </h3>
+
+__Trunk Mode__      | Dynamic Auto  | Dynamic Desirable | Trunk                 | Access
+Dynamic Auto        | Access        | __Trunk__         | __Trunk__             | Access
+Dynamic Desirable   | __Trunk__     | __Trunk__         | __Trunk__             | Access
+Trunk               | __Trunk__     | __Trunk__         | __Trunk__             | Limited connectivity
+Access              | Access        | Access            | Limited connectivity  | Access
+
+<br>

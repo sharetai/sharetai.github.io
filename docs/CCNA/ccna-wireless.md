@@ -243,6 +243,25 @@ __5 GHz__
 \- __WPA2__ - __AES 128-bit__, CCMP encryption, __PSK & 802.1x__ <br>
 \- __WPA3__ - __AES 128-bit (personal) 192-bit (enterprise)__-GCMP encryption, Simultaneous Authentication of Equals (__SAE__) & __802.1x__ <br>
 
+<h3> Wireless LAN Controller Deployment </h3>
+
+__Unified or Centralized WLAN Controller Deployment__ support up to 6000 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Unified-WLC.webp" style="max-width: 400px"/>
+
+__Cloud-Based Wireless LAN Controller Deployment__ support up to 3000 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Cloud-Based-WLC.webp" style="max-width: 400px"/>
+
+__Embedded Wireless LAN Controller Deployment__ support up to 200 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Embedded-WLC.webp" style="max-width: 375px"/>
+
+__Mobility Express Wireless LAN Controller Deployment__ support up to 100 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Mobility-Express-WLC.webp" style="max-width: 425px"/>
+
+
 ## Cisco WLC Interfaces, Ports
 
 __<u>WLC Ports (Physical Interfaces)</u>__
