@@ -330,6 +330,8 @@ cEdge: Cisco IOS-XE tích hợp phần mềm Viptela. Các nền tảng CSR, ISR
 
 Bộ điều phối vBond là thiết bị chịu trách nhiệm xác thực và điều phối kết nối giữa bộ điều khiển vSmart và Router SD-WAN. Đây là thiết bị duy nhất trong mạng yêu cầu địa chỉ IP công cộng để tất cả các thiết bị SD-WAN kết nối với nó.
 
+(*) Hiện tại có thể hiểu tóm tắt là vEdge phụ trách data plane
+
 <br>
 
 
