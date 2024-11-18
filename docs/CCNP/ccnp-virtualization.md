@@ -197,7 +197,7 @@ Với xu thế phát triển mạnh mẽ của Cloud Computing, hạ tầng Data
 
 <!-- ![alt text](/docs/CCNP/img/VXLAN-Packet-Format.gif) -->
 
-<img src="/docs/CCNP/img/VXLAN-Packet-Format.png" width="1020">
+<img src="/docs/CCNP/img/VxLAN-Packet-Format.png" width="1020">
 
 ![alt text](/docs/CCNP/img/VXLAN-GPO-Header.png)
 
@@ -329,8 +329,6 @@ cEdge: Cisco IOS-XE tích hợp phần mềm Viptela. Các nền tảng CSR, ISR
 <h4>vBond Orchestrator</h4>
 
 Bộ điều phối vBond là thiết bị chịu trách nhiệm xác thực và điều phối kết nối giữa bộ điều khiển vSmart và Router SD-WAN. Đây là thiết bị duy nhất trong mạng yêu cầu địa chỉ IP công cộng để tất cả các thiết bị SD-WAN kết nối với nó.
-
-(*) Hiện tại có thể hiểu tóm tắt là vEdge phụ trách data plane
 
 <br>
 
