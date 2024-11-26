@@ -332,6 +332,20 @@ Bộ điều phối vBond là thiết bị chịu trách nhiệm xác thực và
 
 <br>
 
+<h3> Một vài khái niệm khác </h3>
 
+Trong giải pháp Cisco Viptela SDWAN, __OMP (Overlay Management Protocol)__ là một giao thức mới, được giới thiệu như là trái tim của mạng ảo trung chuyển overlay. OMP là một giao thức chạy bên trong các đường hầm TLS hoặc DTLS giữa router vEdge và vSmart controller. OMP là một giao thức điều khiển được dùng để trao đổi các thông tin định tuyến, chính sách và các thông tin quản trị giữa vSmart controller và vEdge router.
+
+Mặc định, giao thức OMP được bật lên, vì vậy bạn không cần cấu hình cho phép giao thức này trên vEdge và vSmart. Khi các thiết bị đã xác thực với nhau xong, các đường hầm DTLS và TLS sẽ được tạo ra, ngay sau đó giao thức OMP sẽ thiết lập các quan hệ láng giềng giữa hai thiết bị và trao đổi các thông tin định tuyến.
+
+OMP quảng bá ba kiểu route sau: OMP Route, TLOC và Service Routes
+
+__OMP routes hay vRoute__: OMP thu thập các thông tin route từ site nội bộ, bao gồm các route dạng connected, static, OSPF và BGP. Các route này sẽ được quảng báo tới vSmart controller cùng với các thuộc tính sau:
+
+__TLOC__: nó chỉ ra giá trị next-hop của vRoute. Thuộc tính này tương tự như BGP next-hop. TLOC là một tập hợp gồm ba giá trị {systemIP, Color, Encapsulation}. Trong đó system IP là địa chỉ của router OMP gửi ra các cập nhật OMP route. Color chỉ ra kiểu kết nối. Encapsulation chỉ ra kiểu đường hầm của lớp transport.
+
+__Service Routes__: các route dạng này tượng trưng cho các dịch vụ kết nối vào vEdge router hay tới các mạng nội bộ mà vEdge có kết nối vào. Các vEdge router sẽ quảng báo các route này tới vSmart controller dùng các họ địa chỉ NLRI.
+
+<br>
 
 
