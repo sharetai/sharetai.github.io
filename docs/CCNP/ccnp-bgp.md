@@ -21,6 +21,8 @@ Giao thức cổng đường biên
 
 ---
 
+## [\<Cheat sheet\>](/docs/CCNP/img/BGP-1.png)
+<br>
 
 ## Tổng quan
 <br>
@@ -62,9 +64,6 @@ _(*) Tại sao có eBGP rồi, lại có thêm iBGP? Vì, ta có thể redistrib
 - ___eBGP___ có TTL là ___1___ và ___iBGP___ là ___255___. iBGP cho phép peer xuyên qua nhiều hop, eBGP thì không. <br>
 - ___eBGP___ chống loop bằng thuộc tính ___AS Path___ _(eBGP không nhận routes nếu AS Path chứa ASN của chính nó)_ và ___iBGP___ chống loop bằng luật ___Split Horizon___ _(routes nhận từ iBGP sẽ không quảng bá cho iBGP khác)_ <br>
 
-<br>
-
-## [\<Cheat sheet\>](/docs/CCNP/img/BGP-1.png)
 <br>
 
 ## Cấu hình eBGP neighbor, iBGP neighbor, quảng bá bgp, Next-Hop-Self, Route Reflector, Peer Group

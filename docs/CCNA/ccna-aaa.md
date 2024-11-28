@@ -31,6 +31,8 @@ __Authorization__: xác định quyền hạn, cấu hình authorization sẽ cu
 
 __Accouting__: thu thập thông tin người dùng như địa chỉ IP, thời gian kết nối,..
 
+### RADIUS
+
 ![image](/docs/CCNA/img/aaa1.png)
 
 ![image](/docs/CCNA/img/aaa2.png)
@@ -44,6 +46,26 @@ Switch(config)#line vty 0 4
 Switch(config-line)#login authentication ABC
 
 Switch(config)#enable secret 789
+```
+
+### TACACS+
+```
+aaa new-model 
+
+! Set up AAA authentication for login:
+! This authorizes privilege level 15 commands using TACACS+, with local as fallback.
+aaa authentication login default group tacacs+ local
+
+! Configure TACACS+ server(s):
+tacacs server prod
+address ipv4 10.10.10.23
+key cisco123
+
+! Specify port
+ip tacacs source-interface Gig 0/0
+
+! Grant access-level rights to remote users
+aaa authorization exec default group tacacs+
 ```
 
 ## RADIUS vs TACACS+

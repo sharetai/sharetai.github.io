@@ -21,6 +21,9 @@ Truyền thông không dây
 
 ---
 
+## [\<Cheat sheet\>](/docs/CCNP/img/IEEE_802.11_WLAN.png)
+<br>
+
 ## Sóng điện từ
 <br>
 Truyền dẫn trong hệ thống truyền thông không dây bao gồm một nguồn hoặc máy phát _(transmitter)_ và một điểm đến hoặc máy thu _(receiver)_. Máy phát gửi một dòng điện xoay chiều vào anten, tạo ra điện trường và từ trường chuyển động phân tán khi sóng truyền ra khỏi anten.
@@ -103,6 +106,26 @@ Rx Signal = -1 dBm <br>
 Cường độ tín hiệu thu hay là chỉ số để đo độ mạnh của tín hiệu tại thiết bị thu (ví dụ anten, sóng wifi..). RSSI càng lớn thì độ mạnh của tín hiệu càng lớn.
 
 <img style="max-width: 600px" src="/docs/CCNP/img/wireless-rssi.png" />
+
+__Công thức tính công suất thu = Công suất phát (Modem) – Tổng suy hao (Mức độ suy hao về vật liệu và do khoảng cách)__ 
+
+Suy hao do vật liệu cũng mang lại mức độ ảnh hưởng ít nhiều đến công suất thu tại thiết bị trong nhà, cụ thể là:
+
+- Đối với cửa sổ kính, độ suy hao sẽ là 2db.
+- Đối với cửa gỗ, độ suy hao sẽ là 3db.
+- Đối với tường khô, độ suy hao sẽ là 4db.
+- Đối với đá hoa cương, độ suy hao sẽ là 5db.
+- Đối với tường kính có khung kim loại, độ suy hao sẽ là 6db.
+- Đối với tường gạch, độ suy hao sẽ là 8db.
+-  Đối với tường bê tông, độ suy hao sẽ là 10-15db.
+     
+Suy hao do khoảng cách giữa modem và thiết bị thu sẽ như sau:
+
+- Đối với khoảng cách 10m, độ suy hao sẽ là 70db.
+- Đối với khoảng cách 20m, độ suy hao sẽ là 80db.
+- Đối với khoảng cách trên 40m, độ suy hao sẽ là trên 90db.
+
+![alt text](/docs/CCNP/img/wireless-rssi-2.png)
 
 <h4> Signal-to-Noise Ratio (SNR) </h4>
 
