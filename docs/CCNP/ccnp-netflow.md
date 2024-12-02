@@ -27,7 +27,8 @@ Network traffic analyzer
 
 NetFlow là một hệ thống giao thức mạng do Cisco tạo ra để thu thập lưu lượng truy cập mạng IP. Sau đó, dữ liệu NetFlow được phân tích để tạo ra bức tranh về lưu lượng cập mạng.
 
-__Traditional NetFlow (TNF)__
+<h3> Traditional NetFlow (TNF) </h3>
+
 Cisco IOS NetFlow cho phép các thiết bị mạng được chuyển tiếp lưu lượng truy cập để tổng hợp dữ liệu về lưu lượng giao thông cá nhân. NetFlow truyền thống (TNF) đề cập đến việc thực hiện ban đầu của NetFlow, trong đó xác định cụ thể một dòng chảy là sự kết hợp độc đáo trong bảy lĩnh vực chính sau đây:
 
 \- Địa chỉ Ip nguồn <br>
@@ -38,7 +39,7 @@ Cisco IOS NetFlow cho phép các thiết bị mạng được chuyển tiếp l�
 \- Type-of-dịch vụ (TOS) byte <br>
 \- Input logical interface <br>
 
-<h3> Configuration </h3>
+<h4> Configuration </h4>
 
 ![alt text](/docs/CCNP/img/netflow.png)
 
@@ -62,7 +63,9 @@ Router1(config-if)#
 Router1(config-if)#end
 ```
 
-<h3> Verification </h3>
+Sử dụng lệnh `ip router-cache flow`, sẽ theo dõi tất cả các luồng đi vào trên physical interface tất cả các sub-interface. Có thể sử dụng lệnh `ip flow egress` hoặc `ip flow ingress` nếu chỉ muốn kích hoạt trên 1 sub-interface hoặc theo 1 hướng.
+
+<h4> Verification </h4>
 
 ```
 Router1#show ip flow export
@@ -81,9 +84,77 @@ Version 9 flow records
 0 export packets were dropped due to encapsulation fixup failures
 ```
 
-<br>
+<h3> Flexible NetFlow (FNF) </h3>
 
 __Flexible NetFlow (FNF)__, không giống như TNF, cho phép tùy chỉnh và tập trung vào thông tin cụ thể. Có thể sử dụng một tập hợp con hoặc nhỏ hơn trong bảy lĩnh vực trọng điểm truyền thống để xác định một dòng chảy. FNF cũng có nhiều lĩnh vực khác. Điều này cho phép một tổ chức xác định mục tiêu thông tin cụ thể hơn, giảm thiểu luồng trafic không cần thiết, cho phép khả năng mở rộng và truyền thông hội nhóm.
+
+__Flexible NetFlow (FNF)__ giúp tối ưu hóa cơ sở hạ tầng mạng bằng cách cung cấp đặc tính chi tiết về lưu lượng IP và xác định nguồn, đích lưu lượng cũng như các giao thức ứng dụng. Với điều này, nó làm giảm nguy cơ xảy ra các mối đe dọa bảo mật tiềm ẩn do khả năng lập kế hoạch năng lực được cải thiện với tính linh hoạt và khả năng mở rộng tăng lên.
+
+<h4> Flexible NetFlow Components </h4>
+
+| Component Name | Description                                                                              |
+| :------------: | :--------------------------------------------------------------------------------------: |
+| Flow Records   | Thu thập bản ghi.                                                                        |
+| Flow Monitors  | Áp vào cổng để giám sát lưu lượng mạng.                                                  |
+| Flow Exporters | Xuất dữ liệu NetFlow Version 9 từ Flow Monitor cache đến 1 host hoặc NetFlow collector.  |
+| Flow Samplers  | Lấy mẫu một phần dữ liệu NetFlow thay vì phân tích tất cả dữ liệu NetFlow.               |
+
+<h4> Configuring and Verifying the Custom Flow Record </h4>
+
+```
+Router# configure terminal
+Router(config)# flow record CUSTOM
+Router(config-flow-record)# description Custom Flow Record for IPv4 Traffic
+Router(config-flow-record)# match ipv4 destination address
+Router(config-flow-record)# collect counter bytes
+Router(config-flow-record)# collect counter packets
+Router(config-flow-record)# exit
+Router(config)# do show flow record CUSTOM
+```
+
+<h4> Configuring and Verifying the Custom Flow Exporter </h4>
+
+```
+Router# configure terminal
+Router(config)# flow exporter CUSTOM1
+Router(config-flow-exporter)# description EXPORT-TO-NETFLOW-COLLECTOR
+Router(config-flow-exporter)# destination 192.168.10.10
+Router(config-flow-exporter)# export-protocol netflow-v9
+Router(config-flow-exporter)# transport UDP 999
+Router(config-flow-exporter)# exit
+Router(config)# exit
+Router# sh run flow exporter
+```
+
+<h4> Configuring and Verifying the Custom Flow Monitor </h4>
+
+```
+Router(config)# flow monitor CUSTOM
+Router(config-flow-monitor)# description Uses Custom Flow Record CUSTOM for IPv4 Traffic
+Router(config-flow-monitor)# record CUSTOM
+Router(config-flow-monitor)# cache timeout active 60
+Router(config-flow-monitor)# end
+Router# show run flow monitor CUSTOM
+```
+
+<h4> Configuring and Verifying the Flow Exporter Mapping to the Flow Monitor </h4>
+
+```
+Router# configure terminal
+Router(config)# flow monitor CUSTOM
+Router(config-flow-monitor)# exporter CUSTOM
+Router(config-flow-monitor)# end
+```
+
+<h4> Configuring and Verifying the Flow Monitor Interface Commands </h4>
+
+```
+Router(config)# interface ethernet1/1
+Router(config-if)# ip flow monitor CUSTOM input
+Router(config-if)# interface ethernet1/2
+Router(config-if)# ip flow monitor CUSTOM input
+Router(config-if)# end
+```
 
 <br>
 

@@ -239,3 +239,19 @@ Hoạt động như một bộ thu lưu lượng không dây 802.11 chuyên dụ
 
 __Sensor Mode__ <br>
 Cho phép AP được hỗ trợ hoạt động giống như máy khách WLAN, liên kết và xác định các sự cố kết nối máy khách
+
+<br>
+
+## Wifi Security
+<br>
+
+| Chuẩn bảo mật | Thuật toán mã hóa | Độ dài khóa (bit) | Mode security | Giao thức xác thực | Các tính năng bổ sung | Độ bảo mật |
+|---|---|---|---|---|---|---|
+| WEP | RC4 | 40, 104 | Open System, Shared Key | WEP | Dễ bị tấn công | Rất yếu |
+| WPA | TKIP | 128 | Personal, Enterprise | 802.1X, PSK | Cải thiện so với WEP | Trung bình |
+| WPA2 | AES (CCMP) | 128 | Personal, Enterprise | 802.1X, PSK | Mã hóa mạnh mẽ, ổn định | Cao |
+| WPA3-Personal | AES (CCMP) | 128 | Personal | SAE | Bảo vệ mật khẩu mạnh mẽ | Rất cao |
+| WPA3-Personal - AES(CCMP128) + SAE + FT | AES (CCMP) | 128 | Personal | SAE | Bảo vệ mật khẩu mạnh mẽ, chuyển đổi nhanh | Rất cao |
+| WPA3-Enterprise + AES(CCMP128) + 802.1x-SHA256 + FT | AES (CCMP) | 128 | Enterprise | 802.1X với SHA-256 | Mã hóa mạnh mẽ, xác thực mạnh, chuyển đổi nhanh | Rất cao |
+| WPA3-Enterprise + GCMP128 cipher + SUITEB-1X | GCMP-128 | 128 | Enterprise | 802.1X với Suite B | Mã hóa mạnh mẽ, xác thực mạnh | Rất cao |
+| WPA3-Enterprise + GCMP256 cipher + SUITEB192-1X | GCMP-256 | 256 | Enterprise | 802.1X với Suite B | Mã hóa mạnh mẽ nhất, xác thực mạnh | Rất cao |

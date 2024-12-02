@@ -38,7 +38,7 @@ Mạng không dây
 \- Mạng LAN không dây (WLAN) sử dụng ___sóng vô tuyến (radio wave)___ ở tầng vật lý: <br>
 \- WLAN sử dụng cơ chế ___CSMA/CA (Carrier Sense Multiple Access/Collision Avoidance)___ thay vì _CSMA/CD (Carrier Sense Multiple Access/Collision Detect)_ cho môi trường truy nhập (_media access_). CSMA/CD sử dụng trong môi trường hub để phát hiện và giảm thiểu xung đột, nhưng ở môi trường access point không thể dò được xung đột nên chỉ có thể sử dụng CSMA/CA để tránh xung đột.<br>
 \- Là kiểu truyền ___half-duplex___. <br>
-\- Một số vấn đề khi truyền dẫn bằng sóng vô tuyến: vùng phủ (_coverage_), nhiễu (_interference, noise_) và bảo mật (_privacy_) cho môi trường khó khăn hơn rất nhiều. <br>
+\- Một số vấn đề khi truyền dẫn bằng sóng vô tuyến: vùng phủ (_coverage_), nhiễu (_interference, noise_) và bảo mật (_privacy_) cho môi trường không dây khó khăn hơn rất nhiều. <br>
 \- Access points là các thiết bị chia sẻ tương tự Ethernet hub trong việc chia sẻ băng thông. Càng nhiều thiết bị truy nhập thì tốc độ dành riêng cho mỗi thiết bị càng giảm. <br>
 
 <h3> Truyền dẫn bằng sóng vô tuyến: </h3>
@@ -59,7 +59,7 @@ BSS có thể xem là vùng phủ của 1 AP.
 \- __Autonomous AP Configuration__: AP tự chủ, hoạt động độc lập, phù hợp với mạng nhỏ. <br>
 \- __Lightweight AP Configuration__: Nhiều LAP được quản lý bởi __Wireless LAN Controller (WLC)__, sử dụng cho mạng lớn. Có 2 mode: local và flexconnect (với flexconnect sẽ chuyển autonomous khi mất kết nối với WLC). <br>
 
-<h3> Có 2 kiến trúc mạng không dây (_Wireless Architecture)_: </h3>
+<h3> Có 2 kiến trúc mạng không dây (Wireless Architecture): </h3>
 \- Autonomous AP Architecture <br>
 \- Split-MAC Architectures <br>
 
@@ -84,6 +84,24 @@ Kiến trúc mạng không dây dựa trên đám mây chỉ tập trung cải t
 Đường hầm ___CAPWAP (Control and Provisioning of Wireless Access Points Tunnels)___ sẽ được tạo có số lượng là 2 giữa WLC và LAP: 1 là CAPWAP Control Tunnel và 2 là CAPWAP Data Tunnel.
 
 <img src="/docs/CCNA/img/802.11-WLC-CAPWAP.webp" style="max-width: 800px"/>
+
+<h3> Wireless LAN Controller Deployment </h3>
+
+__Unified or Centralized WLAN Controller Deployment__ support up to 6000 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Unified-WLC.webp" style="max-width: 400px"/>
+
+__Cloud-Based Wireless LAN Controller Deployment__ support up to 3000 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Cloud-Based-WLC.webp" style="max-width: 400px"/>
+
+__Embedded Wireless LAN Controller Deployment__ support up to 200 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Embedded-WLC.webp" style="max-width: 375px"/>
+
+__Mobility Express Wireless LAN Controller Deployment__ support up to 100 Wireless Access Points
+
+<img src="/docs/CCNA/img/802.11-Mobility-Express-WLC.webp" style="max-width: 425px"/>
 
 <h3> Phổ tần số WiFi 2.4 GHz so với 5 GHz </h3>
 2.4 GHz và 5 GHz là các dải tần số thường được sử dụng trong kết nối WiFi. Sự khác biệt chính giữa 2.4 GHz và 5 GHz là tốc độ và phạm vi phủ sóng. Tần số càng cao thì tốc độ càng nhanh nhưng phạm vi phủ sóng càng ngắn.
@@ -242,24 +260,6 @@ __5 GHz__
 \- __WPA__ - __TKIP 128-bit with RC4__, __PSK & 802.1x__<br>
 \- __WPA2__ - __AES 128-bit__, CCMP encryption, __PSK & 802.1x__ <br>
 \- __WPA3__ - __AES 128-bit (personal) 192-bit (enterprise)__-GCMP encryption, Simultaneous Authentication of Equals (__SAE__) & __802.1x__ <br>
-
-<h3> Wireless LAN Controller Deployment </h3>
-
-__Unified or Centralized WLAN Controller Deployment__ support up to 6000 Wireless Access Points
-
-<img src="/docs/CCNA/img/802.11-Unified-WLC.webp" style="max-width: 400px"/>
-
-__Cloud-Based Wireless LAN Controller Deployment__ support up to 3000 Wireless Access Points
-
-<img src="/docs/CCNA/img/802.11-Cloud-Based-WLC.webp" style="max-width: 400px"/>
-
-__Embedded Wireless LAN Controller Deployment__ support up to 200 Wireless Access Points
-
-<img src="/docs/CCNA/img/802.11-Embedded-WLC.webp" style="max-width: 375px"/>
-
-__Mobility Express Wireless LAN Controller Deployment__ support up to 100 Wireless Access Points
-
-<img src="/docs/CCNA/img/802.11-Mobility-Express-WLC.webp" style="max-width: 425px"/>
 
 
 ## Cisco WLC Interfaces, Ports
