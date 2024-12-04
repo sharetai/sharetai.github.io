@@ -57,7 +57,7 @@ BSS có thể xem là vùng phủ của 1 AP.
 
 <h3> Có 2 cách cấu hình cho 1 access point: </h3>
 \- __Autonomous AP Configuration__: AP tự chủ, hoạt động độc lập, phù hợp với mạng nhỏ. <br>
-\- __Lightweight AP Configuration__: Nhiều LAP được quản lý bởi __Wireless LAN Controller (WLC)__, sử dụng cho mạng lớn. Có 2 mode: local và flexconnect (với flexconnect sẽ chuyển autonomous khi mất kết nối với WLC). <br>
+\- __Lightweight AP Configuration__: Nhiều LAP được quản lý bởi __Wireless LAN Controller (WLC)__, LAP giao tiếp với WLC bằng __CAPWAP tunnel__, sử dụng cho mạng lớn. Có 2 mode: local và flexconnect (với flexconnect sẽ chuyển autonomous khi mất kết nối với WLC). <br>
 
 <h3> Có 2 kiến trúc mạng không dây (Wireless Architecture): </h3>
 \- Autonomous AP Architecture <br>

@@ -42,7 +42,7 @@ Sự khác biệt chính của sóng điện từ là tần số của chúng. T
 
 Tần số sóng điện từ WiFi là số lần tín hiệu thực hiện một chu kỳ lên xuống hoàn chỉnh trong 1 giây. Một chu kỳ có thể bắt đầu khi tín hiệu tăng lên từ đường trung tâm, đi qua nó và tăng trở lại để gặp nó. Ngoài ra, một chu kỳ có thể được tính từ tâm của đỉnh này đến tâm của đỉnh sau. Bất cứ khi nào bắt đầu đo chu kỳ, tín hiệu phải hoàn thành một chuỗi quay trở lại vị trí ban đầu trước khi lặp lại cùng một mẫu tuần hoàn.
 
-Trong ví dụ bên dưới, 1 giây đã trôi qua. Trong thời gian đó, tín hiệu trải qua bốn chu kỳ hoàn chỉnh mỗi giây (Hertz).
+Trong ví dụ bên dưới, 1 giây đã trôi qua. Trong thời gian đó, tín hiệu trải qua 4 chu kỳ hoàn chỉnh mỗi giây (Hertz).
 
 <img style="max-width: 600px" src="/docs/CCNP/img/wireless-frequency.png" />
 
@@ -70,6 +70,8 @@ Bước sóng là khoảng cách vật lý mà sóng truyền được trong m�
 Bước sóng giảm khi tần số tăng. Chu kỳ sóng ngắn hơn khi bước sóng nhỏ hơn. Bước sóng dùng cho  việc thiết kế và định vị anten mạng Wi-Fi.
 
 <h3> Suy hao (Net Loss) </h3>
+
+Suy hao là tổn hao đường truyền tín hiệu. Cường độ tín hiệu sẽ giảm ở máy thu.
 
 __Suy hao = 10log10(cường độ tín hiệu nhận được/cường độ tín hiệu truyền đi) (dB)__
 
@@ -117,7 +119,7 @@ Suy hao do vật liệu cũng mang lại mức độ ảnh hưởng ít nhiều 
 - Đối với đá hoa cương, độ suy hao sẽ là 5db.
 - Đối với tường kính có khung kim loại, độ suy hao sẽ là 6db.
 - Đối với tường gạch, độ suy hao sẽ là 8db.
--  Đối với tường bê tông, độ suy hao sẽ là 10-15db.
+- Đối với tường bê tông, độ suy hao sẽ là 10-15db.
      
 Suy hao do khoảng cách giữa modem và thiết bị thu sẽ như sau:
 
@@ -136,6 +138,22 @@ Có thể dễ dàng bỏ qua tiếng ồn miễn là mức nhiễu nền thấp
 Hình ảnh bên dưới so sánh cường độ tín hiệu nhận được của tín hiệu RF và mức nhiễu nhận được. Cường độ tín hiệu vào khoảng -40 dBm và mức nhiễu sàn là -80 dBm. SNR sẽ là -40 dBm hoặc 40 dB (-40 dBm – -80 dBm). Ở phía bên phải biểu đồ, mức nhiễu nền tăng lên -55 dBm nên giá trị SNR giảm xuống 15 dB (-40 dBm – -55 dBm). Tín hiệu có thể không sử dụng được vì tín hiệu và mức nhiễu rất gần nhau.
 
 <img style="max-width: 600px" src="/docs/CCNP/img/wireless-snr.png" />
+
+<h3> Spatial Multiplexing vs Transmit Beamforming </h3>
+
+__Multiple-input/several-output (MIMO)__ là công nghệ không dây sử dụng nhiều anten ở 2 đầu phát và thu. Các anten này có thể được sử dụng để truyền nhiều luồng dữ liệu cùng lúc.
+
+![alt text](/docs/CCNP/img/wireless-mimo.jpg)
+
+Công nghệ MIMO không sử dụng các tần số khác nhau cho mỗi anten vì tần số Wifi bị hạn chế. Thay vào đó, công nghệ này tận dụng lợi thế của chiều không gian. Nhiều anten sẽ truyền tín hiệu ở cùng tần số, nhưng vì các tín hiệu đi theo các đường dẫn hơi khác nhau và đến vào các thời điểm khác nhau nên anten thu có thể phân biệt được.
+
+Một trong những lợi ích mà công nghệ MIMO mang lại là khả năng giảm thiểu hiện tượng fading (sai lạc tín hiệu thu một cách bất thường) và nhiễu trong các kênh không dây. Việc sử dụng nhiều anten cho phép đa dạng hóa không gian, nghĩa là ngay cả khi một đường truyền bị fading hoặc nhiễu, các đường truyền khác vẫn có thể cung cấp thông tin liên lạc đáng tin cậy.
+
+Một số lợi ích: Tăng thông lượng dữ liệu; Cải thiện chất lượng tín hiệu; Mở rộng phạm vi; Độ tin cậy được cải thiện; Tăng dung lượng.
+
+__Spatial Multiplexing__: tăng thông lượng dữ liệu bằng cách truyền đồng thời nhiều luồng dữ liệu bằng nhiều anten ở cả đầu phát và đầu thu.Tận dụng lợi thế của chiều không gian để truyền nhiều luồng dữ liệu độc lập trong cùng một băng tần. Các triển khai phổ biến bao gồm hệ thống MIMO 2×2, 4×4 và 8×8, biểu thị số lượng anten ở cả hai đầu.
+
+__Beamforming__: là kỹ thuật tập trung tín hiệu được truyền theo một hướng cụ thể để cải thiện chất lượng tín hiệu và vùng phủ sóng. Tăng cường cường độ tín hiệu và giảm nhiễu theo các hướng cụ thể.
 
 ## Anten không dây (Wireless Antenna)
 <br>
@@ -203,7 +221,24 @@ Cisco Lightweight Access Point (LAP) phải được ghép nối với Wireless 
 
 <h3> Cisco Lightweight Access Point States </h3>
 
+1. __AP Boots__ – AP được bật nguồn, khởi chạy bằng 1 bản IOS nhỏ. Địa chỉ IP lấy từ DHCP hoặc cấu hình IP tĩnh.
+2. __WLC Discovery__ – AP tìm kiếm 1 hoặc nhiều WLC. AP gửi unicast _CAPWAP Discovery Request_ đến IP của WLC qua cổng UDP 5246 hoặc broadcast trong local subnet. WLC khả dụng sẽ gửi lại _CAPWAP Discovery Response_. DHCP server cũng có thể cung cấp tùy chọn DHCP option 43 để đề xuất danh sách địa chỉ IP của WLC cho AP; AP sẽ cố gắng phân giải 'CISCO-CAPWAP-ControlLER.domain-name' bằng DNS. Nếu phân giải được ra địa chỉ IP, AP sẽ cố gắng liên lạc với WLC tại địa chỉ đó.
+3. __CAPWAP Tunnel__ – AP tạo đường hầm CAPWAP với các WLC. CAPWAP cung cấp kênh Bảo mật lớp truyền tải gói dữ liệu (DTLS/Datagram Transport Layer Security) an toàn cho các thông báo điều khiển kết nối AP-WLC. AP và WLC xác thực lẫn nhau bằng cách trao đổi chứng chỉ số.
+4. __WLC Join__ – AP chọn WLC từ danh sách các tùy chọn có thể và gửi thông báo _CAPWAP Join Request message_. WLC gửi lại thông báo _CAPWAP Join Response message_.
+5. __Download Image__ – WLC thông báo cho AP về việc phát hành phần mềm. Nếu bản phát hành phần mềm của AP là khác, nó sẽ tải xuống phiên bản tương thích từ WLC. Sau đó khởi động lại để chạy phiên bản mới và quay lại Bước 1.
+6. __Download Config__ – AP lấy các tham số cấu hình từ WLC.
+7. __Run State__ – AP bắt đầu cung cấp BSS và cho phép các máy khách không dây kết nối.
+8. __Reset__ – Khi WLC reset AP, nó sẽ hủy tất cả các kết nối máy khách hiện tại và đường hầm CAPWAP tới WLC. AP sau đó khởi động lại và lặp lại quy trình từ đầu.
+
 <img style="max-width: 800px" src="/docs/CCNP/img/wireless-lap-states.png" />
+
+<h3> Maintaining WLC Availability </h3>
+
+Khi 1 AP join WLC, nó phải duy trì kết nối. AP sẽ bị lỗi nếu WLC bị lỗi, ảnh hưởng đến mạng không dây. AP có thể khám phá nhiều WLC. Nếu WLC bị mất kết nối, AP có thể join WLC khác. Máy khách sẽ mất kết nối trong khoảng thời gian này.
+
+Keepalives là 30 giây 1 lần theo mặc định. WLC phản hồi với mỗi keepalive để cho thấy nó đang hoạt động. Nếu không có phản hồi, AP sẽ gửi thêm 4 lần trong 3 giây. Nếu vẫn không có phản hồi, AP cho rằng WLC đã bị lỗi và sẽ ngay lập tức tìm kiếm 1 WLC khác.
+
+WLC hỗ trợ dự phòng với tính năng SSO, 1 cặp HA gồm 1 active và 1 standby. 1 AP phát hiện cặp HA và tạo đường hầm CAPWAP tới WLC active. WLC standby sẽ đồng bộ hóa: đường hầm CAPWAP, trạng thái AP và máy khách, cấu hình và bản phát hành. Nếu WLC active bị lỗi, WLC standby sẽ có thông tin trạng thái máy khách và AP mới nhất, giúp quá trình chuyển đổi dự phòng luôn trong suốt.
 
 <h3> Cisco Wireless Access Point (AP) Modes </h3>
 
@@ -239,6 +274,40 @@ Hoạt động như một bộ thu lưu lượng không dây 802.11 chuyên dụ
 
 __Sensor Mode__ <br>
 Cho phép AP được hỗ trợ hoạt động giống như máy khách WLAN, liên kết và xác định các sự cố kết nối máy khách
+
+<br>
+
+## Roaming
+
+<h3> Autonomous AP Roaming </h3>
+
+<img style="max-width: 500px" src="/docs/CCNP/img/wireless-Autonomous-AP-Roaming-1.png" />
+<img style="max-width: 410px" src="/docs/CCNP/img/wireless-Autonomous-AP-Roaming-2.png" />
+
+Khi tín hiệu của AP-1 yếu đi, Client-1 sẽ phát hiện điều đó và sẽ tìm kiếm các AP gần đó có tín hiệu mạnh hơn. Client-1 sẽ phát hiện ra AP-2 và cố gắng liên kết với nó. Sau khi chuyển vùng, AP sẽ cập nhật các bảng máy khách được liên kết của chúng, cho thấy rằng máy khách hiện được liên kết với AP-2. 
+
+<h3> Intracontroller WiFi Roaming </h3>
+
+<img style="max-width: 600px" src="/docs/CCNP/img/wireless-Intracontroller-WiFi-Roaming-1.png" />
+<img style="max-width: 620px" src="/docs/CCNP/img/wireless-Intracontroller-WiFi-Roaming-2.png" />
+
+Khi Client-1 chuyển vùng thành công sang AP-2, bảng WLC sẽ được cập nhật để phản ánh liên kết thiết bị máy khách hiện tại nhằm xác định đường hầm CAPWAP nào sẽ sử dụng để tiếp cận máy khách. Vì cả hai AP đều được kết nối với cùng 1 WLC nên việc chuyển vùng diễn ra hoàn toàn trong WLC. Quá trình chuyển vùng mất khoảng 10 mili giây để hoàn thành. Đó là khoảng thời gian cần thiết để WLC di chuyển mục nhập Client-1 từ AP-1 sang AP-2. Máy khách hoàn toàn không biết rằng hai AP được kết nối với bộ điều khiển thông qua đường hầm CAPWAP. Hơn nữa, thiết bị khách không dây di chuyển giữa nhiều AP tùy thuộc vào việc phân tích tín hiệu của nó.
+
+<h3> Layer 2 Intercontroller Roaming </h3>
+
+<img style="max-width: 800px" src="/docs/CCNP/img/wireless-Layer-2-Intercontroller-Roaming-1.png" />
+<img style="max-width: 800px" src="/docs/CCNP/img/wireless-Layer-2-Intercontroller-Roaming-2.png" />
+
+_Layer 2 roam_ hay _local-to-local_ roam cho phép máy khách giữ địa chỉ IP của nó và quá trình chuyển vùng diễn ra nhanh, thường dưới 20 mili giây.
+
+<h3> Layer 3 Intercontroller Roaming </h3>
+
+<img style="max-width: 800px" src="/docs/CCNP/img/wireless-Layer-3-Intercontroller-Roaming-1.png" />
+<img style="max-width: 800px" src="/docs/CCNP/img/wireless-Layer-3-Intercontroller-Roaming-2.png" />
+
+Chuyển vùng lớp 3 sẽ xây dựng một đường hầm CAPWAP bổ sung giữa WLC ban đầu của máy khách và WLC mà nó đã chuyển vùng. Đường hầm truyền dữ liệu đến và đi từ máy khách giống như nó vẫn được liên kết với subnet và WLC ban đầu.
+
+WLC ban đầu được gọi là bộ điều khiển neo (_anchor controller_) và WLC hiện tại nơi máy khách chuyển vùng được liên kết lại được gọi là bộ điều khiển ngoài (_foreign controller_). Máy khách được neo vào WLC gốc ngay cả khi nó chuyển sang các WLC khác nhau.
 
 <br>
 
