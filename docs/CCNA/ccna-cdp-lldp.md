@@ -51,6 +51,6 @@ Tương tự CDP. Khác, __LLDP__ là chuẩn mở.
 ```
 (config)# lldp run
 (config)# interface e0/0
-(config-if)# no cdp receive
-(config-if)# no cdp transmit
+(config-if)# no lldp receive
+(config-if)# no lldp transmit
 ```

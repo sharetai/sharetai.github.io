@@ -21,6 +21,9 @@ Lớp vật lý
 
 ---
 
+## [\<Cheat sheet\>](/docs/CCNA/img/physical_terminations.png)
+<br>
+
 <h2 style="display:inline-block">why?</h2><p style="display:inline-block">&nbsp;&nbsp;Là môi trường truyền dẫn giữa các thiết bị mạng.</p>
 
 ## Cáp xoắn đôi (Twisted Pair)

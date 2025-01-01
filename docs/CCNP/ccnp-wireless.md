@@ -139,6 +139,11 @@ Hình ảnh bên dưới so sánh cường độ tín hiệu nhận được c�
 
 <img style="max-width: 600px" src="/docs/CCNP/img/wireless-snr.png" />
 
+{: .highlight-title }
+> Note
+>
+> Generally, a signal with an SNR value of __20 dB__ or more is recommended for __data__ networks where as an SNR value of __25 dB__ or more is recommended for networks that use __voice__ applications.
+
 <h3> Spatial Multiplexing vs Transmit Beamforming </h3>
 
 __Multiple-input/several-output (MIMO)__ là công nghệ không dây sử dụng nhiều anten ở 2 đầu phát và thu. Các anten này có thể được sử dụng để truyền nhiều luồng dữ liệu cùng lúc.
@@ -222,7 +227,7 @@ Cisco Lightweight Access Point (LAP) phải được ghép nối với Wireless 
 <h3> Cisco Lightweight Access Point States </h3>
 
 1. __AP Boots__ – AP được bật nguồn, khởi chạy bằng 1 bản IOS nhỏ. Địa chỉ IP lấy từ DHCP hoặc cấu hình IP tĩnh.
-2. __WLC Discovery__ – AP tìm kiếm 1 hoặc nhiều WLC. AP gửi unicast _CAPWAP Discovery Request_ đến IP của WLC qua cổng UDP 5246 hoặc broadcast trong local subnet. WLC khả dụng sẽ gửi lại _CAPWAP Discovery Response_. DHCP server cũng có thể cung cấp tùy chọn DHCP option 43 để đề xuất danh sách địa chỉ IP của WLC cho AP; AP sẽ cố gắng phân giải 'CISCO-CAPWAP-ControlLER.domain-name' bằng DNS. Nếu phân giải được ra địa chỉ IP, AP sẽ cố gắng liên lạc với WLC tại địa chỉ đó.
+2. __WLC Discovery__ – AP tìm kiếm 1 hoặc nhiều WLC. AP gửi unicast _CAPWAP Discovery Request_ đến IP của WLC qua cổng UDP 5246 hoặc broadcast trong local subnet. WLC khả dụng sẽ gửi lại _CAPWAP Discovery Response_. DHCP server cũng có thể cung cấp tùy chọn DHCP option 43 để đề xuất danh sách địa chỉ IP của WLC cho AP; AP sẽ cố gắng phân giải __'CISCO-CAPWAP-ControlLER.domain-name'__ bằng DNS. Nếu phân giải được ra địa chỉ IP, AP sẽ cố gắng liên lạc với WLC tại địa chỉ đó.
 3. __CAPWAP Tunnel__ – AP tạo đường hầm CAPWAP với các WLC. CAPWAP cung cấp kênh Bảo mật lớp truyền tải gói dữ liệu (DTLS/Datagram Transport Layer Security) an toàn cho các thông báo điều khiển kết nối AP-WLC. AP và WLC xác thực lẫn nhau bằng cách trao đổi chứng chỉ số.
 4. __WLC Join__ – AP chọn WLC từ danh sách các tùy chọn có thể và gửi thông báo _CAPWAP Join Request message_. WLC gửi lại thông báo _CAPWAP Join Response message_.
 5. __Download Image__ – WLC thông báo cho AP về việc phát hành phần mềm. Nếu bản phát hành phần mềm của AP là khác, nó sẽ tải xuống phiên bản tương thích từ WLC. Sau đó khởi động lại để chạy phiên bản mới và quay lại Bước 1.
@@ -308,6 +313,12 @@ _Layer 2 roam_ hay _local-to-local_ roam cho phép máy khách giữ địa ch�
 Chuyển vùng lớp 3 sẽ xây dựng một đường hầm CAPWAP bổ sung giữa WLC ban đầu của máy khách và WLC mà nó đã chuyển vùng. Đường hầm truyền dữ liệu đến và đi từ máy khách giống như nó vẫn được liên kết với subnet và WLC ban đầu.
 
 WLC ban đầu được gọi là bộ điều khiển neo (_anchor controller_) và WLC hiện tại nơi máy khách chuyển vùng được liên kết lại được gọi là bộ điều khiển ngoài (_foreign controller_). Máy khách được neo vào WLC gốc ngay cả khi nó chuyển sang các WLC khác nhau.
+
+<h3> SD-Access Roaming </h3>
+
+inter-xTR and intra-xTR roaming
+
+![alt text](/docs/CCNP/img/wireless-SDA-Roaming.avif)
 
 <br>
 

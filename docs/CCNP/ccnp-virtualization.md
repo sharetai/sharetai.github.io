@@ -286,6 +286,9 @@ __Anycast Gateway__ - Chỉ có 1 GW kể cả khi người dùng di động san
 
 ## Software-Defined WAN (SD-WAN)
 <br>
+
+![alt text](/docs/CCNP/img/SD-WAN-Architecture-1.png)
+
 SD-WAN được tạo ra để đáp ứng nhu cầu chuyển đổi số, bao gồm:
 
 \- Tự động hóa và điều phối mạng WAN với chi phí và rủi ro thấp hơn. <br>
@@ -345,6 +348,12 @@ __OMP routes hay vRoute__: OMP thu thập các thông tin route từ site nội 
 __TLOC__: nó chỉ ra giá trị next-hop của vRoute. Thuộc tính này tương tự như BGP next-hop. TLOC là một tập hợp gồm ba giá trị {systemIP, Color, Encapsulation}. Trong đó system IP là địa chỉ của router OMP gửi ra các cập nhật OMP route. Color chỉ ra kiểu kết nối. Encapsulation chỉ ra kiểu đường hầm của lớp transport.
 
 __Service Routes__: các route dạng này tượng trưng cho các dịch vụ kết nối vào vEdge router hay tới các mạng nội bộ mà vEdge có kết nối vào. Các vEdge router sẽ quảng báo các route này tới vSmart controller dùng các họ địa chỉ NLRI.
+
+__Configure VPN__: Đối với các thiết bị SD-WAN Cisco IOS XE Catalyst:
+
+   - __VPN 0—Transport VPN__: control traffic
+   - __VPN 512—Management VPN__: out-of-band network management traffic
+   - __VPNs 1–511, 513–65530—Service VPNs__: service-side data traffic
 
 <br>
 

@@ -59,21 +59,30 @@ _Quá trình chuyển mạch gói tin của CEF_
  
 Mặc định, CEF đã được enable tự động trên hầu hết các thiết bị sử dụng hệ điều hành Cisco IOS phiên bản 12.0 trở lên. Để kiểm tra hoạt động của CEF trên thiết bị ta gõ lệnh như sau: 
 
-![alt text](/docs/CCNP/img/CEF-4.png)
+<img style="max-width: 600px" src="/docs/CCNP/img/CEF-4.png" />
 
 Nếu như cef chưa được bật thì hệ thống sẽ trả về kết quả như hình bên dưới:
 
-![alt text](/docs/CCNP/img/CEF-5.png)
+<img style="max-width: 600px" src="/docs/CCNP/img/CEF-5.png" />
 
 Để bật chức năng CEF, ta gõ lệnh: 
 
-![alt text](/docs/CCNP/img/CEF-6.png)
+<img style="max-width: 250px" src="/docs/CCNP/img/CEF-6.png" />
 
 Để kiểm tra thông tin bảng Adjacency, ta gõ lệnh:
 
-![alt text](/docs/CCNP/img/CEF-7.png)
+<img style="max-width: 300px" src="/docs/CCNP/img/CEF-7.png" />
 
 <br>
+
+{: .highlight-title }
+> Note
+>
+> __CEF can be enabled in one of two modes:__ <br>
+>
+> __Central CEF mode__ - When CEF mode is enabled, the CEF FIB and adjacency tables reside on the route processor, and the route processor performs the express forwarding. You can use CEF mode when __line cards are not available for CEF switching__, or when you need to use features not compatible with distributed CEF switching. <br>
+>
+> __Distributed CEF (dCEF) mode__ - When dCEF is enabled, line cards maintain identical copies of the FIB and adjacency tables. __The line cards can perform the express forwarding by themselves__, and this relieves the main processor - Gigabit Route Processor (GRP) - of involvement in the switching operation. This is the only switching method available on the Cisco 12000 Series Router.
 
 ## Cisco Stateful Switchover (SSO)
 <br>

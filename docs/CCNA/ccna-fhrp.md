@@ -21,7 +21,8 @@ Giao thức dự phòng bước nhảy đầu tiên
 
 ---
 
-<h2 style="display:inline-block">why?</h2><p style="display:inline-block">&nbsp;&nbsp;Khi gateway duy nhất gặp sự cố, cần có 1 gateway dự phòng sẵn sàng thay thế, tự động chuyển tiếp các gói tin, đảm bảo lưu lượng mạng không bị gián đoạn.</p>
+<h2 style="display:inline-block">why?</h2><p style="display:inline-block">
+Khi gateway duy nhất gặp sự cố, cần có 1 gateway dự phòng sẵn sàng thay thế, tự động chuyển tiếp các gói tin, đảm bảo lưu lượng mạng không bị gián đoạn.</p>
 
 ## HSRP
 
@@ -157,9 +158,14 @@ R2(config-if)#glbp 1 ip 10.0.0.254
 
 ## HSRP & VRRP & GLBP
 
-| FHRP         | HSRP                                                   | VRRP                         | GLBP                                                                     |
-| :----------- | :----------------------------------------------------- | :--------------------------- | :----------------------------------------------------------------------- |
-| Term         | 1 Active<br>1 Standby<br>1 or more listening           | 1 Master<br>1 or more Backup | 1 AVG (Active Virtual Gateway)<br>Up to 4 AVF (Active Virtual Forwarder) |
-| Virtual MAC  | v1: 0000.0c07.ac<u>XX</u><br>v2: 0000.0c9f.f<u>XXX</u> | 0000.5e00.01<u>XX</u>        | 0007.b400.<u>XXYY</u>                                                    |
-| Multicast IP | v1: 224.0.0.2 - UDP 1985<br>v2: 224.0.0.102 - UDP 1985 | 224.0.0.18 - UDP 112         | 224.0.0.18 - UDP 3222                                                    |
+| FHRP           | HSRP                                                   | VRRP                         | GLBP                                                                     |
+| :------------- | :----------------------------------------------------- | :--------------------------- | :----------------------------------------------------------------------- |
+| Term           | 1 Active<br>1 Standby<br>1 or more listening           | 1 Master<br>1 or more Backup | 1 AVG (Active Virtual Gateway)<br>Up to 4 AVF (Active Virtual Forwarder) |
+| Scope          | Cisco Proprietary                                      | IEEE Standard                | Cisco Proprietary                                                        |
+| Virtual MAC    | v1: 0000.0c07.ac<u>XX</u><br>v2: 0000.0c9f.f<u>XXX</u> | 0000.5e00.01<u>XX</u>        | 0007.b400.<u>XXYY</u>                                                    |
+| Multicast IP   | v1: 224.0.0.2 - UDP 1985<br>v2: 224.0.0.102 - UDP 1985 | 224.0.0.18 - UDP 112         | 224.0.0.102 - UDP 3222                                                   |
+| Timers         | Hello - 3s<br>Hold - 10s                               | Advertisement - 1s<br>Down Interval = 3*Advertisement         | Hello - 3s<br>Hold - 10s                |
+| Group Range    | 0 to 255                                               | 0 to 255                     | 0 to 1023                                                                |
+| Priority Range | 1 to 255, Default 100                                  | 1 to 255, Default 100        | 1 to 255, Default 100                                                    |
+| Support IPv6   | HSRPv2                                                 | VRRPv3                       | GLBP                                                                     |
 

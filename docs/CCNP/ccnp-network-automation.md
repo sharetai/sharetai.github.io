@@ -23,7 +23,9 @@ Tự động hóa mạng
 
 ## EEM Embedded Event Manager
 
-Trình quản lý sự kiện nhúng (EEM) trên thiết bị Cisco IOS là giải pháp tùy chỉnh để phát hiện sự kiện và khôi phục. Khi các sự kiện được giám sát xảy ra, EEM cho phép theo dõi và thực hiện các hành động theo hướng dẫn, khắc phục. EEM mô tả một sự kiện cụ thể và các hành động cần được triển khai để phản hồi lại sự kiện đó.
+### [\<Cheat sheet\>](/docs/CCNP/img/EEM.png)
+<br>
+Trình quản lý sự kiện nhúng (EEM) trên thiết bị Cisco IOS là giải pháp tùy chỉnh để phát hiện sự kiện và khôi phục. Khi các sự kiện được giám sát xảy ra hoặc đạt đến ngưỡng, EEM cho phép theo dõi và thực hiện các hành động theo hướng dẫn. EEM mô tả một sự kiện cụ thể và các hành động cần được triển khai để phản hồi lại sự kiện đó.
 
 <h4> DÙNG EEM SCRIPT ĐỂ TỰ ĐỘNG BACKUP FTP KHI SAVE CONFIG </h4>
 

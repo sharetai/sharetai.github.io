@@ -28,12 +28,12 @@ Truyền thông từ một điểm đến một tập hợp các điểm
 <br>
 Sẽ thế nào nếu gửi dữ liệu từ 1 nguồn đến nhiều đích?
 
-<image src="/docs/CCNP/img/multicast-send-by-unicast.png" width="70%"/>
+<image style="max-width: 600px" src="/docs/CCNP/img/multicast-send-by-unicast.png"/>
 
 Gửi bằng __Unicast__. Bao nhiêu phiên là đủ? Bao nhiêu băng thông là đủ? <br>
 1 router hoặc 1 thiết bị L3 sẽ chuyển các gói tin bằng cách tìm địa chỉ đích trong bảng định tuyến. Nếu 1 thiết bị là L2, nó chỉ cần dựa vào địa chỉ MAC.
 
-<image src="/docs/CCNP/img/multicast-send-by-broadcast.png" width="70%"/>
+<image style="max-width: 600px" src="/docs/CCNP/img/multicast-send-by-broadcast.png"/>
 
 Gửi bằng __Broadcast__. Hiệu quả kém. Lãng phí. <br>
 Địa chỉ đích có thể là địa chỉ tất cả các máy trạm (255.255.255.255) hoặc là 1 phần của địa chỉ mạng con. 1 router hoặc 1 switch L3 sẽ không cho phép chuyển các dữ liệu Broadcast này _(cần cấu hình `ip directed-broadcast`)_. 1 thiết bị switch L2 sẽ cho phép phát tán lưu lượng Broadcast ra tất cả các cổng của nó.
