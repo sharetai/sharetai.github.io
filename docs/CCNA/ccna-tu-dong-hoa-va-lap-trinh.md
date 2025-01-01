@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Network Automation
+title: Tự động hóa và lập trình
 nav_order: 98
 parent: CCNA
 ---
 
-# Network Automation
+# Network Automation and Programmability
 {: .no_toc }
 
-Tự động hóa mạng
+Tự động hóa mạng và khả năng lập trình
 {: .fs-6 .fw-300 }
 
 ---
@@ -108,7 +108,7 @@ __<u>Puppet</u>__ <br>
 
 <br>
 
-## Cisco SDN – Software Defined Networking
+## SDN – Software Defined Networking
 <br>
 Tương lai của mạng là tự động hóa. Trong mạng truyền thống, hiện tại quản lý bằng các phương pháp ___box-by-box___ sử dụng CLI, GUI, SNMP, SSH hoặc telnet. Gặp các vấn đề khi triển khai các thiết bị mới hay nâng cấp thiết bị mới, cấu hình thủ công, quản lý sai sót, không tối ưu hóa được tài nguyên mạng.
 
@@ -140,7 +140,7 @@ API southbound sử dụng __SSH__, __NETCONF__, __OpenFlow__, SNMP. API Northbo
 
 <br>
 
-## Cisco DNA – Digital Network Architecture
+## DNA – Digital Network Architecture
 <br>
 ___Cisco DNA Center (còn gọi là Cisco Digital Network Architecture)___ là bộ điều khiển và quản lý SDN mạnh mẽ cho phép kiểm soát mạng, tối ưu hóa, bảo mật các kết nối từ xa và giảm chi phí.
 
@@ -148,11 +148,33 @@ Cisco DNA Center tận dụng sử dụng mạng dựa trên mục đích ___Int
 
 <br>
 
-## Cisco SD-Access Architecture
+## SD-Access
 <br>
 ![alt text](/docs/CCNA/img/sdn-sd-access.png)
 
-## Cisco SD-WAN Architecture
+## SD-WAN
 <br>
+__SD-WAN (Software-Defined Wide Area Network)__, mạng WAN được xác định bằng phần mềm, được giới thiệu để cung cấp kết nối an toàn và đáng tin cậy hơn với chi phí thấp hơn. SD-WAN là sự kết hợp giữa Internet và private WAN. SD-WAN tối ưu hóa và tự động hóa sử dụng các kết nối như MPLS, DSL, 5G/LTE và Internet để kết nối với các chi nhánh, trung tâm dữ liệu và hội sở. SD-WAN có bộ điều khiển tập trung chịu trách nhiệm tự động hóa, điều khiển cũng như quản lý và cấu hình tập trung.
+
 ![alt text](/docs/CCNA/img/sdn-sd-wan.png)
+
+Kiến trúc SD-WAN có 4 thành phần chính:
+
+__1\. vEdge__
+
+vEdge có vai trò là data plane và có thể là router vật lý hoặc ảo. vEdge chịu trách nhiệm định tuyến và chuyển tiếp trong kiến ​​trúc SD-WAN. Mỗi router sử dụng mã hóa IPSec để cung cấp kết nối an toàn. Các router vEdge phổ biến cho phần cứng là Viptela OS Router hay IOS XE SD-WAN Router và cho ảo hóa là vEdge Cloud hay Cisco Cloud Services Router (CSR).
+
+__2\. vSmart__
+
+vSmart có vai trò là control plane và có sẵn dưới dạng máy ảo. vSmart quảng cáo các policy, routes và security. vSmart chịu trách nhiệm quản lý tất cả các dữ liệu và chính sách điều khiển bằng giao thức Overlay Management Protocol (OMP).
+
+__3\. vManage__
+
+vManage có vai trò là management plane và có thể được xem trong GUI. Là 1 cổng tập trung để quản lý, tạo chính sách và định cấu hình phần mềm và phần cứng trong kiến ​​trúc SD-WAN.
+
+__4\. vBond__
+
+vBond là bộ điều phối, xác thực vSmart controller, vEdge router, vManage trong mạng SD-WAN. Có thể có sẵn dưới dạng phần cứng hoặc thiết bị ảo. vBond chịu trách nhiệm tích hợp tất cả vEdge router. Nó tạo một đường hầm an toàn với vEdge, sau đó thông báo cho vSmart và vManage về cấu hình và thông số của nó, chẳng hạn như địa chỉ IP.
+
+__Zero Touch Provisioning (ZTP)__ là dịch vụ cung cấp tự động dựa trên đám mây cho các thiết bị mạng ở một địa điểm từ xa mà không cần gửi kỹ sư mạng đến các địa điểm đó. ZTP hạn chế lỗi của con người, tích hợp, nâng cấp và cài đặt cấu hình một cách hiệu quả cho các thiết bị trong toàn bộ mạng.
 
