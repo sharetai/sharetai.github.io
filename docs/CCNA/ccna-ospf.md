@@ -170,7 +170,7 @@ network 192.168.2.254 0.0.0.0 area 2
 
 <br>
 
-## OSPF Summary
+## OSPF Summarization
 <br>
 
 ```

@@ -38,19 +38,19 @@ Giao thức định tuyến OSPF
 
 ## Cấu hình OSPF cơ bản
 
-### Router ID
+### Router ID (có lab)
 <br>
 ___Yêu cầu 1 Router ID___ để chạy OSPF. 1 Router ID ___dài 32 bit dạng thập phân___, là duy nhất trong 1 miền AS. <br>
-___Router ID có thể được cấu hình thủ công hoặc router chọn tự động___, thứ tự chọn Router ID như sau:
-1. ___Sử dụng Router ID được cấu hình thủ công___ bằng câu lệnh `router-id` mode `router ospf`.
-2. ___Sử dụng địa chỉ IP cao nhất trên cổng loopback___ đang trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
-3. ___Sử dụng địa chỉ IP cao nhất trên cổng vật lý___ không phải là loopback và trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
-
-Thứ tự đơn giản, nhưng một vài chi tiết bị che dấu bên dưới thứ tự được nêu ra ở trên. Các chi tiết đó như sau:
-- Cổng mà từ đó Router ID được chọn ra không nhất thiết phải so trùng với một câu lệnh `network`. Nói cách khác, cổng đó không bắt buộc phải chạy OSPF.
-- OSPF không phải quảng bá một tuyến đi đến địa chỉ mạng của Router ID.
-- Router ID không cần thiết phải đến được trong từng bảng định tuyến.
-
+___Router ID có thể được cấu hình thủ công hoặc router chọn tự động___, thứ tự chọn Router ID như sau: <br> <br>
+1\. ___Sử dụng Router ID được cấu hình thủ công___ bằng câu lệnh `router-id` mode `router ospf`. <br>
+2\. ___Sử dụng địa chỉ IP cao nhất trên cổng loopback___ đang trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up). <br>
+3\. ___Sử dụng địa chỉ IP cao nhất trên cổng vật lý___ không phải là loopback và trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up). <br>
+<br>
+Thứ tự đơn giản, nhưng một vài chi tiết bị che dấu bên dưới thứ tự được nêu ra ở trên. Các chi tiết đó như sau: <br> <br>
+\- Cổng mà từ đó Router ID được chọn ra không nhất thiết phải so trùng với một câu lệnh `network`. Nói cách khác, cổng đó không bắt buộc phải chạy OSPF. <br>
+\- OSPF không phải quảng bá một tuyến đi đến địa chỉ mạng của Router ID. <br>
+\- Router ID không cần thiết phải đến được trong từng bảng định tuyến. <br>
+<br>
 Sau khi router chạy OSPF và chọn Router ID, nó vẫn sử dụng Router ID này kể cả khi cổng có IP bị hỏng hoặc biến mất hoặc tồn tại một địa chỉ IP lớn hơn. Router chỉ chọn Router ID mới sau khi Router ID được cấu hình lại hoặc quá trình OSPF được khởi động lại.
 
 
@@ -200,28 +200,114 @@ R2#
 
 ### Link State
 <br>
-___Link State___ - Là thông tin trạng thái kết nối của router. <br>
-Bao gồm: <br>
+___Link State___ - Là thông tin trạng thái kết nối của router. Bao gồm: <br>
 \- ___IP Address/mask___ <br>
 \- ___Network Type___ - Môi trường Ethernet là broadcast hay môi trường Serial là point-to-point <br>
 \- ___Cost___ <br>
 \- ___Neighbor routers___ của link <br>
 <br>
 
-### Cost
+### Cost (có lab)
 <br>
 \- ___OSPF sử dụng cost làm metric.___ <br>
 \- Công thức tính: ___cost = 100M / Interface bandwidth___. 100 Mbit/s là OSPF reference bandwidth. _(Note: Đối với các giao diện trên 100M, chi phí sẽ làm tròn là 1, không chính xác. Do đó sử dụng lệnh `auto-cost reference-bandwidth` trong mode `router ospf` để thay đổi reference bandwidth)_ <br>
 \- ___Cost của tuyến đường là tổng giá trị cost của tất cả các interface từ router nguồn đến router đích.___ <br>
 <br>
 
-### Packet Types
+![alt text](/docs/CCNP/img/ospf-cost.png)
+
+* R1
+```
+enable
+conf t
+host R1
+int lo0
+ip addr 1.1.1.1 255.255.255.255
+int e0/0
+ip addr 10.0.12.1 255.255.255.0
+no shut
+router ospf 1
+router-id 1.1.1.1
+network 0.0.0.0 0.0.0.0 area 0
+end
+```
+
+* R2
+```
+enable
+conf t
+host R2
+int lo0
+ip addr 2.2.2.2 255.255.255.255
+int e0/0
+ip addr 10.0.23.2 255.255.255.0
+ip ospf cost 1000
+no shut
+int e0/1
+ip addr 10.0.12.2 255.255.255.0
+ip ospf cost 100
+no shut
+router ospf 1
+router-id 2.2.2.2
+network 0.0.0.0 0.0.0.0 area 0
+end
+```
+
+* R3
+```
+enable
+conf t
+host R3
+int lo0
+ip addr 3.3.3.3 255.255.255.255
+int e0/1
+ip addr 10.0.23.3 255.255.255.0
+ip ospf cost 10000
+no shut
+router ospf 1
+router-id 3.3.3.3
+network 0.0.0.0 0.0.0.0 area 0
+end
+```
+
+Verify
+
+```
+R1#show ip route | e subnets|-
+C        1.1.1.1 is directly connected, Loopback0
+O        2.2.2.2 [110/11] via 10.0.12.2, 00:04:32, Ethernet0/0
+O        3.3.3.3 [110/1011] via 10.0.12.2, 00:04:22, Ethernet0/0
+C        10.0.12.0/24 is directly connected, Ethernet0/0
+L        10.0.12.1/32 is directly connected, Ethernet0/0
+O        10.0.23.0/24 [110/1010] via 10.0.12.2, 00:04:32, Ethernet0/0
+
+R2#show ip route | e subnets|-
+O        1.1.1.1 [110/101] via 10.0.12.1, 00:04:44, Ethernet0/1
+C        2.2.2.2 is directly connected, Loopback0
+O        3.3.3.3 [110/1001] via 10.0.23.3, 00:04:34, Ethernet0/0
+C        10.0.12.0/24 is directly connected, Ethernet0/1
+L        10.0.12.2/32 is directly connected, Ethernet0/1
+C        10.0.23.0/24 is directly connected, Ethernet0/0
+L        10.0.23.2/32 is directly connected, Ethernet0/0
+
+R3#show ip route | e subnets|-
+O        1.1.1.1 [110/10101] via 10.0.23.2, 00:04:41, Ethernet0/1
+O        2.2.2.2 [110/10001] via 10.0.23.2, 00:04:41, Ethernet0/1
+C        3.3.3.3 is directly connected, Loopback0
+O        10.0.12.0/24 [110/10100] via 10.0.23.2, 00:04:41, Ethernet0/1
+C        10.0.23.0/24 is directly connected, Ethernet0/1
+L        10.0.23.3/32 is directly connected, Ethernet0/1
+```
+
+### Packet Types + Adjacency establishment (có lab)
+<br>
+<h4> Packet Types </h4>
 <br>
 OSPF đóng gói trực tiếp ___5___ kiểu thông điệp OSPF khác nhau bên trong gói tin IP, dùng giao thức ___IP 89___
 
 | Loại gói                             | Chức năng                                                                                                          |
 | :----------------------------------- | :----------------------------------------------------------------------------------------------------------------- |
-| Hello                                | Được gửi định kỳ để khám phá, thoả hiệp và duy trì các mối quan hệ neighbor.                                   |
+| Hello                                | Được gửi định kỳ để khám phá, thoả hiệp và duy trì các mối quan hệ neighbor.                                       |
 | Database Description (DD)            | Chứa thông tin ngắn gọn về cơ sở dữ liệu trạng thái liên kết cục bộ (LSDB) và đồng bộ hóa LSDB trên hai thiết bị.  |
 | Link State Request (LSR)             | Yêu cầu LSA cần thiết từ hàng xóm. Các gói LSR chỉ được gửi sau khi các gói DD được trao đổi thành công.           |
 | Link State Update (LSU)              | Gửi LSA cần thiết cho hàng xóm.                                                                                    |
@@ -229,9 +315,8 @@ OSPF đóng gói trực tiếp ___5___ kiểu thông điệp OSPF khác nhau bê
 
 <br>
 
-### Adjacency establishment
+<h4> Adjacency establishment </h4>
 <br>
-
 ![Alt text](/docs/CCNP/img/ospf-state.png)
 
 OSPF lắng nghe những thông điệp Hello được gửi đến 224.0.0.5. Đây là địa chỉ multicast cho tất cả các router chạy OSPF, trên bất cứ cổng nào đã bật OSPF. Các gói Hello sẽ lấy nguồn từ địa chỉ chính trên cổng.
@@ -248,238 +333,13 @@ Khi hai router tìm ra nhau thông qua các gói Hello, các router thực hiệ
 Nếu bất kỳ điều kiện nào nêu trên không thỏa mãn, hai router đơn giản sẽ không hình thành quan hệ láng giềng. Cũng lưu ý rằng một trong những điều kiện quan trọng nhất mà hai bên không cần giống là chỉ số Proces ID của tiến trình OSPF, như được cấu hình trong câu lệnh `router ospf process-id`. Cũng nên lưu ý rằng giá trị MTU phải bằng nhau để các gói tin DD được gửi thành công giữa những láng giềng nhưng thông số này không được kiểm tra trong tiến trình Hello.
 <br><br>
 
-### LSA Types
+<h4> LAB </h4>
 <br>
-
-| Loại LSA                     | Chức năng                                                                                                |
-| :------------------------    | :------------------------------------------------------------------------------------------------------- |
-| Router-LSA (Type 1)          | Các router cùng area trao đổi trạng thái liên kết cho nhau để xây dựng routes nội vùng (internal routes) |
-| Network-LSA (Type 2)         | Thông báo vị trí của DR trong 1 area                                                                     |
-| Network-summary-LSA (Type 3) | Quảng bá routes giữa các area trong cùng miền OSPF (inter area routes)                                         |
-| ASBR-summary-LSA (Type 4)    | Thông báo vị trí của ASBR trong 1 miền OSPF                                                              |
-| AS-external-LSA (Type 5)     | Quảng bá routes bên ngoài vào trong miền OSPF (external routes)                                          |
-| NSSA-LSA (Type 7)            | Quảng bá routes bên ngoài vào trong miền OSPF nhưng để đi qua vùng NSSA (nssa external routes)                |
-
-<u>LSA Type 1: OSPF Router LSA</u>
-
-<img src="/docs/CCNP/img/ospf-lsa-01.png" width="25%">
-
-Các Router trong cùng một khu vực sẽ Flooding các LSA Type 1 cho chính nó và cho các Router khác trong cùng khu vực. LSA Type 1 chứa các thông tin về các kết nối trực tiếp (Directly Link) của Router và danh sách các Router hàng xóm. LSA Type 1 chỉ chạy nội bộ trong một Area và không gửi được sang các Area khác.
-
-![Alt text](/docs/CCNP/img/ospf-lsa-1.png)
-
-<u>LSA Type 2: OSPF Network LSA</u>
-
-<img src="/docs/CCNP/img/ospf-lsa-02.png" width="25%">
-
-LSA Type 2 được sử dụng trên môi trường Multi-Access và do Router DR tạo ra để gửi đi tới các Router khác kết nối trực tiếp. Môi trường Broadcast và Multicast đều đòi hỏi phải có DR/BDR, LSA Type 2 sẽ chứa thông tin về tất cả các Router được kết nối trong môi trường Multi-Access. LSA Type 2 cũng chỉ hoạt động nội bộ trong một khu vực và không gửi sang các khu vực khác.
-
-![Alt text](/docs/CCNP/img/ospf-lsa-2.png)
-
-<u>LSA Type 3: OSPF Summary LSA</u>
-
-<img src="/docs/CCNP/img/ospf-lsa-03.png" width="50%">
-
-LSA Type 3 được tạo ra bởi các Router ABR để gửi thông tin giao tiếp giữa 2 khu vực khác nhau, đây cũng là Router cầu nối định tuyến dữ liệu giữa 2 khu vực. Dựa vào hình minh họa ta có thể thấy Router R1 sẽ gửi LSA của mình qua cho R2 và R2 sẽ đưa LSA đó vào trong LSDB của mình, Router R3 và R4 cần biết được mạng trong Area 2 và R2 sẽ làm cầu nối bằng cách nó tự tạo ra LSA Type 3 và Flood tới Area 0. LSA Type 3 này cũng sẽ Flood ra tất cả Router thuộc các Area OSPF khác, bằng cách này mà các Area OSPF khác sẽ biết được mạng của nhau.
-
-Các routes có ký hiệu "O IA" (OSPF Inter Area), là các routes từ các khu vực khác được học thông qua LSA loại 3.
-
-![Alt text](/docs/CCNP/img/ospf-lsa-3.png)
-
-<u>LSA Type 4: OSPF ASBR Summary LSA and LSA Type 5: OSPF ASBR External LSA</u>
-
-<img src="/docs/CCNP/img/ospf-lsa-04.png" width="50%">
-
-LSA Type 4 cũng được tạo ra bởi các Router ABR để gửi thông tin giữa các khu vực khác nhau nhằm báo hiệu Router nào đang là ASBR. Trong trường hợp này R1 sẽ phải Redistribute giao thức định tuyến RIP vào trong OSPF và nó cũng trở thành Router ASBR. Router R1 sẽ bật một Bit trong gói LSA được gọi là Bit External nhằm thông báo rằng chính nó là ASBR  sau đó nó sẽ tạo ra LSA Type 1 để gửi đi tới các Router biên tiếp giáp vùng Backbone (Area 0). Khi Router R2 nhận được thì bản thân nó sẽ tạo ra LSA Type 4 chỉ để chứa thông tin về ai là Router ASBR và không chứa bất kỳ thông tin định tuyến nào khác. Router R2 sẽ tiến hành Flood LSA Type 4 ấy vào Area 0 và dần sang tới tất cả Area khác, khi ấy mọi Router trong hệ thống mạng sẽ biết đâu là Router ASBR.
-
-<img src="/docs/CCNP/img/ospf-lsa-05.png" width="50%">
-
-LSA Type 5 được tạo ra bởi Router ASBR để gửi thông tin định tuyến từ một giao thức định tuyến khác với giao thức định tuyến của các khu vực còn lại. Như trên hình ta thấy Router dùng RIP được gán thêm một mạng trên Interface của mình (5.5.5.0 /24), mạng này sẽ được Redistribute vào các khu vực đang dùng OSPF. R1 chính là Router ASBR và nó sẽ tạo ra LSA Type 5 để Flood đi tới các Area khác. Tuy nhiên quan trọng là phải đảm bảo các LSA Type 4 đã được quảng bá tới các Router trong các Area khác.
-
-Các routes có ký hiệu "O E1" (OSPF External type 1) và "O E2" (OSPF External type 2), là các routes từ các mạng bên ngoài miền ospf được học thông qua LSA loại 5.
-
-![Alt text](/docs/CCNP/img/ospf-lsa-45.png)
-
-<u>LSA Type 7: OSPF Not So Stubby Area (NSSA) External LSA</u>
-
-<img src="/docs/CCNP/img/ospf-lsa-07.png" width="50%">
-
-LSA Type 7 cũng giống như LSA Type 5 nhưng được phép chạy trong vùng NSSA (Not So Stubby Area) bởi vì trong vùng NSSA không tồn tại các gói LSA Type 5 được. Do đó LSA Type 7 có thể xem là  bổ sung cho LSA Type 5 để thực hiện công việc gửi thông tin định tuyến sang vùng NSSA. Router biên giữa vùng NSSA và các vùng khác sẽ tự động chuyển đổi giữa 2 loại LSA này như trên hình ta thấy Router R2 khi nhận LSA Type 7 thì nó sẽ tiến hành biên dịch và chuyển đổi sang LSA Type 5 để Flood được đi tới Area khác.
-
-Các routes sẽ có ký hiệu "O N1" (OSPF NSSA External type 1) và "O N2" (OSPF NSSA External type 2).
-
-![Alt text](/docs/CCNP/img/ospf-lsa-7.png)
-
-<u>LSA Type 6,8,9,10,11</u>
-
-Loại 6 không còn hỗ trợ.<br>
-Loại 8,9,10,11 đọc thêm.<br>
-<br>
-
-### Area types and accepted LSAs
-<br>
-
-<table class="wikitable mw-collapsible mw-made-collapsible" style="text-align:center;">
-<tbody><tr style="text-align:left;">
-<th>
-</th>
-<th colspan="3" style="text-align:center;">Within a single area
-</th>
-<th colspan="3" style="text-align:center;">Inter area
-</th></tr>
-<tr>
-<td style="text-align:left;">Area type
-</td>
-<td><b>LSA 1 - router</b>
-</td>
-<td><b>LSA 2 - network</b>
-</td>
-<td><b>LSA 7 - NSSA external</b>
-</td>
-<td><b>LSA 3 - network summary</b>
-</td>
-<td><b>LSA 4 - ASBR Summary</b>
-</td>
-<td><b>LSA 5 - AS external</b>
-</td></tr>
-<tr>
-<td style="text-align:right;">Backbone
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, converted into a Type 5 by the ABR
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td></tr>
-<tr>
-<td style="text-align:right;">Non-backbone
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, converted into a Type 5 by the ABR
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td></tr>
-<tr>
-<td style="text-align:right;">Stub
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td></tr>
-<tr>
-<td style="text-align:right;">Totally stubby
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td></tr>
-<tr>
-<td style="text-align:right;">Not-so-stubby
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td></tr>
-<tr>
-<td style="text-align:right;">Totally not-so-stubby
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td>
-<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
-</td></tr></tbody></table>
-<br>
-
-### Router Types
-<br>
-![alt text](/docs/CCNP/img/ospf-router-types.png)
-
-| Loại Router               | Mô tả                                                     |
-| :------------------------ | :-------------------------------------------------------- |
-| Internal router           | Tất cả các interface trên router thuộc cùng area          |
-| Area Border Router (ABR)  | 1 ABR thuộc về 2 area hay nhiều hơn, 1 trong đó là area 0 |
-| Backbone router           | Ít nhất 1 interface thuộc area 0                          |
-| AS Boundary Router (ASBR) | ASBR trao đổi thông tin định tuyến giữa các AS khác       |
-
-<br>
-
-### Route Types
-<br>
-
-| Loại Route            | Mô tả                |
-| :-------------------- | :------------------- |
-| Intra-area route      | Routes trong 1 area  |
-| Inter-area route      | Routes giữa các area |
-| Type 1 external route | ..                   |
-| Type 2 external route | ..                   |
-
-<br>
-
-### Network Types
-<br>
-
-| Network Type                         | When                        | Timers                   | DR/BDR | Multicast/Unicast                     | Nexthop            |
-| :----------------------------------- | :-------------------------- | :----------------------- | :----- | :------------------------------------ | :----------------- |
-| Broadcast                            | Ethernet                    | Hello: 10s<br>Dead: 40s  | Yes    | Multicast (.5, .6)<br>(auto neighbor) | unchanged          |
-| Non-Broadcast                        | FR Multipoint               | Hello: 30s<br>Dead: 120s | Yes    | Unicast<br>(manual neighbor)          | unchanged          |
-| Point to Point                       | FR P2P, PPP, HDLC           | Hello: 10s<br>Dead: 40s  | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
-| Point to Multipoint<br>Broadcast     | FR Multipoint, Partial mesh | Hello: 30s<br>Dead: 120s | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
-| Point to Multipoint<br>Non-Broadcast | FR Multipoint               | Hello: 30s<br>Dead: 120s | No     | Unicast<br>(manual neighbor)          | changed (neighbor) |
-
-<br>
-
-### LAB1
-<br>
-
 ![Alt text](/docs/CCNA/img/ospf-topo.png)
 
 * R1
 ```
-en
+enable
 conf t
 host R1
 int lo0
@@ -489,14 +349,13 @@ ip addr 10.0.12.1 255.255.255.0
 no shut
 router ospf 1
 router-id 1.1.1.1
-network 1.1.1.1 0.0.0.0 area 0
-network 10.0.12.1 0.0.0.0 area 0
+network 0.0.0.0 0.0.0.0 area 0
 end
 ```
 
 * R2
 ```
-en
+enable
 conf t
 host R2
 int lo0
@@ -506,8 +365,7 @@ ip addr 10.0.12.2 255.255.255.0
 no shut
 router ospf 1
 router-id 2.2.2.2
-network 2.2.2.2 0.0.0.0 area 0
-network 10.0.12.2 0.0.0.0 area 0
+network 0.0.0.0 0.0.0.0 area 0
 end
 ```
 
@@ -537,7 +395,20 @@ end
 
 ![Alt text](/docs/CCNA/img/ospf-process-13.png)
 
-### LAB2
+<br>
+
+### LSA Types (có lab)
+<br>
+
+| Loại LSA                     | Chức năng                                                                                                |
+| :------------------------    | :------------------------------------------------------------------------------------------------------- |
+| Router-LSA (Type 1)          | Các router cùng area trao đổi trạng thái liên kết cho nhau để xây dựng routes nội vùng (intra area routes) |
+| Network-LSA (Type 2)         | Thông báo vị trí của DR trong 1 area                                                                     |
+| Network-summary-LSA (Type 3) | Quảng bá routes giữa các area trong cùng miền OSPF (inter area routes)                                   |
+| ASBR-summary-LSA (Type 4)    | Thông báo vị trí của ASBR trong 1 miền OSPF                                                              |
+| AS-external-LSA (Type 5)     | Quảng bá routes bên ngoài vào trong miền OSPF (external routes)                                          |
+| NSSA-LSA (Type 7)            | Quảng bá routes bên ngoài vào trong miền OSPF nhưng để đi qua vùng NSSA (nssa external routes)           |
+
 <br>
 
 ![Alt text](/docs/CCNP/img/ospf-lsa-area.png)
@@ -730,8 +601,6 @@ O IA     10.0.12.0/24 [110/20] via 10.0.23.2, 00:01:58, Ethernet0/1
 R3#
 ```
 
-#### Lab Common area
-
 * R1
 ```conf
 en
@@ -798,6 +667,40 @@ Link ID         ADV Router      Age         Seq#       Checksum
 Link ID         ADV Router      Age         Seq#       Checksum Tag
 10.10.10.0      1.1.1.1         619         0x80000001 0x00601E 0
 30.30.30.0      3.3.3.3         164         0x80000001 0x0051E8 0
+
+R1#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+O IA     10.0.23.0/24 [110/20] via 10.0.12.2, 01:42:59, Ethernet0/0
+      20.0.0.0/24 is subnetted, 1 subnets
+O        20.20.20.0 [110/11] via 10.0.12.2, 00:00:19, Ethernet0/0
+      30.0.0.0/24 is subnetted, 1 subnets
+O E2     30.30.30.0 [110/20] via 10.0.12.2, 00:02:38, Ethernet0/0
+R1#
+```
+
+<br>
+
+#### LSA Type 1: OSPF Router LSA
+<br>
+<img src="/docs/CCNP/img/ospf-lsa-01.png" width="25%">
+
+Các Router trong cùng một khu vực sẽ Flooding các LSA Type 1 cho chính nó và cho các Router khác trong cùng khu vực. LSA Type 1 chứa các thông tin về các kết nối trực tiếp (Directly Link) của Router và danh sách các Router hàng xóm. LSA Type 1 chỉ chạy nội bộ trong một Area và không gửi được sang các Area khác.
+
+![Alt text](/docs/CCNP/img/ospf-lsa-1.png)
+
+```
 R1#show ip ospf database router
 
             OSPF Router with ID (1.1.1.1) (Process ID 1)
@@ -844,8 +747,19 @@ R1#show ip ospf database router
      (Link Data) Router Interface address: 10.0.12.2
       Number of MTID metrics: 0
        TOS 0 Metrics: 10
+```
 
+<br>
 
+#### LSA Type 2: OSPF Network LSA
+<br>
+<img src="/docs/CCNP/img/ospf-lsa-02.png" width="25%">
+
+LSA Type 2 được sử dụng trên môi trường Multi-Access và do Router DR tạo ra để gửi đi tới các Router khác kết nối trực tiếp. Môi trường Broadcast và Multicast đều đòi hỏi phải có DR/BDR, LSA Type 2 sẽ chứa thông tin về tất cả các Router được kết nối trong môi trường Multi-Access. LSA Type 2 cũng chỉ hoạt động nội bộ trong một khu vực và không gửi sang các khu vực khác.
+
+![Alt text](/docs/CCNP/img/ospf-lsa-2.png)
+
+```
 R1#show ip ospf database network
 
             OSPF Router with ID (1.1.1.1) (Process ID 1)
@@ -863,7 +777,21 @@ R1#show ip ospf database network
   Network Mask: /24
         Attached Router: 2.2.2.2
         Attached Router: 1.1.1.1
+```
 
+<br>
+
+#### LSA Type 3: OSPF Summary LSA
+<br>
+<img src="/docs/CCNP/img/ospf-lsa-03.png" width="50%">
+
+LSA Type 3 được tạo ra bởi các Router ABR để gửi thông tin giao tiếp giữa 2 khu vực khác nhau, đây cũng là Router cầu nối định tuyến dữ liệu giữa 2 khu vực. Dựa vào hình minh họa ta có thể thấy Router R1 sẽ gửi LSA của mình qua cho R2 và R2 sẽ đưa LSA đó vào trong LSDB của mình, Router R3 và R4 cần biết được mạng trong Area 2 và R2 sẽ làm cầu nối bằng cách nó tự tạo ra LSA Type 3 và Flood tới Area 0. LSA Type 3 này cũng sẽ Flood ra tất cả Router thuộc các Area OSPF khác, bằng cách này mà các Area OSPF khác sẽ biết được mạng của nhau.
+
+Các routes có ký hiệu "O IA" (OSPF Inter Area), là các routes từ các khu vực khác được học thông qua LSA loại 3.
+
+![Alt text](/docs/CCNP/img/ospf-lsa-3.png)
+
+```
 R1#show ip ospf database summary
 
             OSPF Router with ID (1.1.1.1) (Process ID 1)
@@ -880,7 +808,17 @@ R1#show ip ospf database summary
   Length: 28
   Network Mask: /24
         MTID: 0         Metric: 10
+```
 
+<br>
+
+#### LSA Type 4: OSPF ASBR Summary LSA
+<br>
+<img src="/docs/CCNP/img/ospf-lsa-04.png" width="50%">
+
+LSA Type 4 được tạo ra bởi các Router ABR để gửi thông tin giữa các khu vực khác nhau nhằm báo hiệu Router nào đang là ASBR. Trong trường hợp này R1 sẽ phải Redistribute giao thức định tuyến RIP vào trong OSPF và nó cũng trở thành Router ASBR. Router R1 sẽ bật một Bit trong gói LSA được gọi là Bit External nhằm thông báo rằng chính nó là ASBR  sau đó nó sẽ tạo ra LSA Type 1 để gửi đi tới các Router biên tiếp giáp vùng Backbone (Area 0). Khi Router R2 nhận được thì bản thân nó sẽ tạo ra LSA Type 4 chỉ để chứa thông tin về ai là Router ASBR và không chứa bất kỳ thông tin định tuyến nào khác. Router R2 sẽ tiến hành Flood LSA Type 4 ấy vào Area 0 và dần sang tới tất cả Area khác, khi ấy mọi Router trong hệ thống mạng sẽ biết đâu là Router ASBR.
+
+```
 R1#show ip ospf database asbr-summary
 
             OSPF Router with ID (1.1.1.1) (Process ID 1)
@@ -897,7 +835,22 @@ R1#show ip ospf database asbr-summary
   Length: 28
   Network Mask: /0
         MTID: 0         Metric: 10
+```
 
+<br>
+
+#### LSA Type 5: OSPF ASBR External LSA
+<br>
+
+<img src="/docs/CCNP/img/ospf-lsa-05.png" width="50%">
+
+LSA Type 5 được tạo ra bởi Router ASBR để gửi thông tin định tuyến từ một giao thức định tuyến khác với giao thức định tuyến của các khu vực còn lại. Như trên hình ta thấy Router dùng RIP được gán thêm một mạng trên Interface của mình (5.5.5.0 /24), mạng này sẽ được Redistribute vào các khu vực đang dùng OSPF. R1 chính là Router ASBR và nó sẽ tạo ra LSA Type 5 để Flood đi tới các Area khác. Tuy nhiên quan trọng là phải đảm bảo các LSA Type 4 đã được quảng bá tới các Router trong các Area khác.
+
+Các routes có ký hiệu "O E1" (OSPF External type 1) và "O E2" (OSPF External type 2), là các routes từ các mạng bên ngoài miền ospf được học thông qua LSA loại 5.
+
+![Alt text](/docs/CCNP/img/ospf-lsa-45.png)
+
+```
 R1#show ip ospf database external
 
             OSPF Router with ID (1.1.1.1) (Process ID 1)
@@ -933,28 +886,23 @@ R1#show ip ospf database external
         Metric: 20
         Forward Address: 0.0.0.0
         External Route Tag: 0
+```
 
-R1#show ip route ospf
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
+<br>
 
-Gateway of last resort is not set
+#### LSA Type 7: OSPF Not So Stubby Area (NSSA) External LSA
+<br>
+<img src="/docs/CCNP/img/ospf-lsa-07.png" width="50%">
 
-      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
-O IA     10.0.23.0/24 [110/20] via 10.0.12.2, 01:42:59, Ethernet0/0
-      20.0.0.0/24 is subnetted, 1 subnets
-O        20.20.20.0 [110/11] via 10.0.12.2, 00:00:19, Ethernet0/0
-      30.0.0.0/24 is subnetted, 1 subnets
-O E2     30.30.30.0 [110/20] via 10.0.12.2, 00:02:38, Ethernet0/0
-R1#
+LSA Type 7 cũng giống như LSA Type 5 nhưng được phép chạy trong vùng NSSA (Not So Stubby Area) bởi vì trong vùng NSSA không tồn tại các gói LSA Type 5 được. Do đó LSA Type 7 có thể xem là  bổ sung cho LSA Type 5 để thực hiện công việc gửi thông tin định tuyến sang vùng NSSA. Router biên giữa vùng NSSA và các vùng khác sẽ tự động chuyển đổi giữa 2 loại LSA này như trên hình ta thấy Router R2 khi nhận LSA Type 7 thì nó sẽ tiến hành biên dịch và chuyển đổi sang LSA Type 5 để Flood được đi tới Area khác.
 
+Các routes sẽ có ký hiệu "O N1" (OSPF NSSA External type 1) và "O N2" (OSPF NSSA External type 2).
+
+![Alt text](/docs/CCNP/img/ospf-lsa-7.png)
+
+<br>
+
+```
 R3#show ip ospf database
 
             OSPF Router with ID (3.3.3.3) (Process ID 1)
@@ -1013,7 +961,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R3#
 ```
 
-#### Lab Stub area
+<h4> Stub area </h4>
 
 * R2/3
 ```conf
@@ -1069,7 +1017,7 @@ O IA     20.20.20.0 [110/11] via 10.0.23.2, 00:01:00, Ethernet0/1
 R3#
 ```
 
-#### Lab Totally stub area
+<h4> Totally stub area </h4>
 
 * R2 or R2/3
 ```conf
@@ -1145,7 +1093,7 @@ O        20.20.20.0 [110/11] via 10.0.12.2, 00:15:14, Ethernet0/0
 R1#
 ```
 
-#### Lab NSSA
+<h4> NSSA </h4>
 
 * R2/3
 ```conf
@@ -1259,7 +1207,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R3#
 ```
 
-#### Lab Totally NSSA
+<h4> Totally NSSA </h4>
 
 * R2 or R2/3
 ```conf
@@ -1321,6 +1269,168 @@ Packet sent with a source address of 30.30.30.30
 Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
 R3#
 ```
+
+<u>LSA Type 6,8,9,10,11</u>
+
+Loại 6 không còn hỗ trợ.<br>
+Loại 8,9,10,11 đọc thêm.<br>
+<br>
+
+### Area types and accepted LSAs
+<br>
+
+<table class="wikitable mw-collapsible mw-made-collapsible" style="text-align:center;">
+<tbody><tr style="text-align:left;">
+<th>
+</th>
+<th colspan="3" style="text-align:center;">Within a single area
+</th>
+<th colspan="3" style="text-align:center;">Inter area
+</th></tr>
+<tr>
+<td style="text-align:left;">Area type
+</td>
+<td><b>LSA 1 - router</b>
+</td>
+<td><b>LSA 2 - network</b>
+</td>
+<td><b>LSA 7 - NSSA external</b>
+</td>
+<td><b>LSA 3 - network summary</b>
+</td>
+<td><b>LSA 4 - ASBR Summary</b>
+</td>
+<td><b>LSA 5 - AS external</b>
+</td></tr>
+<tr>
+<td style="text-align:right;">Backbone
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, converted into a Type 5 by the ABR
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td></tr>
+<tr>
+<td style="text-align:right;">Non-backbone
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, converted into a Type 5 by the ABR
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td></tr>
+<tr>
+<td style="text-align:right;">Stub
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td></tr>
+<tr>
+<td style="text-align:right;">Totally stubby
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td></tr>
+<tr>
+<td style="text-align:right;">Not-so-stubby
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td></tr>
+<tr>
+<td style="text-align:right;">Totally not-so-stubby
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#9EFF9E;color:black;vertical-align:middle;text-align:center;" class="table-yes">Yes
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td>
+<td style="background:#FFC7C7;color:black;vertical-align:middle;text-align:center;" class="table-no">No, Default route
+</td></tr></tbody></table>
+<br>
+
+### Router Types
+<br>
+![alt text](/docs/CCNP/img/ospf-router-types.png)
+
+| Loại Router               | Mô tả                                                     |
+| :------------------------ | :-------------------------------------------------------- |
+| Internal router           | Tất cả các interface trên router thuộc cùng area          |
+| Area Border Router (ABR)  | 1 ABR thuộc về 2 area hay nhiều hơn, 1 trong đó là area 0 |
+| Backbone router           | Ít nhất 1 interface thuộc area 0                          |
+| AS Boundary Router (ASBR) | ASBR trao đổi thông tin định tuyến giữa các AS khác       |
+
+<br>
+
+### Route Types
+<br>
+
+| Loại Route            | Mô tả                |
+| :-------------------- | :------------------- |
+| Intra-area route      | Routes trong 1 area  |
+| Inter-area route      | Routes giữa các area |
+| Type 1 external route | ..                   |
+| Type 2 external route | ..                   |
+
+<br>
+
+### Network Types
+<br>
+
+| Network Type                         | When                        | Timers                   | DR/BDR | Multicast/Unicast                     | Nexthop            |
+| :----------------------------------- | :-------------------------- | :----------------------- | :----- | :------------------------------------ | :----------------- |
+| Broadcast                            | Ethernet                    | Hello: 10s<br>Dead: 40s  | Yes    | Multicast (.5, .6)<br>(auto neighbor) | unchanged          |
+| Non-Broadcast                        | FR Multipoint               | Hello: 30s<br>Dead: 120s | Yes    | Unicast<br>(manual neighbor)          | unchanged          |
+| Point to Point                       | FR P2P, PPP, HDLC           | Hello: 10s<br>Dead: 40s  | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
+| Point to Multipoint<br>Broadcast     | FR Multipoint, Partial mesh | Hello: 30s<br>Dead: 120s | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
+| Point to Multipoint<br>Non-Broadcast | FR Multipoint               | Hello: 30s<br>Dead: 120s | No     | Unicast<br>(manual neighbor)          | changed (neighbor) |
+
+<br>
 
 ## Cấu hình Virtual-Link OSPF
 
