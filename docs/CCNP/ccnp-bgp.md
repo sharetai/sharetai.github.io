@@ -98,7 +98,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -114,7 +114,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -136,7 +136,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -159,7 +159,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -181,7 +181,7 @@ end
 
 * __R5__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R5
@@ -200,7 +200,7 @@ __<u>eBGP</u>__
 
 * __R1 (eBGP dùng ip đấu nối)__
 ```
-en
+enable
 conf t
 router bgp 1
 neighbor 117.0.12.2 remote-as 234
@@ -209,7 +209,7 @@ end
 
 * __R2 (eBGP dùng ip đấu nối)__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 117.0.12.1 remote-as 1
@@ -218,7 +218,7 @@ end
 
 * __R4 (eBGP dùng loopback)__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 5.5.5.5 remote-as 5
@@ -229,7 +229,7 @@ end
 
 * __R5 (eBGP dùng loopback)__
 ```
-en
+enable
 conf t
 router bgp 5
 neighbor 4.4.4.4 remote-as 234
@@ -270,7 +270,7 @@ __<u>iBGP full-mesh</u>__
 
 * __R2__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 3.3.3.3 remote-as 234
@@ -282,7 +282,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 2.2.2.2 remote-as 234
@@ -294,7 +294,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 2.2.2.2 remote-as 234
@@ -322,7 +322,7 @@ __<u>Quảng bá BGP</u>__
 
 * __R1 (quảng bá 1.1.1.1 và 10.10.10.10 vào BGP)__
 ```
-en
+enable
 conf t
 router bgp 1
 network 1.1.1.1 mask 255.255.255.255
@@ -332,7 +332,7 @@ end
 
 * __R5 (quảng bá 5.5.5.5 và 50.50.50.50 vào BGP)__
 ```
-en
+enable
 conf t
 router bgp 5
 network 5.5.5.5 mask 255.255.255.255
@@ -342,7 +342,7 @@ end
 
 * __R2 (next-hop-self)__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 3.3.3.3 next-hop-self
@@ -353,7 +353,7 @@ clear ip bgp * soft out
 
 * __R4 (next-hop-self)__
 ```
-en
+enable
 conf t
 router bgp 234
 neighbor 2.2.2.2 next-hop-self
@@ -461,7 +461,7 @@ __<u>Route Reflector</u>__
 
 * __R3 (cấu hình R3 làm route reflector)__
 ```
-en
+enable
 conf t
 router bgp 234
 no neighbor 2.2.2.2
@@ -475,7 +475,7 @@ end
 
 * __R2 (bỏ peer R4)__
 ```
-en
+enable
 conf t
 router bgp 234
 no neighbor 4.4.4.4
@@ -484,7 +484,7 @@ end
 
 * __R4 (bỏ peer R2)__
 ```
-en
+enable
 conf t
 router bgp 234
 no neighbor 2.2.2.2
@@ -592,7 +592,7 @@ __<u>Peer Group</u>__
 
 * __R3__
 ```
-en
+enable
 conf t
 router bgp 234
 no neighbor 2.2.2.2
@@ -637,7 +637,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -662,7 +662,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -685,7 +685,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -708,7 +708,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -729,7 +729,7 @@ __<u>iBGP</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 router bgp 123
 neighbor 2.2.2.2 remote-as 123
@@ -741,7 +741,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 router bgp 123
 neighbor 1.1.1.1 remote-as 123
@@ -755,7 +755,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 router bgp 123
 neighbor 1.1.1.1 remote-as 123
@@ -771,7 +771,7 @@ __<u>eBGP</u>__
 
 * __R2__
 ```
-en
+enable
 conf t
 router bgp 123
 neighbor 117.0.24.4 remote-as 4
@@ -780,7 +780,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 router bgp 123
 neighbor 204.0.34.4 remote-as 4
@@ -789,7 +789,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 router bgp 4
 neighbor 117.0.24.2 remote-as 123
@@ -823,7 +823,7 @@ __<u>Local Preference</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 route-map R2-in permit 10
 set local-preference 200
@@ -862,7 +862,7 @@ __<u>Weight</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 access-list 4 permit 4.4.4.4
 route-map R2-in permit 5
@@ -905,7 +905,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 int lo10
 ip addr 10.10.10.10 255.255.255.255
@@ -942,7 +942,7 @@ __<u>ASpath Prepend</u>__
 
 * __R2__
 ```
-en
+enable
 conf t
 route-map R4-out permit 10
 set as-path prepend 123 123
@@ -978,7 +978,7 @@ __<u>Origin Code</u>__
 
 * __R2__
 ```
-en
+enable
 conf t
 access-list 1 permit 1.1.1.1
 route-map R4-out permit 10
@@ -1014,7 +1014,7 @@ __<u>MED (metric)</u>__
 
 * __R2__
 ```
-en
+enable
 conf t
 access-list 10 permit 10.10.10.10
 route-map R4-out permit 15
@@ -1069,7 +1069,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1081,7 +1081,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -1098,7 +1098,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -1115,7 +1115,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -1132,7 +1132,7 @@ end
 
 * __R5__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R5
@@ -1152,7 +1152,7 @@ __<u>BGP Confederation</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 router bgp 15
 neighbor 10.0.12.2 remote-as 234
@@ -1161,7 +1161,7 @@ end
 
 * __R2 (cấu hình bgp confederation)__
 ```
-en
+enable
 conf t
 router bgp 2
 bgp confederation identifier 234
@@ -1173,7 +1173,7 @@ end
 
 * __R3 (cấu hình bgp confederation)__
 ```
-en
+enable
 conf t
 router bgp 34
 bgp confederation identifier 234
@@ -1185,7 +1185,7 @@ end
 
 * __R4 (cấu hình bgp confederation)__
 ```
-en
+enable
 conf t
 router bgp 34
 bgp confederation identifier 234
@@ -1197,7 +1197,7 @@ end
 
 * __R5__
 ```
-en
+enable
 conf t
 router bgp 15
 neighbor 10.0.45.4 remote-as 234
@@ -1230,7 +1230,7 @@ __<u>Allowas in</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 router bgp 15
 neighbor 10.0.12.2 allowas-in
@@ -1260,7 +1260,7 @@ __<u>AS override</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 router bgp 15
 no neighbor 10.0.12.2 allowas-in
@@ -1269,7 +1269,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 router bgp 2
 neighbor 10.0.12.1 as-override
@@ -1299,7 +1299,7 @@ __<u>Community</u>__
 
 * __R2__
 ```
-en
+enable
 conf t
 router bgp 2
 neighbor 10.0.12.1 send-community both
@@ -1308,7 +1308,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 router bgp 34
 neighbor 10.0.23.2 send-community both
@@ -1317,7 +1317,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 router bgp 34
 neighbor 10.0.34.3 send-community both
@@ -1326,7 +1326,7 @@ end
 
 * __R5__
 ```
-en
+enable
 conf t
 access-list 5 permit 5.5.5.5
 access-list 50 permit 50.50.50.50

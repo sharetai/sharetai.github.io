@@ -431,7 +431,7 @@ end
 
 * R1
 ```conf
-en
+enable
 conf t
 host R1
 no ip domain-lookup
@@ -446,7 +446,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 host R2
 no ip domain-lookup
@@ -465,7 +465,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 host R3
 no ip domain-lookup
@@ -619,7 +619,7 @@ R3#
 
 * R1
 ```conf
-en
+enable
 conf t
 int lo10
 ip add 10.10.10.10 255.255.255.0
@@ -630,7 +630,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 int lo20
 ip add 20.20.20.20 255.255.255.0
@@ -641,7 +641,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 int lo30
 ip add 30.30.30.30 255.255.255.0
@@ -981,7 +981,7 @@ R3#
 
 * R2/3
 ```conf
-en
+enable
 conf t
 router ospf 1
 area 1 stub
@@ -1037,7 +1037,7 @@ R3#
 
 * R2 or R2/3
 ```conf
-en
+enable
 conf t
 router ospf 1
 area 1 stub no-summary
@@ -1113,7 +1113,7 @@ R1#
 
 * R2/3
 ```conf
-en
+enable
 conf t
 router ospf 1
 no area 1 stub
@@ -1227,7 +1227,7 @@ R3#
 
 * R2 or R2/3
 ```conf
-en
+enable
 conf t
 router ospf 1
 no area 1 stub
@@ -1462,7 +1462,7 @@ _Point-to-Point_ -- to -- _Point-to-Multipoint_ (điều chỉnh lại _hello/de
 
 * R1
 ```conf
-en
+enable
 conf t
 host R1
 int e0/0
@@ -1476,7 +1476,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 host R2
 int e0/0
@@ -1495,7 +1495,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 host R3
 int e0/0
@@ -1515,7 +1515,7 @@ end
 
 * R4
 ```conf
-en
+enable
 conf t
 host R4
 int e0/0
@@ -1534,7 +1534,7 @@ end
 
 * R5
 ```conf
-en
+enable
 conf t
 host R5
 int e0/1
@@ -1675,7 +1675,7 @@ R5#
 
 * R1
 ```conf
-en
+enable
 conf t
 host R1
 int e0/0
@@ -1694,7 +1694,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 host R2
 int e0/0
@@ -1712,7 +1712,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 host R3
 int e0/1

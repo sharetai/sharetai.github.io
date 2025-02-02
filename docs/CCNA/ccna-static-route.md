@@ -42,7 +42,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -63,7 +63,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2

@@ -83,7 +83,7 @@ __<u>Init</u>__
 
 * __S1__
 ```
-en
+enable
 conf t
 host S1
 no ip domain-lookup
@@ -97,7 +97,7 @@ debug spanning-tree general
 
 * __S2__
 ```
-en
+enable
 conf t
 host S2
 no ip domain-lookup
@@ -111,7 +111,7 @@ debug spanning-tree general
 
 * __S3__
 ```
-en
+enable
 conf t
 host S3
 no ip domain-lookup

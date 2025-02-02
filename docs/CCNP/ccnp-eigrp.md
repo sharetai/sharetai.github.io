@@ -46,7 +46,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -63,7 +63,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -80,7 +80,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -100,7 +100,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -116,7 +116,7 @@ __<u>EIGRP</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 router eigrp 1234
 network 1.0.0.0
@@ -127,7 +127,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 router eigrp 1234
 network 0.0.0.0
@@ -136,7 +136,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 router eigrp 1234
 network 3.3.3.3 0.0.0.0
@@ -148,7 +148,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 router eigrp 1234
 network 4.4.4.4 0.0.0.0
@@ -501,7 +501,7 @@ __<u>Auto Summary</u>__
 
 * __R4__
 ```
-en
+enable
 conf t
 int lo1
 ip addr 4.4.1.4 255.255.255.255
@@ -514,7 +514,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 router eigrp 1234
 net 4.4.1.4 0.0.0.0
@@ -525,7 +525,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 router eigrp 1234
 auto-summary
@@ -604,7 +604,7 @@ __<u>Manual Summary</u>__
 
 * __R4__
 ```
-en
+enable
 conf t
 int e0/1
 ip summary-address eigrp 1234 4.4.0.4 255.255.248.0

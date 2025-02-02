@@ -31,7 +31,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -45,7 +45,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -62,7 +62,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -79,7 +79,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -96,7 +96,7 @@ end
 
 * __R5__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R5
@@ -113,7 +113,7 @@ end
 
 * __R6__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R6
@@ -129,7 +129,7 @@ end
 
 * __R1__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 route 2002::2/64 2012::2
@@ -138,7 +138,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 route 2001::1/64 2012::1
@@ -173,7 +173,7 @@ R1#
 
 * __R2__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 router rip R2
@@ -186,7 +186,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 router rip R3
@@ -238,7 +238,7 @@ R2#
 
 * __R3__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 router eigrp 34
@@ -252,7 +252,7 @@ end
 
 * __R4__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 router eigrp 34
@@ -344,7 +344,7 @@ R3#
 
 * __R4__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 router ospf 4
@@ -360,7 +360,7 @@ end
 
 * __R5__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 ipv6 router ospf 5
@@ -421,7 +421,7 @@ R4#
 
 * __R5__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 router bgp 56
@@ -434,7 +434,7 @@ end
 
 * __R6__
 ```
-en
+enable
 conf t
 ipv6 unicast-routing
 router bgp 56
@@ -507,7 +507,7 @@ R5#
 
 * __R1__
 ```
-en
+enable
 conf t
 ipv6 route ::/0 2012::2
 end
@@ -515,7 +515,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 ipv6 router rip R2
 redistribute static
@@ -553,7 +553,7 @@ R3#
 
 * __R3__
 ```
-en
+enable
 conf t
 ipv6 router rip R3
 redistribute eigrp 34 metric 1
@@ -585,7 +585,7 @@ R2#
 
 * __R3__
 ```
-en
+enable
 conf t
 ipv6 router eigrp 34
 redistribute rip R3 metric 1 0 1 1 1
@@ -625,7 +625,7 @@ R4#
 
 * __R4__
 ```
-en
+enable
 conf t
 ipv6 router eigrp 34
 redistribute ospf 4 metric 1 0 1 1 1
@@ -657,7 +657,7 @@ R3#
 
 * __R4__
 ```
-en
+enable
 conf t
 ipv6 router ospf 4
 redistribute eigrp 34
@@ -699,7 +699,7 @@ R5#
 
 * __R5 (mặc định ebgp có thể redistribute bằng lệnh `redistribute bgp`, tuy nhiên với ibgp thì cần bổ sung câu lệnh `bgp redistribute-internal`)__
 ```
-en
+enable
 conf t
 ipv6 router ospf 5
 redistribute bgp 56
@@ -734,7 +734,7 @@ R4#
 
 * __R5__
 ```
-en
+enable
 conf t
 router bgp 56
 address-family ipv6 unicast
@@ -806,7 +806,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -822,7 +822,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -839,7 +839,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -859,7 +859,7 @@ Dual-stack có thể hiểu là vừa chạy ipv4 vừa chạy ipv6.
 
 * __R1__
 ```
-en
+enable
 conf t
 router ospf 1
 router-id 1.1.1.1
@@ -881,7 +881,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 router ospf 1
 router-id 2.2.2.2
@@ -903,7 +903,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 router ospf 1
 router-id 3.3.3.3
@@ -963,7 +963,7 @@ __<u>Init</u>__
 
 * __R1__
 ```
-en
+enable
 conf t
 no router ospf 1
 no ipv6 router ospf 1
@@ -974,7 +974,7 @@ end
 
 * __R2__
 ```
-en
+enable
 conf t
 no router ospf 1
 no ipv6 router ospf 1
@@ -987,7 +987,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 no router ospf 1
 no ipv6 router ospf 1
@@ -1000,7 +1000,7 @@ end
 
 * __R1__
 ```
-en
+enable
 conf t
 int tunnel 13
 ipv6 addr 13::1/64
@@ -1014,7 +1014,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 int tunnel 13
 ipv6 addr 13::3/64
@@ -1042,7 +1042,7 @@ R1#
 
 * __R1__
 ```
-en
+enable
 conf t
 int tunnel 13
 ipv6 addr 13::1/64
@@ -1056,7 +1056,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 int tunnel 13
 ipv6 addr 13::3/64
@@ -1084,7 +1084,7 @@ R1#
 
 * __R1 (đổi ipv4 trên cổng e0/0 10.0.12.1 ra ipv6 2002:a00:c01:: với octet đầu bắt buộc là 2002)__
 ```
-en
+enable
 conf t
 int tunnel 13
 no ipv6 addr
@@ -1101,7 +1101,7 @@ end
 
 * __R3 (đổi ipv4 trên cổng e0/1 10.0.23.3 ra ipv6 2002:a00:1703:: với octet đầu bắt buộc là 2002)__
 ```
-en
+enable
 conf t
 int tunnel 13
 no ipv6 addr
@@ -1132,7 +1132,7 @@ R1#
 
 * __R1 (13::/64 có thể lấy tuỳ ý, 13::5EFE:A00:1703 lấy trên R3 bằng lệnh sh ipv6 int tun13)__
 ```
-en
+enable
 conf t
 int tunnel 13
 no ipv6 addr
@@ -1149,7 +1149,7 @@ end
 
 * __R3 (13::/64 có thể lấy tuỳ ý, 13::5EFE:A00:C01 lấy trên R1 bằng lệnh sh ipv6 int tun13)__
 ```
-en
+enable
 conf t
 int tunnel 13
 no ipv6 addr
@@ -1180,7 +1180,7 @@ R1#
 
 * __R1__
 ```
-en
+enable
 conf t
 int lo0
 no ip addr
@@ -1196,7 +1196,7 @@ end
 
 * __R2 (NAT-PT)__
 ```
-en
+enable
 conf t
 int e0/1
 no ip address
@@ -1215,7 +1215,7 @@ end
 
 * __R3__
 ```
-en
+enable
 conf t
 int lo0
 no ipv6 addr

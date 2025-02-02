@@ -31,7 +31,7 @@ Manipulating Routing Updates - Thao túng cập nhật định tuyến
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -51,7 +51,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -72,7 +72,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -158,7 +158,7 @@ R3#
 <br>
 * R2 (manual seed metric)
 ```conf
-en
+enable
 conf t
 router rip
 redistribute ospf 1 metric 5
@@ -191,7 +191,7 @@ R1#
 
 * R2 (manual default seed metric)
 ```conf
-en
+enable
 conf t
 router rip
 no redistribute ospf 1
@@ -228,7 +228,7 @@ R1#
 <br>
 * R2
 ```conf
-en
+enable
 conf t
 access-list 1 permit 172.16.1.0 0.0.0.255
 access-list 2 permit 172.16.2.0 0.0.0.255
@@ -273,7 +273,7 @@ R1#
 <br>
 * R2
 ```conf
-en
+enable
 conf t
 ip prefix-list NET2 permit 172.16.2.0/24
 route-map OSPF-into-RIP permit 20
@@ -309,7 +309,7 @@ R1#
 
 * R3
 ```conf
-en
+enable
 conf t
 int lo2
 ip address 172.16.2.3 255.255.255.192
@@ -405,7 +405,7 @@ Cách này chỉ cần một dòng, điều mà ví dụ ban đầu sẽ mất h
 <br>
 * R1
 ```conf
-en
+enable
 conf t
 int e0/1
 ip add 192.168.15.1 255.255.255.0
@@ -418,7 +418,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 int e0/3
 ip add 192.168.34.3 255.255.255.0
@@ -430,7 +430,7 @@ end
 
 * R4
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -451,7 +451,7 @@ end
 
 * R5
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R5
@@ -584,7 +584,7 @@ R4#
 
 * R2
 ```conf
-en
+enable
 conf t
 router ospf 1
 redistribute rip subnets
@@ -636,7 +636,7 @@ R4#
 
 * R4
 ```
-en
+enable
 conf t
 router rip
 redistribute ospf 1 metric 8
@@ -744,7 +744,7 @@ Mô tả:<br>
 <br>
 * R2
 ```conf
-en
+enable
 conf t
 route-map into-OSPF deny 10
  match tag 100
@@ -757,7 +757,7 @@ end
 
 * R4
 ```conf
-en
+enable
 conf t
 route-map into-RIP deny 10
  match tag 200
@@ -823,7 +823,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -850,7 +850,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -869,7 +869,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -888,7 +888,7 @@ end
 
 * R4
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -990,7 +990,7 @@ R4#
 
 * R2 (cấu hình Distribute-list + ACL không nhận mạng 10.0.13.0/24)
 ```conf
-en
+enable
 conf t
 ip access-list standard DENY13
 deny 10.0.13.0 0.0.0.255
@@ -1027,7 +1027,7 @@ R2#
 
 * R3 (cấu hình Distribute-list + Prefix-list không nhận mạng 10.0.12.0/24)
 ```conf
-en
+enable
 conf t
 ip prefix-list DENY12 deny 10.0.12.0/24
 ip prefix-list DENY12 permit 0.0.0.0/0 le 32
@@ -1064,7 +1064,7 @@ R3#
 
 * R1 (cấu hình Distribute-list + ACL + Prefix-list chỉ quảng bá 2.2.2.2/32 và 4.4.4.4/32 cho R2, chỉ quảng bá 3.3.3.3/32 và 4.4.4.4/32 cho R3)
 ```conf
-en
+enable
 conf t
 ip access-list extended 124
 5 permit ip any host 2.2.2.2
@@ -1150,7 +1150,7 @@ R4#
 
 * R4 (cấu hình Distribute-list + ACL chỉ nhận 4.4.4.4/32 từ R2)
 ```conf
-en
+enable
 conf t
 ip access-list extended 124
 5 permit ip host 10.0.234.2 host 4.4.4.4
@@ -1191,7 +1191,7 @@ R4#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1208,7 +1208,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1230,7 +1230,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1272,7 +1272,7 @@ R1#
 
 * R3 (cấu hình Distribute-list + ACL deny 3.3.3.3/32 out)
 ```conf
-en
+enable
 conf t
 access-list 3 deny host 3.3.3.3
 access-list 3 permit any
@@ -1308,7 +1308,7 @@ R1#
 
 * R1 (cấu hình Distribute-list + ACL deny 3.3.3.3/32 in)
 ```conf
-en
+enable
 conf t
 access-list 3 deny host 3.3.3.3
 access-list 3 permit any
@@ -1350,7 +1350,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1367,7 +1367,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -1384,7 +1384,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -1401,7 +1401,7 @@ end
 
 * R4
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -1525,7 +1525,7 @@ R4#
 
 * R4 (cấu hình filter-list chặn area 1 quảng bá route 1.1.1.1/32)
 ```conf
-en
+enable
 conf t
 ip prefix-list 1 deny 1.1.1.1/32
 ip prefix-list 1 permit 0.0.0.0/0 le 32
@@ -1564,7 +1564,7 @@ R2#
 
 * R4 (cấu hình filter-list chặn area 2 nhận route 3.3.3.3/32)
 ```conf
-en
+enable
 conf t
 ip prefix-list 3 deny 3.3.3.3/32
 ip prefix-list 3 permit 0.0.0.0/0 le 32
@@ -1615,7 +1615,7 @@ R2#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1637,7 +1637,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -1662,7 +1662,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -1724,7 +1724,7 @@ R1#
 
 * R2 (PBR -> Lái lưu lượng 1.1.1.1 đi 3.3.3.3 sẽ đi qua e0/1 192.168.213.0/24)
 ```conf
-en
+enable
 conf t
 access-list 1 permit 1.1.1.1 0.0.0.255
 route-map A1 permit 10
@@ -1758,7 +1758,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1774,7 +1774,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -1813,7 +1813,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 access-list 2 permit host 2.2.2.2
 router rip
@@ -1849,7 +1849,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -1861,7 +1861,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -1875,7 +1875,7 @@ end
 
 * R1 (IP SLA with ping)
 ```conf
-en
+enable
 conf t
 ip sla 1
 icmp-echo 2.2.2.2
@@ -1961,7 +1961,7 @@ R1#
 
 * R1 (Thay đổi `threshold` 0s `timeout` 1s `frequency` 5s, để `return code` là `Over threshold` nhưng `track` vẫn up do `track` ban đầu cấu hình là `reachability`)
 ```conf
-en
+enable
 conf t
 no ip sla schedule 1
 ip sla 1
@@ -2035,7 +2035,7 @@ R1#
 
 * R1 (Thay đổi `track` là `state`, `return code` là `Over threshold` sẽ làm `down` `track`)
 ```conf
-en
+enable
 conf t
 track 10 ip sla 1 state
 end
@@ -2096,7 +2096,7 @@ _(*) Dùng lại lab PBR ([link](http://127.0.0.1:4000/docs/CCNP/ccnp-routing-up
 
 * R2 (PBR -> Lái lưu lượng 1.1.1.1 đi 3.3.3.3 sẽ đi qua e0/1 192.168.213.0/24 + IP SLA -> Chỉ lái khi test ping 3.3.3.3 ok)
 ```conf
-en
+enable
 conf t
 no ip sla 1
 ip sla 1
@@ -2160,7 +2160,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R1
@@ -2187,7 +2187,7 @@ end
 
 * R2
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R2
@@ -2205,7 +2205,7 @@ end
 
 * R3
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R3
@@ -2225,7 +2225,7 @@ end
 
 * R4
 ```conf
-en
+enable
 conf t
 no ip domain-lookup
 host R4
@@ -2276,7 +2276,7 @@ R1#
 
 * R1
 ```conf
-en
+enable
 conf t
 router rip
 distance 130

@@ -19,7 +19,7 @@ Giao thức điểm-điểm qua Ethernet
 * __BRAS__
 
 ```
-en
+enable
 conf t
 hostname BRAS
 !
@@ -56,7 +56,7 @@ write
 PAP authen
 
 ```
-en
+enable
 conf t
 hostname Modem1
 !
@@ -82,7 +82,7 @@ write
 CHAP authen
 
 ```
-en
+enable
 conf t
 hostname Modem1
 !

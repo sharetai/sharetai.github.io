@@ -217,7 +217,7 @@ Quan sát 1 tiến trình OSPF:
 
 ```
 # R1
-en
+enable
 conf t
 host R1
 int lo0
@@ -232,7 +232,7 @@ network 10.0.12.1 0.0.0.0 area 0
 end
 
 # R2
-en
+enable
 conf t
 host R2
 int lo0
@@ -340,7 +340,7 @@ Ví dụ dưới đây mô tả kết quả của lệnh `show ip ospf neighbor`
 
 ```
 # R1
-en
+enable
 conf t
 int e0/0
 ip addr 10.0.88.1 255.255.255.0
@@ -351,7 +351,7 @@ network 10.0.88.1 0.0.0.0 area 0
 end
 
 # R2
-en
+enable
 conf t
 int e0/0
 ip addr 10.0.88.2 255.255.255.0
@@ -362,7 +362,7 @@ network 10.0.88.2 0.0.0.0 area 0
 end
 
 # S1
-en
+enable
 conf t
 int e0/0
 ip addr 10.0.88.7 255.255.255.0
@@ -373,7 +373,7 @@ network 10.0.88.7 0.0.0.0 area 0
 end
 
 # S2
-en
+enable
 conf t
 int e0/0
 ip addr 10.0.88.8 255.255.255.0

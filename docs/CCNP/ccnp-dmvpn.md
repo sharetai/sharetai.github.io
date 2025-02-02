@@ -29,7 +29,7 @@ Mạng riêng ảo đa điểm động
 
 * R1 (HUB)
 ```conf
-en
+enable
 conf t
 interface Ethernet0/0
  no shut
@@ -47,7 +47,7 @@ end
 
 * R2 (Spoke)
 ```conf
-en
+enable
 conf t
 interface Ethernet0/0
  no shut
@@ -68,7 +68,7 @@ end
 
 * R3 (Spoke)
 ```conf
-en
+enable
 conf t
 interface Ethernet0/0
  no shut
@@ -138,7 +138,7 @@ R2#
 * IPSEC
 
 ```
-en
+enable
 conf t
 crypto isakmp policy 10
  encr aes
@@ -162,7 +162,7 @@ end
 
 * R1 (HUB)
 ```conf
-en
+enable
 conf t
 interface Loopback0
  ip address 1.1.1.1 255.255.255.255
@@ -180,7 +180,7 @@ end
 
 * R2 (Spoke)
 ```conf
-en
+enable
 conf t
 interface Loopback0
  ip address 2.2.2.2 255.255.255.255
@@ -199,7 +199,7 @@ end
 
 * R3 (Spoke)
 ```conf
-en
+enable
 conf t
 interface Loopback0
  ip address 3.3.3.3 255.255.255.255
@@ -270,7 +270,7 @@ R2#traceroute 3.3.3.3 source 2.2.2.2    <-- KQ 1 hop
 
 * R1 (HUB)
 ```conf
-en
+enable
 conf t
 interface Tunnel123
  ip ospf network point-to-multipoint
@@ -280,7 +280,7 @@ end
 
 * R2/3 (Spoke)
 ```conf
-en
+enable
 conf t
 interface Tunnel123
  ip ospf network point-to-multipoint
@@ -301,7 +301,7 @@ NHRP up phiên sẽ gán cứng ip tunnel map vs ip public. NHRP redirect and sh
 
 * R2/3 (Spoke)
 ```conf
-en
+enable
 conf t
 interface Tunnel123
  ip nhrp registration no-unique
