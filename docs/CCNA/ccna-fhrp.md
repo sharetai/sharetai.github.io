@@ -168,4 +168,6 @@ R2(config-if)#glbp 1 ip 10.0.0.254
 | Group Range    | 0 to 255                                               | 0 to 255                     | 0 to 1023                                                                |
 | Priority Range | 1 to 255, Default 100                                  | 1 to 255, Default 100        | 1 to 255, Default 100                                                    |
 | Support IPv6   | HSRPv2                                                 | VRRPv3                       | GLBP                                                                     |
+| Preempt        | disabled by defaul                                     | enabled by defaul            | disabled by defaul                                                       |
+| Authentication | MD5                                                    | No                           | MD5                                                                      |
 

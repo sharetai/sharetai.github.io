@@ -331,7 +331,23 @@ Khi hai router tìm ra nhau thông qua các gói Hello, các router thực hiệ
 - Thời gian gửi gói tin Hello _(hello interval)_ và thời gian hết hạn _(dead interval)_ phải bằng nhau. Thời gian *dead interval* mặc định bằng bốn lần thời gian *hello interval*.
 
 Nếu bất kỳ điều kiện nào nêu trên không thỏa mãn, hai router đơn giản sẽ không hình thành quan hệ láng giềng. Cũng lưu ý rằng một trong những điều kiện quan trọng nhất mà hai bên không cần giống là chỉ số Proces ID của tiến trình OSPF, như được cấu hình trong câu lệnh `router ospf process-id`. Cũng nên lưu ý rằng giá trị MTU phải bằng nhau để các gói tin DD được gửi thành công giữa những láng giềng nhưng thông số này không được kiểm tra trong tiến trình Hello.
-<br><br>
+
+Phân biệt _neighbor_ và _adjacency_:
+
+- _Neighbor_: Khi giao diện OSPF của _local router_ gửi gói _Hello_ đến _remote router_. _Remote router_ nhận được gói, nó sẽ kiểm tra xem các tham số được mang trong gói có phù hợp với các tham số riêng của nó hay không. Nếu các tham số là phù hợp, thì _local router_ và _remote router_ thiết lập quan hệ _neighbor_.
+- _Adjacency_: Sau khi _local router_ và _remote router_ thiết lập quan hệ _neighbor_, trao đổi tiếp các gói DD và LSA để thiết lập _adjacency_.
+
+OSPF có 7 trạng thái state machines:
+
+- _Down_: khi router không nhận được _Hello_ khi _dead interval_ hết hạn.
+- _Init_: khi router nhận được _Hello_.
+- _2-way_: khi gói _Hello_ nhận được có chứa _router ID local_.
+- _Exstart_: khi 2 _neighbor_ bắt đầu thương lượng _master/slave_ và xác định _sequence numbers_ của các gói DD.
+- _Exchange_: khi bắt đầu trao đổi các gói DD.
+- _Loading_: khi đã hoàn tất việc trao đổi các gói DD.
+- _Full_: khi danh sách LSA cần truyền lại là trống.
+
+<br>
 
 <h4> LAB </h4>
 <br>
@@ -1429,6 +1445,14 @@ Loại 8,9,10,11 đọc thêm.<br>
 | Point to Point                       | FR P2P, PPP, HDLC           | Hello: 10s<br>Dead: 40s  | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
 | Point to Multipoint<br>Broadcast     | FR Multipoint, Partial mesh | Hello: 30s<br>Dead: 120s | No     | Multicast (.5)<br>(auto neighbor)     | changed (neighbor) |
 | Point to Multipoint<br>Non-Broadcast | FR Multipoint               | Hello: 30s<br>Dead: 120s | No     | Unicast<br>(manual neighbor)          | changed (neighbor) |
+
+__Compatible Network types:__
+
+_Broadcast_ -- to --  _Broadcast_ <br>
+_Non-broadcast_ -- to -- _Non-broadcast_ <br>
+_Point-to-Point_ -- to -- _Point-to-Point_ <br>
+_Broadcast_ -- to -- _Non-broadcast_ (điều chỉnh lại _hello/dead timers_) <br>
+_Point-to-Point_ -- to -- _Point-to-Multipoint_ (điều chỉnh lại _hello/dead timers_)
 
 <br>
 

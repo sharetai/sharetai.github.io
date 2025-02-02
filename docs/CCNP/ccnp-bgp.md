@@ -26,11 +26,10 @@ Giao thức cổng đường biên
 
 ## Tổng quan
 <br>
-___BGP___ định nghĩa lần đầu RFC 1654 năm 1994. <br>
-___BGP-4___ định nghĩa [RFC 4271](http://tools.ietf.org/html/rfc4271) năm 2006. <br>
+___BGP___ hiện tại là ___BGP-4___ định nghĩa [RFC 4271](http://tools.ietf.org/html/rfc4271) năm 2006. <br>
 BGP là giao thức định tuyến ___path vector___ và là giao thức ___EGP___ duy nhất hiện tại. <br>
 BGP là giao thức định tuyến ___classless___ (có gửi kèm subnet mask), hỗ trợ VLSM (subnets) và CIDR (summary route). <br>
-BGP là giao thức định tuyến ___PBR___ xử lý số lượng routes lớn _(100k routes yêu cầu 70MB RAM, hiện tại đã gần 1tr routes)_ và BGP tập trung vào sự ổn định. <br>
+BGP là giao thức định tuyến ___PBR___ (Policy-based routing) xử lý số lượng routes lớn _(100k routes yêu cầu 70MB RAM, hiện tại đã gần 1tr routes)_ và BGP tập trung vào sự ổn định. <br>
 
 <h3>Autonomous System (AS)</h3>
 ___Hệ thống tự trị AS___ là tập hợp các router của 1 tổ chức. ___Số ASN là đại diện AS___, do tổ chức ___Internet Assigned Numbers Authority (IANA)___ cấp phát và quản lý. <br>
@@ -39,27 +38,51 @@ ASN private cho phép sử dụng cục bộ bên trong tổ chức, không đư
 \- Private 16-bit ASN Range: 64,512–65,535 <br>
 \- Private 32-bit ASN Range: 4,200,000,000–4,294,967,294 <br>
 
+<h3>Mục đích</h3>
+Mạng toàn cầu được chia thành các AS khác nhau để dễ quản lý. BGP được thiết kế để: <br>
+\- Lựa chọn các optimal routes <br>
+\- Ngăn chăn routing loops <br>
+\- Truyền thông tin định tuyến hiệu quả <br>
+\- Duy trì một số lượng lớn các routes <br>
+
+<h3>Lợi ích</h3>
+BGP đảm bảo an toàn mạng, linh hoạt, ổn định, tin cậy và hiệu quả: <br>
+\- BGP có xác thực và sử dụng _Generalized TTL Security Mechanism (GTSM)_ cho bảo mật mạng. <br>
+\- BGP cung cấp các chính sách định tuyến để cho phép lựa chọn tuyến đường linh hoạt. <br>
+\- BGP cung cấp _Route Summarization_ và _Route Dampening_ để ngăn chặn route _flapping_ và cải thiện sự ổn định của mạng. <br>
+\- BGP sử dụng _TCP port 179_ làm giao thức lớp vận chuyển, có hỗ trợ _BFD_, có _BGP Tracking_ và _BGP GR_. <br>
+
+<h3>BGP Messages</h3>
+\- _Open message_: dùng thiết lập peer <br>
+\- _Update message_: dùng trao đổi routes <br>
+\- _Notification message_: dùng kết thúc peer <br>
+\- _Keepalive message_: dùng duy trì peer <br>
+\- _Route-refresh message_: dùng gửi lại routes nếu chính sách định tuyến có thay đổi <br>
+
+<h3>BGP State Machine</h3>
+![alt text](/docs/CCNP/img/BGP-State-Machine.png) <br>
+
 <h3>Attributes</h3>
 1 route BGP có thể xem là 1 thực thể bao gồm các thuộc tính:
 
-___1. Well-Known Mandatory___ \- Bắt buộc phải hỗ trở và bắt buộc chuyển tiếp
-   - Origin
-   - AS Path ___(*) BGP chống loop dựa vào thuộc tính AS Path___
-   - Next Hop
+___1. Well-Known Mandatory___ \- Bắt buộc phải hỗ trợ và bắt buộc chuyển tiếp <br>
+\- Origin <br>
+\- AS Path ___(*) BGP chống loop dựa vào thuộc tính AS Path___ <br>
+\- Next Hop <br>
 
-___2. Well-Known Discretionary___ \- Bắt buộc phải hỗ trở nhưng không bắt buộc chuyển tiếp
-   - Local Preference
+___2. Well-Known Discretionary___ \- Bắt buộc phải hỗ trợ nhưng không bắt buộc chuyển tiếp <br>
+\- Local Preference <br>
 
-___3. Optional Transitive___ \- Tuỳ chọn, có hay không hỗ trợ vẫn sẽ chuyển tiếp
-   - Community
+___3. Optional Transitive___ \- Tuỳ chọn, có hay không hỗ trợ vẫn sẽ chuyển tiếp <br>
+\- Community <br>
 
-___4. Optional Non-Transitive___ \- Tuỳ chọn, không hỗ trợ thì không chuyển tiếp
-   - MED
-   - Weight
+___4. Optional Non-Transitive___ \- Tuỳ chọn, không hỗ trợ thì không chuyển tiếp <br>
+\- MED <br>
+\- Weight <br>
 
 <h3>eBGP vs iBGP (external BGP vs internal BGP)</h3>
 _(*) Tại sao có eBGP rồi, lại có thêm iBGP? Vì, ta có thể redistribute routes vào IGP (EIGRP, OSPF), tuy nhiên số lượng routes rất lớn, hạn chế của IGP ko đáp ứng được. iBGP cho phép tuỳ chọn đường đi tối ưu dựa vào các thuộc tính (đường mà BGP chọn là tối ưu có thể dài hơn và IGP lại xem là chưa tối ưu)_ <br>
-- ___eBGP là peer khác AS___ trong câu lệnh `neighbor <ip> remote-as <asn>`, ___iBGP là peer cùng AS___. <br>
+- ___eBGP là peer khác AS___ trong câu lệnh `neighbor <ip> remote-as <asn>`, ngược lại ___iBGP là peer cùng AS___. <br>
 - ___eBGP___ có AD là ___20___ và ___iBGP___ là ___200___. Để ưu tiên hạ tầng của bên khác hay vì là của mình. <br>
 - ___eBGP___ có TTL là ___1___ và ___iBGP___ là ___255___. iBGP cho phép peer xuyên qua nhiều hop, eBGP thì không. <br>
 - ___eBGP___ chống loop bằng thuộc tính ___AS Path___ _(eBGP không nhận routes nếu AS Path chứa ASN của chính nó)_ và ___iBGP___ chống loop bằng luật ___Split Horizon___ _(routes nhận từ iBGP sẽ không quảng bá cho iBGP khác)_ <br>
