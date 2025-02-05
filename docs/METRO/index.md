@@ -15,7 +15,7 @@ METRO
 
 _*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + SRT (dùng IOL L2) + AGG/CT (dùng xrv-9k-demo))_
 
-_*(Build trên CPU Ryzen 3200 + RAM 16Gb <= tham khảo cấu hình trước khi build lab (1 con xrv sẽ yêu cầu 3Gb ram, có thể bỏ đi 1 mặt, chỉ làm 1 AGG và 1 CT; IOL ko yêu cầu ram nhiều))_
+_*(Build trên CPU Ryzen 3200 + RAM 16Gb <= tham khảo cấu hình trước khi build lab (1 con xrv sẽ yêu cầu 3Gb ram, có thể bỏ đi 1 mặt, chỉ làm 1 AGG và 1 CT đối với máy chỉ có 8Gb ram; IOL ko yêu cầu ram nhiều))_
 
 <h3>SRT1</h3>
 
@@ -305,7 +305,6 @@ neighbor-group AGG_TO_SRT
  remote-as 7552
  update-source Loopback0
  address-family ipv4 unicast route-reflector-client
- address-family ipv4 unicast next-hop-self
 neighbor-group AGG_TO_CT
  remote-as 7552
  update-source Loopback0
@@ -398,7 +397,6 @@ neighbor-group AGG_TO_SRT
  remote-as 7552
  update-source Loopback0
  address-family ipv4 unicast route-reflector-client
- address-family ipv4 unicast next-hop-self
 neighbor-group AGG_TO_CT
  remote-as 7552
  update-source Loopback0
@@ -459,7 +457,6 @@ neighbor-group CT_TO_AGG
  remote-as 7552
  update-source Loopback0
  address-family ipv4 unicast route-reflector-client
- address-family ipv4 unicast next-hop-self
 neighbor 10.134.0.1
  use neighbor-group CT_TO_AGG
 neighbor 10.134.0.2
@@ -505,7 +502,6 @@ neighbor-group CT_TO_AGG
  remote-as 7552
  update-source Loopback0
  address-family ipv4 unicast route-reflector-client
- address-family ipv4 unicast next-hop-self
 neighbor 10.134.0.1
  use neighbor-group CT_TO_AGG
 neighbor 10.134.0.2
