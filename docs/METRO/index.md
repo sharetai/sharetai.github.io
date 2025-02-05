@@ -11,6 +11,10 @@ has_children: true
 METRO
 {: .fs-6 .fw-300 }
 
+![alt text](/docs/METRO/img/metro.png)
+
+<h3>SRT1</h3>
+
 ```plaintext
 enable
 conf t
@@ -52,7 +56,11 @@ exit-address-family
 !
 !
 end
+```
 
+<h3>SRT2</h3>
+
+```
 enable
 conf t
 no ip domain-lookup
@@ -92,7 +100,11 @@ address-family ipv4
 exit-address-family
 !
 end
+```
 
+<h3>SRT3</h3>
+
+```
 enable
 conf t
 no ip domain-lookup
@@ -132,7 +144,11 @@ address-family ipv4
 exit-address-family
 !
 end
+```
 
+<h3>SRT4</h3>
+
+```
 enable
 conf t
 no ip domain-lookup
@@ -172,7 +188,11 @@ address-family ipv4
 exit-address-family
 !
 end
+```
 
+<h3>SRT5</h3>
+
+```
 enable
 conf t
 no ip domain-lookup
@@ -212,7 +232,11 @@ address-family ipv4
 exit-address-family
 !
 end
+```
 
+<h3>AGG1</h3>
+
+```
 conf t
 !
 no ip domain-lookup
@@ -300,7 +324,11 @@ neighbor 10.136.0.12
 !
 commit
 end
+```
 
+<h3>AGG2</h3>
+
+```
 conf t
 !
 no ip domain-lookup
@@ -389,7 +417,11 @@ neighbor 10.136.0.12
 !
 commit
 end
+```
 
+<h3>CT1</h3>
+
+```
 conf t
 no ip domain-lookup
 host CT1
@@ -431,7 +463,11 @@ neighbor 10.134.0.2
 !
 commit
 end
+```
 
+<h3>CT2</h3>
+
+```
 conf t
 no ip domain-lookup
 host CT2
