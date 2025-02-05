@@ -13,7 +13,7 @@ METRO
 
 ![alt text](/docs/METRO/img/metro.png)
 
-_*(Build bằng VMware 17.5.0 + PNETLab + SRT (dùng IOL L2) + AGG/PRT (dùng xrv-9k-demo))_
+_*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + SRT (dùng IOL L2) + AGG/CT (dùng xrv-9k-demo))_
 
 <h3>SRT1</h3>
 
