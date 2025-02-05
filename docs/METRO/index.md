@@ -8,7 +8,7 @@ has_children: true
 # METRO
 {: .no_toc }
 
-Cisco Certified Network Associate
+METRO
 {: .fs-6 .fw-300 }
 
 ```plaintext
