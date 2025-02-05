@@ -41,7 +41,7 @@ ASN private cho phép sử dụng cục bộ bên trong tổ chức, không đư
 <h3>Mục đích</h3>
 Mạng toàn cầu được chia thành các AS khác nhau để dễ quản lý. BGP được thiết kế để: <br>
 \- Lựa chọn các optimal routes <br>
-\- Ngăn chăn routing loops <br>
+\- Ngăn chặn routing loops <br>
 \- Truyền thông tin định tuyến hiệu quả <br>
 \- Duy trì một số lượng lớn các routes <br>
 
