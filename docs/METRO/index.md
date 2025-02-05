@@ -15,6 +15,8 @@ METRO
 
 _*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + SRT (dùng IOL L2) + AGG/CT (dùng xrv-9k-demo))_
 
+_*(Build trên CPU Ryzen 3200 + RAM 16Gb <= tham khảo cấu hình trước khi build lab (1 con xrv sẽ yêu cầu 3Gb ram, có thể bỏ đi 1 mặt, chỉ làm 1 AGG và 1 CT; IOL ko yêu cầu ram nhiều))_
+
 <h3>SRT1</h3>
 
 ```plaintext
