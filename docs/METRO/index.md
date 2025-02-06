@@ -300,6 +300,7 @@ router ospf 2
 !
 router bgp 7552
 bgp router-id 10.134.0.1
+ibgp policy out enforce-modifications
 address-family ipv4 unicast
 neighbor-group AGG_TO_SRT
  remote-as 7552
@@ -392,6 +393,7 @@ router ospf 2
 !
 router bgp 7552
 bgp router-id 10.134.0.2
+ibgp policy out enforce-modifications
 address-family ipv4 unicast
 neighbor-group AGG_TO_SRT
  remote-as 7552
