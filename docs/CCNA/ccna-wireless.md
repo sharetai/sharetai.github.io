@@ -256,10 +256,15 @@ __5 GHz__
 \- Data | Data <br>
 
 <h3> WiFi security protocols: </h3>
-\- __WEP__ - __RC4 40-bit__, __PWE__<br>
-\- __WPA__ - __TKIP 128-bit with RC4__, __PSK & 802.1x__<br>
-\- __WPA2__ - __AES 128-bit__, CCMP encryption, __PSK & 802.1x__ <br>
-\- __WPA3__ - __AES 128-bit (personal) 192-bit (enterprise)__-GCMP encryption, Simultaneous Authentication of Equals (__SAE__) & __802.1x__ <br>
+
+|                   | WEP                    | WPA                         | WPA2                        | WPA3                                                 |
+| ----------------- | ---------------------- | --------------------------- | --------------------------- | ---------------------------------------------------- |
+| Encryption Method | RC4                    | TKIP                        | CCMP and AES                | CCMP and AES                                         |
+| Session Key Size  | 40-bit                 | 128-bit                     | 128-bit                     | 128-bit (WPA-Personal)<br>192-bit (WPA-Enterprise)   |
+| Cipher Type       | Stream                 | Stream                      | Block                       | Block                                                |
+| Data Integrity    | CRC-32                 | Message Integrity Code      | CBC-MAC                     | Secure Hash Algorithm                                |
+| Key Management    | Not provided           | 4-way handshaking mechanism | 4-way handshaking mechanism | Simultaneous Authentication of Equals (SAE)          |
+| Authentication    | WPE-Open<br>WPE-Shared | PSK 802.1x EAP              | PSK 802.1x EAP              | SAE EAP                                              |
 
 
 ## Cisco WLC Interfaces, Ports

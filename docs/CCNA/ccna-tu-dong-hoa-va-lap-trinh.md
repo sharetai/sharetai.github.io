@@ -82,29 +82,19 @@ RESTCONF - RESTful Network Configuration Protocol. Là phương pháp tiếp c�
 <br>
 
 ## Configuration Management Tools – Ansible, Chef, Puppet
-<br>
-__<u>Ansible</u>__ <br>
-\- Ngôn ngữ __python__, định dạng __yaml__ <br>
-\- Mô hình __agentless__ (only master) <br>
-\- Agent __push__ cấu hình cho node mạng <br>
-\- Sử dụng __SSH__ NETCONF <br>
-\- File cấu hình gọi là __playbook__ với các __task__ <br>
 
-__<u>Chef</u>__ <br>
-\- Ngôn ngữ __ruby__ <br>
-\- Mô hình __master-agent__ <br>
-\- Agent __pull__ cấu hình từ master <br>
-\- Sử dụng REST <br>
-\- File cấu hình gọi là __cookbook__ <br>
-\- __Recipe__ là mã được triển khai <br>
-
-__<u>Puppet</u>__ <br>
-\- Ngôn ngữ __ruby__ <br>
-\- Mô hình __master-agent__ <br>
-\- Agent __pull__ cấu hình từ master <br>
-\- Sử dụng REST <br>
-\- Các mẫu trong file cấu hình gọi là __module__ <br>
-\- __Manifest__ là mã được triển khai <br>
+| tool           | Ansible           | Chef             | Puppet        | SaltStack          |
+| :------------- | :---------------- | :--------------- | :------------ | :----------------- |
+| agent-based    | agentless         | master-agent     | master-agent  | master-agent       |
+| language       | python, yaml      | ruby             | ruby          | python, yaml, json |
+| coding style   | procedural        | procedural       | declarative   | declarative        |
+| communication  | SSH               | REST             | REST          | SSH                |
+| agent-config   | push              | pull             | pull          | push               |
+| file           | playbook          | recipe/cookbook  | manifest      |                    |
+| task           | task              | resource         | resource      |                    |
+| architecture   | primary/secondary |                  | multi-master  | primary/minion     |
+| management     | configuration     |                  | orchestration |                    |
+| infrastructure | mutable           | mutable          | mutable       | mutable            |
 
 <br>
 

@@ -86,14 +86,25 @@ Nếu như cef chưa được bật thì hệ thống sẽ trả về kết qu�
 
 ## RIB vs FIB
 <br>
-___RIB (Routing Information Base)___ có nguồn gốc từ control plane, không dùng cho forwarding. Mọi giao thức như OSPF, EIGRP, BGP đều có bảng RIB riêng và chọn ra những route tốt nhất để cố gắng cài đặt vào bảng RIB global để sau đó có thể chọn nó để chuyển tiếp.
 
-___FIB (Forwarding Information Base)___ có nguồn gốc từ RIB, dùng cho forwarding, đưa ra quyết định chuyển tiếp dựa vào IP destination prefix.
+| RIB (Routing Information Base)                                                     | FIB (Forwarding Information Base)  |
+| :--------------------------------------------------------------------------------- | :--------------------------------- |
+| Xây dựng dựa trên giao thức định tuyến động, định tuyến tĩnh và kết nối trực tiếp  | Xây dựng dựa trên RIB              |
+| Không dùng cho forwarding                                                          | Dùng cho forwarding                |
+| Mọi giao thức như OSPF, EIGRP, BGP đều có bảng RIB riêng và chọn ra những route tốt nhất để cố gắng cài đặt vào bảng RIB global để sau đó có thể chọn nó để chuyển tiếp, là cơ sở dữ liệu về tiền tố định tuyến | Đưa ra quyết định chuyển tiếp dựa vào IP destination prefix, chọn giao diện đầu ra cho mỗi gói |
+| Chứa nhiều route đến cùng 1 đích                                                   | Chỉ chứa route tốt nhất đến 1 đích |
+| Cài đặt trên control plane, là bảng ip routing                                     | Cài đặt trên line card, là CEF     |
 
 <br>
 
 ## CAM vs TCAM
 <br>
+
+| CAM                                                     | TCAM  |
+| :--------------------------------------------------------------------------------- | :--------------------------------- |
+| Chứa thông tin MAC, port, vlan  | Chứa thông tin ACL và QoS              |
+| Sử dụng cho L2 forwarding | Sử dụng cho L3 address lookup. Sử dụng xây dựng bảng routing |
+| So khớp yêu cầu chính xác. Match 1 and 0 | So khớp chỉ cần tương đối, dựa trên mask. Match 1, 0 and a third "care/don't care" |
 
 1 tiến trình đơn giản hóa được hiển thị trong hình bên dưới. Dữ liệu đi vào, tra cứu bảng _data table_ để tìm địa chỉ lưu trữ _action_ và 1 _action_ được chọn từ bảng _action table_. _Data table_ thường nằm trong CAM, _action table_ thường nằm trong RAM.
 
@@ -133,11 +144,13 @@ Bộ định tuyến có dự phòng phần cứng có thể có nguồn điện
 
 ![alt text](/docs/CCNP/img/sso.avif)
 
-Tuy nhiên, nếu không có cấu hình bổ sung, việc chuyển tiếp gói tin Lớp 3 có thể bị gián đoạn. Khi quá trình chuyển đổi RP xảy ra, giao thức thiết lập láng giềng sẽ nháy, thao tác này sẽ xóa bảng định tuyến. Các mục CEF sẽ bị xóa khi bảng định tuyến bị xóa và lưu lượng không được định tuyến cho đến khi cấu trúc liên kết mạng được học lại và bảng chuyển tiếp được lập trình lại.
+Khi _active route processor_ fail, ngay lập tức _standby route processor_ sẽ lấy quyền điều khiển và tiếp tục chuyển tiếp các gói với route đã biết, đến khi thông tin định tuyến được khôi phục. SSO Yêu cầu đồng bộ giữa các _supervisors_ để đảm bảo kết nối liên tục. Tuy nhiên, nếu không có cấu hình bổ sung, việc chuyển tiếp gói tin Lớp 3 có thể bị gián đoạn. Khi quá trình chuyển đổi RP xảy ra, giao thức thiết lập láng giềng sẽ nháy, thao tác này sẽ xóa bảng định tuyến. Các mục CEF sẽ bị xóa khi bảng định tuyến bị xóa và lưu lượng không được định tuyến cho đến khi cấu trúc liên kết mạng được học lại và bảng chuyển tiếp được lập trình lại.
 
 Việc kích hoạt các tính năng ___NonStop Forwarding (NSF)___ hoặc ___NonStop Routing (NSR)___ sẽ hướng dẫn bộ định tuyến giữ các mục CEF trong 1 thời gian giới hạn và tiếp tục chuyển tiếp các gói trong trường hợp RP bị lỗi cho đến khi mặt phẳng điều khiển phục hồi.
 
 NSF với SSO giúp giảm khoảng thời gian người dùng không thể truy cập mạng sau khi chuyển đổi. Các thiết bị nhận biết NSF của Cisco giúp giảm thiểu các lỗi định tuyến trong các thiết bị hỗ trợ SSO, giảm thiểu tính không ổn định của mạng.
+
+_(*) Nonstop Forwarding requires SSO to also be configured. HSRP is not supported with NSF/SSO._
 
 SSO Cisco Configuration
 

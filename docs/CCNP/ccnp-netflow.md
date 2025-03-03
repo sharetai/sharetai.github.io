@@ -31,14 +31,35 @@ NetFlow là một hệ thống giao thức mạng do Cisco tạo ra để thu th
 
 Cisco IOS NetFlow cho phép các thiết bị mạng được chuyển tiếp lưu lượng truy cập để tổng hợp dữ liệu về lưu lượng giao thông cá nhân. NetFlow truyền thống (TNF) đề cập đến việc thực hiện ban đầu của NetFlow, trong đó xác định cụ thể một dòng chảy là sự kết hợp độc đáo trong bảy lĩnh vực chính sau đây:
 
-\- Địa chỉ Ip nguồn <br>
-\- Địa chỉ IP đích <br>
-\- Số cổng nguồn <br>
-\- Số cổng đích <br>
-\- Loại giao thức lớp 3 <br>
-\- Type-of-dịch vụ (TOS) byte <br>
+\- Source IP address <br>
+\- Destination IP address <br>
+\- Source port number <br>
+\- Destination port number <br>
+\- Layer 3 protocol type <br>
+\- Type of service (ToS) byte <br>
 \- Input logical interface <br>
 
+    Netflow versions
+
+    v1
+        initial version
+    v5
+        adds support for ASN and flow sequence numbers
+    v7
+        special version for old C6k releases
+    v8
+        adds support for aggregation caches
+    v9
+        adds support for new fields and record types using templates
+        adds support for IPv6, multicast, MPLS and BGP next hop
+    v10
+        aka IPFIX
+
+    
+    v1, v5, v9 are the most common ones.
+
+    IPFIX (an IETF standard) is based on netflow v9.
+    
 <h4> Configuration </h4>
 
 ![alt text](/docs/CCNP/img/netflow.png)
@@ -116,7 +137,7 @@ Router(config)# do show flow record CUSTOM
 
 ```
 Router# configure terminal
-Router(config)# flow exporter CUSTOM1
+Router(config)# flow exporter CUSTOM
 Router(config-flow-exporter)# description EXPORT-TO-NETFLOW-COLLECTOR
 Router(config-flow-exporter)# destination 192.168.10.10
 Router(config-flow-exporter)# export-protocol netflow-v9

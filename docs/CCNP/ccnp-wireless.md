@@ -322,7 +322,7 @@ inter-xTR and intra-xTR roaming
 
 <br>
 
-## Wifi Security
+<!-- ## Wifi Security
 <br>
 
 | Chuẩn bảo mật | Thuật toán mã hóa | Độ dài khóa (bit) | Mode security | Giao thức xác thực | Các tính năng bổ sung | Độ bảo mật |
@@ -335,3 +335,13 @@ inter-xTR and intra-xTR roaming
 | WPA3-Enterprise + AES(CCMP128) + 802.1x-SHA256 + FT | AES (CCMP) | 128 | Enterprise | 802.1X với SHA-256 | Mã hóa mạnh mẽ, xác thực mạnh, chuyển đổi nhanh | Rất cao |
 | WPA3-Enterprise + GCMP128 cipher + SUITEB-1X | GCMP-128 | 128 | Enterprise | 802.1X với Suite B | Mã hóa mạnh mẽ, xác thực mạnh | Rất cao |
 | WPA3-Enterprise + GCMP256 cipher + SUITEB192-1X | GCMP-256 | 256 | Enterprise | 802.1X với Suite B | Mã hóa mạnh mẽ nhất, xác thực mạnh | Rất cao |
+
+|                   | WEP                    | WPA                         | WPA2                        | WPA3                                                 |
+| ----------------- | ---------------------- | --------------------------- | --------------------------- | ---------------------------------------------------- |
+| Encryption Method | RC4                    | TKIP                        | CCMP and AES                | CCMP and AES                                         |
+| Session Key Size  | 40-bit                 | 128-bit                     | 128-bit                     | 128-bit (WPA-Personal)<br>192-bit (WPA-Enterprise)   |
+| Cipher Type       | Stream                 | Stream                      | Block                       | Block                                                |
+| Data Integrity    | CRC-32                 | Message Integrity Code      | CBC-MAC                     | Secure Hash Algorithm                                |
+| Key Management    | Not provided           | 4-way handshaking mechanism | 4-way handshaking mechanism | Simultaneous Authentication of Equals (SAE)          |
+| Authentication    | WPE-Open<br>WPE-Shared | PSK 802.1x EAP              | PSK 802.1x EAP              | SAE EAP                                              | -->
+

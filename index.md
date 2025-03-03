@@ -13,8 +13,7 @@ permalink: /
 
 ### My badge
 
-<img src="./docs/CCNA/img/Cisco Certified Network Associate certificate-1.png" width="50%"/>
-
-<img src="./docs/JN0/img/Junos certificate-1.png" width="50%"/>
-
-<img src="./docs/JN0/img/Service Provider Routing and Switching certificate-1.png" width="50%"/>
+<img src="./docs/CCNP/img/Cisco Certified Specialist - Enterprise Core certificate-1.png" style="max-width: 550px"/>
+<img src="./docs/CCNA/img/Cisco Certified Network Associate certificate-1.png" style="max-width: 550px"/>
+<img src="./docs/JN0/img/Junos certificate-1.png" style="max-width: 550px"/>
+<img src="./docs/JN0/img/Service Provider Routing and Switching certificate-1.png" style="max-width: 550px"/>
