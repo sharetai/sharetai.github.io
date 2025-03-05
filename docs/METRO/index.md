@@ -30,8 +30,7 @@ _*(Build trên CPU Ryzen 3200 + RAM 16Gb <= tham khảo cấu hình trước khi
 ## IP ADDRESS
 
 <h3>SRT1</h3>
-
-```plaintext
+```
 enable
 conf t
 !
@@ -48,10 +47,10 @@ int e0/1
   no shut
 !
 end
+write
 ```
 
 <h3>SRT2</h3>
-
 ```
 enable
 conf t
@@ -69,10 +68,10 @@ int e0/1
   no shut
 !
 end
+write
 ```
 
 <h3>SRT3</h3>
-
 ```
 enable
 conf t
@@ -90,10 +89,10 @@ int e0/1
   no shut
 !
 end
+write
 ```
 
 <h3>SRT4</h3>
-
 ```
 enable
 conf t
@@ -111,10 +110,10 @@ int e0/1
   no shut
 !
 end
+write
 ```
 
 <h3>SRT5</h3>
-
 ```
 enable
 conf t
@@ -132,11 +131,38 @@ int e0/1
   no shut
 !
 end
+write
 ```
 
 <h3>AGG1</h3>
-
 ```
+enable
+conf t
+!
+no ip domain lookup
+host AGG1
+!
+int Loopback0
+  ip addr 10.134.0.1 255.255.255.255
+int gi1
+  ip addr 10.164.0.13 255.255.255.252
+  no shut
+int gi2
+  ip addr 10.164.0.10 255.255.255.252
+  no shut
+int gi2.11
+  encapsulation dot1Q 11
+  ip addr 10.162.0.1 255.255.255.252
+  no shut
+int gi3
+  ip addr 10.162.0.5 255.255.255.252
+  no shut
+!
+end
+write
+```
+
+<!-- ```
 conf t
 !
 no ip domain-lookup
@@ -160,10 +186,9 @@ int gi0/0/0/2
 !
 commit
 end
-```
+``` -->
 
 <h3>AGG2</h3>
-
 ```
 conf t
 !
@@ -191,8 +216,33 @@ end
 ```
 
 <h3>CT1</h3>
-
 ```
+enable
+conf t
+!
+no ip domain-lookup
+host CT1
+!
+int Loopback0
+  ip addr 10.136.0.11 255.255.255.255
+int e0/0
+  ip addr 10.166.0.5 255.255.255.252
+  no shut
+int e0/1
+  ip addr 10.166.0.1 255.255.255.252
+  no shut
+int e0/1.200
+  encapsulation dot1Q 200
+  ip addr 10.164.0.1 255.255.255.252
+  no shut
+int e0/2
+  ip addr 10.164.0.14 255.255.255.252
+  no shut
+!
+end
+write
+```
+<!-- ```
 conf t
 !
 no ip domain-lookup
@@ -216,10 +266,9 @@ int gi0/0/0/2
 !
 commit
 end
-```
+``` -->
 
 <h3>CT2</h3>
-
 ```
 conf t
 !
@@ -247,7 +296,6 @@ end
 ```
 
 <h3>RR</h3>
-
 ```
 conf t
 !
@@ -273,8 +321,7 @@ end
 ## OSPF
 
 <h3>SRT1</h3>
-
-```plaintext
+```
 enable
 conf t
 !
@@ -297,10 +344,10 @@ int e0/1
   ip ospf cost 100
 !
 end
+write
 ```
 
 <h3>SRT2</h3>
-
 ```
 enable
 conf t
@@ -324,10 +371,10 @@ int e0/1
   ip ospf cost 100
 !
 end
+write
 ```
 
 <h3>SRT3</h3>
-
 ```
 enable
 conf t
@@ -351,10 +398,10 @@ int e0/1
   ip ospf cost 100
 !
 end
+write
 ```
 
 <h3>SRT4</h3>
-
 ```
 enable
 conf t
@@ -378,10 +425,10 @@ int e0/1
   ip ospf cost 100
 !
 end
+write
 ```
 
 <h3>SRT5</h3>
-
 ```
 enable
 conf t
@@ -405,11 +452,58 @@ int e0/1
   ip ospf cost 100
 !
 end
+write
 ```
 
 <h3>AGG1</h3>
-
 ```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao OSPF
+! ========================================================================
+no router ospf 2
+router ospf 2
+  router-id 10.134.0.1
+  passive-interface Loopback0
+  network 10.134.0.1 0.0.0.0 area 0
+  network 10.164.0.10 0.0.0.0 area 0
+  network 10.164.0.13 0.0.0.0 area 0
+  network 10.162.0.1 0.0.0.0 area 1
+  network 10.162.0.5 0.0.0.0 area 1
+!
+int gi1
+  ip ospf network point-to-point
+  ip ospf cost 10000
+int gi2
+  ip ospf network point-to-point
+  ip ospf cost 2000
+int gi2.11
+  ip ospf network point-to-point
+  ip ospf cost 10
+int gi3
+  ip ospf network point-to-point
+  ip ospf cost 100
+!
+! ========================================================================
+! Khai bao Filtering LSA Type 3 giua Area 0 va Area khac 0
+! ========================================================================
+no ip prefix-list AREA_0_TO_AREA_N
+no ip prefix-list AREA_N_TO_AREA_0
+ip prefix-list AREA_0_TO_AREA_N permit 10.134.0.1/32
+ip prefix-list AREA_0_TO_AREA_N deny 0.0.0.0/0 le 32
+ip prefix-list AREA_N_TO_AREA_0 deny 0.0.0.0/0 le 32
+!
+router ospf 2
+area 0 filter-list prefix AREA_N_TO_AREA_0 in
+area 1 filter-list prefix AREA_0_TO_AREA_N in
+!
+end
+write
+```
+
+<!-- ```
 conf t
 !
 ! ========================================================================
@@ -458,10 +552,9 @@ router ospf 2
 !
 commit
 end
-```
+``` -->
 
 <h3>AGG2</h3>
-
 ```
 conf t
 !
@@ -514,8 +607,47 @@ end
 ```
 
 <h3>CT1</h3>
-
 ```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao OSPF
+! ========================================================================
+no router ospf 1
+no router ospf 2
+router ospf 1
+  router-id 10.134.0.1
+  network 10.166.0.1 0.0.0.0 area 0
+  network 10.166.0.5 0.0.0.0 area 0
+router ospf 2
+  router-id 10.134.0.1
+  passive-interface Loopback0
+  network 10.136.0.11 0.0.0.0 area 0
+  network 10.164.0.1 0.0.0.0 area 0
+  network 10.164.0.14 0.0.0.0 area 0
+!
+int e0/0
+  ip ospf network point-to-point
+  ip ospf cost 2000
+int e0/1
+  ip ospf network point-to-point
+  ip ospf cost 600
+int e0/1.11
+  ip ospf network point-to-point
+  ip ospf cost 500
+int e0/2
+  ip ospf network point-to-point
+  ip ospf cost 10000
+!
+! ========================================================================
+! Khai bao quang ba Loopback 0 CT vao OSPF Process 1
+! ========================================================================
+!
+end
+write
+```
+<!-- ```
 conf t
 !
 ! ========================================================================
@@ -566,10 +698,9 @@ router ospf 1
 !
 commit
 end
-```
+``` -->
 
 <h3>CT2</h3>
-
 ```
 conf t
 !
@@ -618,7 +749,6 @@ end
 ```
 
 <h3>RR</h3>
-
 ```
 conf t
 !
@@ -645,8 +775,7 @@ end
 ## BGP
 
 <h3>SRT1</h3>
-
-```plaintext
+```
 enable
 conf t
 !
@@ -668,10 +797,10 @@ router bgp 7552
   exit-address-family
 !
 end
+write
 ```
 
 <h3>SRT2</h3>
-
 ```
 enable
 conf t
@@ -694,10 +823,10 @@ router bgp 7552
   exit-address-family
 !
 end
+write
 ```
 
 <h3>SRT3</h3>
-
 ```
 enable
 conf t
@@ -720,10 +849,10 @@ router bgp 7552
   exit-address-family
 !
 end
+write
 ```
 
 <h3>SRT4</h3>
-
 ```
 enable
 conf t
@@ -746,10 +875,10 @@ router bgp 7552
   exit-address-family
 !
 end
+write
 ```
 
 <h3>SRT5</h3>
-
 ```
 enable
 conf t
@@ -772,10 +901,10 @@ router bgp 7552
   exit-address-family
 !
 end
+write
 ```
 
 <h3>AGG1</h3>
-
 ```
 conf t
 !
@@ -818,7 +947,6 @@ end
 ```
 
 <h3>AGG2</h3>
-
 ```
 conf t
 !
@@ -861,7 +989,6 @@ end
 ```
 
 <h3>CT1</h3>
-
 ```
 conf t
 !
@@ -897,7 +1024,6 @@ end
 ```
 
 <h3>CT2</h3>
-
 ```
 conf t
 !
@@ -933,7 +1059,6 @@ end
 ```
 
 <h3>RR</h3>
-
 ```
 conf t
 !
@@ -962,8 +1087,7 @@ end
 ## MPLS
 
 <h3>SRT[12345]</h3>
-
-```plaintext
+```
 enable
 conf t
 !
@@ -976,10 +1100,31 @@ int e0/1
   mpls ip
 !
 end
+write
 ```
 
-<h3>AGG[12]</h3>
+<h3>AGG1</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao MPLS
+! ========================================================================
+int gi1
+  mpls ip
+int gi2
+  mpls ip
+int gi2.11
+  mpls ip
+int gi3
+  mpls ip
+!
+end
+write
+```
 
+<h3>AGG2</h3>
 ```
 conf t
 !
@@ -996,8 +1141,28 @@ commit
 end
 ```
 
-<h3>CT[12]</h3>
+<h3>CT1</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao MPLS
+! ========================================================================
+int e0/0
+  mpls ip
+int e0/1
+  mpls ip
+int e0/1.200
+  mpls ip
+int e0/2
+  mpls ip
+!
+end
+write
+```
 
+<h3>CT2</h3>
 ```
 conf t
 !
@@ -1015,7 +1180,6 @@ end
 ```
 
 <h3>RR</h3>
-
 ```
 conf t
 !
@@ -1034,13 +1198,11 @@ end
 ## HSI
 
 <h3>VPC</h3>
-
 ```
 ip dhcp
 ```
 
 <h3>Modem</h3>
-
 ```
 enable
 conf t
@@ -1098,6 +1260,7 @@ write
 
 <h3>SRT3</h3>
 ```
+enable
 conf t
 !
 interface Ethernet0/2
@@ -1111,6 +1274,17 @@ write
 
 <h3>AGG1</h3>
 ```
+enable
+conf t
+!
+l2vpn xconnect context HSI
+ member 10.132.0.3 10001 encapsulation mpls
+ member 10.136.0.11 10003 encapsulation mpls
+!
+end
+write
+```
+<!-- ```
 conf t
 !
 ! ========================================================================
@@ -1131,7 +1305,7 @@ l2vpn
     pw-class HSI
    !
    vfi HSI
-    neighbor 10.134.0.12 pw-id 10007
+    neighbor 10.134.0.2 pw-id 10007
     !
    !
   !
@@ -1139,10 +1313,25 @@ l2vpn
 !
 commit
 end
-```
+``` -->
 
 <h3>CT1</h3>
 ```
+enable
+conf t
+!
+interface Ethernet0/3
+  no shut
+!
+interface Ethernet0/3.11
+  encapsulation dot1Q 11
+  xconnect 10.134.0.1 10003 encapsulation mpls
+    backup peer 10.134.0.2 10004
+!
+end
+write
+```
+<!-- ```
 conf t
 !
 ! ========================================================================
@@ -1165,10 +1354,9 @@ l2vpn
           pw-class HSI
 commit
 end
-```
+``` -->
 
 <h3>BRAS</h3>
-
 ```
 enable
 conf t
@@ -1207,7 +1395,7 @@ write
 
 <h3>SRT1</h3>
 
-```plaintext
+```
 enable
 conf t
 no ip domain-lookup
@@ -1249,6 +1437,7 @@ int e0/1
  mpls ip
 !
 end
+write
 ```
 
 <h3>SRT2</h3>
@@ -1295,6 +1484,7 @@ int e0/1
  mpls ip
 !
 end
+write
 ```
 
 <h3>SRT3</h3>
@@ -1392,6 +1582,7 @@ int e0/1
  mpls ip
 !
 end
+write
 ```
 
 <h3>SRT5</h3>
@@ -1438,6 +1629,7 @@ int e0/1
  mpls ip
 !
 end
+write
 ```
 
 <h3>AGG1</h3>
