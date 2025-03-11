@@ -1391,6 +1391,55 @@ end
 write
 ```
 
+## RSVP
+
+<h3>AGG1</h3>
+```
+enable
+conf t
+!
+mpls traffic-eng tunnels
+!
+int range Gi1-2
+ mpls traffic-eng tunnels
+ ip rsvp bandwidth
+!
+router ospf 2
+mpls traffic-eng area 0
+mpls traffic-eng router-id lo0
+!
+int tun1
+ ip unnumbered Lo0
+ tunnel mode mpls traffic-eng
+ tunnel destination 10.136.0.11
+ ! Cho phep MPLS-TE tunnel tham gia vao qua trinh tinh toan OSPF
+ tunnel mpls traffic-eng autoroute announce
+ tunnel mpls traffic-eng path-option 1 explicit name AGG1_TO_CT1
+!
+ip explicit-path name AGG1_TO_CT1
+ index 1 next-address 10.164.0.14
+!
+end
+```
+
+<h3>CT1</h3>
+```
+enable
+conf t
+!
+mpls traffic-eng tunnels
+!
+int range e0/1-2
+ mpls traffic-eng tunnels
+ ip rsvp bandwidth
+!
+router ospf 2
+mpls traffic-eng area 0
+mpls traffic-eng router-id lo0
+!
+end
+```
+
 <!-- ## backup
 
 <h3>SRT1</h3>
