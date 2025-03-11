@@ -23,9 +23,9 @@ METRO
 
 ![alt text](/docs/METRO/img/metro.png)
 
-_*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + SRT (dùng IOL L2) + AGG/CT (dùng xrv-9k-demo))_
+_*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + Modem/SRT/CR1/BRAS (dùng IOL L3) + AGG1 (dùng CSR1000))_
 
-_*(Build trên CPU Ryzen 3200 + RAM 16Gb <= tham khảo cấu hình trước khi build lab (1 con xrv sẽ yêu cầu 3Gb ram, có thể bỏ đi 1 mặt, chỉ làm 1 AGG và 1 CT đối với máy chỉ có 8Gb ram; IOL ko yêu cầu ram nhiều))_
+_*(Build trên CPU Ryzen 3200 + RAM 16Gb <= tham khảo cấu hình trước khi build lab (1 con xrv demo sẽ yêu cầu 3Gb ram, 1 con csr sẽ yêu cầu 6Gb ram; có thể bỏ đi 1 mặt, chỉ làm 1 AGG và 1 CT đối với máy chỉ có 8Gb ram; IOL ko yêu cầu ram nhiều))_
 
 ## IP ADDRESS
 
@@ -92,7 +92,7 @@ end
 write
 ```
 
-<h3>SRT4</h3>
+<!-- <h3>SRT4</h3>
 ```
 enable
 conf t
@@ -132,7 +132,7 @@ int e0/1
 !
 end
 write
-```
+``` -->
 
 <h3>AGG1</h3>
 ```
@@ -188,7 +188,7 @@ commit
 end
 ``` -->
 
-<h3>AGG2</h3>
+<!-- <h3>AGG2</h3>
 ```
 conf t
 !
@@ -213,7 +213,7 @@ int gi0/0/0/2
 !
 commit
 end
-```
+``` -->
 
 <h3>CT1</h3>
 ```
@@ -268,7 +268,7 @@ commit
 end
 ``` -->
 
-<h3>CT2</h3>
+<!-- <h3>CT2</h3>
 ```
 conf t
 !
@@ -293,9 +293,9 @@ int gi0/0/0/2
 !
 commit
 end
-```
+``` -->
 
-<h3>RR</h3>
+<!-- <h3>RR</h3>
 ```
 conf t
 !
@@ -316,7 +316,7 @@ int gi0/0/0/2
 !
 commit
 end
-```
+``` -->
 
 ## OSPF
 
@@ -401,7 +401,7 @@ end
 write
 ```
 
-<h3>SRT4</h3>
+<!-- <h3>SRT4</h3>
 ```
 enable
 conf t
@@ -453,7 +453,7 @@ int e0/1
 !
 end
 write
-```
+``` -->
 
 <h3>AGG1</h3>
 ```
@@ -554,7 +554,7 @@ commit
 end
 ``` -->
 
-<h3>AGG2</h3>
+<!-- <h3>AGG2</h3>
 ```
 conf t
 !
@@ -604,7 +604,7 @@ router ospf 2
 !
 commit
 end
-```
+``` -->
 
 <h3>CT1</h3>
 ```
@@ -700,7 +700,7 @@ commit
 end
 ``` -->
 
-<h3>CT2</h3>
+<!-- <h3>CT2</h3>
 ```
 conf t
 !
@@ -770,9 +770,9 @@ area 0
 !
 commit
 end
-```
+``` -->
 
-## BGP
+<!-- ## BGP
 
 <h3>SRT1</h3>
 ```
@@ -1082,7 +1082,7 @@ bgp router-id 10.138.0.1
 !
 commit
 end
-```
+``` -->
 
 ## MPLS
 
@@ -1098,6 +1098,12 @@ int e0/0
   mpls ip
 int e0/1
   mpls ip
+!
+! ========================================================================
+! Tat tinh nang go nhan LDP tai hop cuoi (Penultimate Hop) de duy tri 
+! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
+! ========================================================================
+mpls ldp explicit-null
 !
 end
 write
@@ -1120,11 +1126,17 @@ int gi2.11
 int gi3
   mpls ip
 !
+! ========================================================================
+! Tat tinh nang go nhan LDP tai hop cuoi (Penultimate Hop) de duy tri 
+! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
+! ========================================================================
+mpls ldp explicit-null
+!
 end
 write
 ```
 
-<h3>AGG2</h3>
+<!-- <h3>AGG2</h3>
 ```
 conf t
 !
@@ -1139,7 +1151,7 @@ mpls ldp
 !
 commit
 end
-```
+``` -->
 
 <h3>CT1</h3>
 ```
@@ -1158,11 +1170,17 @@ int e0/1.200
 int e0/2
   mpls ip
 !
+! ========================================================================
+! Tat tinh nang go nhan LDP tai hop cuoi (Penultimate Hop) de duy tri 
+! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
+! ========================================================================
+mpls ldp explicit-null
+!
 end
 write
 ```
 
-<h3>CT2</h3>
+<!-- <h3>CT2</h3>
 ```
 conf t
 !
@@ -1192,6 +1210,61 @@ mpls ldp
   int gi0/0/0/2
 !
 commit
+end
+``` -->
+
+## RSVP
+
+<h3>AGG1</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao RSVP AGG to CT
+! ========================================================================
+mpls traffic-eng tunnels
+!
+int range Gi1-2
+ mpls traffic-eng tunnels
+ ip rsvp bandwidth
+!
+router ospf 2
+mpls traffic-eng area 0
+mpls traffic-eng router-id lo0
+!
+int tun1
+ ip unnumbered Lo0
+ tunnel mode mpls traffic-eng
+ tunnel destination 10.136.0.11
+ ! Cho phep MPLS-TE tunnel tham gia vao qua trinh tinh toan OSPF
+ tunnel mpls traffic-eng autoroute announce
+ tunnel mpls traffic-eng path-option 1 explicit name AGG1_TO_CT1
+!
+ip explicit-path name AGG1_TO_CT1
+ index 1 next-address 10.164.0.14
+!
+end
+```
+
+<h3>CT1</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao RSVP
+! ========================================================================
+mpls traffic-eng tunnels
+!
+int range e0/1-2
+ mpls traffic-eng tunnels
+ ip rsvp bandwidth
+!
+router ospf 2
+mpls traffic-eng area 0
+mpls traffic-eng router-id lo0
+!
 end
 ```
 
@@ -1263,6 +1336,9 @@ write
 enable
 conf t
 !
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
 interface Ethernet0/2
   no shutdown
   xconnect 10.134.0.1 10001 encapsulation mpls
@@ -1277,6 +1353,9 @@ write
 enable
 conf t
 !
+! ========================================================================
+! Khai bao pseudowire stitching / multi-segment pseudowire
+! ========================================================================
 l2vpn xconnect context HSI
  member 10.132.0.3 10001 encapsulation mpls
  member 10.136.0.11 10003 encapsulation mpls
@@ -1320,13 +1399,16 @@ end
 enable
 conf t
 !
-interface Ethernet0/3
-  no shut
-!
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
 interface Ethernet0/3.11
   encapsulation dot1Q 11
   xconnect 10.134.0.1 10003 encapsulation mpls
     backup peer 10.134.0.2 10004
+!
+interface Ethernet0/3
+  no shut
 !
 end
 write
@@ -1361,6 +1443,9 @@ end
 enable
 conf t
 !
+! ========================================================================
+! Khai bao PPPoE Server
+! ========================================================================
 hostname BRAS
 !
 username ftth_u1 password 123
@@ -1389,55 +1474,6 @@ ip local pool NN_DHCP 210.245.0.2 210.245.0.254
 !
 end
 write
-```
-
-## RSVP
-
-<h3>AGG1</h3>
-```
-enable
-conf t
-!
-mpls traffic-eng tunnels
-!
-int range Gi1-2
- mpls traffic-eng tunnels
- ip rsvp bandwidth
-!
-router ospf 2
-mpls traffic-eng area 0
-mpls traffic-eng router-id lo0
-!
-int tun1
- ip unnumbered Lo0
- tunnel mode mpls traffic-eng
- tunnel destination 10.136.0.11
- ! Cho phep MPLS-TE tunnel tham gia vao qua trinh tinh toan OSPF
- tunnel mpls traffic-eng autoroute announce
- tunnel mpls traffic-eng path-option 1 explicit name AGG1_TO_CT1
-!
-ip explicit-path name AGG1_TO_CT1
- index 1 next-address 10.164.0.14
-!
-end
-```
-
-<h3>CT1</h3>
-```
-enable
-conf t
-!
-mpls traffic-eng tunnels
-!
-int range e0/1-2
- mpls traffic-eng tunnels
- ip rsvp bandwidth
-!
-router ospf 2
-mpls traffic-eng area 0
-mpls traffic-eng router-id lo0
-!
-end
 ```
 
 <!-- ## backup
