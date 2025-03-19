@@ -1440,7 +1440,11 @@ router bgp 7552
     neighbor AGG_TO_SRT route-reflector-client
     neighbor AGG_TO_SRT send-community both
     neighbor AGG_TO_SRT next-hop-self all
+    neighbor 10.132.0.1 activate
+    neighbor 10.132.0.2 activate
     neighbor 10.132.0.3 activate
+    neighbor 10.132.0.4 activate
+    neighbor 10.132.0.5 activate
     !
     neighbor AGG_TO_CT send-community both
     neighbor AGG_TO_CT next-hop-self all
@@ -2655,6 +2659,89 @@ l2vpn vfi context L2VPN
 bridge-domain 200
   member vfi L2VPN
   member 10.132.1.1 20002 encapsulation mpls
+!
+end
+write
+```
+
+## rtfilter
+
+<h3>SRT2</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao BGP
+! ========================================================================
+no router bgp 7552
+router bgp 7552
+  bgp router-id 10.132.0.2
+  neighbor SRT_TO_AGG peer-group
+  neighbor SRT_TO_AGG remote-as 7552
+  neighbor SRT_TO_AGG update-source Loopback0
+  neighbor 10.134.0.1 peer-group SRT_TO_AGG
+  neighbor 10.134.0.2 peer-group SRT_TO_AGG
+  address-family ipv4
+    network 10.132.0.2 mask 255.255.255.255
+    neighbor SRT_TO_AGG send-community both
+    neighbor SRT_TO_AGG send-label
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  exit-address-family
+  address-family vpnv4
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  exit-address-family
+!
+end
+write
+```
+
+<h3>SRT2</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao BGP
+! ========================================================================
+router bgp 7552
+!
+  address-family rtfilter unicast
+  !
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  !
+  exit-address-family
+!
+end
+write
+```
+
+<h3>AGG1</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao BGP
+! ========================================================================
+router bgp 7552
+!
+  address-family rtfilter unicast
+  !
+    neighbor AGG_TO_CT route-reflector-client
+    neighbor AGG_TO_CT send-community both
+    neighbor 10.132.0.1 activate
+    neighbor 10.132.0.2 activate
+    neighbor 10.132.0.3 activate
+    neighbor 10.132.0.4 activate
+    neighbor 10.132.0.5 activate
+  !
+  exit-address-family
 !
 end
 write
