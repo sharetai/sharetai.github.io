@@ -23,7 +23,7 @@ METRO
 
 ![alt text](/docs/METRO/img/metro.png)
 
-_*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + Modem/SRT/BRAS dùng IOL L3 + AGG/CT/RR dùng CSR1000)_
+_*(Build bằng VMware Pro 17.5.0 (search gg sẽ lấy đc key active) + PNETLab + Modem/SRT/BRAS/CKV/PE dùng IOL L3 + AGG/CT/RR dùng CSR1000)_
 
 _*(Build trên CPU Ryzen 3200 + RAM 32Gb <= tham khảo cấu hình trước khi build lab (1 con xrv demo sẽ yêu cầu 3Gb ram, 1 con csr sẽ yêu cầu 6Gb ram; IOL ko yêu cầu ram nhiều))_
 
@@ -301,33 +301,6 @@ commit
 end
 ``` -->
 
-<h3>RR</h3>
-```
-enable
-conf t
-!
-no ip domain lookup
-host RR
-!
-int Loopback0
-  ip addr 10.138.0.1 255.255.255.255
-int gi1
-  ip addr 10.166.0.6 255.255.255.252
-  no shut
-int gi2
-  ip addr 10.166.0.10 255.255.255.252
-  no shut
-int gi3
-  ip addr 10.166.0.13 255.255.255.252
-  no shut
-int gi4
-  ip addr 10.166.0.17 255.255.255.252
-  no shut
-!
-end
-write
-```
-
 <h3>CTx</h3>
 ```
 enable
@@ -450,6 +423,75 @@ int e0/1
 end
 write
 ``` -->
+
+<h3>CKV</h3>
+```
+enable
+conf t
+!
+no ip domain-lookup
+host CKV
+!
+int Loopback0
+  ip addr 10.136.0.1 255.255.255.255
+int e0/0
+  ip addr 10.166.0.253 255.255.255.252
+  no shut
+int e0/1
+  ip addr 10.166.0.6 255.255.255.252
+  no shut
+int e0/2
+  ip addr 10.166.0.10 255.255.255.252
+  no shut
+int e0/3
+  ip addr 10.166.0.13 255.255.255.252
+  no shut
+int e1/0
+  ip addr 10.166.0.17 255.255.255.252
+  no shut
+int e1/1
+  ip addr 10.166.0.21 255.255.255.252
+  no shut
+!
+end
+write
+```
+
+<h3>RR</h3>
+```
+enable
+conf t
+!
+no ip domain lookup
+host RR
+!
+int Loopback0
+  ip addr 10.255.0.1 255.255.255.255
+int gi1
+  ip addr 10.166.0.254 255.255.255.252
+  no shut
+!
+end
+write
+```
+
+<h3>PE2G</h3>
+```
+enable
+conf t
+!
+no ip domain-lookup
+host PE2G
+!
+int Loopback0
+  ip addr 10.138.0.1 255.255.255.255
+int e0/0
+  ip addr 10.166.0.22 255.255.255.252
+  no shut
+!
+end
+write
+```
 
 ## OSPF
 
@@ -782,12 +824,13 @@ route-map PROCESS_ME_TO_PROCESS_CORE permit 10
   match ip address prefix-list LOOPBACK0_CT
 !
 router ospf 1
-  redistribute ospf 2 route-map PROCESS_ME_TO_PROCESS_CORE
+  redistribute ospf 2 metric-type 1 route-map PROCESS_ME_TO_PROCESS_CORE
 !
 end
 write
 ```
-<!-- ```
+<!--<h3>CT1</h3>
+```
 conf t
 !
 ! ========================================================================
@@ -888,30 +931,6 @@ commit
 end
 ``` -->
 
-<h3>RR</h3>
-```
-enable
-conf t
-!
-! ========================================================================
-! Khai bao OSPF
-! ========================================================================
-no router ospf 1
-router ospf 1
-  router-id 10.138.0.1
-  network 10.138.0.1 0.0.0.0 area 0
-  network 10.166.0.6 0.0.0.0 area 0
-  network 10.166.0.10 0.0.0.0 area 0
-  network 10.166.0.13 0.0.0.0 area 0
-  network 10.166.0.17 0.0.0.0 area 0
-!
-int range gi1-4
-  ip ospf network point-to-point
-!
-end
-write
-```
-
 <h3>CTx</h3>
 ```
 enable
@@ -999,6 +1018,68 @@ router ospf 2
   passive-interface Loopback0
   network 10.132.1.1 0.0.0.0 area 1
   network 10.162.0.6 0.0.0.0 area 1
+!
+int e0/0
+  ip ospf network point-to-point
+!
+end
+write
+```
+
+<h3>CKV</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao OSPF
+! ========================================================================
+no router ospf 1
+router ospf 1
+  router-id 10.136.0.1
+  network 0.0.0.0 0.0.0.0 area 0
+!
+int range e0/0-3,e1/0-3
+  ip ospf network point-to-point
+!
+end
+write
+```
+
+<h3>RR</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao OSPF
+! ========================================================================
+no router ospf 1
+router ospf 1
+  router-id 10.255.0.1
+  network 10.255.0.1 0.0.0.0 area 0
+  network 10.166.0.254 0.0.0.0 area 0
+!
+int gi1
+  ip ospf network point-to-point
+!
+end
+write
+```
+
+<h3>PE2G</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao OSPF
+! ========================================================================
+no router ospf 1
+router ospf 1
+  router-id 10.138.0.1
+  network 10.138.0.1 0.0.0.0 area 0
+  network 10.166.0.22 0.0.0.0 area 0
 !
 int e0/0
   ip ospf network point-to-point
@@ -1149,6 +1230,9 @@ int e0/1
 ! ========================================================================
 mpls ldp explicit-null
 !
+! Dung ping/trace mpls
+mpls oam
+!
 end
 write
 ```
@@ -1175,6 +1259,9 @@ int gi3
 ! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
 ! ========================================================================
 mpls ldp explicit-null
+!
+! Dung ping/trace mpls
+mpls oam
 !
 end
 write
@@ -1220,6 +1307,9 @@ int gi3
 ! ========================================================================
 mpls ldp explicit-null
 !
+! Dung ping/trace mpls
+mpls oam
+!
 end
 write
 ```
@@ -1241,6 +1331,30 @@ commit
 end
 ``` -->
 
+<h3>CKV</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao MPLS
+! ========================================================================
+int range e0/0-3,e1/0-3
+  mpls ip
+!
+! ========================================================================
+! Tat tinh nang go nhan LDP tai hop cuoi (Penultimate Hop) de duy tri 
+! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
+! ========================================================================
+mpls ldp explicit-null
+!
+! Dung ping/trace mpls
+mpls oam
+!
+end
+write
+```
+
 <h3>RR</h3>
 ```
 enable
@@ -1249,7 +1363,7 @@ conf t
 ! ========================================================================
 ! Khai bao MPLS
 ! ========================================================================
-int range gi1-4
+int gi1
   mpls ip
 !
 ! ========================================================================
@@ -1257,6 +1371,33 @@ int range gi1-4
 ! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
 ! ========================================================================
 mpls ldp explicit-null
+!
+! Dung ping/trace mpls
+mpls oam
+!
+end
+write
+```
+
+<h3>PE2G</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao MPLS
+! ========================================================================
+int e0/0
+  mpls ip
+!
+! ========================================================================
+! Tat tinh nang go nhan LDP tai hop cuoi (Penultimate Hop) de duy tri 
+! gia tri QoS trong nhan LDP dam bao thuc hien QoS toan trinh.
+! ========================================================================
+mpls ldp explicit-null
+!
+! Dung ping/trace mpls
+mpls oam
 !
 end
 write
@@ -1300,7 +1441,7 @@ write
 
 ## BGP
 
-<!-- <h3>SRT1</h3>
+<h3>SRT1</h3>
 ```
 enable
 conf t
@@ -1310,17 +1451,29 @@ conf t
 ! ========================================================================
 no router bgp 7552
 router bgp 7552
-  bgp router-id 10.132.0.1
   neighbor SRT_TO_AGG peer-group
   neighbor SRT_TO_AGG remote-as 7552
   neighbor SRT_TO_AGG update-source Loopback0
   neighbor 10.134.0.1 peer-group SRT_TO_AGG
   neighbor 10.134.0.2 peer-group SRT_TO_AGG
+  !
   address-family ipv4
     network 10.132.0.1 mask 255.255.255.255
+    neighbor SRT_TO_AGG send-community both
+    neighbor SRT_TO_AGG send-label
     neighbor 10.134.0.1 activate
     neighbor 10.134.0.2 activate
-  exit-address-family
+  !
+  address-family vpnv4
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  !
+  address-family rtfilter unicast
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  !
 !
 end
 write
@@ -1336,21 +1489,33 @@ conf t
 ! ========================================================================
 no router bgp 7552
 router bgp 7552
-  bgp router-id 10.132.0.2
   neighbor SRT_TO_AGG peer-group
   neighbor SRT_TO_AGG remote-as 7552
   neighbor SRT_TO_AGG update-source Loopback0
   neighbor 10.134.0.1 peer-group SRT_TO_AGG
   neighbor 10.134.0.2 peer-group SRT_TO_AGG
+  !
   address-family ipv4
     network 10.132.0.2 mask 255.255.255.255
+    neighbor SRT_TO_AGG send-community both
+    neighbor SRT_TO_AGG send-label
     neighbor 10.134.0.1 activate
     neighbor 10.134.0.2 activate
-  exit-address-family
+  !
+  address-family vpnv4
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  !
+  address-family rtfilter unicast
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  !
 !
 end
 write
-``` -->
+```
 
 <h3>SRT3</h3>
 ```
@@ -1368,18 +1533,24 @@ router bgp 7552
   neighbor SRT_TO_AGG update-source Loopback0
   neighbor 10.134.0.1 peer-group SRT_TO_AGG
   neighbor 10.134.0.2 peer-group SRT_TO_AGG
+  !
   address-family ipv4
     network 10.132.0.3 mask 255.255.255.255
     neighbor SRT_TO_AGG send-community both
     neighbor SRT_TO_AGG send-label
     neighbor 10.134.0.1 activate
     neighbor 10.134.0.2 activate
-  exit-address-family
+  !
   address-family vpnv4
     neighbor SRT_TO_AGG send-community both
     neighbor 10.134.0.1 activate
     neighbor 10.134.0.2 activate
-  exit-address-family
+  !
+  address-family rtfilter unicast
+    neighbor SRT_TO_AGG send-community both
+    neighbor 10.134.0.1 activate
+    neighbor 10.134.0.2 activate
+  !
 !
 end
 write
@@ -1433,8 +1604,6 @@ router bgp 7552
     neighbor 10.136.0.11 activate
     neighbor 10.136.0.12 activate
   !
-  exit-address-family
-  !
   address-family vpnv4
   !
     neighbor AGG_TO_SRT route-reflector-client
@@ -1451,15 +1620,22 @@ router bgp 7552
     neighbor 10.136.0.11 activate
     neighbor 10.136.0.12 activate
   !
-  exit-address-family
-  !
   address-family l2vpn vpls
   !
     neighbor AGG_TO_CT send-community both
     neighbor 10.136.0.11 activate
     neighbor 10.136.0.12 activate
   !
-  exit-address-family
+  address-family rtfilter unicast
+  !
+    neighbor AGG_TO_SRT route-reflector-client
+    neighbor AGG_TO_SRT send-community both
+    neighbor 10.132.0.1 activate
+    neighbor 10.132.0.2 activate
+    neighbor 10.132.0.3 activate
+    neighbor 10.132.0.4 activate
+    neighbor 10.132.0.5 activate
+  !
 !
 end
 write
@@ -1487,7 +1663,7 @@ router bgp 7552
   neighbor CT_TO_RR peer-group
   neighbor CT_TO_RR remote-as 7552
   neighbor CT_TO_RR update-source Loopback0
-  neighbor 10.138.0.1 peer-group CT_TO_RR
+  neighbor 10.255.0.1 peer-group CT_TO_RR
   !
   address-family ipv4
   !
@@ -1501,9 +1677,7 @@ router bgp 7552
     neighbor CT_TO_RR send-community both
     neighbor CT_TO_RR send-label
     neighbor CT_TO_RR next-hop-self all
-    neighbor 10.138.0.1 activate
-  !
-  exit-address-family
+    neighbor 10.255.0.1 activate
   !
   address-family vpnv4
   !
@@ -1513,7 +1687,7 @@ router bgp 7552
     neighbor 10.134.0.2 activate
     !
     neighbor CT_TO_RR send-community both
-    neighbor 10.138.0.1 activate
+    neighbor 10.255.0.1 activate
   !
   address-family l2vpn vpls
   !
@@ -1523,68 +1697,8 @@ router bgp 7552
     neighbor 10.134.0.2 activate
     !
     neighbor CT_TO_RR send-community both
-    neighbor 10.138.0.1 activate
+    neighbor 10.255.0.1 activate
   !
-  exit-address-family
-!
-end
-write
-```
-
-<h3>RR</h3>
-```
-enable
-conf t
-!
-! ========================================================================
-! Khai bao BGP
-! ========================================================================
-no router bgp 7552
-router bgp 7552
-!
-  bgp router-id 10.138.0.1
-  !
-  neighbor RR_TO_CT peer-group
-  neighbor RR_TO_CT remote-as 7552
-  neighbor RR_TO_CT update-source Loopback0
-  neighbor 10.136.0.11 peer-group RR_TO_CT
-  neighbor 10.136.0.12 peer-group RR_TO_CT
-  neighbor 10.136.0.13 peer-group RR_TO_CT
-  neighbor 10.136.0.14 peer-group RR_TO_CT
-  !
-  address-family ipv4
-  !
-    neighbor RR_TO_CT route-reflector-client
-    neighbor RR_TO_CT send-community both
-    neighbor RR_TO_CT send-label
-    neighbor 10.136.0.11 activate
-    neighbor 10.136.0.12 activate
-    neighbor 10.136.0.13 activate
-    neighbor 10.136.0.14 activate
-  !
-  exit-address-family
-  !
-  address-family vpnv4
-  !
-    neighbor RR_TO_CT route-reflector-client
-    neighbor RR_TO_CT send-community both
-    neighbor 10.136.0.11 activate
-    neighbor 10.136.0.12 activate
-    neighbor 10.136.0.13 activate
-    neighbor 10.136.0.14 activate
-  !
-  exit-address-family
-  !
-  address-family l2vpn vpls
-  !
-    neighbor RR_TO_CT route-reflector-client
-    neighbor RR_TO_CT send-community both
-    neighbor 10.136.0.11 activate
-    neighbor 10.136.0.12 activate
-    neighbor 10.136.0.13 activate
-    neighbor 10.136.0.14 activate
-  !
-  exit-address-family
 !
 end
 write
@@ -1771,7 +1885,7 @@ router bgp 7552
     use neighbor-group CT_TO_AGG
   neighbor 10.134.0.2
     use neighbor-group CT_TO_AGG
-  neighbor 10.138.0.1
+  neighbor 10.255.0.1
     use neighbor-group CT_TO_RR
 !
 commit
@@ -1820,7 +1934,7 @@ router bgp 7552
     use neighbor-group CT_TO_AGG
   neighbor 10.134.0.2
     use neighbor-group CT_TO_AGG
-  neighbor 10.138.0.1
+  neighbor 10.255.0.1
     use neighbor-group CT_TO_RR
 !
 commit
@@ -1837,21 +1951,23 @@ conf t
 ! ========================================================================
 no router bgp 7552
 router bgp 7552
+!
   bgp router-id 10.132.1.1
   neighbor SRT_TO_AGG peer-group
   neighbor SRT_TO_AGG remote-as 7552
   neighbor SRT_TO_AGG update-source Loopback0
   neighbor 10.134.1.1 peer-group SRT_TO_AGG
+  !
   address-family ipv4
     network 10.132.1.1 mask 255.255.255.255
     neighbor SRT_TO_AGG send-community both
     neighbor SRT_TO_AGG send-label
     neighbor 10.134.1.1 activate
-  exit-address-family
+  !
   address-family vpnv4
     neighbor SRT_TO_AGG send-community both
     neighbor 10.134.1.1 activate
-  exit-address-family
+  !
 !
 end
 write
@@ -1895,8 +2011,6 @@ router bgp 7552
     neighbor AGG_TO_CT next-hop-self all
     neighbor 10.136.0.13 activate
   !
-  exit-address-family
-  !
   address-family vpnv4
   !
     neighbor AGG_TO_SRT route-reflector-client
@@ -1908,14 +2022,11 @@ router bgp 7552
     neighbor AGG_TO_CT next-hop-self all
     neighbor 10.136.0.13 activate
   !
-  exit-address-family
-  !
   address-family l2vpn vpls
   !
     neighbor AGG_TO_CT send-community both
     neighbor 10.136.0.13 activate
   !
-  exit-address-family
 !
 end
 write
@@ -1942,7 +2053,7 @@ router bgp 7552
   neighbor CT_TO_RR peer-group
   neighbor CT_TO_RR remote-as 7552
   neighbor CT_TO_RR update-source Loopback0
-  neighbor 10.138.0.1 peer-group CT_TO_RR
+  neighbor 10.255.0.1 peer-group CT_TO_RR
   !
   address-family ipv4
   !
@@ -1955,9 +2066,7 @@ router bgp 7552
     neighbor CT_TO_RR send-community both
     neighbor CT_TO_RR send-label
     neighbor CT_TO_RR next-hop-self all
-    neighbor 10.138.0.1 activate
-  !
-  exit-address-family
+    neighbor 10.255.0.1 activate
   !
   address-family vpnv4
   !
@@ -1966,9 +2075,7 @@ router bgp 7552
     neighbor 10.134.1.1 activate
     !
     neighbor CT_TO_RR send-community both
-    neighbor 10.138.0.1 activate
-  !
-  exit-address-family
+    neighbor 10.255.0.1 activate
   !
   address-family l2vpn vpls
   !
@@ -1977,9 +2084,96 @@ router bgp 7552
     neighbor 10.134.1.1 activate
     !
     neighbor CT_TO_RR send-community both
+    neighbor 10.255.0.1 activate
+  !
+!
+end
+write
+```
+
+<h3>RR</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao BGP
+! ========================================================================
+no router bgp 7552
+router bgp 7552
+!
+  bgp router-id 10.255.0.1
+  !
+  neighbor RR_TO_CT peer-group
+  neighbor RR_TO_CT remote-as 7552
+  neighbor RR_TO_CT update-source Loopback0
+  neighbor 10.136.0.11 peer-group RR_TO_CT
+  neighbor 10.136.0.12 peer-group RR_TO_CT
+  neighbor 10.136.0.13 peer-group RR_TO_CT
+  neighbor 10.136.0.14 peer-group RR_TO_CT
+  neighbor 10.138.0.1 peer-group RR_TO_CT
+  !
+  address-family ipv4
+  !
+    neighbor RR_TO_CT route-reflector-client
+    neighbor RR_TO_CT send-community both
+    neighbor RR_TO_CT send-label
+    neighbor 10.136.0.11 activate
+    neighbor 10.136.0.12 activate
+    neighbor 10.136.0.13 activate
+    neighbor 10.136.0.14 activate
     neighbor 10.138.0.1 activate
   !
-  exit-address-family
+  address-family vpnv4
+  !
+    neighbor RR_TO_CT route-reflector-client
+    neighbor RR_TO_CT send-community both
+    neighbor 10.136.0.11 activate
+    neighbor 10.136.0.12 activate
+    neighbor 10.136.0.13 activate
+    neighbor 10.136.0.14 activate
+  !
+  address-family l2vpn vpls
+  !
+    neighbor RR_TO_CT route-reflector-client
+    neighbor RR_TO_CT send-community both
+    neighbor 10.136.0.11 activate
+    neighbor 10.136.0.12 activate
+    neighbor 10.136.0.13 activate
+    neighbor 10.136.0.14 activate
+  !
+!
+end
+write
+```
+
+<h3>PE2G</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao BGP
+! ========================================================================
+no router bgp 7552
+router bgp 7552
+!
+  bgp router-id 10.138.0.1
+  !
+  neighbor CT_TO_RR peer-group
+  neighbor CT_TO_RR remote-as 7552
+  neighbor CT_TO_RR update-source Loopback0
+  neighbor 10.255.0.1 peer-group CT_TO_RR
+  !
+  address-family ipv4
+  !
+    network 10.138.0.1 mask 255.255.255.255
+    !
+    neighbor CT_TO_RR send-community both
+    neighbor CT_TO_RR send-label
+    neighbor CT_TO_RR next-hop-self all
+    neighbor 10.255.0.1 activate
+  !
 !
 end
 write
@@ -2025,7 +2219,7 @@ router bgp 7552
   !
   neighbor 10.134.1.2
     use neighbor-group CT_TO_AGG
-  neighbor 10.138.0.1
+  neighbor 10.255.0.1
     use neighbor-group CT_TO_RR
 !
 commit
@@ -2518,14 +2712,13 @@ conf t
 ! ========================================================================
 ! Khai bao L3VPN
 ! ========================================================================
-vrf definition L3VPN
+ip vrf L3VPN
   rd 7552:500
   route-target export 7552:500
   route-target import 7552:500
-  address-family ipv4 unicast
 !
 interface lo500
-  vrf forwarding L3VPN
+  ip vrf forwarding L3VPN
   ip address 172.16.40.1 255.255.255.0
   no shutdown
 !
@@ -2546,13 +2739,14 @@ conf t
 ! ========================================================================
 ! Khai bao L3VPN
 ! ========================================================================
-ip vrf L3VPN
+vrf definition L3VPN
   rd 7552:500
   route-target export 7552:500
   route-target import 7552:500
+  address-family ipv4 unicast
 !
 interface lo500
-  ip vrf forwarding L3VPN
+  vrf forwarding L3VPN
   ip address 172.16.140.1 255.255.255.0
   no shutdown
 !
@@ -2664,58 +2858,20 @@ end
 write
 ```
 
-## rtfilter
+## L2VPN_TDM
 
-<h3>SRT2</h3>
+<h3>SRT3</h3>
 ```
 enable
 conf t
 !
 ! ========================================================================
-! Khai bao BGP
+! Khai bao pseudowire
 ! ========================================================================
-no router bgp 7552
-router bgp 7552
-  bgp router-id 10.132.0.2
-  neighbor SRT_TO_AGG peer-group
-  neighbor SRT_TO_AGG remote-as 7552
-  neighbor SRT_TO_AGG update-source Loopback0
-  neighbor 10.134.0.1 peer-group SRT_TO_AGG
-  neighbor 10.134.0.2 peer-group SRT_TO_AGG
-  address-family ipv4
-    network 10.132.0.2 mask 255.255.255.255
-    neighbor SRT_TO_AGG send-community both
-    neighbor SRT_TO_AGG send-label
-    neighbor 10.134.0.1 activate
-    neighbor 10.134.0.2 activate
-  exit-address-family
-  address-family vpnv4
-    neighbor SRT_TO_AGG send-community both
-    neighbor 10.134.0.1 activate
-    neighbor 10.134.0.2 activate
-  exit-address-family
-!
-end
-write
-```
-
-<h3>SRT2</h3>
-```
-enable
-conf t
-!
-! ========================================================================
-! Khai bao BGP
-! ========================================================================
-router bgp 7552
-!
-  address-family rtfilter unicast
-  !
-    neighbor SRT_TO_AGG send-community both
-    neighbor 10.134.0.1 activate
-    neighbor 10.134.0.2 activate
-  !
-  exit-address-family
+interface Ethernet1/1
+  no shutdown
+  xconnect 10.134.0.1 333 encapsulation mpls
+    backup peer 10.134.0.2 334
 !
 end
 write
@@ -2727,23 +2883,82 @@ enable
 conf t
 !
 ! ========================================================================
-! Khai bao BGP
+! Khai bao pseudowire stitching [MS-PW (multi-segment pseudowire)]
 ! ========================================================================
-router bgp 7552
-!
-  address-family rtfilter unicast
-  !
-    neighbor AGG_TO_CT route-reflector-client
-    neighbor AGG_TO_CT send-community both
-    neighbor 10.132.0.1 activate
-    neighbor 10.132.0.2 activate
-    neighbor 10.132.0.3 activate
-    neighbor 10.132.0.4 activate
-    neighbor 10.132.0.5 activate
-  !
-  exit-address-family
+l2vpn xconnect context L2VPN_TDM
+  member 10.132.0.3 333 encapsulation mpls
+  member 10.134.1.1 333 encapsulation mpls
 !
 end
 write
 ```
+
+<h3>AGGx</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao pseudowire stitching [MS-PW (multi-segment pseudowire)]
+! ========================================================================
+l2vpn xconnect context L2VPN_TDM
+  member 10.134.0.1 333 encapsulation mpls
+  member 10.132.1.1 333 encapsulation mpls
+!
+end
+write
+```
+
+<h3>SRTx</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
+interface Ethernet0/1
+  no shutdown
+  xconnect 10.134.1.1 333 encapsulation mpls
+    backup peer 10.134.1.2 334
+!
+end
+write
+```
+
+## 2G
+
+<h3>SRT3</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
+interface Ethernet1/0
+  no shutdown
+  xconnect 10.138.0.1 10010 encapsulation mpls
+    backup peer 10.138.0.2 10001
+!
+end
+write
+```
+
+<h3>PE2G</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
+interface Ethernet0/1
+  no shutdown
+  xconnect 10.132.0.3 10010 encapsulation mpls
+!
+end
+write
+```
+
 
