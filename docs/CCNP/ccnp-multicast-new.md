@@ -36,6 +36,15 @@ Nếu source gửi unicast đến từng host → tốn tài nguyên server, ả
 
 Hình trái: Server tạo luồng unicast đến từng host. Hình phải: Router/Switch sao chép & gửi multicast đến host cần nhận.
 
+**So sánh giữa Phát sóng Truyền hình và Truyền Multicast**
+
+| Trình tự | Phát sóng truyền hình (TV Broadcasting)          | Truyền Multicast (Multicast Transmission)                       |
+|----------|--------------------------------------------------|-----------------------------------------------------------------|
+| 1        | Đài truyền hình gửi dữ liệu đến kênh.            | Nguồn multicast gửi dữ liệu đến một nhóm multicast.             |
+| 2        | Người dùng bật tivi và chọn kênh.                | Các thành viên (receivers) tham gia vào nhóm multicast.         |
+| 3        | Tivi phát kênh.                                  | Các thành viên nhận và xem dữ liệu được gửi đến nhóm multicast. |
+| 4        | Người dùng chuyển sang kênh khác hoặc tắt tivi.  | Thành viên có thể rời hoặc tham gia lại nhóm multicast.         |
+
 ## Khó khăn của Multicast
 <br>
 - Sử dụng __UDP__; vì TCP không hợp lý khi server phải keep trạng thái cho từng receiver và nhận TCP control messages (ví dụ: ACK). UDP dẫn đến lưu lượng multicast là không tin cậy, thường dùng cho audio/video.
@@ -67,13 +76,14 @@ Chia nhóm Multicast IP:
 <br>
 Multicast IP phải được ánh xạ sang MAC address, do không có 1 host nào "sở hữu" Multicast IP để trả lời ARP. Multicast không phải broadcast nên không thể dùng MAC FFFF.FFFF.FFFF, chỉ host quan tâm mới nhận traffic.
 
-Giải pháp: định nghĩa prefix multicast MAC 25-bit là __0100.5eXX.XXXX__, trong đó hex thứ 7 là 0-7. Do đó, các MAC dùng cho multicast nằm trong khoảng 0100.5E00.0000 đến 0100.5e7f.ffff.
+Giải pháp: định nghĩa prefix multicast MAC 25-bit là __0100.5eXX.XXXX__, trong đó hex thứ 7 là 0-7 (do bit 25 luôn là 0). Do đó, các MAC dùng cho multicast nằm trong khoảng 0100.5E00.0000 đến 0100.5e7f.ffff.
 
 MAC address dài 48 bit, nên có 48 - 25 = 23 bit dùng để ánh xạ multicast IP. Vì multicast IP có 28 bit (32 - 4) là duy nhất (do multicast range là 224.0.0.0/4), nên 5 bit đầu không ánh xạ, dẫn đến 2^5 (32) multicast IP có cùng MAC address.
 
 Ví dụ: multicast IP 239.101.1.23 ánh xạ sang MAC 0100.5e65.0117.
 
 <img style="max-width: 600px" src="/docs/CCNP/img/multicast-Multicast MAC.png" />
+<img style="max-width: 400px" src="/docs/CCNP/img/multicast-Multicast MAC 2.png" />
 
 <h3>Mapping kiểu này có vấn đề không? (đọc thêm, có thể bỏ qua)</h3>
 
@@ -95,11 +105,11 @@ Ví dụ: multicast IP 239.101.1.23 ánh xạ sang MAC 0100.5e65.0117.
 - Được gọi là __Shortest Path Tree__ vì traffic đi theo đường ngắn nhất (theo reverse path).
 - __PIM-DM__ sử dụng source tree.
 
-## Shared Tree (RP Tree)
+## Shared Tree (RPT)
 <img style="max-width: 560px" src="/docs/CCNP/img/multicast-Shared Tree (RP Tree).png" />
 - Root là __Rendezvous Point (RP)__.
 - Ký hiệu: __(\*, G)__; mọi source đều gửi về RP trước. Ví dụ có 2 source 10.1.1.1 và 10.1.2.1, cả 2 multicast flows xem là 1 single tree (\*, 239.1.1.1).
-- Mặc dù không phải đường ngắn nhất, nhưng rule bắt buộc traffic phải đi qua RP (__ASM - any source multicast__).
+- Mặc dù không phải đường ngắn nhất, nhưng rule bắt buộc traffic phải đi qua RP (__ASM - any source multicast__). Nên gọi là __Rendezvous Point Tree__.
 - __PIM-SM__ sử dụng shared tree và source tree.
 
 ## Reverse Path Forwarding Check
@@ -211,7 +221,7 @@ __#R1 (bật PIM và IGMPv2 trên upstream e0/1 và downstream e0/2)__
 enable
 conf t
 !
-ip multicast-routing distributed
+ip multicast-routing
 !
 int e0/1
  ip pim dense-mode
@@ -307,6 +317,20 @@ R1 nhận Leave và gửi targeted membership query (max response time giảm xu
 __PIM (Protocol Independent Multicast)__ dùng để xây dựng multicast distribution trees. "Protocol independent" nghĩa là PIM không quan tâm giao thức unicast routing protocol nào được dùng để build unicast routing table (dù là static, connected, OSPF, BGP,…). PIM xác định đường đi tốt nhất qua RPF check.
 
 PIM là Router-to-Router Protocol, không trao đổi route, thay vào đó dùng __Join__ và __Prune__ messages để xây dựng tree cho (\*, G) hoặc (S, G). Neighbor discovery diễn ra qua địa chỉ link-local multicast __224.0.0.13__.
+
+Có 2 kiểu entry (bản ghi) PIM được tạo trong quá trình chạy PIM: **(S, G)** và **(\*, G)**.  
+- **S** đại diện cho địa chỉ nguồn multicast cụ thể.  
+- **G** đại diện cho địa chỉ nhóm multicast cụ thể.  
+- **\*** đại diện cho mọi nguồn multicast.
+
+**(S, G)**: Thường dùng để thiết lập **SPT (Shortest Path Tree)** trên mạng PIM. Áp dụng cho **PIM-DM** và **PIM-SM**.
+
+**(\*, G)**: Thường dùng để thiết lập **RPT (Rendezvous Point Tree)** trên mạng PIM. Áp dụng cho **PIM-SM** và **Bidir-PIM**.
+
+Một router PIM có thể chứa cả 2 loại entry (S, G) và (*, G). Khi nhận được gói multicast với địa chỉ nguồn **S** và địa chỉ nhóm **G**, nếu gói này vượt qua kiểm tra RPF, router chuyển tiếp gói theo quy tắc:
+
+1. Nếu đã tồn tại **(S, G)**, router chuyển tiếp dựa trên **(S, G)**.  
+2. Nếu **(S, G)** chưa tồn tại nhưng **(\*, G)**  có, router sẽ tạo entry **(S, G)** dựa trên **(\*, G)** và chuyển tiếp gói theo **(S, G)** vừa được tạo.
 
 __PIM-SM:__ Khi router nhận IGMP Join từ host, nó gửi PIM Join cho neighbor báo "Tôi có host downstream cần nhận multicast từ group này." 
 
@@ -1310,61 +1334,201 @@ Sử dụng topo sau để mô tả 2 cơ chế này.
 
 <img style="max-width: 300px" src="/docs/CCNP/img/multicast-PIM DR and Assert Message.png" />
 
+_(\*) Cấu hình sẽ thay đổi, tất cả thiết bị sẽ dùng IOL. e0/1 là gi1, e0/2 là gi2, e0/3 là gi3, e0/0 là gi4._
+
+__#Source__
+```
+enable
+conf t
+!
+hostname Source
+!
+no ip domain-lookup
+!
+int e0/1
+ ip address 10.10.10.10 255.255.255.0
+ no shut
+!
+ip route 0.0.0.0 0.0.0.0 10.10.10.1
+!
+end
+write
+```
+
+__#R1__
+```
+enable
+conf t
+!
+hostname R1
+!
+no ip domain-lookup
+!
+ip multicast-routing
+!
+int e0/1
+ ip address 10.10.10.1 255.255.255.0
+ ip pim dense-mode
+ no shut
+!
+int e0/2
+ ip address 10.1.2.1 255.255.255.0
+ no shut
+ ip pim dense-mode
+!
+int e0/3
+ ip address 10.1.3.1 255.255.255.0
+ no shut
+ ip pim dense-mode
+!
+router ospf 1
+ network 0.0.0.0 255.255.255.255 area 0
+!
+end
+write
+```
+
+__#R2__
+```
+enable
+conf t
+!
+hostname R2
+!
+no ip domain-lookup
+!
+ip multicast-routing
+!
+int e0/1
+ ip address 10.1.2.2 255.255.255.0
+ ip pim dense-mode
+ no shut
+!
+int e0/2
+ ip address 10.10.100.2 255.255.255.0
+ ip pim dense-mode
+ vrrp 1 ip 10.10.100.1
+ no shut
+!
+router ospf 1
+ network 0.0.0.0 255.255.255.255 area 0
+!
+end
+write
+```
+
+__#R3__
+```
+enable
+conf t
+!
+hostname R3
+!
+no ip domain-lookup
+!
+ip multicast-routing
+!
+int e0/1
+ ip address 10.1.3.3 255.255.255.0
+ ip pim dense-mode
+ no shut
+!
+int e0/2
+ ip address 10.10.100.3 255.255.255.0
+ ip pim dense-mode
+ vrrp 1 ip 10.10.100.1
+ vrrp 1 priority 90
+ no shut
+!
+router ospf 1
+ network 0.0.0.0 255.255.255.255 area 0
+!
+end
+write
+```
+
+__#Host1__
+```
+enable
+conf t
+!
+hostname Host1
+!
+no ip domain-lookup
+!
+int e0/0
+ ip address 10.10.100.10 255.255.255.0
+ no shut
+ ip igmp join-group 239.1.1.1
+!
+ip route 0.0.0.0 0.0.0.0 10.10.100.1
+!
+end
+write
+```
+
 <h3>Assert Message</h3>
 
 Trong PIM-DM, khi source gửi multicast, R1 sẽ flood cả Gi2 và Gi3. R2 và R3 đều có entry (\*, 239.1.1.1), vì vậy mỗi router sẽ gửi lưu lượng ra Gi2 của nó. Host1 sẽ nhận được các gói trùng lặp.
 
 ```
-R2#show ip mroute 239.1.1.1
-
-(*, 239.1.1.1), 00:09:28/00:02:22, RP 0.0.0.0, flags: DC
+R2#show ip mroute | sec 239
+(*, 239.1.1.1), 00:00:18/00:02:41, RP 0.0.0.0, flags: DC
   Incoming interface: Null, RPF nbr 0.0.0.0
   Outgoing interface list:
-    GigabitEthernet2, Forward/Dense, 00:09:28/stopped
-    GigabitEthernet1, Forward/Dense, 00:09:28/stopped
+    Ethernet0/2, Forward/Dense, 00:00:18/stopped
+    Ethernet0/1, Forward/Dense, 00:00:18/stopped
 
-R3#show ip mroute 239.1.1.1
-
-(*, 239.1.1.1), 00:09:42/00:02:04, RP 0.0.0.0, flags: DC
+R3#show ip mroute | sec 239
+(*, 239.1.1.1), 00:00:25/00:02:55, RP 0.0.0.0, flags: DC
   Incoming interface: Null, RPF nbr 0.0.0.0
   Outgoing interface list:
-    GigabitEthernet2, Forward/Dense, 00:09:42/stopped
-    GigabitEthernet1, Forward/Dense, 00:09:42/stopped
+    Ethernet0/2, Forward/Dense, 00:00:25/stopped
+    Ethernet0/1, Forward/Dense, 00:00:25/stopped
 ```
 
 Để ngăn điều này, PIM sử dụng Assert message: Khi một router nhận gói multicast trên một interface đã có trong OIL, nó gửi đi thông điệp Assert chứa AD và metric của mình. Nếu nhận được Assert với metric thấp hơn (hoặc cùng metric nhưng IP cao hơn), router đó dừng gửi traffic trên interface đó.
 
 Ví dụ: R2 và R3 đều nhận traffic từ R1, dẫn đến duplicated packets tại Host1. R3 gửi Assert; R2, nhận thấy R3 "win", R2 sẽ gửi Prune trên Gi2 và Gi1.
 
-```
-R2#show ip mroute 239.1.1.1
+Ping từ Source đến 239.1.1.1 và bắt gói tại e0/0 của Host1.
 
-(*, 239.1.1.1), 00:07:04/stopped, RP 0.0.0.0, flags: DC
+![alt text](/docs/CCNP/img/multicast-PIM-SM Assert Message.png)
+
+```
+R1#show ip mroute | sec 239
+(*, 239.1.1.1), 00:00:27/stopped, RP 0.0.0.0, flags: D
   Incoming interface: Null, RPF nbr 0.0.0.0
   Outgoing interface list:
-    GigabitEthernet1, Forward/Dense, 00:06:39/stopped
-    GigabitEthernet2, Forward/Dense, 00:07:04/stopped
-
-(10.10.10.10, 239.1.1.1), 00:04:08/00:01:51, flags: PT
-  Incoming interface: GigabitEthernet1, RPF nbr 10.1.2.1
+    Ethernet0/3, Forward/Dense, 00:00:27/stopped
+    Ethernet0/2, Forward/Dense, 00:00:27/stopped
+(10.10.10.10, 239.1.1.1), 00:00:27/00:02:32, flags: T
+  Incoming interface: Ethernet0/1, RPF nbr 0.0.0.0
   Outgoing interface list:
-    GigabitEthernet2, Prune/Dense, 00:04:08/00:01:48
-```
+    Ethernet0/2, Prune/Dense, 00:00:27/00:02:32
+    Ethernet0/3, Forward/Dense, 00:00:27/stopped
 
-```
-R1#show ip mroute 239.1.1.1
-
-(*, 239.1.1.1), 00:05:32/stopped, RP 0.0.0.0, flags: D
+R2#show ip mroute | sec 239
+(*, 239.1.1.1), 00:09:24/stopped, RP 0.0.0.0, flags: DC
   Incoming interface: Null, RPF nbr 0.0.0.0
   Outgoing interface list:
-    GigabitEthernet3, Forward/Dense, 00:05:32/stopped
-    GigabitEthernet2, Forward/Dense, 00:05:32/stopped
-
-(10.10.10.10, 239.1.1.1), 00:00:43/00:02:16, flags: T
-  Incoming interface: GigabitEthernet1, RPF nbr 0.0.0.0
+    Ethernet0/2, Forward/Dense, 00:09:24/stopped
+    Ethernet0/1, Forward/Dense, 00:09:24/stopped
+(10.10.10.10, 239.1.1.1), 00:00:31/00:02:28, flags: PT
+  Incoming interface: Ethernet0/1, RPF nbr 10.1.2.1
   Outgoing interface list:
-    GigabitEthernet2, Prune/Dense, 00:00:31/00:02:28
-    GigabitEthernet3, Forward/Dense, 00:00:43/stopped
+    Ethernet0/2, Prune/Dense, 00:00:31/00:02:28
+
+R3#show ip mroute | sec 239
+(*, 239.1.1.1), 00:09:27/stopped, RP 0.0.0.0, flags: DC
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list:
+    Ethernet0/2, Forward/Dense, 00:09:27/stopped
+    Ethernet0/1, Forward/Dense, 00:09:27/stopped
+(10.10.10.10, 239.1.1.1), 00:00:35/00:02:24, flags: T
+  Incoming interface: Ethernet0/1, RPF nbr 10.1.3.1
+  Outgoing interface list:
+    Ethernet0/2, Forward/Dense, 00:00:35/stopped, A
 ```
 
 <h3>Designated Router (DR)</h3>
@@ -1375,38 +1539,92 @@ DR được bầu khi các PIM neighborship up, chỉ dùng trong PIM-SM. DR là
 
 Ưu tiên dựa trên DR Priority (mặc định là 1). Nếu bằng thì chọn router có IP cao nhất.
 
+Lab: Thay đổi từ PIM-DM sang PIM-SM. R1 làm RP.
+
+__#R1__
+```
+enable
+conf t
+!
+int lo0
+ ip address 1.1.1.1 255.255.255.255
+!
+ip pim rp-address 1.1.1.1
+!
+int range e0/1-3
+ ip pim sparse-mode
+!
+end
+```
+
+__#R2/R3__
+```
+enable
+conf t
+!
+ip pim rp-address 1.1.1.1
+!
+int range e0/1-2
+ ip pim sparse-mode
+!
+end
+debug ip pim
+```
+
 Ví dụ: Trên broadcast segment có R2 và R3, nếu R3 có DR flag, thì R2 sẽ không gửi PIM Join mà chỉ gửi Prune. DR cũng chịu trách nhiệm gửi PIM Register nếu có nhiều FHR trên LAN.
 
 ```
-R2#show ip pim neighbor 
+R1#show ip pim neighbor
 PIM Neighbor Table
 Mode: B - Bidir Capable, DR - Designated Router, N - Default DR Priority,
       P - Proxy Capable, S - State Refresh Capable, G - GenID Capable,
       L - DR Load-balancing Capable
 Neighbor          Interface                Uptime/Expires    Ver   DR
 Address                                                            Prio/Mode
-10.1.2.1          GigabitEthernet1         00:20:03/00:01:21 v2    1 / S P G
-10.10.100.3       GigabitEthernet2         00:20:02/00:01:21 v2    1 / DR S P G
+10.1.2.2          Ethernet0/2              00:21:55/00:01:27 v2    1 / DR S P G
+10.1.3.3          Ethernet0/3              00:21:47/00:01:37 v2    1 / DR S P G
+
+R2#show ip pim neighbor
+PIM Neighbor Table
+Mode: B - Bidir Capable, DR - Designated Router, N - Default DR Priority,
+      P - Proxy Capable, S - State Refresh Capable, G - GenID Capable,
+      L - DR Load-balancing Capable
+Neighbor          Interface                Uptime/Expires    Ver   DR
+Address                                                            Prio/Mode
+10.1.2.1          Ethernet0/1              00:21:37/00:01:15 v2    1 / S P G
+10.10.100.3       Ethernet0/2              00:21:29/00:01:25 v2    1 / DR S P G
+
+R3#show ip pim neighbor
+PIM Neighbor Table
+Mode: B - Bidir Capable, DR - Designated Router, N - Default DR Priority,
+      P - Proxy Capable, S - State Refresh Capable, G - GenID Capable,
+      L - DR Load-balancing Capable
+Neighbor          Interface                Uptime/Expires    Ver   DR
+Address                                                            Prio/Mode
+10.1.3.1          Ethernet0/1              00:22:22/00:01:28 v2    1 / S P G
+10.10.100.2       Ethernet0/2              00:22:22/00:01:31 v2    1 / S P G
 ```
 
 ```
-*Sep 14 14:44:49.730: PIM(0): Re-check RP 1.1.1.1 into the (*, 239.1.1.1) entry
-*Sep 14 14:44:49.731: PIM(0): Building Triggered (*,G) Join / (S,G,RP-bit) Prune message for 239.1.1.1
-
-R2#show ip mroute 239.1.1.1
-
-(*, 239.1.1.1), 00:00:23/00:02:49, RP 1.1.1.1, flags: SP
-  Incoming interface: GigabitEthernet1, RPF nbr 10.1.2.1
-  Outgoing interface list: Null
-```
-
-```
-R1#show ip mroute 239.1.1.1
-
-(*, 239.1.1.1), 00:06:04/00:03:02, RP 1.1.1.1, flags: S
+R1#show ip mroute | sec 239
+(*, 239.1.1.1), 00:00:30/00:02:59, RP 1.1.1.1, flags: S
   Incoming interface: Null, RPF nbr 0.0.0.0
   Outgoing interface list:
-    GigabitEthernet3, Forward/Sparse, 00:02:25/00:03:02
+    Ethernet0/3, Forward/Sparse, 00:00:30/00:02:59
+
+R2#
+*Mar 27 02:54:37.965: PIM(0): Check RP 1.1.1.1 into the (*, 239.1.1.1) entry
+*Mar 27 02:54:37.965: PIM(0): Building Triggered (*,G) Join / (S,G,RP-bit) Prune message for 239.1.1.1
+R2#show ip mroute | sec 239
+(*, 239.1.1.1), 00:00:16/00:02:43, RP 1.1.1.1, flags: SP
+  Incoming interface: Ethernet0/1, RPF nbr 10.1.2.1
+  Outgoing interface list: Null
+
+R3#show ip mroute | sec 239
+(*, 239.1.1.1), 00:00:25/00:02:34, RP 1.1.1.1, flags: SJC
+  Incoming interface: Ethernet0/1, RPF nbr 10.1.3.1
+  Outgoing interface list:
+    Ethernet0/2, Forward/Sparse, 00:00:25/00:02:34
 ```
 
 <h3>DR Failover</h3>
@@ -1415,22 +1633,25 @@ Nếu DR fail, router không phải DR chỉ takeover sau khi neighborship timeo
 
 ```
 #R3
-int range Gi1-2
+int range e0/1-2
  shutdown
 
-Source1#ping 239.1.1.1 repeat 100
+Source#ping 239.1.1.1 repeat 100
 Type escape sequence to abort.
 Sending 100, 100-byte ICMP Echos to 239.1.1.1, timeout is 2 seconds:
 
-Reply to request 0 from 10.10.100.10, 37 ms...................................................
-Reply to request 52 from 10.10.100.10, 20 ms
+Reply to request 0 from 10.10.100.10, 39 ms
+Reply to request 1 from 10.10.100.10, 2 ms
+Reply to request 2 from 10.10.100.10, 2 ms......................................
+Reply to request 41 from 10.10.100.10, 16 ms
+Reply to request 42 from 10.10.100.10, 2 ms
 ```
 
-51 lần ping timeout trước khi R2 take over DR.
+Xảy ra ping timeout trước khi R2 take over DR.
 
 ## PIM-SM Auto-RP
 
-Auto-RP được tạo ra độc quyền của Cisco, dùng giải quyết cấu hình RP (ip pim rp-address) là thủ công và không hỗ trợ nhiều RP dự phòng.
+Auto-RP được tạo ra độc quyền của Cisco, dùng giải quyết cấu hình RP (__ip pim rp-address__) là thủ công và không hỗ trợ nhiều RP dự phòng.
 
 **Candidate RP:** Cấu hình bằng lệnh __ip pim send-rp-announce__; các router gửi thông báo trạng thái tới Mapping Agent qua multicast __224.0.1.39__ (Cisco-RP-Announce).  
 
@@ -1582,7 +1803,7 @@ ip pim rp-candidate lo0
 end
 ```
 
-BSR sẽ quảng bá RP-set cho toàn mạng.
+BSR sẽ quảng bá tất cả RP cho toàn mạng.
 
 ```
 R5#show ip pim rp mapping
@@ -1597,75 +1818,249 @@ Group(s) 224.0.0.0/4
          Uptime: 00:00:36, expires: 00:02:02
 ```
 
-## PIM-BiDir
+<!-- ## PIM-BiDir
 
-<h3>DF Election</h3>
+Một số ứng dụng sử dụng cách tiếp cận many-to-many (ví dụ: video chat) khi mỗi thiết bị vừa là nguồn vừa là người nhận.
 
-_(Chưa sẵn sàng)_
+Sử dụng PIM-SM với một số thay đổi: không có (S, G) state và không có quá trình source registration.
 
-Một số ứng dụng sử dụng cách tiếp cận many-to-many. Ví dụ: một ứng dụng trò chuyện video hỗ trợ đa hướng có thể có mỗi người tham gia đều vừa là cả nguồn phát và người nhận. Người tham gia là một nguồn gửi video của riêng mình và là người nhận tất cả các luồng khác của người tham gia.
+Khi source bắt đầu gửi, FHR chỉ chuyển tiếp traffic về RP, sau đó RP phát tán traffic xuống cây chia sẻ (shared tree).
+  - Do không có PIM Register, traffic có thể “đi lên” cây chia sẻ mà không bị RPF check từ chối.
+  - Để ngăn vòng lặp, PIM-BiDir bầu một Designated Forwarder (DF) trên mỗi link.
 
 Để kích hoạt pim-bidir, cần 2 bước:
-- Bật BIDIR trên mỗi router: __ip pim bidir-enable__
+- Bật BiDir trên mỗi router: __ip pim bidir-enable__
 - Đặt RP thành Bidir:
   - Statically: __ip pim rp-address 1.1.1.1 bidir__
   - BSR: __ip pim rp-candidate Lo0 bidir__
   - Auto-RP: __ip pim send-rp-announce lo0 scope 255 bidir__
 
-<h3>Traffic flow</h3>
+Lab: Di chuyển BSR rp-candidate sang chỉ có R4 và bật BiDir trên mỗi router. R2 vẫn làm BSR bsr-candidate.
 
-_(Chưa sẵn sàng)_
+```
+#R1, R6
+no ip pim rp-candidate lo0
+
+#R4
+int lo0
+ ip pim sparse-mode
+!
+ip pim bidir-enable
+ip pim rp-candidate lo0 bidir
+
+#All routers
+ip pim bidir-enable
+```
+
+```
+R1#show ip pim int df
+* implies this system is the DF
+Interface                RP               DF Winner        Metric     Uptime
+Ethernet0/0              4.4.4.4           10.1.6.6         11         00:08:40
+Ethernet0/1              4.4.4.4          *10.10.10.1       21         00:08:40
+Ethernet0/2              4.4.4.4           10.1.2.2         11         00:08:40
+Ethernet0/3              4.4.4.4           10.1.5.5         11         00:08:40
+R1#show ip mroute | sec 224
+(*,224.0.0.0/4), 00:08:42/-, RP 4.4.4.4, flags: B
+  Bidir-Upstream: Ethernet0/0, RPF nbr: 10.1.6.6
+  Incoming interface list:
+    Ethernet0/1, Accepting/Sparse
+    Ethernet0/0, Accepting/Sparse
+(*, 224.0.1.40), 00:14:07/00:02:55, RP 0.0.0.0, flags: DPL
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list: Null
+
+R2#show ip pim int df
+* implies this system is the DF
+Interface                RP               DF Winner        Metric     Uptime
+Ethernet0/0              4.4.4.4           10.2.6.6         11         00:02:14
+Ethernet0/1              4.4.4.4          *10.1.2.2         11         00:02:14
+Ethernet0/2              4.4.4.4          *10.2.3.2         11         00:02:14
+Ethernet0/3              4.4.4.4           10.2.4.4         0          00:02:14
+Loopback0                4.4.4.4          *2.2.2.2          11         00:02:14
+R2#show ip mroute | sec 224
+(*,224.0.0.0/4), 00:03:05/-, RP 4.4.4.4, flags: B
+  Bidir-Upstream: Ethernet0/3, RPF nbr: 10.2.4.4
+  Incoming interface list:
+    Ethernet0/2, Accepting/Sparse
+    Ethernet0/1, Accepting/Sparse
+    Loopback0, Accepting/Sparse
+    Ethernet0/3, Accepting/Sparse
+(*, 224.0.1.40), 00:08:00/00:02:39, RP 0.0.0.0, flags: DPL
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list: Null
+
+R3#show ip pim int df
+* implies this system is the DF
+Interface                RP               DF Winner        Metric     Uptime
+Ethernet0/1              4.4.4.4           10.2.3.2         11         00:02:17
+Ethernet0/2              4.4.4.4          *10.10.0.1        21         00:02:17
+Ethernet0/3              4.4.4.4          *10.10.11.1       21         00:02:17
+R3#show ip mroute | sec 224
+(*,224.0.0.0/4), 00:03:08/-, RP 4.4.4.4, flags: B
+  Bidir-Upstream: Ethernet0/1, RPF nbr: 10.2.3.2
+  Incoming interface list:
+    Ethernet0/3, Accepting/Sparse
+    Ethernet0/2, Accepting/Sparse
+    Ethernet0/1, Accepting/Sparse
+(*, 224.0.1.40), 00:08:00/00:02:34, RP 0.0.0.0, flags: DCL
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list:
+    Ethernet0/1, Forward/Sparse, 00:08:00/00:02:34
+
+R4#show ip pim int df
+* implies this system is the DF
+Interface                RP               DF Winner        Metric     Uptime
+Ethernet0/0              4.4.4.4          *10.4.5.4         0          00:02:20
+Ethernet0/1              4.4.4.4          *10.2.4.4         0          00:02:20
+Ethernet0/2              4.4.4.4          *10.10.100.1      0          00:02:20
+Ethernet0/3              4.4.4.4          *10.4.6.4         0          00:02:20
+Loopback0                4.4.4.4          *4.4.4.4          0          00:02:20
+R4#show ip mroute | sec 224
+(*,224.0.0.0/4), 00:03:10/-, RP 4.4.4.4, flags: B
+  Bidir-Upstream: Loopback0, RPF nbr: 4.4.4.4
+  Incoming interface list:
+    Ethernet0/3, Accepting/Sparse
+    Ethernet0/0, Accepting/Sparse
+    Ethernet0/2, Accepting/Sparse
+    Ethernet0/1, Accepting/Sparse
+    Loopback0, Accepting/Sparse
+(*, 224.0.1.40), 00:07:59/00:02:37, RP 0.0.0.0, flags: DPL
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list: Null
+
+R5#show ip pim int df
+* implies this system is the DF
+Interface                RP               DF Winner        Metric     Uptime
+Ethernet0/1              4.4.4.4          *10.1.5.5         11         00:02:22
+Ethernet0/2              4.4.4.4          *10.10.200.1      11         00:02:22
+Ethernet0/3              4.4.4.4           10.4.5.4         0          00:02:22
+R5#show ip mroute | sec 224
+(*,224.0.0.0/4), 00:03:11/-, RP 4.4.4.4, flags: B
+  Bidir-Upstream: Ethernet0/3, RPF nbr: 10.4.5.4
+  Incoming interface list:
+    Ethernet0/1, Accepting/Sparse
+    Ethernet0/2, Accepting/Sparse
+    Ethernet0/3, Accepting/Sparse
+(*, 224.0.1.40), 00:07:59/00:02:35, RP 0.0.0.0, flags: DCL
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list:
+    Ethernet0/3, Forward/Sparse, 00:07:59/00:02:35
+    Ethernet0/1, Forward/Sparse, 00:07:59/00:02:30
+
+R6#show ip pim int df
+* implies this system is the DF
+Interface                RP               DF Winner        Metric     Uptime
+Ethernet0/1              4.4.4.4          *10.1.6.6         11         00:02:24
+Ethernet0/2              4.4.4.4          *10.2.6.6         11         00:02:24
+Ethernet0/3              4.4.4.4           10.4.6.4         0          00:02:24
+R6#show ip mroute | sec 224
+(*,224.0.0.0/4), 00:03:13/-, RP 4.4.4.4, flags: B
+  Bidir-Upstream: Ethernet0/3, RPF nbr: 10.4.6.4
+  Incoming interface list:
+    Ethernet0/1, Accepting/Sparse
+    Ethernet0/2, Accepting/Sparse
+    Ethernet0/3, Accepting/Sparse
+(*, 224.0.1.40), 00:07:59/00:02:30, RP 0.0.0.0, flags: DCL
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list:
+    Ethernet0/2, Forward/Sparse, 00:07:59/00:02:30
+    Ethernet0/1, Forward/Sparse, 00:07:59/00:02:23
+```
 
 <h3>Phantom RP</h3>
 
-_(Chưa sẵn sàng)_
+Trong PIM-BiDir, RP chỉ cần là gốc của cây chia sẻ, không cần tham gia (S, G) như PIM-SM.
+Kỹ thuật "phantom RP" dùng longest prefix match để tạo một RP ảo:
+- Cấu hình các router với RP address tĩnh (ví dụ, 192.168.100.1).
+- R4 và R6 có loopback khác nhau (ví dụ, R4: 192.168.100.2/29, R6: 192.168.100.2/30).
+- Điều này buộc traffic PIM Join đến R6 mặc dù R6 không có interface với địa chỉ RP thật.
+
+<img style="max-width: 700px" src="/docs/CCNP/img/multicast-PIM-BiDir Phantom RP.png" />
+
+```
+#R6
+int lo1
+ ip address 192.168.100.2 255.255.255.252
+ ip ospf network point-to-point ! Used to allow OSPF to advertise the loopback's mask
+ ip pim sparse-mode
+!
+ip pim rp-address 192.168.100.1 bidir
+
+#R4
+int lo1
+ ip address 192.168.100.2 255.255.255.248
+ ip ospf network point-to-point
+ ip pim sparse-mode
+!
+no ip pim rp-candidate Loopback0 bidir
+ip pim rp-address 192.168.100.1 bidir
+
+#All other routers
+ip pim rp-address 192.168.100.1 bidir
+``` -->
 
 ## PIM-SSM (Source-Specific Multicast)
 
-- **Khái niệm:**  
-  - Host chỉ nhận traffic từ 1 nguồn cụ thể.  
-  - LHR gia nhập cây (S, G) dựa trên thông tin nguồn từ IGMP Membership Report (ví dụ: (1.1.1.1, 232.1.1.1)).  
-  - Cây (S, G) xây dựng giống như PIM-SM sau SPT switchover, nhưng không cần RP vì host đã cung cấp source.
+Host chỉ định nguồn cụ thể để nhận traffic multicast. LHR gia nhập cây (S, G) dựa trên thông tin nguồn từ IGMP Membership Report (ví dụ: (1.1.1.1, 232.1.1.1)). Cây (S, G) xây dựng giống như PIM-SM sau SPT switchover, nhưng không cần RP vì host đã cung cấp source.
 
-- **Yêu cầu & Giao thức:**  
-  - Yêu cầu IGMPv3 trên host để cho phép chỉ định nguồn.  
-  - IGMPv3 hỗ trợ tương thích ngược với IGMPv2.
-  - PIM-SSM sử dụng dải nhóm 232.0.0.0/8 (có thể thay đổi qua ACL).
+PIM-SSM Yêu cầu IGMPv3 trên cổng đấu với host để cho phép chỉ định nguồn. IGMPv3 hỗ trợ tương thích ngược với IGMPv2.
 
-- **Ưu điểm:**  
-  - Giảm phức tạp: không cần cấu hình RP.
-  - Mỗi (source, group) là một flow duy nhất, cho phép tái sử dụng cùng một multicast IP cho các nguồn khác nhau (ví dụ, S1 và S2 cùng sử dụng G cho các kênh TV khác nhau).
+PIM-SSM sử dụng dải nhóm 232.0.0.0/8 là mặc định (có thể thay đổi qua ACL).
 
-- **Cấu hình Lab:**  
-  - Loại bỏ các cấu hình PIM-bidir và RP cũ.
-  - Cấu hình R6 làm RP bằng BSR (nếu dùng PIM-SM kết hợp).
-  - Thiết lập PIM-SSM trên tất cả router:  
-    ```
-    ip pim ssm default
-    ```
-  - Trên các interface đối với host (ví dụ R3, R4, R5):  
-    ```
-    ip igmp version 3
-    ```
-  - Host tham gia SSM bằng lệnh:  
-    ```
-    ip igmp join-group 232.1.1.1 source 10.10.10.10
-    ```
-  - Lưu ý: ban đầu, nếu host vẫn chạy IGMPv2, tham số source sẽ bị bỏ qua.
+**Ưu điểm:**  
+- Giảm phức tạp: không cần cấu hình RP.
+- Mỗi (source, group) là một flow duy nhất, cho phép tái sử dụng cùng một multicast IP cho các nguồn khác nhau (ví dụ, S1 và S2 cùng sử dụng G cho các kênh TV khác nhau).
 
-- **Luồng Traffic & IGMPv3:**  
-  - LHR (ví dụ R5) tạo trạng thái cho cả ASM và SSM dựa trên IGMPv3 Membership Report của host.  
-  - Ví dụ, trạng thái:  
-    - (*, 239.100.100.100) cho ASM, có liên quan đến RP.  
-    - (10.10.10.10, 232.1.1.1) cho SSM, được xây dựng trực tiếp từ FHR đến LHR.
-  - Khi source gửi traffic tới 232.1.1.1, host nhận phản hồi mà không cần RP can thiệp.
+**Lab**
 
-- **Quá trình Leave:**  
-  - Khi host rời nhóm ASM, IGMPv3 chuyển sang “Include” với 0 nguồn.
-  - Khi host rời nhóm SSM, thông điệp Leave khiến LHR gỡ bỏ entry (vì nguồn duy nhất bị chặn).
+- Loại bỏ các cấu hình liên quan đến PIM cũ.
+- Chỉ bật PIM-SM trên cổng đấu neighbor/host của tất cả router. Không cấu hình RP.
+  ```
+  int range e0/0-3
+  ip pim sparse-mode
+  ```
+- Trên các interface đối với host (ví dụ R3, R4, R5). 
+  ```
+  ip igmp version 3
+  ```
+- Khai báo SSM mapping.
+  ```
+  no ip igmp ssm-map query dns                  ! tat tinh nang igmp ssm-map query dns
+  ip igmp ssm-map enable                        ! bat tinh nang igmp ssm-map
+  ip access-list standard SSM_RANGE             ! khai bao acl cho phep dai ip multicast
+    permit 239.0.0.0 0.255.255.255
+  ip pim ssm range SSM_RANGE                    ! khai bao dai ssm range tuy y (mac dinh là 232.0.0.0/8)
+  ip igmp ssm-map static SSM_RANGE 10.10.10.10  ! khai bao map static ip multicast vao ip source
+  ```
+- Host tham gia SSM bằng lệnh:  
+  ```
+  ip igmp join-group 239.2.2.2 source 10.10.10.10
+  ```
 
-- **Kết luận:**  
-  - PIM-SSM dùng IGMPv3 để cho host chỉ định nguồn, giúp LHR xây dựng cây (S, G) SPT trực tiếp từ nguồn mà không cần RP.  
-  - So với PIM-SM, việc phát hiện nguồn được thực hiện sớm và không cần quá trình đăng ký nguồn (Source Registration), giảm tải cho mạng.
+```
+R5#show ip mroute | sec 239
+(10.10.10.10, 239.2.2.2), 00:09:37/00:02:19, flags: sTI
+  Incoming interface: Ethernet0/1, RPF nbr 10.1.5.1
+  Outgoing interface list:
+    Ethernet0/2, Forward/Sparse, 00:09:37/00:02:19
+
+R1#show ip mroute | sec 239
+(*, 239.2.2.2), 00:09:49/stopped, RP 0.0.0.0, flags: SPF
+  Incoming interface: Null, RPF nbr 0.0.0.0
+  Outgoing interface list: Null
+(10.10.10.10, 239.2.2.2), 00:01:57/00:01:02, flags: FT
+  Incoming interface: Ethernet0/1, RPF nbr 0.0.0.0
+  Outgoing interface list:
+    Ethernet0/3, Forward/Sparse, 00:01:57/00:03:29
+
+Source1#ping 239.2.2.2 repeat 4
+Type escape sequence to abort.
+Sending 4, 100-byte ICMP Echos to 239.2.2.2, timeout is 2 seconds:
+Reply to request 0 from 10.10.200.10, 2 ms
+Reply to request 1 from 10.10.200.10, 3 ms
+Reply to request 2 from 10.10.200.10, 2 ms
+Reply to request 3 from 10.10.200.10, 2 ms
+```
 
 
