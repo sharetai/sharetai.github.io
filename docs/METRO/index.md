@@ -244,6 +244,9 @@ int e1/0
 int e1/1
   ip addr 10.166.0.21 255.255.255.252
   no shut
+int e1/2
+  ip addr 10.166.0.25 255.255.255.252
+  no shut
 !
 end
 write
@@ -279,6 +282,27 @@ int Loopback0
   ip addr 10.136.0.5 255.255.255.255
 int e0/0
   ip addr 10.166.0.22 255.255.255.252
+  no shut
+!
+end
+write
+```
+
+<h3>IGW</h3>
+```
+enable
+conf t
+!
+no ip domain-lookup
+host IGW
+!
+int Loopback0
+  ip addr 10.136.0.26 255.255.255.255
+int e0/0
+  ip addr 10.166.0.26 255.255.255.252
+  no shut
+int e0/1
+  ip addr 8.8.8.1 255.255.255.0
   no shut
 !
 end
@@ -760,6 +784,27 @@ end
 write
 ```
 
+<h3>IGW</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao OSPF
+! ========================================================================
+router ospf 1
+  router-id 10.136.0.26
+  passive-interface Loopback0
+  network 10.136.0.26 0.0.0.0 area 0
+!
+int e0/0
+  ip ospf 1 area 0
+  ip ospf network point-to-point
+!
+end
+write
+```
+
 ## MPLS
 
 <h3>SRT1/SRT2/SRT3/SRT4/SRT5/SRTx</h3>
@@ -896,7 +941,7 @@ end
 write
 ```
 
-<h3>PE</h3>
+<h3>PE/IGW</h3>
 ```
 enable
 conf t
@@ -1422,6 +1467,7 @@ router bgp 7552
   neighbor 10.136.0.13 peer-group RR_TO_CT
   neighbor 10.136.0.14 peer-group RR_TO_CT
   neighbor 10.136.0.5 peer-group RR_TO_CT
+  neighbor 10.136.0.26 peer-group RR_TO_CT
   !
   address-family ipv4
   !
@@ -1433,6 +1479,7 @@ router bgp 7552
     neighbor 10.136.0.13 activate
     neighbor 10.136.0.14 activate
     neighbor 10.136.0.5 activate
+    neighbor 10.136.0.26 activate
   !
   address-family vpnv4
   !
@@ -1477,6 +1524,37 @@ router bgp 7552
   address-family ipv4
   !
     network 10.136.0.5 mask 255.255.255.255
+    !
+    neighbor CT_TO_RR send-community both
+    neighbor CT_TO_RR send-label
+    neighbor CT_TO_RR next-hop-self all
+    neighbor 10.255.0.1 activate
+  !
+!
+end
+write
+```
+
+<h3>IGW</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao BGP
+! ========================================================================
+router bgp 7552
+!
+  bgp router-id 10.136.0.26
+  !
+  neighbor CT_TO_RR peer-group
+  neighbor CT_TO_RR remote-as 7552
+  neighbor CT_TO_RR update-source Loopback0
+  neighbor 10.255.0.1 peer-group CT_TO_RR
+  !
+  address-family ipv4
+  !
+    network 10.136.0.26 mask 255.255.255.255
     !
     neighbor CT_TO_RR send-community both
     neighbor CT_TO_RR send-label
@@ -1679,6 +1757,26 @@ write
 <h3>VPC</h3>
 ```
 ip dhcp
+save
+```
+
+<h3>8.8.8.8</h3>
+```
+ip 8.8.8.8/24 8.8.8.1
+save
+```
+
+<h3>IGW</h3>
+```
+enable
+conf t
+!
+router bgp 7552
+  address-family ipv4
+    network 8.8.8.0 mask 255.255.255.0
+!
+end
+write
 ```
 
 <h3>Modem</h3>
@@ -1689,7 +1787,7 @@ conf t
 hostname Modem
 !
 ! ========================================================================
-! Khai bao PPPoeE
+! Khai bao PPPoeE Client
 ! ========================================================================
 interface Ethernet0/0
   no shutdown
@@ -1731,7 +1829,7 @@ int e0/1
 ! ========================================================================
 ! Khai bao Default Route
 ! ========================================================================
-ip route 0.0.0.0 0.0.0.0 210.245.0.1
+ip route 0.0.0.0 0.0.0.0 Dialer0
 !
 end
 write
@@ -1745,8 +1843,8 @@ conf t
 ! ========================================================================
 ! Khai bao pseudowire
 ! ========================================================================
-interface Ethernet0/2
-  no shutdown
+interface Ethernet0/2.35
+  encapsulation dot1Q 35
   xconnect 10.134.0.1 10001 encapsulation mpls
     backup peer 10.134.0.2 10002
 !
@@ -1764,6 +1862,7 @@ conf t
 ! ========================================================================
 l2vpn vfi context HSI
   vpn id 100
+  member 10.134.0.2 10005 encapsulation mpls
 bridge-domain 100
   member vfi HSI
   member 10.132.0.3 10001 encapsulation mpls
@@ -1789,6 +1888,31 @@ interface gi4.11
 interface gi4
   no shut
 !
+! ========================================================================
+! Khai bao OSPF 4050 giua CT-BRAS
+! ========================================================================
+interface gi4.4050
+  encapsulation dot1Q 4050
+  ip addr 10.40.0.1 255.255.255.252
+  ip ospf 4050 area 4050
+  ip ospf network point-to-point
+!
+router ospf 4050
+  area 4050 nssa default-information-originate metric-type 1 no-summary
+!
+! ========================================================================
+! Khai bao default route tro PE
+! ========================================================================
+!
+ip route 0.0.0.0 0.0.0.0 10.136.0.5
+!
+route-map CT_01_PUB_BRAS
+  match tag 4050
+!
+router bgp 7552
+  address-family ipv4 unicast
+    redistribute ospf 4050 metric 0 route-map CT_01_PUB_BRAS
+!
 end
 write
 ```
@@ -1798,34 +1922,60 @@ write
 enable
 conf t
 !
+no ip domain-lookup
+!
+hostname BRAS
+!
+int Loopback0
+  ip addr 10.137.0.1 255.255.255.255
+!
 ! ========================================================================
 ! Khai bao PPPoE Server
 ! ========================================================================
-hostname BRAS
-!
 username ftth_u1 password 123
 !
 bba-group pppoe NHATNGHE
  virtual-template 1
 !
-interface Virtual-Template1
- mtu 1492
- ip unnumbered Ethernet0/0
- peer default ip address pool NN_DHCP
- ppp authentication chap callin
+int Loopback1
+  ip addr 10.137.32.1 255.255.255.255
 !
 interface Ethernet0/0
  no shutdown
 !
 interface Ethernet0/0.11
  encapsulation dot1Q 11
+ no ip address
  pppoe enable group NHATNGHE
 !
-interface Ethernet0/0
- no shutdown
- ip address 210.245.0.1 255.255.255.0
+interface Virtual-Template1
+ mtu 1492
+ ip unnumbered lo1
+ peer default ip address pool NN_DHCP
+ ppp authentication chap callin
 !
-ip local pool NN_DHCP 210.245.0.2 210.245.0.254
+ip local pool NN_DHCP 210.245.0.1 210.245.0.255
+!
+! ========================================================================
+! Khai bao OSPF 4050 giua CT-BRAS
+! ========================================================================
+ip prefix-list POOL-BRAS permit 210.245.0.0/24
+!
+ip route 210.245.0.0 255.255.255.0 null 0
+!
+route-map EXPORT-POOL-BRAS-TO-OSPF permit 10
+ match ip address POOL-BRAS
+ set tag 4050
+!
+interface e0/0.4050
+  encapsulation dot1Q 4050
+  ip addr 10.40.0.2 255.255.255.252
+  ip ospf 4050 area 4050
+  ip ospf network point-to-point
+!
+router ospf 4050
+  area 4050 nssa
+  redistribute static subnets metric-type 1 route-map EXPORT-POOL-BRAS-TO-OSPF
 !
 end
 write
@@ -2142,11 +2292,11 @@ conf t
 ! ========================================================================
 ! Quang ba route DTH cho PE
 ! ========================================================================
-route-map DTH permit 10
+route-map PROCESS_ME_TO_PROCESS_CORE permit 20
   match tag 1001
 !
 router ospf 1
-  redistribute ospf 2 route-map DTH
+  redistribute ospf 2 route-map PROCESS_ME_TO_PROCESS_CORE
 !
 end
 write
@@ -2310,11 +2460,11 @@ conf t
 ! ========================================================================
 ! Quang ba route BTV cho SRT
 ! ========================================================================
-route-map BTV permit 10
+route-map PROCESS_CORE_TO_PROCESS_ME permit 20
   match tag 1000
 !
 router ospf 2
-  redistribute ospf 1 route-map BTV
+  redistribute ospf 1 route-map PROCESS_CORE_TO_PROCESS_ME
 !
 end
 write
