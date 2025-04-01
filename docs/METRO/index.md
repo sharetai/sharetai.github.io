@@ -2557,3 +2557,133 @@ int e0/0
 end
 write
 ```
+
+## 4G
+
+<h3>SRT3</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao L3VPN
+! ========================================================================
+ip vrf 4G
+  rd 7552:300
+  route-target export 7552:300
+  route-target import 7552:3333
+!
+interface e0/2.300
+  ip vrf forwarding 4G
+  encapsulation dot1Q 300
+  ip address 10.20.10.1 255.255.255.0
+!
+router bgp 7552
+  address-family ipv4 vrf 4G
+    network 10.20.10.0 mask 255.255.255.0
+  exit-address-family
+!
+end
+write
+```
+
+<h3>AGG1</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao L3VPN
+! ========================================================================
+vrf definition 4G
+  rd 7552:300
+  address-family ipv4
+    route-target export 7552:3333
+    route-target import 7552:300
+    route-target import 7552:5555
+!
+router bgp 7552
+  address-family ipv4 vrf 4G
+    network 0.0.0.0 mask 0.0.0.0
+  exit-address-family
+!
+ip route vrf 4G 0.0.0.0 0.0.0.0 null 0
+!
+ip extcommunity-list standard 4G permit rt 7552:300
+!
+route-map 4G permit 10
+match extcommunity 4G
+set extcommunity rt 7552:3333 additive
+route-map 4G permit 20
+!
+router bgp 7552
+address-family vpnv4
+neighbor AGG_TO_CT route-map 4G out
+!
+end
+write
+```
+
+<h3>AGGx</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao L3VPN
+! ========================================================================
+ip vrf 4G
+  rd 7552:501
+  route-target export 7552:5555
+  route-target import 7552:501
+  route-target import 7552:3333
+!
+router bgp 7552
+  address-family ipv4 vrf 4G
+    network 0.0.0.0 mask 0.0.0.0
+  exit-address-family
+!
+ip route vrf 4G 0.0.0.0 0.0.0.0 null 0
+!
+ip extcommunity-list standard 4G permit rt 7552:501
+!
+route-map 4G permit 10
+match extcommunity 4G
+set extcommunity rt 7552:5555 additive
+route-map 4G permit 20
+!
+router bgp 7552
+address-family vpnv4
+neighbor AGG_TO_CT route-map 4G out
+!
+end
+write
+```
+
+<h3>SRTx</h3>
+```
+enable
+conf t
+!
+! ========================================================================
+! Khai bao L3VPN
+! ========================================================================
+vrf definition 4G
+  rd 7552:501
+  route-target export 7552:501
+  route-target import 7552:5555
+  address-family ipv4 unicast
+!
+interface e0/2.500
+  vrf forwarding 4G
+  encapsulation dot1Q 500
+  ip address 10.20.50.1 255.255.255.0
+!
+router bgp 7552
+  address-family ipv4 vrf 4G
+    network 10.20.50.0 mask 255.255.255.0
+  exit-address-family
+!
+end
+write
+```
