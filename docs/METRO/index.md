@@ -154,6 +154,31 @@ end
 write
 ```
 
+<!-- <h3>CT2</h3>
+```
+enable
+conf t
+!
+no ip domain-lookup
+host CT2
+!
+int Loopback0
+  ip addr 10.136.0.12 255.255.255.255
+int gi0/0/0/0
+  ip addr 10.166.0.9 255.255.255.252
+  no shut
+int gi0/0/0/1
+  ip addr 10.166.0.2 255.255.255.252
+  no shut
+int gi0/0/0/1.200
+  encapsulation dot1Q 200
+  ip addr 10.164.0.2 255.255.255.252
+  no shut
+!
+commit
+end
+``` -->
+
 <h3>CTx</h3>
 ```
 enable
@@ -507,7 +532,7 @@ int gi2
   ip ospf 1 area 0
   ip ospf network point-to-point
   ip ospf cost 600
-int gi2.11
+int gi2.200
   ip ospf 2 area 0
   ip ospf network point-to-point
   ip ospf cost 500
