@@ -13,7 +13,7 @@ Kỹ thuật dịch ngược mã nguồn phần mềm
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

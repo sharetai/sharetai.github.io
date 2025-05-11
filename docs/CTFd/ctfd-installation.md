@@ -13,7 +13,7 @@ Bài viết này dùng để ghi lại các bước cơ bản để dễ dàng h
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

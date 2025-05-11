@@ -5,10 +5,8 @@ h1,
 .text-alpha {
   @include fs-8;
 
-  // font-weight: 300;
-
   // [New]
-  font-weight: 500;
+  // font-weight: 300;
 }
 
 h2,
@@ -27,7 +25,8 @@ h4,
   @include fs-2;
 
   font-weight: 400;
-  text-transform: uppercase;
+  // [New]
+  // text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 

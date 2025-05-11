@@ -13,7 +13,7 @@ Truyền thông từ một điểm đến một tập hợp các điểm
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

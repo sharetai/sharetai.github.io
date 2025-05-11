@@ -15,7 +15,7 @@ _Nguồn tham khảo: [https://0xinfection.github.io/reversing/](https://0xinfec
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

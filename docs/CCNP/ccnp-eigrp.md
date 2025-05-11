@@ -13,7 +13,7 @@ Giao thức định tuyến vectơ khoảng cách tiên tiến
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC
@@ -277,7 +277,7 @@ DUAL có một số khái niệm sau:
 - __Reported Distance/Advertised Distance__ - cũng là metric của best route đến đích nhưng là của neighbor và quảng bá vào router
 - __Successor__ - best loop free path
 - __Feasible Successor__ - loop free backup path
-- __Feasible Condition__ - điều kiện để 1 route được xem là backup path và cài vào bảng _eigrp topology_. __RD < FD__. Đây cũng là điều kiện chống loop của EIGRP.
+- __Feasible Condition__ - điều kiện để 1 route được xem là backup path và cài vào bảng _eigrp topology_. __RD < FDmin__. Đây cũng là điều kiện chống loop của EIGRP.
 
 ```
 Xem kết quả lệnh `sh ip eigrp topology`
@@ -469,15 +469,15 @@ R1#
 
 Một vài minh hoạ khác:
 
-Feasibility Condition (Sẽ ra sao nếu R3 cài vào bảng route các path có RD > FD?)
+Feasibility Condition (Sẽ ra sao nếu R3 cài vào bảng route các path có RD > FDmin?)
 
 ![alt text](/docs/CCNP/img/eigrp-Feasibility-Condition.png)
 
-Feasible Successor thoả mãn điều kiện Feasibility Condition (RD < FD)
+Feasible Successor thoả mãn điều kiện Feasibility Condition (RD < FDmin)
 
 ![alt text](/docs/CCNP/img/eigrp-Feasible-Successor.png)
 
-Feasibility Condition Is Not Perfect (Là backup path nhưng RD > FD)
+Feasibility Condition Is Not Perfect (Là backup path nhưng RD > FDmin)
 
 ![alt text](/docs/CCNP/img/eigrp-Feasibility-Condition-Is-Not-Perfect.png)
 

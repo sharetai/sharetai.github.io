@@ -13,7 +13,7 @@ Giao thức Cây Mở Rộng 802.1d
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC
@@ -827,7 +827,7 @@ ___- Hoạt động:___ BPDU Filter cấu hình bộ lọc ngăn chặn gửi, n
 ___- Ứng dụng:___ Sử dụng trong tình huống muốn ngăn bpdu truyền đi trong môi trường là L2 giữa 2 site. <br>
 
 <br>
-![Alt text](/docs/CCNA/img/stp-Portfast-BPDU-Guard-Root-Guard.png)
+![Alt text](/docs/CCNA (old)/img/stp-Portfast-BPDU-Guard-Root-Guard.png)
 
 ![alt text](/docs/CCNP/img/stp-Portfast-BPDU-Guard-Root-Guard-lab.png)
 
@@ -1021,9 +1021,9 @@ __Sync process__
 
 ## Giải pháp PVST trên switch cisco
 <br>
-![Alt text](/docs/CCNA/img/stp-pvst-1.png)
+![Alt text](/docs/CCNA (old)/img/stp-pvst-1.png)
 
-![Alt text](/docs/CCNA/img/stp-pvst-2.png)
+![Alt text](/docs/CCNA (old)/img/stp-pvst-2.png)
 
 ### IEEE Open Standard Spanning Tree Modes <br>
 __Spanning Tree Protocol (STP) IEEE 802.1D –__ 1 instance <br>

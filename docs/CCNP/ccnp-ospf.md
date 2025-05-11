@@ -13,7 +13,7 @@ Giao thức định tuyến OSPF
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC
@@ -340,18 +340,18 @@ Phân biệt _neighbor_ và _adjacency_:
 OSPF có 7 trạng thái state machines:
 
 - _Down_: khi router không nhận được _Hello_ khi _dead interval_ hết hạn.
-- _Init_: khi router nhận được _Hello_.
-- _2-way_: khi gói _Hello_ nhận được có chứa _router ID local_.
-- _Exstart_: khi 2 _neighbor_ bắt đầu thương lượng _master/slave_ và xác định _sequence numbers_ của các gói DD.
-- _Exchange_: khi bắt đầu trao đổi các gói DD.
-- _Loading_: khi đã hoàn tất việc trao đổi các gói DD.
+- _Init_: khi router nhận được _Hello_ nhưng chưa có router-id của router neighbor.
+- _2-way_: khi gói _Hello_ nhận được có chứa router-id, trao đổi thông tin với các router khác trong môi trường multiaccess.
+- _Exstart_: DR/BDR đã được bầu chọn và bắt đầu xác định _sequence numbers_ của các gói DD.
+- _Exchange_: khi bắt đầu trao đổi và so sánh các gói DD.
+- _Loading_: khi đã hoàn tất việc trao đổi các gói DD, yêu cầu gửi cập nhật các entri còn thiếu bằng.
 - _Full_: khi danh sách LSA cần truyền lại là trống.
 
 <br>
 
 <h4> LAB </h4>
 <br>
-![Alt text](/docs/CCNA/img/ospf-topo.png)
+![Alt text](/docs/CCNA (old)/img/ospf-topo.png)
 
 * R1
 ```
@@ -385,31 +385,31 @@ network 0.0.0.0 0.0.0.0 area 0
 end
 ```
 
-![Alt text](/docs/CCNA/img/ospf-process-1.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-1.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-2.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-2.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-3.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-3.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-4.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-4.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-5.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-5.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-6.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-6.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-7.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-7.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-8.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-8.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-9.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-9.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-10.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-10.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-11.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-11.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-12.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-12.png)
 
-![Alt text](/docs/CCNA/img/ospf-process-13.png)
+![Alt text](/docs/CCNA (old)/img/ospf-process-13.png)
 
 <br>
 

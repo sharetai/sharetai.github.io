@@ -13,7 +13,7 @@ Mô hình OSI và mô hình TCP/IP
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

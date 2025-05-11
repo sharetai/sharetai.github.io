@@ -13,7 +13,7 @@ Mạng nội bộ ảo
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

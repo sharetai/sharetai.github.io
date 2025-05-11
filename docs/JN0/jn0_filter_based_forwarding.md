@@ -13,7 +13,7 @@ Chuyển tiếp dựa vào bộ lọc
 
 ---
 
-## Table of contents
+## TABLE OF CONTENTS
 {: .no_toc .text-delta }
 
 1. TOC

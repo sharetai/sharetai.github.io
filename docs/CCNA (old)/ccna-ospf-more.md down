@@ -1,0 +1,491 @@
+---
+layout: default
+title: OSPF more
+nav_order: 13.5
+parent: CCNA (old)
+---
+
+# Open Shortest Path First
+{: .no_toc }
+
+Giao thức định tuyến OSPF
+{: .fs-6 .fw-300 }
+
+_Nguồn tham khảo: [vnpro.vn/thu-vien/chuong-10-giao-thuc-dinh-tuyen-ospf-phan-1](https://vnpro.vn/thu-vien/chuong-10-giao-thuc-dinh-tuyen-ospf-phan-1-3437.html)_
+
+---
+
+## TABLE OF CONTENTS
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+Các giao thức định tuyến nhóm trạng thái kết nối (link-state) định nghĩa nội dung và cấu trúc dữ liệu để mô tả hệ thống mạng và định nghĩa các tiến trình trong đó các router trao đổi các thông tin chi tiết về sơ đồ mạng. Thuật ngữ trạng thái kết nối “link-state” muốn ám chỉ đến yếu tố là thông tin về sơ đồ mạng bao gồm từng kết nối dữ liệu, cùng với trạng thái hoạt động của từng kết nối. Tất cả các dữ liệu sẽ hình thành nên một cơ sở dữ liệu trạng thái kết nối *(link-state database - LSDB)*.
+
+Mỗi router chạy giao thức link-state áp dụng thuật toán Dijkstra vào cơ sở dữ liệu để tính toán đường đi tốt nhất về từng mạng con.
+
+## I. TRAO ĐỔI CƠ SỞ DỮ LIỆU OSPF
+
+OSPF định nghĩa năm kiểu thông điệp mà router có thể dùng để trao đổi LSA. Tiến trình các LSA được trao đổi không ảnh hưởng bởi việc OSPF dùng đơn vùng hay đa vùng, vì vậy phần này chỉ khảo sát OSPF đơn vùng.
+
+### 1. Định danh Router chạy OSPF
+
+Trước khi một router chạy OSPF có thể gửi bất kỳ một thông điệp OSPF nào, nó phải chọn một danh xưng duy nhất dài 32 bit dạng thập phân được gọi là OSPF *router identifier (RID)*. Các router của Cisco dùng thứ tự các bước như sau để chọn RID trong OSPF. Router chỉ chuyển sang bước kế tiếp nếu bước trước đó không xác định được RID.
+
+- **Bước 1**: Sử dụng RID được cấu hình bằng câu lệnh `router-id` trong chế độ `router ospf`.
+- **Bước 2**: Sử dụng địa chỉ IP cao nhất trong bất kỳ cổng loopback nào đang trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
+- **Bước 3**: Sử dụng địa chỉ IP cao nhất trên bất kỳ cổng nào không phải là loopback và trong tình trạng hoạt động tốt cả vật lý và giao thức (up/up).
+
+```
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#int e0/0
+R1(config-if)#ip addr 10.0.12.1 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#
+*Mar 16 15:34:19.178: %LINK-3-UPDOWN: Interface Ethernet0/0, changed state to up
+*Mar 16 15:34:20.186: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/0, changed state to up
+R1(config-if)#int e0/1
+R1(config-if)#ip addr 10.0.13.1 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#
+*Mar 16 15:34:37.585: %LINK-3-UPDOWN: Interface Ethernet0/1, changed state to up
+*Mar 16 15:34:38.591: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/1, changed state to up
+R1(config-if)#int e0/2
+R1(config-if)#ip addr 10.0.14.1 255.255.255.0
+R1(config-if)#exit
+R1(config)#router ospf 1
+R1(config-router)#exit
+R1(config)#do sh ip int bri
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.0.12.1       YES manual up                    up
+Ethernet0/1                10.0.13.1       YES manual up                    up
+Ethernet0/2                10.0.14.1       YES manual administratively down down
+Ethernet0/3                unassigned      YES unset  administratively down down
+R1(config)#do sh ip ospf database
+
+            OSPF Router with ID (10.0.13.1) (Process ID 1)
+R1(config)#int lo0
+R1(config-if)#
+*Mar 16 15:36:15.173: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+R1(config-if)#ip addr 2.2.2.2 255.255.255.255
+R1(config-if)#exit
+R1(config)#do sh ip int bri
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.0.12.1       YES manual up                    up
+Ethernet0/1                10.0.13.1       YES manual up                    up
+Ethernet0/2                10.0.14.1       YES manual administratively down down
+Ethernet0/3                unassigned      YES unset  administratively down down
+Loopback0                  2.2.2.2         YES manual up                    up
+R1(config)#do sh ip ospf database
+
+            OSPF Router with ID (10.0.13.1) (Process ID 1)
+R1(config)#do clear ip ospf process
+Reset ALL OSPF processes? [no]: yes
+R1(config)#do sh ip ospf database
+
+            OSPF Router with ID (10.0.13.1) (Process ID 1)
+R1(config)#int e0/1
+R1(config-if)#shut
+R1(config-if)#
+*Mar 16 15:37:59.636: %LINK-5-CHANGED: Interface Ethernet0/1, changed state to administratively down
+*Mar 16 15:38:00.640: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/1, changed state to down
+R1(config-if)#do clear ip ospf process
+Reset ALL OSPF processes? [no]: yes
+R1(config-if)#do sh ip ospf database
+
+            OSPF Router with ID (10.0.13.1) (Process ID 1)
+R1(config-if)#no ip addr
+R1(config-if)#do sh ip ospf database
+
+            OSPF Router with ID (10.0.13.1) (Process ID 1)
+R1(config-if)#do clear ip ospf process
+Reset ALL OSPF processes? [no]: yes
+R1(config-if)#do sh ip ospf database
+
+            OSPF Router with ID (2.2.2.2) (Process ID 1)
+R1(config-if)#exit
+R1(config)#router ospf 1
+R1(config-router)#router-id 1.1.1.1
+R1(config-router)#exit
+R1(config)#do sh ip ospf database
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+R1(config)#router ospf 2
+R1(config-router)#router ospf 3
+R1(config-router)#router ospf 4
+R1(config-router)#
+*Mar 16 15:41:24.074: %OSPF-4-NORTRID: OSPF process 4 failed to allocate unique router-id and cannot start
+R1(config-router)#exit
+R1(config)#do sh ip ospf database
+%OSPF: Router process 4 is not running, please configure a router-id
+
+            OSPF Router with ID (10.0.12.1) (Process ID 3)
+
+            OSPF Router with ID (2.2.2.2) (Process ID 2)
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+R1(config)#
+```
+Thứ tự và thuật toán rất đơn giản, nhưng một vài chi tiết bị che dấu bên dưới thứ tự được nêu ra ở trên. Các chi tiết đó như sau:
+
+- Cổng mà từ đó RID được chọn ra không nhất thiết phải so trùng với một câu lệnh `network`. Nói cách khác, cổng đó không bắt buộc phải chạy OSPF.
+- OSPF không phải quảng bá một tuyến đi đến địa chỉ mạng của RID.
+- RID không cần thiết phải đến được trong từng bảng định tuyến.
+
+```
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#int e0/1
+R2(config-if)#ip addr 10.0.12.2 255.255.255.0
+R2(config-if)#no shut
+R2(config-if)#
+*Mar 16 15:51:14.752: %LINK-3-UPDOWN: Interface Ethernet0/1, changed state to up
+*Mar 16 15:51:15.756: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/1, changed state to up
+R2(config-if)#router ospf 1
+R2(config-router)#network 10.0.12.2 0.0.0.0 area 0
+R2(config-router)#
+*Mar 16 15:52:32.787: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on Ethernet0/1 from LOADING to FULL, Loading Done
+R2(config-router)#end
+R2#
+*Mar 16 15:52:50.754: %SYS-5-CONFIG_I: Configured from console by console
+R2#sh ip ospf database
+
+            OSPF Router with ID (10.0.12.2) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         36          0x80000002 0x0016DC 1
+10.0.12.2       10.0.12.2       35          0x80000002 0x009A2F 1
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.0.12.1       1.1.1.1         36          0x80000001 0x00B949
+R2#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.0.12.0/24 is directly connected, Ethernet0/1
+L        10.0.12.2/32 is directly connected, Ethernet0/1
+R2#
+```
+
+Bước 2 và bước 3 xem xét đến các cổng hiện có để chọn RID khi tiến trình OSPF được bắt đầu. Router xem xét thay đổi OSPF RID khi tiến trình OSPF được khởi động lại hoặc khi ta cấu hình thay đổi RID. Nếu một RID thay đổi, các router còn lại trong cùng một vùng cũng sẽ phải thực hiện lại phép tính SPF mới. Nếu RID được cấu hình tĩnh bằng lệnh `router-id`, và nếu lệnh đó không thay đổi, RID của router đó cũng sẽ không bao giờ thay đổi.
+
+Vì những lý do này, nhiều người thiết lập RID bằng lệnh `router-id` và dùng một sơ đồ đánh số rõ ràng để giúp nhận dạng một router bằng RID của nó.
+
+### 2. Trở thành láng giềng, trao đổi cơ sở dữ liệu và trờ thành liền kề
+
+OSPF đóng gói trực tiếp năm kiểu thông điệp OSPF khác nhau bên trong gói tin IP, dùng giao thức IP 89, theo bảng:
+
+| Thông điệp      | Mô tả |
+| :-------------- | :---- |
+| Hello           | Được dùng để tìm ra các router láng giềng, chuyển một quan hệ láng giềng sang trạng thái 2 bước (2-way), sau đó hello giúp giám sát trả lời của láng giềng trong trường hợp láng giềng bị lỗi. |
+| DB Description  | Được dùng để trao đổi các bản sơ lược của từng LSA tiêu biểu trong giai đoạn ban đầu để router có thể biết một danh sách của các LSA của láng giềng.
+| LS Request      | Một gói tin chỉ ra một hoặc nhiều LSA được gửi ra bởi một router yêu cầu các router láng giềng của nó cung cấp các chi tiết đầy đủ về LSA.
+| LS Update       | Một gói tin chứa các chi tiết đầy đủ, thường được gửi để trả lời cho một thông điệp LSR.
+| LS Acknowledge  | Được gửi để xác nhận việc nhận một LSU.
+
+Các thông điệp này cho phép các router tìm ra sự hiện diện của các router khác (Hello), học các thông điệp LSA nào bị mất trong cơ sở dữ liệu LSDB, truy vấn và trao đổi một cách tin cậy các LSA (LSR/LSU), giám sát các láng giềng khi có bất kỳ sự thay đổi nào trong sơ đồ mạng (Hello). Chú ý rằng chính các LSA không phải là các thông điệp OSPF. Một LSA là một cấu trúc dữ liệu, được lưu giữ bên trong một LSDB của router và được trao đổi bên trong những thông điệp LSU.
+
+Khi một kết nối nào đó được bật lên, router chạy OSPF đầu tiên trở thành láng giềng dùng các thông điệp Hello. Ở thời điểm đó, chúng trao đổi các thông tin về sơ đồ mạng dùng bốn loại thông điệp OSPF khác.
+
+![Alt text](/docs/CCNA (old)/img/ospf-process.png)
+
+Hình trên mô tả tiến trình tổng thể của các thông điệp, cùng với các trạng thái trên từng router. Một router chạy OSPF lưu giữ trạng thái của từng láng giềng, liệt kê trạng thái từng láng giềng trong kết quả của lệnh `show ip ospf neighbor`. Các trạng thái này thay đổi khi các router nhận các thông điệp khác nhau. Trong ví dụ này, các láng giềng cố định ở trạng thái đầy đủ (full-state), nghĩa là nó hình thành quan hệ đầy đủ khi tiến trình hoàn tất.
+
+Quan sát 1 tiến trình OSPF:
+
+![Alt text](/docs/CCNA (old)/img/ospf-topo.png)
+
+```
+# R1
+enable
+conf t
+host R1
+int lo0
+ip addr 1.1.1.1 255.255.255.255
+int e0/0
+ip addr 10.0.12.1 255.255.255.0
+no shut
+router ospf 1
+router-id 1.1.1.1
+network 1.1.1.1 0.0.0.0 area 0
+network 10.0.12.1 0.0.0.0 area 0
+end
+
+# R2
+enable
+conf t
+host R2
+int lo0
+ip addr 2.2.2.2 255.255.255.255
+int e0/1
+ip addr 10.0.12.2 255.255.255.0
+no shut
+router ospf 1
+router-id 2.2.2.2
+network 2.2.2.2 0.0.0.0 area 0
+network 10.0.12.2 0.0.0.0 area 0
+end
+```
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-1.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-2.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-3.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-4.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-5.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-6.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-7.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-8.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-9.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-10.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-11.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-12.png)
+
+![Alt text](/docs/CCNA (old)/img/ospf-process-13.png)
+
+**Trở thành láng giềng, tiến trình Hello**
+
+Các thông điệp Hello trong OSPF thực hiện ba chức năng chính:
+
+- Tìm ra những router chạy OSPF khác trên cùng một mạng chung.
+- Kiểm tra sự tương thích trong các thông số cấu hình.
+- Giám sát tình trạng của láng giềng để phản ứng nếu láng giềng bị lỗi.
+
+Để tìm ra những router láng giềng, OSPF lắng nghe những thông điệp Hello được gửi đến 224.0.0.5. Đây là địa chỉ multicast tượng trưng cho tất cả các router chạy OSPF, trên bất cứ cổng nào đã bật OSPF. Các gói Hello sẽ lấy nguồn từ địa chỉ chính trên cổng, nói cách khác, Hello không dùng địa chỉ phụ. (Router chạy OSPF sẽ quảng bá các địa chỉ phụ nhưng nó sẽ không gửi Hello từ những địa chỉ này và không bao giờ hình thành mối quan hệ dùng địa chỉ phụ).
+
+Khi hai router tìm ra nhau thông qua các gói Hello, các router thực hiện các phép kiểm tra các thông số như sau:
+
+- Các router phải vượt qua tiến trình xác thực.
+- Các router phải trong cùng địa chỉ mạng chính, phải có cùng mặt nạ mạng con.
+- Phải trong cùng vùng OSPF.
+- Phải có cùng kiểu vùng OSPF.
+- Không có trùng RID.
+- Thời gian gửi gói tin Hello và thời gian hết hạn phải bằng nhau.
+
+Nếu bất kỳ điều kiện nào nêu trên không thỏa mãn, hai router đơn giản sẽ không hình thành quan hệ láng giềng. Cũng lưu ý rằng một trong những điều kiện quan trọng nhất mà hai bên không cần giống là chỉ số ID của tiến trình OSPF, như được cấu hình trong câu lệnh `router ospf process-id`. Bạn cũng nên lưu ý rằng giá trị MTU phải bằng nhau để các gói tin DD được gửi thành công giữa những láng giềng nhưng thông số này không được kiểm tra trong tiến trình Hello.
+
+Chức năng thứ ba của Hello là để duy trì liên lạc giữa những láng giềng. Các láng giềng gửi Hello ở mỗi chu kỳ gọi là *hello interval*; nếu router không nhận được Hello trong khoảng thời gian hết hạn *dead interval* sẽ làm cho router tin rằng láng giềng của nó đã lỗi. Khoảng thời gian hello mặc định bằng 10 giây trên những cổng LAN và 30 giây trong những đường T1 hoặc đường thấp hơn T1. Thời gian hết hạn mặc định bằng bốn lần thời gian hết hạn.
+
+**Phát tán các phần đầu của LSA tới láng giềng**
+
+Khi hai router nhận Hello và việc kiểm tra các thông số đã thành công, các router không gửi ngay các gói tin chứa LSA. Thay vào đó, từng router sẽ tạo và gửi các gói tin mô tả cơ sở dữ liệu *DD* (hoặc thỉnh thoảng còn gọi là *DBD*) trong đó chứa header của từng LSA.
+
+Header sẽ bao gồm đủ thông tin để nhận ra duy nhất LSA. Ban đầu, các router trao đổi một danh sách của tất cả các LSA mà nó biết. Bước kế tiếp trong tiến trình là để một router yêu cầu một phiên bản mới của bất kỳ một LSA không xác định nào.
+
+Thông điệp DD dùng một tiến trình khôi phục lỗi đơn giản trong OSPF. Mỗi gói tin DD chứa vài LSA được gán một chỉ số tuần tự duy nhất. Bên nhận sẽ xác nhận một gói tin DD nhận được bằng cách gửi một gói tin DD tương tự ngược về nơi gửi. Bên gửi dùng kích thước cửa sổ bằng một gói tin, sau đó chờ công nhận trước khi gửi gói tin DD kế tiếp.
+
+**Yêu cầu, Nhận và công nhận LSA**
+
+Khi tất cả các LSA đã được trao đổi dùng gói tin DD, từng router có một danh sách của các LSA của router láng giềng. Dùng thông tin này, một router cần yêu cầu một bản sao đầy đủ của từng LSA không có trong LSDB của nó. Để biết một láng giềng có một hoặc nhiều bản sao của một LSA đặc biệt, một router xem xét chỉ số tuần tự của LSA trong LSDB của nó và so sánh với chỉ số đó của cùng LSA được từ gói tin DD.
+
+Mỗi chỉ số tuần tự LSA được tăng mỗi khi LSA thay đổi. Vì vậy nếu một router nhận được một header của LSA trong một gói tin DD có chỉ số tuần tự mới hơn (so sánh với LSA trong LSDB), router đó biết rằng láng giềng đã có LSA mới hơn.
+
+Ví dụ, R1 gửi cho R2 một LSA kiểu LSA 1 trong đó mô tả chính R1, với chỉ số tuần tự là 0x80000004. Nếu cơ sở dữ liệu của R2 đã có LSA đó nhưng có chỉ số tuần tự là 0x80000003, thì R2 sẽ biết rằng nó cần hỏi R1 gửi bản sao mới nhất (chỉ số tuần tự là 0x80000004) của LSA đó.
+
+Chú ý rằng các LSA mới bắt đầu với chỉ số tuần tự 0x80000001, tăng lên dần và sau đó quay ngược về 0x7FFFFFFF. Nếu LSA có chỉ số tuần tự là 0x80000000, LSA đó phải được phát tán lại trên toàn mạng.
+
+Router dùng các gói tin LSR để yêu cầu một hoặc nhiều LSA trả lời bằng gói tin LSU, trong đó chứa một hoặc nhiều LSA. Khi tiến trình là hoàn tất, các router sẽ vào trạng thái quan hệ thiết lập đầy đủ. Trong trạng thái này, hai router đã trao đổi toàn bộ cơ sở dữ liệu, giúp cho hai router có các phiên bản giống nhau của LSDB cho cả hai router đó.
+
+Tiến trình LSR/LSA dùng một giao thức tin cậy có hai tuỳ chọn để công nhận gói tin. Đầu tiên, một LSU có thể xác nhận bằng cách gửi lại cùng một LSU ngược về bên router gửi. Hoặc là, một router có thể gửi ngược lại một LSAck để công nhận gói tin, trong đó chứa một danh sách các LSA.
+
+Ở cuối của tiến trình, hai router có thể trao đổi các cơ sở dữ liệu LSDB. Kết quả là các LSDB sẽ giống nhau. Ở thời điểm này, các router có thể chạy thuật toán Dijkstra tính toán đường đi ngắn nhất (Shortest Path First - SPF) một cách độc lập để tính ra đường đi tốt nhất từ nó.
+
+### 3. Router được lựa chọn trên LAN
+
+OSPF tối ưu tiến trình phát tán LSA trên những mạng đa truy cập bằng cách dùng khái niệm router được lựa chọn *(designated router - DR)*. Nếu không có khái niệm DR, từng cặp router có cùng mạng phải thiết lập quan hệ đầy đủ. Từng cặp router phải trao đổi trực tiếp các cơ sở dữ liệu LSDB với nhau. Trên một LAN chỉ có sáu router, nếu không có DR, sẽ có 15 cặp quan hệ giữa router và 15 bản khác nhau của cơ sở dữ liệu đầy đủ được phát tán. OSPF dùng DR (và DR dự phòng gọi là BDR) trên một LAN hay những mạng đa truy cập khác. Tiến trình phát tán thông qua DR, giảm thiểu đáng kể những trao đổi LSA không cần thiết.
+
+DR có một trong những chức năng chính bên cạnh cải tiến hiệu suất của LSA. Các DR tạo ra các LSA loại 2 tượng trưng cho mạng con.
+
+**Tối ưu bầu chọn DR trên LAN**
+
+Hình dưới mô tả cách tối ưu tiến trình phát tán của DR khi gửi gói tin DD trên LAN.
+
+![Alt text](/docs/CCNA (old)/img/ospf-dr-in-lan.png)
+
+Những router không phải là DR (bao gồm cả BDR) gửi các gói tin DD đến DR theo địa chỉ 224.0.0.6, đây là địa chỉ multicast của tất cả các router được chọn làm DR. DR sau đó sẽ công nhận các gói DD bằng cách gửi DD theo kiểu unicast. Router DR sẽ phát tán một gói tin DD mới đến tất cả các OSPF router theo địa chỉ 224.0.0.5.
+
+Hình trên mô tả ba bước chính, nhưng các router không phải là DR cũng cần phải xác nhận gói tin DD đã được gửi trong bước 3. Thông thường, quá trình xác nhận diễn ra bởi các router khác. Từng router sẽ gửi trả lời bằng gói tin unicast DD. Trong một mạng không có DR, các gói tin DD và LSU thường được gửi đến địa chỉ 224.0.0.5 là địa chỉ tất cả các router đang chạy OSPF.
+
+Ví dụ dưới đây mô tả kết quả của lệnh `show ip ospf neighbor` trên R1. Chú ý rằng R1 đang trong trạng thái thiết lập quan hệ đầy đủ với S2, là router DR với OSPF RID 8.8.8.8. R1 cũng trong trạng thái quan hệ với S1, BDR, OSPF RID 7.7.7.7. Tuy nhiên R1 trong trạng thái 2-Way với R2, RID 2.2.2.2.
+
+```
+# R1
+enable
+conf t
+int e0/0
+ip addr 10.0.88.1 255.255.255.0
+no shut
+router ospf 1
+router-id 1.1.1.1
+network 10.0.88.1 0.0.0.0 area 0
+end
+
+# R2
+enable
+conf t
+int e0/0
+ip addr 10.0.88.2 255.255.255.0
+no shut
+router ospf 1
+router-id 2.2.2.2
+network 10.0.88.2 0.0.0.0 area 0
+end
+
+# S1
+enable
+conf t
+int e0/0
+ip addr 10.0.88.7 255.255.255.0
+no shut
+router ospf 1
+router-id 7.7.7.7
+network 10.0.88.7 0.0.0.0 area 0
+end
+
+# S2
+enable
+conf t
+int e0/0
+ip addr 10.0.88.8 255.255.255.0
+no shut
+router ospf 1
+router-id 8.8.8.8
+network 10.0.88.8 0.0.0.0 area 0
+end
+```
+
+```
+R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   2WAY/DROTHER    00:00:38    10.0.88.2       Ethernet0/0
+7.7.7.7           1   FULL/BDR        00:00:31    10.0.88.7       Ethernet0/0
+8.8.8.8           1   FULL/DR         00:00:36    10.0.88.8       Ethernet0/0
+R1#
+```
+
+Khi một DR được dùng trên một kết nối, các router sẽ đóng vai trò là DR, BDR hoặc không là cả hai. Một router không là DR hoặc BDR được gọi là DROther. DR và BDR hình thành quan hệ đầy đủ với tất cả các router láng giềng khác trên kết nối, vì vậy nó đạt trạng thái quan hệ đầy đủ khi tiến trình trao đổi cơ sở dữ liệu là hoàn tất.
+
+Tuy nhiên, hai láng giềng cùng là DROther không có quan hệ đầy đủ với nhau. Các router này dừng lại ở trạng thái 2WAY. Việc dừng lại ở trạng thái 2WAY là bình thường, nó chỉ đơn giản có nghĩa là các thông số Hello đã giống nhau nhưng các router không cần thiết xử lý trao đổi gói tin DD, bởi vì điều này không cần thiết khi đã có một DR tồn tại.
+
+Để mô tả sự việc một vài router láng giềng không trao đổi trực tiếp DD và các gói LSU, OSPF thực hiện một sự khác biệt giữa hai thuật ngữ láng giềng (neighbor) và quan hệ đầy đủ (adjacent):
+
+- **Láng giềng**: hai router có chung kết nối lớp 2, trao đổi Hello và các gói tin Hello phải giống nhau.
+- **Quan hệ đầy đủ**: hai router đã hoàn tất tiến trình trao đổi DD và LSU trực tiếp với nhau.
+
+Chú ý rằng mặc dù các DROther không trao đổi DD và các gói tin LSU trực tiếp với nhau, các DROther sẽ kết thúc với cùng một bản sao LSDB bằng cách trao đổi LSDB với DR.
+
+**Bầu chọn DR trên LAN**
+
+Nếu một DR được bầu chọn, tiến trình bầu chọn diễn ra sau khi router đã trở thành láng giềng nhưng trước khi nó gửi gói tin DD và đạt được trạng thái ExStart. Khi một OSPF router đạt được trạng thái 2WAY với láng giềng đầu tiên trên một cổng, nó đã nhận ít nhất một gói tin Hello từ láng giềng đó. Nếu thông điệp Hello chứa thông tin là DR có địa chỉ 0.0.0.0, nghĩa là chưa có bầu chọn được DR, router sẽ phải chờ để bầu chọn DR. Điều này thường xảy ra sau một sự cố trên LAN. Các router chạy OSPF phải chờ với mục đích cho phép tất cả các router trên mạng đó một cơ hội để hoàn thành quá trình khởi động sau khi gặp một sự cố hoặc một sự thay đổi trên mạng. Điều này là cần thiết để tất cả các router có thể tham gia và bầu chọn DR, nếu khác đi, router đầu tiên được kích hoạt OSPF sẽ luôn trở thành DR. Khoảng thời gian phải chờ được gọi là thời gian chờ, được gán bằng giá trị như thời gian hết hạn.
+
+Tuy nhiên, nếu router nhận được thông điệp Hello đã xác định RID của DR, nó sẽ không chờ trước khi bắt đầu tiến trình bầu chọn. Điều này thường diễn ra khi một router mất kết nối của nó trên LAN nhưng những router khác vẫn còn và tiếp tục hoạt động. Trong trường hợp này, các router mới kết nối vào mạng sẽ không cố gắng bầu chọn DR mới, mà nó sẽ giả sử các DR được liệt kê trong gói tin Hello là DR hiện hành. Tiến trình bầu chọn tạo ra khả năng có nhiều tình huống những router trở thành DR hay BDR.
+
+Một cách tổng quát, các luật sau được dùng để mô tả tiến trình bầu chọn DR/BDR:
+
+- Bất kỳ router nào có độ ưu tiên OSPF của nó được gán từ 1-255 có thể thử trở thành DR bằng cách đặt giá trị RID của chính nó vào trường DR của gói tin Hello.
+- Router kiểm tra gói tin Hello nhận được, so sánh với độ ưu tiên của các router khác, RID và kiểm tra xem các láng giềng khác có khai báo để trở thành DR hay không.
+- Nếu một gói Hello nhận được trên một router khai báo một DR tốt hơn, router sẽ ngừng việc khai báo chính nó là DR và công nhận ứng cử viên tốt hơn đó nên là DR.
+- Tiêu chuẩn đầu tiên để một router được xem là “tốt hơn” là router có độ ưu tiên cao nhất.
+- Nếu độ ưu tiên bằng nhau, router có RID cao hơn thì tốt hơn.
+- Router không khai báo là DR, nhưng với một độ ưu tiên cao hơn những router còn lại (hoặc RID cao hơn) sẽ trở thành BDR.
+- Nếu một router xuất hiện sau quá trình bầu chọn, hoặc nếu router hiện hành sửa đổi độ ưu tiên của nó, router sẽ không chiếm quyền các DR hiện hành và không đóng vai trò là DR (hoặc BDR).
+- Khi DR được bầu chọn, và DR bị lỗi, router BDR sẽ trở thành DR và một cuộc bầu chọn mới được tổ chức để tìm ra BDR. Khi DR đã được bầu chọn, quá trình phát tán LSA tiếp tục như đã mô tả trước đây.
+
+### 4. Các router DR trên WAN và các kiểu mạng OSPF
+
+Việc sử dụng DR trên môi trường LAN là hợp lý bởi vì nó cải tiến hiệu suất của quá trình phát tán. Tương tự, việc không sử dụng DR trên kết nối WAN dạng điểm-điểm cũng là hợp lý bởi vì chỉ với hai router trên mạng, sẽ không có điểm nào kém hiệu quả để cải tiến. Tuy nhiên trong môi trường đa truy cập không hỗ trợ broadcast (Non-Broadcast MultiAccess - NBMA), có thể nảy sinh vấn đề là một DR có hữu ích hay không. Vì vậy, OSPF bao gồm vài tùy chọn trong đó cho phép ta chọn lựa khi nào thì dùng DR trên cổng WAN.
+
+Các Router của Cisco có thể được cấu hình để dùng hoặc không dùng DR. Ngoài ra còn một vài trạng thái chủ chốt khác, dựa vào kiểu mạng OSPF cho từng cổng. Kiểu mạng OSPF xác định trạng thái của router liên quan đến những vấn đề sau:
+
+- Router có nên cố gắng bầu chọn DR trên cổng đó hay không.
+- Router có nên cấu hình láng giềng hoặc tìm láng giềng dùng các gói tin Hello dạng multicast.
+- Router có nên có nhiều hơn hai láng giềng trên cùng một mạng con hay không.
+
+Ví dụ, những cổng LAN mặc định sẽ dùng kiểu mạng OSPF là broadcast. Kiểu mạng OSPF là broadcast sẽ bầu chọn DR. Kiểu hoạt động này của OSPF dùng cơ chế Hello để tìm ra những láng giềng và cho phép có nhiều hơn hai router trong cùng mạng con trên LAN đó. Đối với những kết nối HDLC hay PPP, OSPF dùng kiểu mạng là điểm-điểm, nghĩa là sẽ không có bầu chọn DR, chỉ có hai địa chỉ IP là có trong mạng con và các láng giềng có thể tìm thấy thông qua Hello.
+
+Bảng dưới sẽ tóm tắt các kiểu cổng OSPF và các ý nghĩa của nó. Chú ý rằng kiểu cổng có thể được gán bằng lệnh `ip ospf network type`. Cột đầu tiên trong bảng liệt kê từ khóa chính xác tương ứng với lệnh này. Ngoài ra, cho những trường hợp trong đó DR không được bầu chọn, tất cả các router cũng trở thành láng giềng bằng cách trao đổi các gói DD, LSR và LSU.
+
+| Kiểu cổng | Có dùng DR/BDR | Giá trị thời gian hello mặc định | Có yêu cầu sử dụng câu lệnh neighbor | Nhiều hơn hai máy trên mạng con |
+| :-------------- | :---- | :---- | :---- | :---- |
+| Broadcast | Có | 10 | Không | Có |
+| Điểm - Điểm | Không | 10 | Không | Không |
+| Không  hỗ trợ broadcast | Có | 30 | Có | Có |
+| Điểm - Đa điểm | Không | 30 | Không | Có |
+| Điểm – Đa điểm nhưng không hỗ trợ Broadcast | Không | 30 | Có | Có |
+| Loopback | Không | - | - | Không |
+
+### 5. Tính toán SPF
+
+Khi các router đã có các thông tin của nó trong LSDB, nó sẽ dùng thuật toán Dijkstra SPF để kiểm tra các LSA trong LSDB và dẫn xuất ra một dạng hiển thị toán học của sơ đồ mạng. Mô hình toán này tượng trưng cho các router, kết nối và chi phí cho từng kết nối và trạng thái hiện hành (up/down) của từng kết nối. Hình dưới tượng trưng cho mô hình SPF của mạng.
+
+![Alt text](/docs/CCNA (old)/img/ospf-spf.png)
+
+Một người có thể dễ dàng nhanh chóng rút ra cùng một kết quả mà thuật toán SPF sẽ cho ra, cho dù thuật toán SPF khá phức tạp. SPF trên router sẽ tìm ra tất cả các khả năng có thể để đến một mạng con, thêm chi phí vào từng cổng ra để đi về tuyến đó và sau đó sẽ chọn ra đường đi có chi phí thấp nhất. OSPF sẽ đưa các tuyến có đường đi ngắn nhất này vào trong bảng định tuyến. Ví dụ, S2 sẽ tính hai đường đi có thể về mạng 10.5.1.0/24 với đường đi tốt hơn sẽ thông qua cổng VLAN1 của S2, với R2 là địa chỉ chặng kế tiếp. Cũng lưu ý trong hình trên rằng các giá trị chi phí áp dụng cho từng cổng và SPF sẽ cộng vào chi phí từng cổng để ra tổng chi phí đi về tuyến đó.
+
+**Hoạt động ở trạng thái ổn định**
+
+Ngay cả khi một mạng đã ổn định, tất cả các router trong cùng một vùng có cùng LSA và từng route đã chọn tuyến đường tốt nhất dùng SPF, các sự kiện sau vẫn diễn ra với các router chạy OSPF:
+
+- Mỗi router gửi Hello theo các khoảng thời gian Hello.
+- Mỗi router mong đợi nhận được Hello từ láng giềng trong khoảng thời gian hết hạn trên từng cổng, nếu không, láng giềng sẽ bị xem như là bị lỗi.
+- Từng router sẽ quảng bá một LSA sẽ phát tán lại LSA (sau khi tăng chỉ số tuần tự lên 1) dựa trên khoảng thời gian làm mới lại trạng thái kết nối (LSRefresh), mặc định là 30 phút.
+- Từng router phải có LSA được cập nhật trong mỗi khoảng thời gian tồn tại tối đa của các LSA, mặc định là 60 phút.
+
+## II. MÔ HÌNH THIẾT KẾ OSPF VÀ CÁC LOẠI LSA
+
+Phần này mô tả hai chủ đề chính:
+
+- Mô hình thiết kế OSPF.
+- Các kiểu OSPF LSA.
+
+Mặc dù các chủ đề này có vẻ như là các khái niệm riêng biệt, phần lớn các chọn lựa thiết kế OSPF ảnh hưởng trực tiếp đến kiểu LSA trong mạng và đặt ra các ràng buộc trên những láng giềng có thể trao đổi các LSA này.
+
+Phần này bắt đầu bằng thiết kế OSPF và nhắc lại những thuật ngữ sau đó sẽ chuyển sang các kiểu LSA. Cuối của phần này, các kiểu *OSPF area* sẽ được đề cập đến, bao gồm việc mô tả từng biến thể thay đổi của các LSA trên các kiểu vùng ngõ cụt của OSPF.
+
+### 1.Các thuật ngữ thiết kế OSPF
+
+Thiết kế OSPF sử dụng một nhóm các kết nối vào các vùng liên tục. Các router có các kết nối đến các vùng khác nhau được gọi là router ở biên giới của vùng *(Area Border Router - ABR)*. Các router ABR phải được kết nối về vùng 0 *(area 0)* hay còn gọi là vùng xương sống *(backbone area)*. ASBR sẽ đưa các tuyến bên ngoài vào trong miền OSPF, những tuyến được học từ quá trình phân phối lại.
+
+![Alt text](/docs/CCNA (old)/img/ospf-area.png)
+
+Các mạng có thể dùng mạng OSPF đơn vùng nhưng việc sử dụng các vùng OSPF sẽ giúp giảm thời gian hội tụ và giảm phí tổn trong mạng OSPF. OSPF dùng khái niệm vùng sẽ có các lợi điểm sau đây:
+
+- Các cơ sở dữ liệu cho từng vùng sẽ nhỏ hơn, yêu cầu tốn ít bộ nhớ hơn.
+- Tính toán nhanh hơn.
+- Một kết nối bị sự cố trong một vùng chỉ yêu cầu tính toán SPF lại một phần trong những vùng khác.
+- Các tuyến có thể được tóm tắt ở ABR và ASBR; giúp cho các vùng thực hiện tóm tắt để rút gọn LSDB và cải tiến hiệu suất tính toán SPF.
+
+Khi so sánh việc sử dụng một vùng với nhiều vùng, số router hay số kết nối không giảm đi nhưng kích thước của LSDB trên phần lớn các router sẽ giảm. LSDB giảm là do một ABR không truyền các LSA loại 1 và 2 từ vùng này sang vùng khác, thay vào nó truyền loại 3 tóm tắt LSA. LSA loại 1 và 2 có thể xem như là các thông tin chi tiết gây ra phần lớn tính toán trong thuật toán SPF. Bằng cách đại diện các chi tiết trong loại 1 và 2 LSA trong những cách khác nhau trong những vùng khác, OSPF sẽ đạt được mục đích giảm tác động của SPF.
+
+
