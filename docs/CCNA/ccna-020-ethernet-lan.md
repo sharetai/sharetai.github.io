@@ -29,6 +29,8 @@ Cần 1 chuẩn kết nối vật lý hay 1 nguyên tắc giao thức giữa cá
 <h3> what? </h3>
 Cụm từ __Ethernet__ dùng để chỉ 1 họ các chuẩn mạng LAN quy định lớp vật lý và lớp liên kết dữ liệu của công nghệ mạng LAN có dây. __Ethernet LAN là chuẩn của Wired LAN__. Do Viện Kỹ sư Điện và Điện tử (IEEE) ban hành, bao gồm quy định về loại cáp (cabling), đầu nối (connector), quy tắc truyền thông (protocol rules) và mọi yếu tố cần thiết để xây dựng 1 mạng Ethernet.
 
+Ethernet định ngĩa cách để truyền dữ liệu qua 1 loại cáp cụ thể và ở 1 tốc độ cụ thể. Ethernet định nghĩa giao thức hay nguyên tắc mà các Ethernet node phải tuân theo để trở thành 1 phần của Ethernet Lan.
+
 __Ethernet__ là họ chuẩn __IEEE 802.3__ quy định cách truyền dữ liệu qua cáp đồng hoặc quang với nhiều tốc độ.<br>
 Cáp đồng rẻ, truyền điện, khoảng cách ngắn.<br>
 Cáp quang đắt, truyền ánh sáng, đi xa.<br>
@@ -43,11 +45,39 @@ Ví dụ về các loại Ethernet:<br>
 > Có thể truy cập trang (www.EthernetAlliance.org) để xem roadmap mới nhất về Ethernet.<br>
 > Hoặc [đây](/docs/CCNA/img/2025-Ethernet-Roadmap-2-Sided-Web-03-17-2025.pdf) để xem 2025 Ethernet Roadmap.
 
+__Hành vi đồng nhất trên mọi liên kết nhờ tầng liên kết dữ liệu Ethernet__
+
+Dù Ethernet có nhiều chuẩn vật lý khác nhau, nó vẫn hoạt động như một công nghệ LAN duy nhất vì dùng chung chuẩn tầng liên kết dữ liệu. Chuẩn này quy định 1 header và trailer Ethernet thống nhất (là các byte dữ liệu phụ giúp Ethernet gửi dữ liệu trên LAN). __Dù dữ liệu truyền qua UTP, cáp quang hay ở tốc độ nào, header và trailer vẫn giữ nguyên định dạng__.
+
+Các chuẩn vật lý tập trung vào việc truyền bit trên cáp, còn giao thức tầng liên kết dữ liệu của Ethernet tập trung vào việc gửi khung (frame) từ nút nguồn đến nút đích. __1 frame gồm header, trailer và dữ liệu được gói bên trong__. Các nút chỉ cần chuyển tiếp khung qua các liên kết cần thiết để đến đúng đích.
+
+Hình minh họa: PC1 gửi khung Ethernet đến PC3, đi qua UTP đến SW1, qua cáp quang đến SW2 và SW3, rồi qua UTP đến PC3. Các liên kết này chạy ở 4 tốc độ khác nhau: 10 Mbps, 1 Gbps, 10 Gbps và 100 Mbps.
+
+<img src="/docs/CCNA/img/ethernet-lan-Ethernet LAN Forwards a Data-Link Frame over Many Types of Links.png" style="max-width: 100%; width: 600px" />
+
 ## Cáp xoắn đôi (Twisted Pair)
 
-<img src="/docs/CCNA/img/ethernet-lan-cable-Twisted-Pair.png" style="max-width: 100%; width: 600px" />
+Ethernet truyền dữ liệu qua cáp UTP bằng cách dùng dòng điện chạy trong các sợi dây. Có 2 phần: tạo mạch điện và truyền tín hiệu 0, 1.<br>
+Trước hết, Ethernet định nghĩa cách dùng 2 dây trong 1 cặp xoắn để tạo thành 1 mạch kín, cho phép dòng điện chạy qua (như hình). Các cổng Ethernet của 2 thiết bị nối hai dây này thành vòng kín để dòng điện lưu thông.
 
-Thông thường, NIC phát ở chân 1,2 và nhận ở 3,6; switch làm ngược lại.<br>
+<img src="/docs/CCNA/img/ethernet-lan-Creating One Electrical Circuit over One Pair to Send in One Direction.png" style="max-width: 100%; width: 600px" />
+
+Để truyền dữ liệu, 2 thiết bị tuân theo một quy tắc mã hóa: thiết bị gửi thay đổi tín hiệu điện theo thời gian, còn thiết bị nhận giải mã các thay đổi đó thành các bit 0, 1. Ví dụ, 10BASE-T mã hóa bit 0 bằng cách chuyển từ điện áp cao sang thấp giữa khoảng thời gian 1/10.000.000 giây.<br>
+Trong thực tế, các dây trong cáp UTP được xoắn lại (không song song như hình) để giảm nhiễu điện từ. Việc xoắn giúp triệt tiêu phần lớn nhiễu.
+
+<img src="/docs/CCNA/img/ethernet-lan-cable-Twisted-Pair.png" style="max-width: 100%; width: 600px" />
+<img src="/docs/CCNA/img/ethernet-lan-cable-Twisted-Pair-t568a-t568b.png" style="max-width: 100%; width: 400px" />
+
+Liên kết Ethernet gồm: cáp UTP, đầu nối RJ-45 và cổng RJ-45 trên thiết bị. Cáp chứa các cặp dây đồng xoắn, chuẩn 10/100BASE-T dùng 2 cặp, chuẩn 1000BASE-T dùng 4 cặp. Đầu RJ-45 với 8 chân nối dây đồng với thiết bị, cho phép dòng điện truyền dữ liệu.<br>
+Các thiết bị cần cổng RJ-45 để kết nối với đầu cáp RJ-45. Trên PC, cổng này thường nằm trên card mạng (NIC). Switch thường có nhiều cổng RJ-45 để nối nhiều thiết bị vào mạng.<br>
+Ngoài RJ-45, switch Cisco còn hỗ trợ các loại cổng khác, với phần cứng (transceiver) có thể thay đổi sau khi mua. Ví dụ:
+- __SFP__: Cho Gigabit.
+- __SFP+__: Cùng kích thước SFP nhưng hỗ trợ tốc độ 10 Gbps.
+
+<img src="/docs/CCNA/img/ethernet-lan-RJ-45 Connectors and Ports.png" style="max-width: 100%; width: 600px" />
+<img src="/docs/CCNA/img/ethernet-lan-10-Gbps SFP+ with Cable Sitting Just Outside a Catalyst 3560CX Switch.png" style="max-width: 100%; width: 400px" />
+
+Chuẩn 10BASE-T và 100BASE-T dùng 2 cặp dây UTP, mỗi cặp truyền dữ liệu theo 1 chiều. NIC phát ở cặp chân trên 1,2 và nhận ở cặp dưới 3,6; switch làm ngược lại.<br>
 <img src="/docs/CCNA/img/ethernet-lan-Using One Pair for Each Transmission Direction with 10- and 100-Mbps Ethernet.png" style="max-width: 100%; width: 600px" />
 
 Để NIC trên PC giao tiếp với switch, cáp UTP cần là cáp thẳng hay "straight-through cable". Cáp thẳng nối cùng chân ở 2 đầu (1–1, 2–2, 3–3, 6-6…), phù hợp nối PC với switch.<br>
@@ -73,7 +103,7 @@ Cáp 1000BASE-T (Gigabit Ethernet) khác với 10/100 Mbps: dùng 4 cặp dây, 
 
 <img src="/docs/CCNA/img/ethernet-lan-cable-Fiber-optic.png" style="max-width: 100%; width: 450px" />
 
-Cáp quang dùng sợi thủy tinh để truyền ánh sáng mã hóa dữ liệu. Sợi quang linh hoạt, nằm giữa lõi cáp. Ánh sáng từ nguồn phát (optical transmitter) đi vào lõi (core), phản xạ trên lớp cladding giúp truyền đi xa. 3 lớp ngoài có tác dụng bảo vệ bên trong của cáp.<br>
+Cáp quang dùng lõi thủy tinh để truyền ánh sáng, thay đổi ánh sáng theo thời gian để mã hóa 0 và 1. Thủy tinh trong cáp là sợi thủy tinh mỏng, mềm, đặt giữa các lớp bảo vệ: cladding, buffer, strengthener và vỏ ngoài. Ánh sáng từ nguồn phát (optical transmitter) đi vào lõi (core), phản xạ trên lớp cladding giúp truyền đi xa. 3 lớp ngoài có tác dụng bảo vệ bên trong của cáp.<br>
 <img src="/docs/CCNA/img/ethernet-lan-Components of a Fiber-Optic Cable.png" style="max-width: 100%; width: 450px" />
 
 Multimode fiber (sợi quang đa mode): <br>
@@ -103,6 +133,11 @@ Cáp quang dùng 2 sợi – 1 sợi phát (__TX__), 1 sợi thu (__RX__). <br>
 
 Một số chuẩn Ethernet quang 10G: <br>
 <img src="/docs/CCNA/img/ethernet-lan-A Sampling of IEEE 802.3 10-Gbps Fiber Standards.png" style="max-width: 100%; width: 600px" />
+
+{: .new-title }
+> NOTE
+>
+> Nếu cần xem thêm về quang ethernet và SFP/SFP+, hãy xem (tmgmatrix.cisco.com).
 
 ## Truyền dữ liệu trong mạng ethernet
 
@@ -158,9 +193,11 @@ Ví dụ truyền giữa PC1 và PC2 qua 2 switch: <br>
 (4) PC2 nhận và xử lý frame
 
 __Gửi qua Hub (Half-Duplex)__ <br>
-Hub chỉ lặp lại tín hiệu điện, không đọc địa chỉ. Nếu 2 thiết bị gửi cùng lúc → collision. Vì thế phải dùng half-duplex: nếu đang nhận thì chờ trước khi gửi. Cơ chế điều phối dùng thuật toán __carrier sense multiple access with collision detection (CSMA/CD)__: <br>
-\- Nghe đường truyền → nếu rảnh thì gửi. <br>
-\- Nếu đang gửi mà phát hiện collision: Gửi jamming signal. Chờ ngẫu nhiên rồi thử lại.
+Hub chỉ lặp lại tín hiệu điện ra tất cả các cổng (trừ cổng nhận vào), không đọc địa chỉ. Nếu 2 thiết bị gửi cùng lúc → collision. 
+
+Nếu thay hub bằng switch, va chạm sẽ được tránh. Switch hoạt động ở tầng 2, đọc header và trailer của khung, xem địa chỉ MAC. Nếu phải gửi hai khung đến cùng đích, switch sẽ gửi từng khung một, khung còn lại được xếp hàng chờ.
+
+Để tránh va chạm các thiết bị kết nối với hub phải dùng half-duplex: nếu đang nhận thì chờ trước khi gửi. Cơ chế điều phối dùng thuật toán __carrier sense multiple access with collision detection (CSMA/CD)__: nghe kênh → gửi → nếu va chạm thì phát tín hiệu nhiễu, đợi ngẫu nhiên rồi thử lại.
 
 <img src="/docs/CCNA/img/ethernet-lan-Collision Occurring Because of LAN Hub Behavior.png" style="max-width: 100%; width: 500px" />
 
