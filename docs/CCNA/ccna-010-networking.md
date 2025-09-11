@@ -47,7 +47,7 @@ Hiện tại mạng sẽ hoạt động đúng chính xác vì các thiết bị
 
 ## Các thành phần mạng cơ bản
 
-<img src="/docs/CCNA/img/voice of the world.png" style="max-width: 100%; width: 1500px" />
+<img src="/docs/CCNA/img/whvt_1.png" style="max-width: 100%; width: 1500px" />
 Các thành phần mạng cơ bản cơ bản sẽ có:
 - **máy tính** + **cáp** + **switch** + **router**.
 
@@ -59,7 +59,7 @@ Các thành phần mạng cơ bản cơ bản sẽ có:
 
 ## Các đặc điểm mạng cơ bản
 
-<img src="/docs/CCNA/img/voice of the world.png" style="max-width: 100%; width: 1500px" />
+<img src="/docs/CCNA/img/whvt_1.png" style="max-width: 100%; width: 1500px" />
 Các đặc điểm mạng cơ bản:
 
 **Tốc độ (Speed)**
@@ -103,30 +103,32 @@ Các mô hình mạng hoạt động như thế nào?
 <h3> H-How? </h3>
 <img src="/docs/CCNA/img/voice of the world.png" style="max-width: 100%; width: 1500px" />
 Có 2 mô hình:
-- **TCP/IP - Transmission Control Protocol/Internet Protocol Model**
 - **OSI - Open Standard Interconnection Model**
+- **TCP/IP - Transmission Control Protocol/Internet Protocol Model**
 
-TCP/IP được phát triển ở Mỹ bởi Cerf và Kahn, để xây dựng 1 bộ giao thức truyền thông có khả năng kết nối các mạng khác nhau. Song song, OSI được phát triển ở châu âu bởi Tổ chức Tiêu chuẩn hóa Quốc tế ISO, nhằm tạo ra 1 khung chuẩn hoá toàn diện để giúp các hệ thống với công nghệ khác nhau có thể giao tiếp được, cung cấp 1 khung lý thuyết rõ ràng nhằm phân chia chức năng và tăng tính tương tác giữa các thành phần hệ thống.
+Mặc dù các mô hình mạng độc quyền của nhà cung cấp thường hoạt động tốt, nhưng mong muốn nỗ lực có 1 mô hình mạng mở và trung lập sẽ làm giảm độ phức tạp của mạng. Ở châu âu, Tổ chức Tiêu chuẩn hóa Quốc tế The International Organization for Standardization **ISO đã nhận nhiệm vụ tạo ra mô hình OSI: chuẩn hóa các giao thức mạng dữ liệu để cho phép giao tiếp được giữa tất cả các máy tính trên toàn hành tinh**. ISO có sự tham gia của hầu hết các quốc gia phát triển công nghệ trên trái đất.
 
-TCP/IP có lợi thế về thực nghiệm khi đã chứng minh hiệu quả qua việc triển khai thực tế. OSI là 1 mô hình lý thuyết, chuẩn hóa theo từng tầng (7 tầng), mặc dù chi tiết và hữu ích trong giảng dạy và tư duy về cấu trúc mạng, nhưng khó và chậm triển khai. Kết quả TCP/IP được áp dụng rộng rãi và đã giành chiến thắng về mặt ứng dụng.
+Ít chính thức hơn, **xuất phát từ 1 hợp động của Bộ quốc phòng Mỹ**, 1 nỗ lực thứ 2 tạo ra mô hình mạng công cộng và trung lập, **các nhà nghiên cứu tình nguyện của nhiều trường đại học đã phát triển và cho ra đời TCP/IP**.
+
+TCP/IP có lợi thế về thực nghiệm khi đã chứng minh hiệu quả qua việc triển khai thực tế. OSI là 1 mô hình lý thuyết, chuẩn hóa theo từng tầng (7 tầng), mặc dù chi tiết và hữu ích trong giảng dạy và tư duy về cấu trúc mạng, nhưng khó và chậm triển khai. **Kết quả TCP/IP được áp dụng rộng rãi và đã giành chiến thắng về mặt ứng dụng.**
 
 ### Mô hình TCP/IP
 
-TCP/IP định nghĩa các giao thức bằng cách sử dụng các tài liệu RFC (Requests For Comments) hoặc tránh các giao thức có sẵn như tham chiếu đến IEEE (Institute of Electrical and Electronic Engineers ).
+**TCP/IP vừa định nghĩa** các giao thức bằng cách sử dụng các tài liệu **RFC (Requests For Comments)** **vừa tránh lặp lại** các giao thức có sẵn bằng việc tham chiếu đến **IEEE (Institute of Electrical and Electronic Engineers)**.
 
-| <img src="/docs/CCNA/img/networking-tcp-ip-model.png" style="max-width: 100%; width: 200px" /> | Tầng Physical truyền các bit qua các liên kết. Tầng Data Link chỉ rõ cách gửi dữ liệu qua từng loại liên kết vật lý (ví dụ: Ethernet LAN hay Wireless LAN). Tầng Network truyền dữ liệu toàn trình từ máy tính gửi đến máy tính đích. 2 tầng trên cùng làm việc với các ứng dụng cần gửi và nhận dữ liệu. |
+| <img src="/docs/CCNA/img/networking-tcp-ip-model.png" style="max-width: 100%; width: 200px" /> | Tầng **Physical** truyền các bit qua các liên kết.<br>Tầng **Data Link** chỉ rõ cách gửi dữ liệu qua từng loại liên kết vật lý (ví dụ: Ethernet LAN hay Wireless LAN).<br>Tầng **Network** truyền dữ liệu toàn trình từ máy tính gửi đến máy tính nhận.<br>2 tầng **Application** và **Transport** làm việc với các ứng dụng cần gửi và nhận dữ liệu. |
 
 1 số giao thức TCP/IP tương ứng các tầng của mô hình như bảng dưới.<br>
 <img src="/docs/CCNA/img/networking-tcp-ip-model-and-example-protocols.png" style="max-width: 100%; width: 600px" />
 
 Hoạt động của giao thức HTTP:
 
-| <img src="/docs/CCNA/img/networking-tcp-ip-application-layer.png" style="max-width: 100%; width: 280px" /> | **TCP/IP application layer**<br>Tầng ứng dụng không định nghĩa ứng dụng, mà định nghĩa dịch vụ mà ứng dụng cần. Như ví dụ, HTTP định nghĩa cách mà trình duyệt web lấy nội dung trang web từ web server.<br><br>(1) PC gửi yêu cầu "GET http://larry.com/home.htm".<br>(2) Server gửi phản hồi "200 OK home.htm".<br>(3) Các phần còn lại của nội dung file "home.htm" được chia nhỏ gửi tiếp theo sau. |
-| <img src="/docs/CCNA/img/networking-tcp-ip-transport-layer.png" style="max-width: 100%; width: 345px" /> | **TCP/IP transport layer**<br>Tầng vận chuyển sử dụng 2 giao thức phổ biến là TCP (Transmission Control Protocol) và UDP (User Datagram Protocol). TCP cung cấp cơ chế truyền thông tin cậy, nhờ tính năng phục hồi lỗi bằng cách gửi lại.<br><br>(1)->(3) TCP header có trường thứ tự SEQ mỗi message.<br> (4) PC không nhận được message số 2 sẽ yêu cầu server gửi lại. |
-| <img src="/docs/CCNA/img/networking-tcp-ip-network-layer.png" style="max-width: 100%; width: 1000px" /> | **TCP/IP network layer**<br>Tầng mạng có 1 giao thức lớn là IP. IP cung cấp tính năng định địa chỉ và định tuyến (có thể hiểu tương đương với dịch vụ bưu chính).<br><br>(1) Server gửi gói đến R1 là router gần nhất (tương đương gửi gói hàng đến bưu cục gần nhất). Server không biết topo của các router.<br>(2) R1 nhận được gói, R1 nhìn vào ip đích là 2.2.2.2, đưa ra quyết định chuyển tiếp dựa vào định tuyến ip. Kết quả là gửi đến R2.<br>(3) R2 làm công việc tương tự R1, R2 gửi gói đến PC do trong cùng mạng LAN. |
-| <img src="/docs/CCNA/img/networking-tcp-ip-datalink-and-physical-layer.png" style="max-width: 100%; width: 1000px" /> | **TCP/IP data-link and physical layer**<br>Tầng liên kết dữ liệu và tầng vật lý định nghĩa các giao thức và phần cứng cần thiết để truyền dữ liệu qua 1 mạng vật lý. 2 tầng này hoạt động chặt chẽ cùng nhau. Tầng vật lý quy định về hệ thống cáp, năng lượng và các tín hiệu điện. Có một số quy tắc và chuẩn khi gửi dữ liệu qua cáp, các quy tắc đó thuộc về tầng liên kết dữ liệu.<br><br>(1) IP packet được đóng gói vào giữa Ethernet header và Ethernet trailer, gọi là 1 Ethernet frame.<br>(2) Frame được chuyển thành các bits và sử dụng tín hiệu điện để chuyền trên cáp ethernet.<br>(3) R1 nhận được tín hiệu điện trên cáp và tái tạo lại thành các bits giống máy gửi.<br>(4) R1 mở gói IP bằng cách bỏ đi Ethernet header và Ethernet trailer. |
+| <img src="/docs/CCNA/img/networking-tcp-ip-application-layer.png" style="max-width: 100%; width: 320px" /> | **5. TCP/IP application layer**<br>Tầng ứng dụng cung cấp các dịch vụ cho phần mềm ứng dụng chạy trên máy tính. Như ví dụ, HTTP cung cấp cách mà trình duyệt web lấy nội dung trang web từ web server.<br><br>(1) PC gửi yêu cầu "GET http://larry.com/home.htm".<br>(2) Server gửi phản hồi "200 OK home.htm".<br>(3) Các phần còn lại của nội dung file "home.htm" được chia nhỏ gửi tiếp theo sau. |
+| <img src="/docs/CCNA/img/networking-tcp-ip-transport-layer.png" style="max-width: 100%; width: 385px" /> | **4. TCP/IP transport layer**<br>Tầng vận chuyển sử dụng 2 giao thức phổ biến là TCP (Transmission Control Protocol) và UDP (User Datagram Protocol). TCP cung cấp cơ chế truyền thông tin cậy, nhờ tính năng phục hồi lỗi bằng cách gửi lại.<br><br>(1)->(3) TCP header có trường thứ tự SEQ mỗi message.<br> (4) PC không nhận được message có số thứ tự 2 sẽ yêu cầu server gửi lại. |
+| <img src="/docs/CCNA/img/networking-tcp-ip-network-layer.png" style="max-width: 100%; width: 1000px" /> | **3. TCP/IP network layer**<br>Tầng mạng có 1 giao thức lớn là IP. IP cung cấp tính năng định địa chỉ và định tuyến (có thể hiểu tương đương với dịch vụ bưu chính). IP là địa chỉ duy nhất để nhận dạng 1 thiết bị TCP/IP trong mạng. Định tuyến IP là chuyển tiếp gói tin IP từ thiết bị này sang thiết bị khác.<br><br>(1) Server gửi gói đến R1 là router gần nhất (tương đương gửi gói hàng đến bưu cục gần nhất). Server không biết topo của các router.<br>(2) R1 nhận được gói, R1 nhìn vào ip đích là 2.2.2.2, đưa ra quyết định chuyển tiếp dựa vào định tuyến ip. Kết quả là gửi đến R2.<br>(3) R2 làm công việc tương tự R1, R2 gửi gói đến PC do trong cùng mạng LAN. |
+| <img src="/docs/CCNA/img/networking-tcp-ip-datalink-and-physical-layer.png" style="max-width: 100%; width: 1000px" /> | **1&2. TCP/IP data-link and physical layer**<br>Tầng liên kết dữ liệu và tầng vật lý định nghĩa các giao thức và phần cứng cần thiết để truyền dữ liệu qua 1 mạng vật lý. 2 tầng này hoạt động chặt chẽ cùng nhau. Tầng vật lý quy định về hệ thống cáp, năng lượng và các tín hiệu điện. Có một số quy tắc và chuẩn khi gửi dữ liệu qua cáp, các quy tắc đó thuộc về tầng liên kết dữ liệu.<br><br>(1) IP packet được đóng gói vào giữa Ethernet header và Ethernet trailer, gọi là 1 Ethernet frame.<br>(2) Frame được chuyển thành các bits và sử dụng tín hiệu điện để truyền trên cáp Ethernet.<br>(3) R1 nhận được tín hiệu điện trên cáp và tái tạo lại thành các bits giống máy gửi.<br>(4) R1 mở gói IP bằng cách bỏ đi Ethernet header và Ethernet trailer. |
 
-Hình dưới là tóm tắt quá trình encapsulation. Các từ **Segment**, **Packet**, và **Frame** thường dùng để chỉ các thông điệp tương ứng các tầng.
+**Thuật ngữ đóng gói (encapsulation) đề cập đến quá trình đặt phần tiêu đề (header) thường là lên đầu dữ liệu.** Hình dưới là tóm tắt quá trình encapsulation. Các từ **Segment**, **Packet**, và **Frame** thường dùng để chỉ các thông điệp tương ứng các tầng.
 
 <img src="/docs/CCNA/img/networking-tcp-ip-encapsulation.png" style="max-width: 100%; width: 500px" />
 
