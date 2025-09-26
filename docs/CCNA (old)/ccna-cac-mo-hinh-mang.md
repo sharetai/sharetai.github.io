@@ -5,7 +5,7 @@ nav_order: 1
 parent: CCNA (old)
 ---
 
-# Open Standard Interconnection Model<br>and<br>Transmission Control Protocol/Internet Protocol Model
+# Open Systems Interconnection Model<br>and<br>Transmission Control Protocol/Internet Protocol Model
 {: .no_toc }
 
 Mô hình OSI và mô hình TCP/IP
@@ -32,7 +32,7 @@ Cần có một khung tham chiếu chung để các nhà sản xuất thiết b�
   <img alt="" alt="" style="max-width: 400px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/OSI_Model_v1.svg/800px-OSI_Model_v1.svg.png" />
 </div>
 
-**Open Standard Interconnection (OSI)** Model là một sự chuẩn hóa cho những chức năng trong hệ thống mạng. Chức năng của mô hình là giúp cho tính phức tạp của mạng trở nên đơn giản hơn, cho phép các nhà phát triển module hóa việc thiết kế. Phương pháp này cho phép nhiều nhà phát triển làm việc độc lập nhau để tạo ra những chức năng riêng biệt mà vẫn có thể hòa hợp thành một thể thống nhất một cách dễ dàng (plug-and-play). Ngoài ra mô hình còn giúp cho những quản trị viên có thể hình tượng hóa quá trình trao đổi dữ liệu giữa các máy tính để hiểu được hoạt động của hệ thống mạng một cách tường minh hơn.
+**Open Systems Interconnection (OSI)** Model là một sự chuẩn hóa cho những chức năng trong hệ thống mạng. Chức năng của mô hình là giúp cho tính phức tạp của mạng trở nên đơn giản hơn, cho phép các nhà phát triển module hóa việc thiết kế. Phương pháp này cho phép nhiều nhà phát triển làm việc độc lập nhau để tạo ra những chức năng riêng biệt mà vẫn có thể hòa hợp thành một thể thống nhất một cách dễ dàng (plug-and-play). Ngoài ra mô hình còn giúp cho những quản trị viên có thể hình tượng hóa quá trình trao đổi dữ liệu giữa các máy tính để hiểu được hoạt động của hệ thống mạng một cách tường minh hơn.
 
 Mô hình **OSI** bao gồm 7 lớp:
 

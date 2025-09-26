@@ -103,12 +103,12 @@ Các mô hình mạng hoạt động như thế nào?
 <h3> H-How? </h3>
 <img src="/docs/CCNA/img/voice of the world.png" style="max-width: 100%; width: 1500px" />
 Có 2 mô hình:
-- **OSI - Open Standard Interconnection Model**
+- **OSI - Open Systems Interconnection Model**
 - **TCP/IP - Transmission Control Protocol/Internet Protocol Model**
 
 Mặc dù các mô hình mạng độc quyền của nhà cung cấp thường hoạt động tốt, nhưng mong muốn nỗ lực có 1 mô hình mạng mở và trung lập sẽ làm giảm độ phức tạp của mạng. Ở châu âu, Tổ chức Tiêu chuẩn hóa Quốc tế The International Organization for Standardization **ISO đã nhận nhiệm vụ tạo ra mô hình OSI: chuẩn hóa các giao thức mạng dữ liệu để cho phép giao tiếp được giữa tất cả các máy tính trên toàn hành tinh**. ISO có sự tham gia của hầu hết các quốc gia phát triển công nghệ trên trái đất.
 
-Ít chính thức hơn, **xuất phát từ 1 hợp động của Bộ quốc phòng Mỹ**, 1 nỗ lực thứ 2 tạo ra mô hình mạng công cộng và trung lập, **các nhà nghiên cứu tình nguyện của nhiều trường đại học đã phát triển và cho ra đời TCP/IP**.
+Ít chính thức hơn, **xuất phát từ 1 hợp đồng của Bộ quốc phòng Mỹ**, 1 nỗ lực thứ 2 tạo ra mô hình mạng công cộng và trung lập, **các nhà nghiên cứu tình nguyện của nhiều trường đại học đã phát triển và cho ra đời TCP/IP**.
 
 TCP/IP có lợi thế về thực nghiệm khi đã chứng minh hiệu quả qua việc triển khai thực tế. OSI là 1 mô hình lý thuyết, chuẩn hóa theo từng tầng (7 tầng), mặc dù chi tiết và hữu ích trong giảng dạy và tư duy về cấu trúc mạng, nhưng khó và chậm triển khai. **Kết quả TCP/IP được áp dụng rộng rãi và đã giành chiến thắng về mặt ứng dụng.**
 
@@ -134,7 +134,7 @@ Hoạt động của giao thức HTTP:
 
 ### Mô hình OSI
 
-Open Standard Interconnection (OSI) Model là một sự chuẩn hóa cho những chức năng trong hệ thống mạng. Chức năng của mô hình là giúp cho tính phức tạp của mạng trở nên đơn giản hơn, cho phép các nhà phát triển module hóa việc thiết kế. Phương pháp này cho phép nhiều nhà phát triển làm việc độc lập nhau để tạo ra những chức năng riêng biệt mà vẫn có thể hòa hợp thành một thể thống nhất một cách dễ dàng (plug-and-play). Ngoài ra mô hình còn giúp cho những quản trị viên có thể hình tượng hóa quá trình trao đổi dữ liệu giữa các máy tính để hiểu được hoạt động của hệ thống mạng một cách tường minh hơn.
+Open Systems Interconnection (OSI) Model là một sự chuẩn hóa cho những chức năng trong hệ thống mạng. Chức năng của mô hình là giúp cho tính phức tạp của mạng trở nên đơn giản hơn, cho phép các nhà phát triển module hóa việc thiết kế. Phương pháp này cho phép nhiều nhà phát triển làm việc độc lập nhau để tạo ra những chức năng riêng biệt mà vẫn có thể hòa hợp thành một thể thống nhất một cách dễ dàng (plug-and-play). Ngoài ra mô hình còn giúp cho những quản trị viên có thể hình tượng hóa quá trình trao đổi dữ liệu giữa các máy tính để hiểu được hoạt động của hệ thống mạng một cách tường minh hơn.
 
 Mô hình OSI tương đồng với mô hình TCP/IP, có các tầng và mỗi tầng định nghĩa một tập hợp các chức năng mạng điển hình. Giống như TCP/IP, mỗi tầng trong mô hình OSI cũng liên quan đến nhiều giao thức và tiêu chuẩn được sử dụng để thực hiện các chức năng mà tầng đó quy định.
 
@@ -142,10 +142,10 @@ Mô hình OSI tương đồng với mô hình TCP/IP, có các tầng và mỗi 
 
 Mô hình OSI bao gồm 7 lớp:
 
-| **7. Application** | Giao diện giữa người dùng và mạng. Cung cấp dịch vụ mạng cho ứng dụng. | HTTP, FTP, SMTP, Telnet |
-| **6. Presentation** | Xử lý định dạng dữ liệu: mã hóa, giải mã, nén, chuyển đổi ký tự. | ASCII, JPEG, MPEG |
-| **5. Session** | Thiết lập, duy trì, đồng bộ và kết thúc phiên giao tiếp. | NetBIOS, RPC |
-| **4. Transport** | Đảm bảo truyền dữ liệu đáng tin cậy, phân mảnh và tái tổ hợp dữ liệu. | TCP, UDP |
-| **3. Network** | Định tuyến, gán địa chỉ IP, gửi gói qua các mạng trung gian. | IPv4, IPv6, OSPF, RIP |
-| **2. Data Link** | Truyền dữ liệu qua liên kết vật lý, kiểm soát lỗi và địa chỉ MAC. | Ethernet, PPP, VLAN, ARP |
-| **1. Physical** | Truyền bit qua phương tiện vật lý: cáp, tín hiệu, điện áp. | RJ45, Fiber, DSL, V.35 |
+| **7. Application**    | Giao diện giữa người dùng và mạng. Cung cấp dịch vụ mạng cho ứng dụng.    | HTTP, FTP, SMTP, Telnet   |
+| **6. Presentation**   | Xử lý định dạng dữ liệu: mã hóa, giải mã, nén, chuyển đổi ký tự.          | ASCII, JPEG, MPEG         |
+| **5. Session**        | Thiết lập, duy trì, đồng bộ và kết thúc phiên giao tiếp.                  | NetBIOS, RPC              |
+| **4. Transport**      | Đảm bảo truyền dữ liệu đáng tin cậy, phân mảnh và tái tổ hợp dữ liệu.     | TCP, UDP                  |
+| **3. Network**        | Định tuyến, gán địa chỉ IP, gửi gói qua các mạng trung gian.              | IPv4, IPv6, OSPF, RIP     |
+| **2. Data Link**      | Truyền dữ liệu qua liên kết vật lý, kiểm soát lỗi và địa chỉ MAC.         | Ethernet, PPP, VLAN, ARP  |
+| **1. Physical**       | Truyền bit qua phương tiện vật lý: cáp, tín hiệu, điện áp.                | RJ45, Fiber, DSL, V.35    |
