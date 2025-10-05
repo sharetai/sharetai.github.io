@@ -39,11 +39,8 @@ Giới thiệu
 
 ## Mô tả về kiến trúc Service Provider Network
 
-<img src="/docs/CCNA/img/whvt_1.png" style="max-width: 100%; width: 1500px" />
-<h3> W-Why? </h3>
 Là 1 SP - Service Provider. Thì cần có quy hoạch và thiết kế ban đầu.
 
-<h3> H-How? </h3>
 Ta thường có 1 quy hoạch chung như sau:
 
 | **Service Provider Core Architectures**   | **Modern Service Provider**                           |
@@ -62,7 +59,7 @@ Bên trái là mạng **Telco truyền thống**: Gồm nhiều thiết bị đ�
 Nhược: Nhiều công nghệ → tốn kém, dịch vụ đắt  
 
 Bên phải là mạng **ISP truyền thống**: Ban đầu chỉ có Internet (chạy IP).  
-Ưu: Đơn giản, chi phí thấp, giá cạnh tranh  
+Ưu: Đơn giản (chỉ 1 công nghệ ip), chi phí thấp, giá cạnh tranh  
 Nhược: Chỉ có Internet, không có VPN/dịch vụ khác  
 
 **Kết luận: Cần có mô hình Modern Service Provider:**
