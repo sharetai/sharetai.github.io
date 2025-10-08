@@ -140,3 +140,219 @@ Bảng dưới liệt kê **các thông tin chính** chứa trong 1 OSPF hello p
 
 Hình trên minh họa các trạng thái và các gói tin được trao đổi khi hai router (R1 và R2) hình thành 1 quan hệ OSPF adjacency.  
 Để quan sát chi tiết quá trình hoặc debug lỗi, có thể sử dụng lệnh: **debug ip ospf adj**
+
+## Lab
+
+<img src="/docs/CCNP SP/img/ospf lab.png" style="max-width: 100%; width: 1500px" />
+
+```
+1. Thiet lap IP dau noi va Loopback IP cho cac Router theo hinh ve tren
+
+2. Xay dung OSPF neighbor giua cac Router dap ung cac dieu kien sau:
+2.1. vIOS-xRV1: area0, xRV1-xRV2: area 1, xRV1-xRV3: area 2. Cac interface nhan moi truong OSPF = point-to-point
+2.2. Cac Router nhan Loopback0 lam Router-ID
+2.3. Cac interface cua cac Router xRV1,2,3 MTU = 9000.
+
+3. Tai router vIOS, tao them cac interface Loopback10,11,12 voi IP = 172.16.x.1/32 (x=10,11,12) va dua cac interface nay vao OSPF.
+Kiem tra bang route OSPF tai cac router con lai va dua ra nhan xet.
+
+4. Tai router xRV1, thuc hien cau hinh sao cho router xRV2 chi hoc duoc route 1.1.1.1/32 trong area 0.
+
+5. Thuc hien dua area 2 thanh Totally NSSA area, dua ra nhan xet sau khi dieu chinh.
+```
+
+**xrv1**
+```
+conf
+!
+host xrv1
+!
+! @@@@@@@@@ 1. Thiet lap IP dau noi va Loopback IP cho cac Router theo hinh ve tren
+int lo0
+  ipv4 addr 1.1.1.2/32
+!
+int g0/0/0/0
+  no shut
+  ipv4 addr 10.1.1.1/30
+!
+int g0/0/0/1
+  no shut
+  ipv4 addr 10.1.2.1/30
+!
+int g0/0/0/2
+  no shut
+  ipv4 addr 10.1.3.1/30
+!
+! @@@@@@@@@ 2. Xay dung OSPF neighbor giua cac Router dap ung cac dieu kien sau:
+! 2.1. vIOS-xRV1: area0, xRV1-xRV2: area 1, xRV1-xRV3: area 2. Cac interface nhan moi truong OSPF = point-to-point
+! 2.2. Cac Router nhan Loopback0 lam Router-ID
+! 2.3. Cac interface cua cac Router xRV1,2,3 MTU = 9000.
+router ospf 1
+  router-id 1.1.1.2
+  area 0
+    network point-to-point
+    interface lo0
+      exit
+    interface gi0/0/0/0
+      exit
+  area 1
+    network point-to-point
+    interface gi0/0/0/1
+      exit
+  area 2
+    network point-to-point
+    interface gi0/0/0/2
+      exit
+root
+!
+int g0/0/0/0
+  mtu 9000
+int g0/0/0/1
+  mtu 9000
+int g0/0/0/2
+  mtu 9000
+!
+! @@@@@@@@@ 4. Tai router xRV1, thuc hien cau hinh sao cho router xRV2 chi hoc duoc route 1.1.1.1/32 trong area 0.
+route-policy permit-lo0-vIOS
+  if destination in (1.1.1.1/32) then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+router ospf 1
+  area 1
+    route-policy permit-lo0-vIOS in
+root
+!
+! @@@@@@@@@ 5. Thuc hien dua area 2 thanh Totally NSSA area, dua ra nhan xet sau khi dieu chinh.
+router ospf 1
+  area 2
+    nssa no-summary
+root
+!
+commit
+end
+```
+
+**xrv2**
+```
+conf
+!
+host xrv2
+!
+! @@@@@@@@@ 1. Thiet lap IP dau noi va Loopback IP cho cac Router theo hinh ve tren
+int lo0
+  ipv4 addr 1.1.1.3/32
+!
+int g0/0/0/1
+  no shut
+  ipv4 addr 10.1.2.2/30
+!
+! @@@@@@@@@ 2. Xay dung OSPF neighbor giua cac Router dap ung cac dieu kien sau:
+! 2.1. vIOS-xRV1: area0, xRV1-xRV2: area 1, xRV1-xRV3: area 2. Cac interface nhan moi truong OSPF = point-to-point
+! 2.2. Cac Router nhan Loopback0 lam Router-ID
+! 2.3. Cac interface cua cac Router xRV1,2,3 MTU = 9000.
+router ospf 1
+  router-id 1.1.1.3
+  area 1
+    network point-to-point
+    interface lo0
+      exit
+    interface gi0/0/0/1
+      exit
+root
+!
+int g0/0/0/1
+  mtu 9000
+!
+commit
+end
+```
+
+**xrv3**
+```
+conf
+!
+host xrv3
+!
+! @@@@@@@@@ 1. Thiet lap IP dau noi va Loopback IP cho cac Router theo hinh ve tren
+int lo0
+  ipv4 addr 1.1.1.4/32
+!
+int g0/0/0/2
+  no shut
+  ipv4 addr 10.1.3.2/30
+!
+! @@@@@@@@@ 2. Xay dung OSPF neighbor giua cac Router dap ung cac dieu kien sau:
+! 2.1. vIOS-xRV1: area0, xRV1-xRV2: area 1, xRV1-xRV3: area 2. Cac interface nhan moi truong OSPF = point-to-point
+! 2.2. Cac Router nhan Loopback0 lam Router-ID
+! 2.3. Cac interface cua cac Router xRV1,2,3 MTU = 9000.
+router ospf 1
+  router-id 1.1.1.4
+  area 2
+    network point-to-point
+    interface lo0
+      exit
+    interface gi0/0/0/2
+      exit
+root
+!
+int g0/0/0/2
+  mtu 9000
+!
+! @@@@@@@@@ 5. Thuc hien dua area 2 thanh Totally NSSA area, dua ra nhan xet sau khi dieu chinh.
+router ospf 1
+  area 2
+    nssa no-summary
+root
+!
+commit
+end
+```
+
+**vIOS**
+```
+enable
+conf t
+!
+no ip domain-lookup
+host vIOS
+!
+! @@@@@@@@@ 1. Thiet lap IP dau noi va Loopback IP cho cac Router theo hinh ve tren
+int Loopback0
+  ip addr 1.1.1.1 255.255.255.255
+!
+int g0/0
+  no shut
+  ip addr 10.1.1.2 255.255.255.252
+!
+! @@@@@@@@@ 2. Xay dung OSPF neighbor giua cac Router dap ung cac dieu kien sau:
+! @@@ 2.1. vIOS-xRV1: area0, xRV1-xRV2: area 1, xRV1-xRV3: area 2. Cac interface nhan moi truong OSPF = point-to-point
+! @@@ 2.2. Cac Router nhan Loopback0 lam Router-ID
+! @@@ 2.3. Cac interface cua cac Router xRV1,2,3 MTU = 9000.
+int Loopback0
+  ip ospf 1 area 0
+!
+int g0/0
+  mtu 8986
+  ip ospf 1 area 0
+  ip ospf network point-to-point
+!
+! @@@@@@@@@ 3. Tai router vIOS, tao them cac interface Loopback10,11,12 voi IP = 172.16.x.1/32 (x=10,11,12) va dua cac interface nay vao OSPF.
+! @@@ Kiem tra bang route OSPF tai cac router con lai va dua ra nhan xet.
+int Loopback10
+  ip addr 172.16.10.1 255.255.255.255
+  ip ospf 1 area 0
+int Loopback20
+  ip addr 172.16.20.1 255.255.255.255
+  ip ospf 1 area 0
+int Loopback30
+  ip addr 172.16.30.1 255.255.255.255
+  ip ospf 1 area 0
+!
+end
+write
+```
+
