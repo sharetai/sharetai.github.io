@@ -612,3 +612,337 @@ Prefix          Label   Label(s)       Outgoing     Next Hop            Flags
 
 RP/0/0/CPU0:xrv3#
 ```
+
+## MPLS Traffic Engineering
+
+**Mục tiêu:**  
+**Điều khiển luồng lưu lượng mạng**, giảm nghẽn mạng, tận dụng tối đa tài nguyên mạng.
+ 
+<img src="/docs/CCNP SP/img/mpls Tunnel Path with Most Available Resources.png" style="max-width: 100%; width: 350px" />
+
+**Yêu cầu chính:**  
+- Mọi LSR phải thấy **toàn bộ topology** mạng (qua OSPF/IS-IS).  
+- Phải biết **thông tin thêm** về tài nguyên (băng thông, ràng buộc).  
+- Cần **OSPF hoặc IS-IS** có mở rộng TE và RSVP để thiết lập tunnel, phân phối nhãn.
+
+**Cơ chế hoạt động:**  
+- MPLS TE tạo **Label-Switched Path (LSP)** – đường hầm dẫn lưu lượng qua các router được chỉ định.  
+- **CSPF (Constrained SPF)** chọn đường ngắn nhất thỏa mãn ràng buộc tài nguyên.  
+- **RSVP** gửi thông điệp **Path** từ router đầu (headend) đến cuối (tail-end), rồi nhận lại **Resv** để gán nhãn và thiết lập LSP.
+
+<img src="/docs/CCNP SP/img/mpls RSVP Path.png" style="max-width: 100%; width: 600px" />
+<img src="/docs/CCNP SP/img/mpls RSVP Resv.png" style="max-width: 100%; width: 600px" />
+
+**Chuyển lưu lượng vào tunnel:**  
+- **static route**
+- **autoroute announce** (tự quảng bá tunnel vào IGP)  
+- Hoặc **policy-based routing (PBR)**.
+
+**End to End Protection:**  
+Khi **LSP chính (protected LSP)** gặp sự cố, **router nguồn** sẽ ngay lập tức kích hoạt **LSP dự phòng (secondary LSP)** để tạm thời chuyển lưu lượng của tunnel.  
+Nếu **LSP dự phòng** cũng bị lỗi, tunnel sẽ mất khả năng bảo vệ đường đi cho đến khi lỗi được khắc phục.  
+Cơ chế bảo vệ đường đi (path protection) có thể được áp dụng trong cùng một vùng IGP.
+
+<img src="/docs/CCNP SP/img/mpls te End to End Protection.png" style="max-width: 100%; width: 800px" />
+
+### Lab
+
+<img src="/docs/CCNP SP/img/mpls lab tunnel-te.png" style="max-width: 100%; width: 420px" />
+
+**xrv4**
+```
+conf
+!
+host xrv4
+!
+! @@@@@@@@@ 1. Thiet lap IP dau noi va Loopback IP
+int lo0
+  ipv4 addr 4.4.4.4/32
+!
+int g0/0/0/0
+  no shut
+  ipv4 addr 10.0.24.4/24
+!
+! @@@@@@@@@ 2. Xay dung OSPF neighbor giua cac Router
+router ospf 1
+  router-id 4.4.4.4
+  area 0
+    network point-to-point
+    interface lo0
+      exit
+    interface gi0/0/0/0
+      exit
+root
+!
+commit
+end
+```
+
+**xrv2**
+```
+conf
+!
+int g0/0/0/2
+  no shut
+  ipv4 addr 10.0.24.2/24
+!
+router ospf 1
+  area 0
+    interface gi0/0/0/2
+      exit
+root
+!
+commit
+end
+```
+
+**xrv1/2/3/4**
+```
+conf
+!
+router ospf 1
+  mpls traffic-eng router-id loopback 0
+  mpls traffic-eng multicast-intact
+  area 0
+    mpls traffic-eng
+root
+!
+mpls traffic-eng
+  interface gi0/0/0/0
+  !
+  interface gi0/0/0/1
+  !
+  interface gi0/0/0/2
+  !
+  signalling advertise explicit-null
+root
+!
+rsvp
+  interface gi0/0/0/0
+    bandwidth percentage 85
+  !
+  interface gi0/0/0/1
+    bandwidth percentage 85
+  !
+  interface gi0/0/0/2
+    bandwidth percentage 85
+  !
+root
+!
+commit
+end
+```
+```
+RP/0/0/CPU0:xrv1#show rsvp interface
+Wed Oct 22 17:28:00.849 UTC
+
+*: RDM: Default I/F B/W % : 75% [default] (max resv/bc0), 0% [default] (bc1)
+
+Interface                 MaxBW (bps)  MaxFlow (bps) Allocated (bps)      MaxSub (bps)
+------------------------- ------------ ------------- -------------------- -------------
+GigabitEthernet0/0/0/0           850M           850M             0 (  0%)            0
+GigabitEthernet0/0/0/1           850M           850M             0 (  0%)            0
+GigabitEthernet0/0/0/2           850M           850M             0 (  0%)            0
+RP/0/0/CPU0:xrv1#
+```
+
+**xrv1**
+```
+conf
+!
+interface tunnel-te4
+  description xrv1-to-xrv4-dynamicpath
+  ipv4 unnumbered Loopback0
+  signalled-name xrv1-to-xrv4-dynamicpath
+  destination 4.4.4.4
+  path-option 1 dynamic
+!
+commit
+end
+```
+```
+RP/0/0/CPU0:xrv1#show mpls traffic-eng tunnels 4
+Mon Oct 13 18:29:37.519 UTC
+
+
+Name: tunnel-te4  Destination: 4.4.4.4  Ifhandle:0xd0
+  Signalled-Name: xrv1-to-xrv4-dynamicpath
+  Status:
+    Admin:    up Oper:   up   Path:  valid   Signalling: connected
+
+    path option 1,  type dynamic  (Basis for Setup, path weight 2)
+    G-PID: 0x0800 (derived from egress interface properties)
+    Bandwidth Requested: 0 kbps  CT0
+    Creation Time: Mon Oct 13 18:28:05 2025 (00:01:32 ago)
+  Config Parameters:
+    Bandwidth:        0 kbps (CT0) Priority:  7  7 Affinity: 0x0/0xffff
+    Metric Type: TE (global)
+    Path Selection:
+      Tiebreaker: Min-fill (default)
+    Hop-limit: disabled
+    Cost-limit: disabled
+    Path-invalidation timeout: 10000 msec (default), Action: Tear (default)
+    AutoRoute: disabled  LockDown: disabled   Policy class: not set
+    Forward class: 0 (default)
+    Forwarding-Adjacency: disabled
+    Autoroute Destinations: 0
+    Loadshare:          0 equal loadshares
+    Auto-bw: disabled
+    Fast Reroute: Disabled, Protection Desired: None
+    Path Protection: Not Enabled
+    BFD Fast Detection: Disabled
+    Reoptimization after affinity failure: Enabled
+    Soft Preemption: Disabled
+  History:
+    Tunnel has been up for: 00:01:31 (since Mon Oct 13 18:28:06 UTC 2025)
+    Current LSP:
+      Uptime: 00:01:31 (since Mon Oct 13 18:28:06 UTC 2025)
+
+  Path info (OSPF 1 area 0):
+  Node hop count: 2
+  Hop0: 10.0.12.2
+  Hop1: 10.0.24.4
+  Hop2: 4.4.4.4
+Displayed 1 (of 2) heads, 0 (of 0) midpoints, 0 (of 0) tails
+Displayed 1 up, 0 down, 0 recovering, 0 recovered heads
+```
+```
+conf
+!
+explicit-path name xrv1-to-xrv4
+ index 1 next-address strict ipv4 unicast 10.0.13.3
+ index 2 next-address strict ipv4 unicast 10.0.23.2
+ index 3 next-address strict ipv4 unicast 10.0.24.4
+!
+explicit-path name xrv1-to-xrv4-bk
+ index 1 next-address strict ipv4 unicast 10.0.12.2
+ index 2 next-address strict ipv4 unicast 10.0.24.4
+!
+interface tunnel-te40
+  description xrv1-to-xrv4-explicitpath
+  ipv4 unnumbered Loopback0
+  signalled-name xrv1-to-xrv4-explicitpath
+  autoroute announce
+  !
+  destination 4.4.4.4
+  path-protection
+  path-option 1 explicit name xrv1-to-xrv4 protected-by 2
+  path-option 2 explicit name xrv1-to-xrv4-bk
+!
+commit
+end
+```
+```
+RP/0/0/CPU0:xrv1#show mpls traffic-eng tunnels 40
+Mon Oct 13 18:54:52.165 UTC
+
+
+Name: tunnel-te40  Destination: 4.4.4.4  Ifhandle:0xf0
+  Signalled-Name: xrv1-to-xrv4-explicitpath
+  Status:
+    Admin:    up Oper:   up   Path:  valid   Signalling: connected
+
+    path option 1,  type explicit xrv1-to-xrv4 (Basis for Setup, path weight 3)
+      Protected-by PO index: 2
+    path option 2,  type explicit xrv1-to-xrv4-bk (Basis for Standby, path weight 2)
+    G-PID: 0x0800 (derived from egress interface properties)
+    Bandwidth Requested: 0 kbps  CT0
+    Creation Time: Mon Oct 13 18:36:26 2025 (00:18:26 ago)
+  Config Parameters:
+    Bandwidth:        0 kbps (CT0) Priority:  7  7 Affinity: 0x0/0xffff
+    Metric Type: TE (global)
+    Path Selection:
+      Tiebreaker: Min-fill (default)
+    Hop-limit: disabled
+    Cost-limit: disabled
+    Path-invalidation timeout: 10000 msec (default), Action: Tear (default)
+    AutoRoute:  enabled  LockDown: disabled   Policy class: not set
+    Forward class: 0 (default)
+    Forwarding-Adjacency: disabled
+    Autoroute Destinations: 0
+    Loadshare:          0 equal loadshares
+    Auto-bw: disabled
+    Fast Reroute: Disabled, Protection Desired: None
+    Path Protection: Enabled
+    BFD Fast Detection: Disabled
+    Reoptimization after affinity failure: Enabled
+    Soft Preemption: Disabled
+  History:
+    Tunnel has been up for: 00:10:38 (since Mon Oct 13 18:44:14 UTC 2025)
+    Current LSP:
+      Uptime: 00:07:42 (since Mon Oct 13 18:47:10 UTC 2025)
+    Reopt. LSP:
+      Last Failure:
+        LSP not signalled, identical to the [CURRENT] LSP
+        Date/Time: Mon Oct 13 18:47:45 UTC 2025 [00:07:07 ago]
+    Prior LSP:
+      ID: 5 Path Option: 2
+      Removal Trigger: reoptimization completed
+    Standby LSP:
+      Uptime: 00:01:08 (since Mon Oct 13 18:53:44 UTC 2025)
+
+  Path info (OSPF 1 area 0):
+  Node hop count: 3
+  Hop0: 10.0.13.3
+  Hop1: 10.0.23.2
+  Hop2: 10.0.24.4
+  Hop3: 4.4.4.4
+
+  Standby LSP Path info (OSPF 1 area 0), Oper State: Up :
+  Node hop count: 2
+  Hop0: 10.0.12.2
+  Hop1: 10.0.24.4
+  Hop2: 4.4.4.4
+Displayed 1 (of 3) heads, 0 (of 0) midpoints, 0 (of 0) tails
+Displayed 1 up, 0 down, 0 recovering, 0 recovered heads
+RP/0/0/CPU0:xrv1#
+RP/0/0/CPU0:xrv1#traceroute mpls traffic-eng tunnel-te 40 lsp active
+Mon Oct 13 18:55:24.133 UTC
+
+Tracing MPLS TE Label Switched Path on tunnel-te40, timeout is 2 seconds
+
+Codes: '!' - success, 'Q' - request not sent, '.' - timeout,
+  'L' - labeled output interface, 'B' - unlabeled output interface,
+  'D' - DS Map mismatch, 'F' - no FEC mapping, 'f' - FEC mismatch,
+  'M' - malformed request, 'm' - unsupported tlvs, 'N' - no rx label,
+  'P' - no rx intf label prot, 'p' - premature termination of LSP,
+  'R' - transit router, 'I' - unknown upstream index,
+  'X' - unknown return code, 'x' - return code 0
+
+Type escape sequence to abort.
+
+  0 10.0.13.1 MRU 1500 [Labels: 24005 Exp: 0]
+L 1 10.0.13.3 MRU 1500 [Labels: 24005 Exp: 0] 30 ms
+L 2 10.0.23.2 MRU 1500 [Labels: implicit-null Exp: 0] 0 ms
+! 3 10.0.24.4 10 ms
+RP/0/0/CPU0:xrv1#traceroute mpls traffic-eng tunnel-te 40 lsp path-protect
+Mon Oct 13 18:55:33.012 UTC
+
+Tracing MPLS TE Label Switched Path on tunnel-te40, timeout is 2 seconds
+
+Codes: '!' - success, 'Q' - request not sent, '.' - timeout,
+  'L' - labeled output interface, 'B' - unlabeled output interface,
+  'D' - DS Map mismatch, 'F' - no FEC mapping, 'f' - FEC mismatch,
+  'M' - malformed request, 'm' - unsupported tlvs, 'N' - no rx label,
+  'P' - no rx intf label prot, 'p' - premature termination of LSP,
+  'R' - transit router, 'I' - unknown upstream index,
+  'X' - unknown return code, 'x' - return code 0
+
+Type escape sequence to abort.
+
+  0 10.0.12.1 MRU 1500 [Labels: 24004 Exp: 0]
+L 1 10.0.12.2 MRU 1500 [Labels: implicit-null Exp: 0] 10 ms
+! 2 10.0.24.4 1 ms
+RP/0/0/CPU0:xrv1#
+RP/0/0/CPU0:xrv1#show route 4.4.4.4/32
+Mon Oct 13 18:56:24.239 UTC
+
+Routing entry for 4.4.4.4/32
+  Known via "ospf 1", distance 110, metric 65537, type intra area
+  Installed Oct 13 18:53:44.830 for 00:02:39
+  Routing Descriptor Blocks
+    4.4.4.4, from 4.4.4.4, via tunnel-te40
+      Route metric is 65537
+  No advertising protos.
+RP/0/0/CPU0:xrv1#
+```
