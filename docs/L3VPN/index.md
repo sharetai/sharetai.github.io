@@ -23,7 +23,7 @@ Dịch vụ Mạng riêng ảo lớp 3
 
 ## Sơ đồ
 
-![](/docs/HSI/img/hsiâ.png)
+![](/docs/L3VPN/img/l3vpn.png)
 
 ## Cấu hình
 
