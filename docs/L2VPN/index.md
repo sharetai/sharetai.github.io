@@ -1,11 +1,11 @@
 ---
 layout: default
-title: L3VPN
-nav_order: 3.55
+title: L2VPN
+nav_order: 3.54
 has_children: false
 ---
 
-# Layer 3 Virtual Private Network
+# Layer 2 Virtual Private Network
 {: .no_toc }
 
 Dịch vụ Mạng riêng ảo lớp 3
@@ -23,7 +23,7 @@ Dịch vụ Mạng riêng ảo lớp 3
 
 ## Sơ đồ
 
-![](/docs/L3VPN/img/l3vpn.png)
+![](/docs/L2VPN/img/l2vpn.png)
 
 ## Cấu hình
 
@@ -74,28 +74,9 @@ router bgp 7552
   address-family ipv4
     network 10.132.0.1 mask 255.255.255.255 route-map COMMMUNITY_SRT_LOOPBACK0
     neighbor SRT_TO_AGG send-community both
+    neighbor SRT_TO_AGG send-label
     neighbor 10.134.0.1 activate
   !
-  address-family vpnv4
-    neighbor 10.134.0.1 activate
-  !
-!
-! ========================================================================
-! Khai bao L3VPN
-! ========================================================================
-ip vrf L3VPN
-  rd 7552:500
-  route-target export 7552:501
-  route-target import 7552:502
-!
-interface lo501
-  ip vrf forwarding L3VPN
-  ip address 172.16.40.1 255.255.255.0
-!
-router bgp 7552
-  address-family ipv4 vrf L3VPN
-    network 172.16.40.0 mask 255.255.255.0
-  exit-address-family
 !
 ! ========================================================================
 ! Khai bao MPLS
@@ -112,6 +93,14 @@ mpls ldp explicit-null
 ! Dung ping/trace mpls
 mpls oam
 !
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
+interface e0/3.3500
+  encapsulation dot1Q 3500
+  xconnect 10.134.0.1 20001 encapsulation mpls
+    backup peer 10.134.0.2 20003
+!
 end
 write
 ```
@@ -127,10 +116,10 @@ host AGG1
 !
 int Loopback0
   ip addr 10.134.0.1 255.255.255.255
-int e0/0
+int gi1
   ip addr 10.164.0.13 255.255.255.252
   no shut
-int e0/1
+int gi2
   ip addr 10.162.0.26 255.255.255.252
   no shut
 !
@@ -142,12 +131,12 @@ router ospf 2
   passive-interface Loopback0
   network 10.134.0.1 0.0.0.0 area 0
 !
-int e0/0
+int gi1
   ip ospf 2 area 0
   ip ospf network point-to-point
   ip ospf cost 10000
 !
-int e0/1
+int gi2
   ip ospf 2 area 1
   ip ospf network point-to-point
   ip ospf cost 100
@@ -190,27 +179,24 @@ router bgp 7552
     !
     neighbor AGG_TO_SRT route-reflector-client
     neighbor AGG_TO_SRT send-community both
+    neighbor AGG_TO_SRT send-label
     neighbor AGG_TO_SRT next-hop-self all
     neighbor AGG_TO_SRT route-map DENY_ALL out
     neighbor 10.132.0.1 activate
     !
     neighbor AGG_TO_CT send-community both
+    neighbor AGG_TO_CT send-label
     neighbor AGG_TO_CT next-hop-self all
     neighbor 10.136.0.11 activate
   !
-  address-family vpnv4
-    neighbor AGG_TO_SRT route-reflector-client
-    neighbor AGG_TO_SRT next-hop-self all
-    neighbor 10.132.0.1 activate
-    !
-    neighbor AGG_TO_CT next-hop-self all
+  address-family l2vpn vpls
     neighbor 10.136.0.11 activate
   !
 !
 ! ========================================================================
 ! Khai bao MPLS
 ! ========================================================================
-int range e0/0-3
+int range gi1-3
   mpls ip
 !
 ! ========================================================================
@@ -221,6 +207,16 @@ mpls ldp explicit-null
 !
 ! Dung ping/trace mpls
 mpls oam
+!
+! ========================================================================
+! Khai bao VPLS
+! ========================================================================
+l2vpn vfi context L2VPN
+  vpn id 200
+  autodiscovery bgp signaling ldp
+bridge-domain 200
+  member vfi L2VPN
+  member 10.132.0.1 20001 encapsulation mpls
 !
 end
 write
@@ -237,10 +233,10 @@ host CT1
 !
 int Loopback0
   ip addr 10.136.0.11 255.255.255.255
-int e0/0
+int gi1
   ip addr 10.166.0.5 255.255.255.252
   no shut
-int e0/1
+int gi2
   ip addr 10.164.0.14 255.255.255.252
   no shut
 !
@@ -254,12 +250,12 @@ router ospf 2
   passive-interface Loopback0
   network 10.136.0.11 0.0.0.0 area 0
 !
-int e0/0
+int gi1
   ip ospf 1 area 0
   ip ospf network point-to-point
   ip ospf cost 2000
 !
-int e0/1
+int gi2
   ip ospf 2 area 0
   ip ospf network point-to-point
   ip ospf cost 10000
@@ -306,26 +302,25 @@ router bgp 7552
     !
     neighbor CT_TO_AGG route-reflector-client
     neighbor CT_TO_AGG send-community both
+    neighbor CT_TO_AGG send-label
     neighbor CT_TO_AGG next-hop-self all
     neighbor 10.134.0.1 activate
     !
     neighbor CT_TO_RR send-community both
+    neighbor CT_TO_RR send-label
     neighbor CT_TO_RR next-hop-self all
     neighbor 10.255.0.1 activate
   !
-  address-family vpnv4
+  address-family l2vpn vpls
     neighbor CT_TO_AGG route-reflector-client
-    neighbor CT_TO_AGG next-hop-self all
     neighbor 10.134.0.1 activate
-    !
-    neighbor CT_TO_RR next-hop-self all
     neighbor 10.255.0.1 activate
   !
 !
 ! ========================================================================
 ! Khai bao MPLS
 ! ========================================================================
-int range e0/0-3
+int range gi1-3
   mpls ip
 !
 ! ========================================================================
@@ -352,10 +347,10 @@ host CTx
 !
 int Loopback0
   ip addr 10.136.0.13 255.255.255.255
-int e0/0
+int gi1
   ip addr 10.166.0.14 255.255.255.252
   no shut
-int e0/1
+int gi2
   ip addr 10.164.0.14 255.255.255.252
   no shut
 !
@@ -369,11 +364,11 @@ router ospf 2
   passive-interface Loopback0
   network 10.136.0.13 0.0.0.0 area 0
 !
-int e0/0
+int gi1
   ip ospf 1 area 0
   ip ospf network point-to-point
 !
-int e0/1
+int gi2
   ip ospf 2 area 0
   ip ospf network point-to-point
 !
@@ -419,26 +414,25 @@ router bgp 7552
     !
     neighbor CT_TO_AGG route-reflector-client
     neighbor CT_TO_AGG send-community both
+    neighbor CT_TO_AGG send-label
     neighbor CT_TO_AGG next-hop-self all
     neighbor 10.134.1.1 activate
     !
     neighbor CT_TO_RR send-community both
+    neighbor CT_TO_RR send-label
     neighbor CT_TO_RR next-hop-self all
     neighbor 10.255.0.1 activate
   !
-  address-family vpnv4
+  address-family l2vpn vpls
     neighbor CT_TO_AGG route-reflector-client
-    neighbor CT_TO_AGG next-hop-self all
     neighbor 10.134.1.1 activate
-    !
-    neighbor CT_TO_RR next-hop-self all
     neighbor 10.255.0.1 activate
   !
 !
 ! ========================================================================
 ! Khai bao MPLS
 ! ========================================================================
-int range e0/0-3
+int range gi1-3
   mpls ip
 !
 ! ========================================================================
@@ -465,10 +459,10 @@ host AGGx
 !
 int Loopback0
   ip addr 10.134.1.1 255.255.255.255
-int e0/1
+int gi2
   ip addr 10.162.0.26 255.255.255.252
   no shut
-int e0/0
+int gi1
   ip addr 10.164.0.13 255.255.255.252
   no shut
 !
@@ -480,11 +474,11 @@ router ospf 2
   passive-interface Loopback0
   network 10.134.1.1 0.0.0.0 area 0
 !
-int e0/0
+int gi1
   ip ospf 2 area 0
   ip ospf network point-to-point
 !
-int e0/1
+int gi2
   ip ospf 2 area 1
   ip ospf network point-to-point
 !
@@ -526,27 +520,24 @@ router bgp 7552
     !
     neighbor AGG_TO_SRT route-reflector-client
     neighbor AGG_TO_SRT send-community both
+    neighbor AGG_TO_SRT send-label
     neighbor AGG_TO_SRT next-hop-self all
     neighbor AGG_TO_SRT route-map DENY_ALL out
     neighbor 10.132.1.1 activate
     !
     neighbor AGG_TO_CT next-hop-self all
     neighbor AGG_TO_CT send-community both
+    neighbor AGG_TO_CT send-label
     neighbor 10.136.0.13 activate
   !
-  address-family vpnv4
-    neighbor AGG_TO_SRT route-reflector-client
-    neighbor AGG_TO_SRT next-hop-self all
-    neighbor 10.132.1.1 activate
-    !
-    neighbor AGG_TO_CT next-hop-self all
+  address-family l2vpn vpls
     neighbor 10.136.0.13 activate
   !
 !
 ! ========================================================================
 ! Khai bao MPLS
 ! ========================================================================
-int range e0/0-3
+int range gi1-3
   mpls ip
 !
 ! ========================================================================
@@ -557,6 +548,16 @@ mpls ldp explicit-null
 !
 ! Dung ping/trace mpls
 mpls oam
+!
+! ========================================================================
+! Khai bao VPLS
+! ========================================================================
+l2vpn vfi context L2VPN
+  vpn id 200
+  autodiscovery bgp signaling ldp
+bridge-domain 200
+  member vfi L2VPN
+  member 10.132.1.1 20002 encapsulation mpls
 !
 end
 write
@@ -608,28 +609,9 @@ router bgp 7552
   address-family ipv4
     network 10.132.1.1 mask 255.255.255.255 route-map COMMMUNITY_SRT_LOOPBACK0
     neighbor SRT_TO_AGG send-community both
+    neighbor SRT_TO_AGG send-label
     neighbor 10.134.1.1 activate
   !
-  address-family vpnv4
-    neighbor 10.134.1.1 activate
-  !
-!
-! ========================================================================
-! Khai bao L3VPN
-! ========================================================================
-ip vrf L3VPN
-  rd 7552:500
-  route-target export 7552:502
-  route-target import 7552:501
-!
-interface lo502
-  ip vrf forwarding L3VPN
-  ip address 172.16.140.1 255.255.255.0
-!
-router bgp 7552
-  address-family ipv4 vrf L3VPN
-    network 172.16.140.0 mask 255.255.255.0
-  exit-address-family
 !
 ! ========================================================================
 ! Khai bao MPLS
@@ -645,6 +627,12 @@ mpls ldp explicit-null
 !
 ! Dung ping/trace mpls
 mpls oam
+!
+! ========================================================================
+! Khai bao pseudowire
+! ========================================================================
+interface e0/3
+  xconnect 10.134.1.1 20002 encapsulation mpls
 !
 end
 write
@@ -711,7 +699,7 @@ host RR
 !
 int Loopback0
   ip addr 10.255.0.1 255.255.255.255
-int e0/0
+int gi2
   ip addr 10.166.0.254 255.255.255.252
   no shut
 !
@@ -723,7 +711,7 @@ router ospf 1
   passive-interface Loopback0
   network 10.255.0.1 0.0.0.0 area 0
 !
-int e0/0
+int gi2
   ip ospf 1 area 0
   ip ospf network point-to-point
 !
@@ -749,7 +737,7 @@ router bgp 7552
     neighbor 10.136.0.11 activate
     neighbor 10.136.0.13 activate
   !
-  address-family vpnv4
+  address-family l2vpn vpls
   !
     neighbor RR_TO_CT route-reflector-client
     neighbor 10.136.0.11 activate
@@ -759,7 +747,7 @@ router bgp 7552
 ! ========================================================================
 ! Khai bao MPLS
 ! ========================================================================
-int range e0/0-3
+int range gi1-3
   mpls ip
 !
 ! ========================================================================
